@@ -1,0 +1,21 @@
+{
+  "name": "ds3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:deps": "pnpm config:build && pnpm env:build && pnpm react:build",
+    "config:build": "pnpm --filter config run build",
+    "react:build": "pnpm --filter react run build",
+    "env:build": "pnpm --filter env run build",
+    "vite:dev": "pnpm --filter vite-example run dev --force",
+    "vite:build": "pnpm --filter vite-example run build",
+    "vite:preview": "pnpm --filter vite-example run preview",
+    "expo:start": "pnpm --filter expo-example run start --clear",
+    "clean": "rm -rf $(find . -name 'node_modules' -type d) && rm -rf $(find . -name 'dist' -type d) && pnpm store prune"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,66 @@
+{
+  "name": "@ds3/config",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    },
+    "./vite": {
+      "types": "./dist/vite.config.d.ts",
+      "require": "./dist/vite.config.cjs",
+      "import": "./dist/vite.config.js"
+    },
+    "./tailwind": {
+      "types": "./dist/tailwind.config.d.ts",
+      "require": "./dist/tailwind.config.cjs",
+      "import": "./dist/tailwind.config.js"
+    },
+    "./nativewind": {
+      "types": "./dist/nativewind.config.d.ts",
+      "require": "./dist/nativewind.config.cjs",
+      "import": "./dist/nativewind.config.js"
+    },
+    "./env": {
+      "types": "./dist/config.d.ts",
+      "require": "./dist/config.cjs",
+      "import": "./dist/config.js",
+      "default": "./dist/config.js"
+    }
+  },
+  "react-native": {
+    "./env": "./dist/config.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@radix-ui/colors": "^3.0.0",
+    "lodash": "^4.17.21",
+    "tailwindcss": "^3.4.14",
+    "nativewind": "^4.1.23",
+    "vite-plugin-react-native-web": "^1.1.2",
+    "vite": "^5.4.10",
+    "@vitejs/plugin-react": "^4.3.3"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "@types/lodash": "^4.17.13"
+  }
+}
