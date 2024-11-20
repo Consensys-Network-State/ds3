@@ -3,7 +3,7 @@ import { vars } from "nativewind";
 import { config } from "@ds3/env";
 import { ColorMode, ThemeName } from "@ds3/config";
 import { DEFAULT_MODE, DEFAULT_THEME } from "@ds3/config";
-import { cn } from "../utils/cn";
+import { cn } from "../utils";
 import { useMemo } from "react";
 import useTheme from "../hooks/useTheme";
 

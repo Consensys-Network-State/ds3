@@ -89,3 +89,14 @@ createRoot(document.getElementById('root')!).render(
   </StrictMode>,
 )
 ```
+
+Sometimes the following error occurs: `Uncaught ReferenceError: exports is not defined`.
+
+Fix by adding this to `index.html`:
+
+```
+<script>
+  /* https://stackoverflow.com/questions/43042889/typescript-referenceerror-exports-is-not-defined */
+  var exports = {};
+</script>
+```
