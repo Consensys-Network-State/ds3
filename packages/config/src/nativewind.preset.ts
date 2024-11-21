@@ -1,17 +1,17 @@
 import { hairlineWidth } from "nativewind/theme";
 // @ts-ignore
 import nativeWindPreset from 'nativewind/preset';
-import tailwindConfig from './tailwind.config';
+import ds3TailwindPreset from './tailwind.preset';
 import tailwindcssAnimate from 'tailwindcss-animate';
 import { Config as TailwindConfig } from 'tailwindcss';
 import { Config } from "./types";
 
-const nativewindConfig = (config: Config): TailwindConfig => ({
+const ds3Preset = (config: Config): TailwindConfig => ({
   content: [],
   presets: [
     tailwindcssAnimate,
     nativeWindPreset,
-    tailwindConfig(config)
+    ds3TailwindPreset(config)
   ],
   plugins: [],
   theme: {
@@ -23,4 +23,4 @@ const nativewindConfig = (config: Config): TailwindConfig => ({
   },
 });
 
-export default nativewindConfig;
+export default ds3Preset;

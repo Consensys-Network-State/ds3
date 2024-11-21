@@ -3,9 +3,12 @@ import { defineConfig } from 'tsup';
 export default defineConfig({
   entry: [
     'src/index.ts',
-    'src/vite.config.ts',
-    'src/tailwind.config.ts',
-    'src/nativewind.config.ts',
+    'src/vite.plugin.ts',
+    'src/tailwind.preset.ts',
+    'src/nativewind.preset.ts',
+    'src/babel.preset.ts',
+    'src/expo.preset.ts',
+    'src/metro.config.ts',
     'src/config.ts'
   ],
   format: ['esm', 'cjs'],

@@ -58,7 +58,7 @@ const assignCssVars = (themes: ConfigThemes): Record<string, ConfigColorShades> 
   return vars;
 };
 
-const tailwindConfig = (config: Config): TailwindConfig => ({
+const ds3Preset = (config: Config): TailwindConfig => ({
   darkMode: 'class',
   content: [],
   presets: [
@@ -81,4 +81,4 @@ const tailwindConfig = (config: Config): TailwindConfig => ({
   ],
 });
 
-export default tailwindConfig;
+export default ds3Preset;
