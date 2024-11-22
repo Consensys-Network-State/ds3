@@ -6,9 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:deps": "pnpm config:build && pnpm env:build && pnpm react:build",
+    "watch:deps": "pnpm -r --filter config --filter env --filter react --parallel run dev",
     "config:build": "pnpm --filter config run build",
+    "config:dev": "pnpm --filter config run dev",
     "react:build": "pnpm --filter react run build",
+    "react:dev": "pnpm --filter react run dev",
     "env:build": "pnpm --filter env run build",
+    "env:dev": "pnpm --filter env run dev",
     "apoc:dev": "pnpm --filter apoc run dev --force",
     "apoc:build": "pnpm --filter apoc run build",
     "apoc:preview": "pnpm --filter apoc run preview",

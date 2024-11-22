@@ -98,6 +98,9 @@ importers:
       vite:
         specifier: ^5.4.10
         version: 5.4.11(@types/node@22.9.1)(lightningcss@1.28.1)(terser@5.36.0)
+      vite-plugin-restart:
+        specifier: ^0.4.1
+        version: 0.4.1(vite@5.4.11(@types/node@22.9.1)(lightningcss@1.28.1)(terser@5.36.0))
 
   apps/expo-example:
     dependencies:
@@ -8162,6 +8165,11 @@ packages:
   vite-plugin-react-native-web@1.1.2:
     resolution: {integrity: sha512-EkxXHoWz/jUTLRRSSo3bEGcsZsu27JIWnhxIJ0GwdTFvhSu37chg22BP7qtytP2rmJgHcrtequsRELaXRoHn3w==}
     engines: {node: '>=14.0.0'}
+
+  vite-plugin-restart@0.4.1:
+    resolution: {integrity: sha512-MYhDFaa2HMoSavr/2pShj6toKVFso+zqF6FAdWGC8JSIrsNig+4giy9EzoSySgGRJvsnbwZXKdjAvn8ag8rUkA==}
+    peerDependencies:
+      vite: ^2.9.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
 
   vite-plugin-svgr@4.3.0:
     resolution: {integrity: sha512-Jy9qLB2/PyWklpYy0xk0UU3TlU0t2UMpJXZvf+hWII1lAmRHrOUKi11Uw8N3rxoNk7atZNYO3pR3vI1f7oi+6w==}
@@ -18135,6 +18143,11 @@ snapshots:
   vite-plugin-react-native-web@1.1.2:
     dependencies:
       flow-remove-types: 2.253.0
+
+  vite-plugin-restart@0.4.1(vite@5.4.11(@types/node@22.9.1)(lightningcss@1.28.1)(terser@5.36.0)):
+    dependencies:
+      micromatch: 4.0.8
+      vite: 5.4.11(@types/node@22.9.1)(lightningcss@1.28.1)(terser@5.36.0)
 
   vite-plugin-svgr@4.3.0(rollup@4.27.3)(typescript@5.6.3)(vite@5.4.11(@types/node@22.9.1)(lightningcss@1.28.1)(terser@5.36.0)):
     dependencies:

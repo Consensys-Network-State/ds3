@@ -121,6 +121,9 @@ export function generateColorCssVars(color: string): ConfigColorShades {
   const vars: ConfigColorShades = {};
 
   for (let i = 1; i <= 12; i++) {
+    if (i === 1) {
+      vars['DEFAULT'] = `var(${generateCssVar(color, 6)})`;
+    }
     vars[i] = `var(${generateCssVar(color, i)})`;
     vars[`a${i}`] = `var(${generateCssVar(color, `a${i}`)})`;
   }
