@@ -16,6 +16,9 @@ export const ThemeContext =
 
 interface ThemeProviderProps extends ThemeProps {}
 
+// todo: explore window.document.documentElement.classList.add('light')
+// make sure it works in native
+
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children , ...otherProps}) => {
   const currentMode = useColorScheme();
   const [theme, setTheme] = useState<ThemeName>(DEFAULT_THEME);

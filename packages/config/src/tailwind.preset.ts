@@ -33,7 +33,9 @@ const getThemeColorKeys = (themes: ConfigThemes): string[] => {
 
 const defineCssVars = (themes: ConfigThemes) =>
   plugin(({ addBase }) => {
-    const vars: Record<string, CssVariableRecord> = {};
+    const vars: Record<string, CssVariableRecord> = {
+      ':root': generateThemeCssVars(themes.default.colors.light)
+    };
 
     Object.entries(themes).forEach(([themeName, theme]) => {
       const lightClassName =

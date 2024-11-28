@@ -31,3 +31,5 @@ export * from './theme/ModeToggle';
 
 // utils
 export * as utils from './utils';
+export * from '@rn-primitives/portal';
+export * as Slot from '@rn-primitives/slot';

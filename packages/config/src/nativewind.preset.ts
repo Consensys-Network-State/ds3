@@ -9,11 +9,10 @@ import { Config } from "./types";
 const ds3Preset = (config: Config): TailwindConfig => ({
   content: [],
   presets: [
-    tailwindcssAnimate,
     nativeWindPreset,
     ds3TailwindPreset(config)
   ],
-  plugins: [],
+  plugins: [tailwindcssAnimate],
   theme: {
     extend: {
       borderWidth: {
