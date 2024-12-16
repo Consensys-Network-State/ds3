@@ -7,5 +7,7 @@ export { Sun } from './Sun';
 export { AlertTriangle } from './AlertTriangle';
 export { LogOut } from './LogOut';
 export { SquareArrowOutUpLeft } from './SquareArrowOutUpLeft';
+export { SquareArrowOutUpRight } from './SquareArrowOutUpRight';
 export { Terminal } from './Terminal';
 export { Copy } from './Copy';
+export { Signature } from './Signature';

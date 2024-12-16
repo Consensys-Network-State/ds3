@@ -4,12 +4,13 @@ import react from '@vitejs/plugin-react';
 import { Config } from "./types";
 
 function vitePlugin(command: 'serve' | 'build', config: Config): PluginOption[] {
-  const plugins: PluginOption[] = [
+  return [
     react({
       babel: {
         presets: ['nativewind/babel'],
       },
     }),
+    // @ts-ignore
     reactNativeWeb(),
     {
       enforce: 'pre',
@@ -41,8 +42,6 @@ function vitePlugin(command: 'serve' | 'build', config: Config): PluginOption[] 
       },
     },
   ];
-
-  return plugins;
-};
+}
 
 export default vitePlugin;

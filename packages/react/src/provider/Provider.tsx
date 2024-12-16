@@ -6,9 +6,9 @@ interface ProviderProps {
   children: React.ReactNode;
 }
 
-export const Provider: React.FC<ProviderProps> = ({ children }) => (
+export const Provider: React.FC<ProviderProps> = ({ children, ...otherProps }) => (
   <SafeAreaProvider>
-    <ThemeProvider>
+    <ThemeProvider {...otherProps}>
       {children}
     </ThemeProvider>
   </SafeAreaProvider>
