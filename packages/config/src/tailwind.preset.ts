@@ -1,5 +1,6 @@
 import { Config as TailwindConfig } from 'tailwindcss';
 import plugin from 'tailwindcss/plugin';
+import tailwindcssAnimate from 'tailwindcss-animate';
 import {
   generateRadixColorValues,
   generateColorCssVars,
@@ -72,6 +73,7 @@ const ds3Preset = (config: Config): TailwindConfig => ({
   ],
   plugins: [
     defineCssVars(config.themes),
+    tailwindcssAnimate,
   ],
   theme: {
     extend: {
