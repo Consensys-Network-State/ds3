@@ -13,6 +13,7 @@ export * from './components/Input';
 export * from './components/Label';
 export * from './components/RadioGroup';
 export * from './components/TextArea';
+export * from './components/Switch';
 
 // hooks
 export * from './hooks/useTheme';
