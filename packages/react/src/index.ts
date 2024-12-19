@@ -10,6 +10,7 @@ export * from './components/Badge';
 export * from './components/Checkbox';
 export * from './components/Dialog';
 export * from './components/Input';
+export * from './components/InputField';
 export * from './components/Label';
 export * from './components/RadioGroup';
 export * from './components/TextArea';
