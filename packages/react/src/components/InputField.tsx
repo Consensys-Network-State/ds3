@@ -16,9 +16,9 @@ const InputField: React.FC<InputFieldProps> = (props) => {
 
   const inputRef = useRef<TextInput>(null);
   const componentId = useId();
-  const inputId = `${componentId}-input`;
-  const inputErrorId = `${componentId}-input-error`;
-  const inputDescriptionId = `${componentId}-input-description`;
+  const fieldId = `${componentId}-field`;
+  const fieldErrorId = `${componentId}-field-error`;
+  const fieldDescriptionId = `${componentId}-field-description`;
 
   function handleOnLabelPress() {
     if (!inputRef.current) {
@@ -35,7 +35,7 @@ const InputField: React.FC<InputFieldProps> = (props) => {
     <View>
       {label && (
         <Label
-          nativeID={inputId}
+          nativeID={fieldId}
           onPress={handleOnLabelPress}
         >
           {label}
@@ -44,15 +44,15 @@ const InputField: React.FC<InputFieldProps> = (props) => {
 
       <Input
         ref={inputRef}
-        aria-labelledby={inputId}
-        aria-describedby={!error ? inputDescriptionId : inputErrorId}
+        aria-labelledby={fieldId}
+        aria-describedby={!error ? fieldDescriptionId : fieldErrorId}
         aria-invalid={!!error}
         {...otherProps}
       />
 
       {description && !error && (
         <Animated.View entering={FadeInDown}>
-          <Text nativeID={inputDescriptionId}>
+          <Text nativeID={fieldDescriptionId}>
             {description}
           </Text>
         </Animated.View>
@@ -60,7 +60,7 @@ const InputField: React.FC<InputFieldProps> = (props) => {
 
       {error && (
         <Animated.View entering={FadeInDown}>
-          <Text className="text-destructive" nativeID={inputErrorId}>
+          <Text className="text-destructive" nativeID={fieldErrorId}>
             {error}
           </Text>
         </Animated.View>
