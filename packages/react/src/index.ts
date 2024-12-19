@@ -2,6 +2,7 @@
 export * from './components/Button';
 export * from './components/Text';
 export * from './components/Select';
+export * from './components/SelectField';
 export * from './components/Avatar';
 export * from './components/DropdownMenu';
 export * from './components/Card';
