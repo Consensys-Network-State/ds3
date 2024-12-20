@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { useColorScheme, ColorSchemeName } from 'react-native';
-import { ThemeBase, ThemeProps } from "../theme/Theme";
-import type { ColorMode, ThemeName } from "@ds3/config";
+import { ThemeBase, ThemeProps } from "./Theme";
+import type { ColorMode, ThemeName, Config } from "@ds3/config";
 import { DEFAULT_MODE, DEFAULT_THEME } from "@ds3/config";
 
 export interface ThemeContextType {
@@ -9,14 +9,17 @@ export interface ThemeContextType {
   mode: ColorSchemeName | ColorMode | undefined;
   setTheme: (theme: ThemeName) => void;
   setMode: (mode: ColorSchemeName) => void;
+  config: Config;
 }
 
 export const ThemeContext =
   createContext<ThemeContextType | undefined>(undefined);
 
-interface ThemeProviderProps extends ThemeProps {}
+interface ThemeProviderProps extends ThemeProps {
+  config: Config,
+}
 
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children , ...otherProps}) => {
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, config, ...otherProps}) => {
   const currentMode = useColorScheme();
   const [theme, setTheme] = useState<ThemeName>(DEFAULT_THEME);
   const [mode, setMode] = useState<ColorSchemeName>(currentMode || DEFAULT_MODE);
@@ -26,8 +29,15 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children , ...othe
   }, [currentMode]);
 
   return (
-    <ThemeContext.Provider value={{ theme, mode, setTheme, setMode}}>
-      <ThemeBase theme={theme} mode={mode as ColorMode} {...otherProps}>
+    <ThemeContext.Provider
+      value={{ theme, mode, setTheme, setMode, config }}
+    >
+      <ThemeBase
+        theme={theme}
+        mode={mode as ColorMode}
+        config={config}
+        {...otherProps}
+      >
         {children}
       </ThemeBase>
     </ThemeContext.Provider>

@@ -1,13 +1,16 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
 import App from './App'
-import { Provider } from "@ds3/react";
+import { ThemeProvider } from "@ds3/react";
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import './index.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Provider>
-      <App />
-    </Provider>
+    <SafeAreaProvider>
+      <ThemeProvider config={import.meta.env.DS3}>
+        <App />
+      </ThemeProvider>
+    </SafeAreaProvider>
   </StrictMode>,
 )

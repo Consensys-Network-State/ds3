@@ -1,7 +1,7 @@
 import { Button } from "../components/Button";
 import { Sun } from "../icons/Sun";
 import React from "react";
-import { useTheme } from "../hooks/useTheme";
+import { useTheme } from "./useTheme";
 import { COLOR_MODES } from "@ds3/config";
 import { MoonStar } from "../icons/MoonStar";
 

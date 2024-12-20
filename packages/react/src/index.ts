@@ -18,17 +18,12 @@ export * from './components/RadioGroupField';
 export * from './components/TextArea';
 export * from './components/Switch';
 
-// hooks
-export * from './hooks/useTheme';
-
 // icons
 export * as Icons from './icons';
 
-// providers
-export * from './provider/ThemeProvider';
-export * from './provider/Provider';
-
 // theme
+export * from './theme/ThemeProvider';
+export * from './theme/useTheme';
 export * from './theme/Theme';
 export * from './theme/ThemeSwitcher';
 export * from './theme/ModeToggle';

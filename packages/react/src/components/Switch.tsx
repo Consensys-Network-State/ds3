@@ -7,7 +7,7 @@ import Animated, {
   useDerivedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useTheme } from '../hooks/useTheme';
+import { useTheme } from '../theme/useTheme';
 import { cn } from '../utils';
 
 const SwitchWeb = React.forwardRef<SwitchPrimitives.RootRef, SwitchPrimitives.RootProps>(

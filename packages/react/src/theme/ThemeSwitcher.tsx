@@ -1,6 +1,5 @@
 import React from "react";
-import { useTheme } from "../hooks/useTheme";
-import { config } from "@ds3/env";
+import { useTheme } from "./useTheme";
 import {
   Select,
   SelectContent,
@@ -23,7 +22,7 @@ export const ThemeSwitcher: React.FC = () => {
     right: 12,
   };
 
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, config } = useTheme();
   const themes = config.themes;
   const themeKeys = Object.keys(themes);
 

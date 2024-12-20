@@ -8,6 +8,7 @@ import 'react-native-reanimated';
 import "../global.css";
 import { ThemeProvider as DS3Provider } from '@ds3/react'
 import { PortalHost } from '@rn-primitives/portal';
+import ExpoConstants from 'expo-constants';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -32,7 +33,7 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <DS3Provider className="flex-1">
+      <DS3Provider className="flex-1" config={ExpoConstants?.expoConfig?.extra?.DS3}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
