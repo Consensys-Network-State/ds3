@@ -18,6 +18,7 @@ export * from './components/RadioGroupField';
 export * from './components/TextArea';
 export * from './components/TextAreaField';
 export * from './components/Switch';
+export * from './components/SwitchField';
 
 // icons
 export * as Icons from './icons';
