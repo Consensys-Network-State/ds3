@@ -1,58 +1,62 @@
+import { ElementRef, forwardRef, useId } from "react";
 import { Text } from "./Text";
 import { Label } from "./Label";
 import { Select } from "./Select";
-import React, { useId } from "react";
 import { View } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
-import { RootProps } from '@rn-primitives/select';
+import { RootProps as SelectProps } from '@rn-primitives/select';
 
-interface SelectFieldProps extends RootProps{
+interface SelectFieldProps extends SelectProps{
   label?: string;
   description?: string;
   error?: string;
 }
 
 // todo: get label to open select using trigger ref
-const SelectField: React.FC<SelectFieldProps> = (props) => {
-  const {
-    error,
-    label,
-    description,
-    ...otherProps
-  } = props;
+const SelectField = forwardRef<ElementRef<typeof Select>, SelectFieldProps>(
+  (props, ref) => {
 
-  const componentId = useId();
-  const fieldId = `${componentId}-field`;
-  const fieldErrorId = `${componentId}-field-error`;
-  const fieldDescriptionId = `${componentId}-field-description`;
+    const {
+      error,
+      label,
+      description,
+      ...otherProps
+    } = props;
 
-  return (
-    <View>
-      {label && <Label nativeID={fieldId}>{label}</Label>}
+    const componentId = useId();
+    const fieldId = `${componentId}-field`;
+    const fieldErrorId = `${componentId}-field-error`;
+    const fieldDescriptionId = `${componentId}-field-description`;
 
-      <Select
-        aria-labelledby={fieldId}
-        aria-describedby={!error ? fieldDescriptionId : fieldErrorId}
-        aria-invalid={!!error}
-        {...otherProps}
-      />
+    return (
+      <View>
+        {label && <Label nativeID={fieldId}>{label}</Label>}
 
-      {description && !error && (
-        <Animated.View entering={FadeInDown}>
-          <Text nativeID={fieldDescriptionId}>{description}</Text>
-        </Animated.View>
-      )}
+        <Select
+          ref={ref}
+          aria-labelledby={fieldId}
+          aria-describedby={!error ? fieldDescriptionId : fieldErrorId}
+          aria-invalid={!!error}
+          {...otherProps}
+        />
 
-      {error && (
-        <Animated.View entering={FadeInDown}>
-          <Text className="text-destructive" nativeID={fieldErrorId}>
-            {error}
-          </Text>
-        </Animated.View>
-      )}
-    </View>
-  );
-};
+        {description && !error && (
+          <Animated.View entering={FadeInDown}>
+            <Text nativeID={fieldDescriptionId}>{description}</Text>
+          </Animated.View>
+        )}
+
+        {error && (
+          <Animated.View entering={FadeInDown}>
+            <Text className="text-destructive" nativeID={fieldErrorId}>
+              {error}
+            </Text>
+          </Animated.View>
+        )}
+      </View>
+    );
+  }
+);
 
 SelectField.displayName = 'SelectField';
 export { SelectField };

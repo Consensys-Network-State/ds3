@@ -1,5 +1,12 @@
-import React, { useId, useRef } from 'react';
-import { View, TextInput, TextInputProps } from 'react-native';
+import {
+  ElementRef,
+  forwardRef,
+  useId,
+  useRef,
+  ComponentRef,
+  useImperativeHandle
+} from 'react';
+import { View, TextInputProps } from 'react-native';
 import { Input } from "./Input";
 import { Label } from "./Label";
 import { Text } from "./Text";
@@ -11,63 +18,83 @@ interface InputFieldProps extends TextInputProps {
   description?: string;
 }
 
-const InputField: React.FC<InputFieldProps> = (props) => {
-  const { error, label, description, ...otherProps } = props;
+const InputField = forwardRef<ElementRef<typeof Input>, InputFieldProps>(
+  (props, ref) => {
 
-  const inputRef = useRef<TextInput>(null);
-  const componentId = useId();
-  const fieldId = `${componentId}-field`;
-  const fieldErrorId = `${componentId}-field-error`;
-  const fieldDescriptionId = `${componentId}-field-description`;
+    const {
+      error,
+      label,
+      description,
+      ...otherProps
+    } = props;
 
-  function handleOnLabelPress() {
-    if (!inputRef.current) {
-      return;
+    const inputRef = useRef<ComponentRef<typeof Input>>(null);
+
+    useImperativeHandle(
+      ref,
+      () => {
+        if (!inputRef.current) {
+          return {} as ComponentRef<typeof Input>;
+        }
+        return inputRef.current;
+      },
+      [inputRef.current]
+    );
+
+    const componentId = useId();
+    const fieldId = `${componentId}-field`;
+    const fieldErrorId = `${componentId}-field-error`;
+    const fieldDescriptionId = `${componentId}-field-description`;
+
+    function handleOnLabelPress() {
+      if (!inputRef.current) {
+        return;
+      }
+      if (inputRef.current.isFocused()) {
+        inputRef.current.blur();
+      } else {
+        inputRef.current.focus();
+      }
     }
-    if (inputRef.current.isFocused()) {
-      inputRef.current.blur();
-    } else {
-      inputRef.current.focus();
-    }
+
+    return (
+      <View>
+        {label && (
+          <Label
+            nativeID={fieldId}
+            onPress={handleOnLabelPress}
+          >
+            {label}
+          </Label>
+        )}
+
+        <Input
+          ref={inputRef}
+          aria-labelledby={fieldId}
+          aria-describedby={!error ? fieldDescriptionId : fieldErrorId}
+          aria-invalid={!!error}
+          {...otherProps}
+        />
+
+        {description && !error && (
+          <Animated.View entering={FadeInDown}>
+            <Text nativeID={fieldDescriptionId}>
+              {description}
+            </Text>
+          </Animated.View>
+        )}
+
+        {error && (
+          <Animated.View entering={FadeInDown}>
+            <Text className="text-destructive" nativeID={fieldErrorId}>
+              {error}
+            </Text>
+          </Animated.View>
+        )}
+      </View>
+    );
   }
-
-  return (
-    <View>
-      {label && (
-        <Label
-          nativeID={fieldId}
-          onPress={handleOnLabelPress}
-        >
-          {label}
-        </Label>
-      )}
-
-      <Input
-        ref={inputRef}
-        aria-labelledby={fieldId}
-        aria-describedby={!error ? fieldDescriptionId : fieldErrorId}
-        aria-invalid={!!error}
-        {...otherProps}
-      />
-
-      {description && !error && (
-        <Animated.View entering={FadeInDown}>
-          <Text nativeID={fieldDescriptionId}>
-            {description}
-          </Text>
-        </Animated.View>
-      )}
-
-      {error && (
-        <Animated.View entering={FadeInDown}>
-          <Text className="text-destructive" nativeID={fieldErrorId}>
-            {error}
-          </Text>
-        </Animated.View>
-      )}
-    </View>
-  );
-};
+);
 
 InputField.displayName = 'InputField';
 

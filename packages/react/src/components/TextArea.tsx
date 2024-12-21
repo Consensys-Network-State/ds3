@@ -2,7 +2,7 @@ import * as React from 'react';
 import { TextInput, type TextInputProps } from 'react-native';
 import { cn } from '../utils';
 
-const Textarea = React.forwardRef<React.ElementRef<typeof TextInput>, TextInputProps>(
+const TextArea = React.forwardRef<React.ElementRef<typeof TextInput>, TextInputProps>(
   ({ className, multiline = true, numberOfLines = 4, placeholderClassName, ...props }, ref) => {
     return (
       <TextInput
@@ -22,6 +22,6 @@ const Textarea = React.forwardRef<React.ElementRef<typeof TextInput>, TextInputP
   }
 );
 
-Textarea.displayName = 'Textarea';
+TextArea.displayName = 'Textarea';
 
-export { Textarea };
+export { TextArea };

@@ -1,58 +1,62 @@
-import React from 'react';
+import { FC, ElementRef, forwardRef } from 'react';
 import { useId } from 'react';
 import { View } from 'react-native';
 import { Label } from "./Label";
 import { RadioGroup, RadioGroupItem } from "./RadioGroup";
 import { Text } from "./Text";
 import Animated, { FadeInDown } from 'react-native-reanimated';
-import { RootProps } from '@rn-primitives/radio-group';
+import { RootProps as RadioGroupProps } from '@rn-primitives/radio-group';
 
-interface RadioGroupFieldProps extends RootProps {
+interface RadioGroupFieldProps extends RadioGroupProps {
   label?: string;
   description?: string;
   error?: string;
 }
 
-const RadioGroupField: React.FC<RadioGroupFieldProps> = (props) => {
-  const {
-    error,
-    label,
-    description,
-    ...otherProps
-  } = props;
+const RadioGroupField = forwardRef<ElementRef<typeof RadioGroup>, RadioGroupFieldProps>(
+  (props, ref) => {
 
-  const componentId = useId();
-  const fieldId = `${componentId}-field`;
-  const fieldErrorId = `${componentId}-field-error`;
-  const fieldDescriptionId = `${componentId}-field-description`;
+    const {
+      error,
+      label,
+      description,
+      ...otherProps
+    } = props;
 
-  return (
-    <View>
-      {label && <Label nativeID={fieldId}>{label}</Label>}
+    const componentId = useId();
+    const fieldId = `${componentId}-field`;
+    const fieldErrorId = `${componentId}-field-error`;
+    const fieldDescriptionId = `${componentId}-field-description`;
 
-      <RadioGroup
-        aria-labelledby={fieldId}
-        aria-describedby={!error ? fieldDescriptionId : fieldErrorId}
-        aria-invalid={!!error}
-        {...otherProps}
-      />
+    return (
+      <View>
+        {label && <Label nativeID={fieldId}>{label}</Label>}
 
-      {description && !error && (
-        <Animated.View entering={FadeInDown}>
-          <Text nativeID={fieldDescriptionId}>{description}</Text>
-        </Animated.View>
-      )}
+        <RadioGroup
+          ref={ref}
+          aria-labelledby={fieldId}
+          aria-describedby={!error ? fieldDescriptionId : fieldErrorId}
+          aria-invalid={!!error}
+          {...otherProps}
+        />
 
-      {error && (
-        <Animated.View entering={FadeInDown}>
-          <Text className="text-destructive" nativeID={fieldErrorId}>
-            {error}
-          </Text>
-        </Animated.View>
-      )}
-    </View>
-  );
-};
+        {description && !error && (
+          <Animated.View entering={FadeInDown}>
+            <Text nativeID={fieldDescriptionId}>{description}</Text>
+          </Animated.View>
+        )}
+
+        {error && (
+          <Animated.View entering={FadeInDown}>
+            <Text className="text-destructive" nativeID={fieldErrorId}>
+              {error}
+            </Text>
+          </Animated.View>
+        )}
+      </View>
+    );
+  }
+);
 
 RadioGroupField.displayName = 'RadioGroupField';
 
@@ -62,7 +66,7 @@ interface RadioGroupFieldItemProps {
 }
 
 // todo: try to use a ref to set the value on label click
-const RadioGroupFieldItem: React.FC<RadioGroupFieldItemProps> = ({ value, onLabelPress }) => {
+const RadioGroupFieldItem: FC<RadioGroupFieldItemProps> = ({ value, onLabelPress }) => {
   return (
     <View className="flex-row gap-2 items-center">
       <RadioGroupItem aria-labelledby={`label-for-${value}`} value={value} />
