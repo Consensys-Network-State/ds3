@@ -2,6 +2,7 @@ export { Check } from './Check';
 export { ChevronUp } from './ChevronUp';
 export { ChevronDown } from './ChevronDown';
 export { ChevronRight } from './ChevronRight';
+export { ChevronLeft } from './ChevronLeft';
 export { MoonStar } from './MoonStar';
 export { Sun } from './Sun';
 export { AlertTriangle } from './AlertTriangle';

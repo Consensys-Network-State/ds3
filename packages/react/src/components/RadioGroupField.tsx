@@ -62,16 +62,17 @@ RadioGroupField.displayName = 'RadioGroupField';
 
 interface RadioGroupFieldItemProps {
   value: string;
+  label: string;
   onLabelPress?: () => void;
 }
 
 // todo: try to use a ref to set the value on label click
-const RadioGroupFieldItem: FC<RadioGroupFieldItemProps> = ({ value, onLabelPress }) => {
+const RadioGroupFieldItem: FC<RadioGroupFieldItemProps> = ({ label, value, onLabelPress }) => {
   return (
     <View className="flex-row gap-2 items-center">
       <RadioGroupItem aria-labelledby={`label-for-${value}`} value={value} />
       <Label nativeID={`label-for-${value}`} onPress={onLabelPress}>
-        {value}
+        {label || value}
       </Label>
     </View>
   );

@@ -10,7 +10,6 @@ export default generateConfig({
         error: 'red',
         warning: 'yellow',
         success: 'green',
-        leif: 'tomato',
       },
     },
     oceanBreeze: {
