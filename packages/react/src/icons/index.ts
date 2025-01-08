@@ -12,3 +12,5 @@ export { SquareArrowOutUpRight } from './SquareArrowOutUpRight';
 export { Terminal } from './Terminal';
 export { Copy } from './Copy';
 export { Signature } from './Signature';
+export { Ellipsis } from './Ellipsis';
+export { Pencil } from './Pencil';
