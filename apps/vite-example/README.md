@@ -6,28 +6,83 @@ This example provides a minimal setup to get DS3 working in Vite.
 
 This template was created with the following steps:
 
+### Dependencies
+
 Create a vite application:
 
-`pnpm create vite`
-
-Install dev dependencies:
-
+```bash
+pnpm create vite
 ```
-pnpm add -D @ds3/react @ds3/nativewind
+
+Install dependencies:
+
+```bash
+pnpm add @ds3/react @ds3/config react-native-web react-native-safe-area-context
 ```
+
+### DS3 Configuration
+
+Create `ds3.config.js` file:
+
+```bash
+touch ds3.config.js
+```
+
+Configure `ds3.config.js`:
+
+```js
+const { generateConfig } = require('@ds3/config');
+
+module.exports = generateConfig({
+  themes: {
+    default: {
+      // use any radix colors - https://www.radix-ui.com/colors
+      colors: {
+        neutral: 'gray',
+        primary: 'violet',
+        secondary: 'teal',
+        error: 'red',
+        warning: 'yellow',
+        success: 'green',
+        // add custom schemes here
+      },
+    },
+  },
+});
+```
+
+Under `src/main.tsx`, add the following:
+
+```tsx
+import { ThemeProvider } from "@ds3/react";
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+// ...
+
+return (
+  <SafeAreaProvider>
+      <ThemeProvider config={import.meta.env.DS3}>
+         // ...
+      </ThemeProvider>
+  </SafeAreaProvider>
+);
+```
+
+### Tailwind Configuration
 
 Instantiate Tailwind:
 
 ```
-npx tailwindcss init -p
+pnpm exec tailwindcss init -p
 ```
 
-Create and configure `tailwind.config.js`:
+Configure `tailwind.config.js`:
 
 ```js
-import ds3 from "@ds3/react/tailwind.config";
+import ds3Preset from "@ds3/config/nativewind";
+import ds3Config from "./ds3.config";
 
-// /** @type {import('tailwindcss').Config} */
+/** @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./index.html",
@@ -35,35 +90,34 @@ export default {
     './node_modules/@ds3/react/**/*.{js,jsx,ts,tsx}',
     '!node_modules/**/*.{js,ts,jsx,tsx}',
   ],
-  presets: [ds3]
+  presets: [ds3Preset(ds3Config)]
 }
-
 ```
 
-Configure `vite.config.ts`:
-
-Note: remove existing `@vitejs/plugin-react`
-
-```js
-import { defineConfig } from 'vite'
-import { vitePlugin } from '@ds3/nativewind';
-
-export default defineConfig(({ command }) => {
-  return {
-    plugins: [
-      vitePlugin(command),
-    ],
-  }
-});
-
-```
-
-Add tailwind to `src/index.css`:
+Add to `src/index.css`:
 
 ```css
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+```
+
+### Vite Configuration
+
+Replace `vite.config.ts` with the following:
+
+```js
+import { defineConfig } from 'vite'
+import ds3Plugin from '@ds3/config/vite';
+import ds3Config from "./ds3.config";
+
+export default defineConfig(({ command }) => {
+  return {
+    plugins: [
+      ds3Plugin(command, ds3Config),
+    ],
+  }
+});
 ```
 
 Add types to `src/vite-end.d.ts`
@@ -72,23 +126,7 @@ Add types to `src/vite-end.d.ts`
 /// <reference types="nativewind/types" />
 ```
 
-Add `Provder.tsx` to `main.tsx`:
-
-```js
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App'
-import { Provider } from "@ds3/react";
-
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <Provider>
-      <App />
-    </Provider>
-  </StrictMode>,
-)
-```
+### Troubleshooting
 
 Sometimes the following error occurs: `Uncaught ReferenceError: exports is not defined`.
 
