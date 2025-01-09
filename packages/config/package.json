@@ -75,7 +75,9 @@
     "vite-plugin-react-native-web": "^1.1.2"
   },
   "devDependencies": {
+    "@expo/config": "^10.0.7",
     "@types/lodash": "^4.17.13",
+    "expo": "^52.0.24",
     "tsup": "^8.3.5"
   }
 }
