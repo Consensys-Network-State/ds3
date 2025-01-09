@@ -1,5 +1,5 @@
 import { withNativeWind } from 'nativewind/metro';
-import { MetroConfig } from 'expo/metro-config';
+import { MetroConfig } from '@expo/metro-config';
 import path from 'path';
 
 export function withDs3(config: MetroConfig, options: { input?: string } = {}): MetroConfig {
