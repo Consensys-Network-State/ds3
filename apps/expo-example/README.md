@@ -2,30 +2,79 @@
 
 This example provides a minimal setup to get DS3 working in Expo.
 
-## Installing DS3
+## Install DS3
 
 This template was created with the following steps:
 
+### Dependencies
+
 Create a vite application:
 
-`pnpm create expo`
-
-Install dev dependencies:
-
-```
-pnpm add -D @ds3/react @ds3/nativewind
+```bash
+pnpm create expo@latest
 ```
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Install dependencies:
 
+```bash
+pnpm add @ds3/react @ds3/config
+```
+
+### DS3 Configuration
+
+Create `ds3.config.js` file:
+
+```bash
+touch ds3.config.js
+```
+
+Configure `ds3.config.js`:
+
+```js
+const { generateConfig } = require('@ds3/config');
+
+module.exports = generateConfig({
+  themes: {
+    default: {
+      // use any radix colors - https://www.radix-ui.com/colors
+      colors: {
+        neutral: 'gray',
+        primary: 'violet',
+        secondary: 'teal',
+        error: 'red',
+        warning: 'yellow',
+        success: 'green',
+        // add custom schemes here
+      },
+    },
+  },
+});
+```
+
+Under `app/_layout.tsx`, replace the `ThemeProvider`:
+
+```tsx
+import { ThemeProvider } from "@ds3/react";
+import ExpoConstants from 'expo-constants';
+
+// ...
+
+return (
+  <ThemeProvider className="flex-1" config={ExpoConstants?.expoConfig?.extra?.DS3}>
+     // ...
+  </ThemeProvider>
+);
+```
+
+### Tailwind Configuration
 
 Instantiate Tailwind:
 
-```
-npx tailwindcss init
+```bash
+pnpm exec tailwindcss init
 ```
 
-Create and configure `tailwind.config.js`:
+Configure `tailwind.config.js`:
 
 ```js
 /** @type {import('tailwindcss').Config} */
@@ -40,7 +89,13 @@ module.exports = {
 }
 ```
 
-Create and add tailwind to `/global.css`:
+Create a `global.css` file:
+
+```bash
+touch global.css
+```
+
+Configure `/global.css`:
 
 ```css
 @tailwind base;
@@ -51,82 +106,76 @@ Create and add tailwind to `/global.css`:
 Under `app/_layout.tsx`, add:
 
 ```js
-// Import your global CSS file
 import "../global.css";
 ```
 
-Create and configure `metro.config.js`:
+### Expo Configuration
+
+#### Metro
+
+Create a `metro.config.js` file:
+
+```bash
+touch metro.config.js
+```
+
+Configure `metro.config.js`:
 
 ```js
-const { getDefaultConfig } = require("expo/metro-config");
-const { withNativeWind } = require("nativewind/metro");
+const { getDefaultConfig } = require('expo/metro-config');
+const { withDs3 } = require('@ds3/config/metro');
 
 const config = getDefaultConfig(__dirname);
 
-module.exports = withNativeWind(config, { input: "./global.css" });
+module.exports = withDs3(config);
+```
+
+If using a monorepo (workspace), use the following configuration instead:
+
+```js
+const { getDefaultConfig } = require('expo/metro-config');
+const { withDs3Workspace } = require('@ds3/config/metro');
+
+const config = getDefaultConfig(__dirname);
+
+module.exports = withDs3Workspace(config);
+```
+
+#### Expo
+
+Create a `app.config.js` file:
+
+```bash
+touch app.config.js
+```
+
+Configure `app.config.js`:
+
+```js
+import withDs3 from '@ds3/config/expo';
+import ds3Config from './ds3.config';
+
+module.exports = ({ config }) => {
+   return withDs3({ config, ds3Config });
+};
+```
+
+#### Babel
+
+Create a `babel.config.js` file:
+
+```bash
+touch app.config.js
 ```
 
 Create and configure `babel.config.js`:
 
 ```js
 module.exports = function (api) {
-  api.cache(true);
-  return {
-    presets: [
-      ["babel-preset-expo", { jsxImportSource: "nativewind" }],
-      "nativewind/babel",
-    ],
-  };
+   api.cache(true);
+
+   return {
+      presets: ['@ds3/config/expo/babel'],
+   };
 };
 ```
-
-
-
-
-
-## Get started
-
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
