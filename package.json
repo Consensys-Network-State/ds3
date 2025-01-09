@@ -18,7 +18,9 @@
     "vite:build": "pnpm --filter vite-example run build",
     "vite:preview": "pnpm --filter vite-example run preview",
     "expo:start": "pnpm --filter expo-example run start --clear",
-    "clean": "rm -rf $(find . -name 'node_modules' -type d) && rm -rf $(find . -name 'dist' -type d) && pnpm store prune"
+    "docs:start": "pnpm --filter docs run start --clear",
+    "clean": "rm -rf $(find . -name 'node_modules' -type d) && rm -rf $(find . -name 'dist' -type d) && pnpm store prune",
+    "postinstall": "pnpm build:deps"
   },
   "keywords": [],
   "author": "",

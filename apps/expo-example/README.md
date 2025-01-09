@@ -77,15 +77,17 @@ pnpm exec tailwindcss init
 Configure `tailwind.config.js`:
 
 ```js
+import ds3Preset from "@ds3/config/nativewind";
+import ds3Config from "./ds3.config";
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-   // NOTE: Update this to include the paths to all of your component files.
-   content: ["./app/**/*.{js,jsx,ts,tsx}"],
-   presets: [require("nativewind/preset")],
-   theme: {
-      extend: {},
-   },
-   plugins: [],
+  content: [
+    "./app/**/*.{js,jsx,ts,tsx}",
+    './node_modules/@ds3/react/**/*.{js,jsx,ts,tsx}',
+    '!node_modules/**/*.{js,ts,jsx,tsx}',
+  ],
+  presets: [ds3Preset(ds3Config)],
 }
 ```
 
@@ -165,7 +167,7 @@ module.exports = ({ config }) => {
 Create a `babel.config.js` file:
 
 ```bash
-touch app.config.js
+touch babel.config.js
 ```
 
 Create and configure `babel.config.js`:
