@@ -1,12 +1,13 @@
 import { cva, type VariantProps } from 'class-variance-authority';
-import { createContext, forwardRef, ElementRef, useContext } from 'react';
+import { createContext, forwardRef, ElementRef, useContext, ComponentType } from 'react';
 import { Pressable } from 'react-native';
 import { cn } from '../utils';
 import { TextClassContext } from './Text';
 import { Icon } from './Icon';
 import * as React from "react";
+import { Spinner, SpinnerProps } from './Spinner'
 
-//group flex items-center justify-center rounded-4 web:ring-offset-background web:transition-colors web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2
+// group flex items-center justify-center rounded-4 web:ring-offset-background web:transition-colors web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2
 
 // box-shadow: var(--button-elevated-box-shadow-top-1-position-x, 0px) var(--button-elevated-box-shadow-top-1-position-y, 0px) var(--button-elevated-box-shadow-top-1-blur, 0px) var(--button-elevated-box-shadow-top-1-spread, 1px) var(--button-elevated-box-shadow-top-1-color, rgba(255, 255, 255, 0.10)) inset, var(--button-elevated-box-shadow-top-2-position-x, 0px) var(--button-elevated-box-shadow-top-2-position-y, 4px) var(--button-elevated-box-shadow-top-2-blur, 2px) var(--button-elevated-box-shadow-top-2-spread, -2px) var(--button-elevated-box-shadow-top-2-color, rgba(255, 255, 255, 0.15)) inset, var(--button-elevated-box-shadow-top-3-position-x, 0px) var(--button-elevated-box-shadow-top-3-position-y, 1px) var(--button-elevated-box-shadow-top-3-blur, 1px) var(--button-elevated-box-shadow-top-3-spread, 0px) var(--button-elevated-box-shadow-top-3-color, rgba(255, 255, 255, 0.40)) inset, var(--button-elevated-box-shadow-top-4-position-x, 0px) var(--button-elevated-box-shadow-top-4-position-y, -1px) var(--button-elevated-box-shadow-top-4-blur, 1px) var(--button-elevated-box-shadow-top-4-spread, 0px) var(--button-elevated-box-shadow-top-4-color, rgba(0, 0, 0, 0.40)) inset, var(--button-elevated-box-shadow-bottom-1-position-x, 0px) var(--button-elevated-box-shadow-bottom-1-position-y, 0px) var(--button-elevated-box-shadow-bottom-1-blur, 0px) var(--button-elevated-box-shadow-bottom-1-spread, 0px) var(--button-elevated-box-shadow-bottom-1-color, rgba(255, 255, 255, 0.00)) inset, var(--button-elevated-box-shadow-bottom-2-position-x, 0px) var(--button-elevated-box-shadow-bottom-2-position-y, 0px) var(--button-elevated-box-shadow-bottom-2-blur, 0px) var(--button-elevated-box-shadow-bottom-2-spread, 0px) var(--button-elevated-box-shadow-bottom-2-color, rgba(255, 255, 255, 0.00)) inset;
 
@@ -132,15 +133,20 @@ const buttonIconVariants = cva(
   }
 );
 
-const ButtonContext = createContext<VariantProps<typeof buttonVariants> | undefined>(undefined);
+const ButtonContext = createContext<VariantProps<typeof buttonVariants> & {
+  loading?: boolean,
+} | undefined>(undefined);
 
-type ButtonProps = React.ComponentPropsWithoutRef<typeof Pressable> &
-  VariantProps<typeof buttonVariants>;
+type PressableProps = Omit<React.ComponentPropsWithoutRef<typeof Pressable>, keyof VariantProps<typeof buttonVariants>>;
+
+interface ButtonProps extends PressableProps, VariantProps<typeof buttonVariants> {
+  loading?: boolean;
+}
 
 const Button = forwardRef<ElementRef<typeof Pressable>, ButtonProps>(
-  ({ className, variant, color, size, ...props }, ref) => {
+  ({ className, variant, color, loading = false, size, ...props }, ref) => {
     return (
-      <ButtonContext.Provider value={{ variant, color, size }}>
+      <ButtonContext.Provider value={{ variant, color, size, loading }}>
         <TextClassContext.Provider
           value={buttonTextVariants({ variant, color, size, className: 'web:pointer-events-none' })}
         >
@@ -160,7 +166,7 @@ const Button = forwardRef<ElementRef<typeof Pressable>, ButtonProps>(
 );
 Button.displayName = 'Button';
 
-type ButtonIconProps = React.ComponentPropsWithoutRef<typeof Icon>;
+interface ButtonIconProps extends React.ComponentPropsWithoutRef<typeof Icon> {}
 
 const ButtonIcon = forwardRef<ElementRef<typeof Icon>, ButtonIconProps>(
   ({ className, icon, ...props }, ref) => {
@@ -185,5 +191,62 @@ const ButtonIcon = forwardRef<ElementRef<typeof Icon>, ButtonIconProps>(
 );
 Button.displayName = 'ButtonIcon';
 
-export { Button, ButtonIcon, buttonTextVariants, buttonVariants };
+interface ButtonSpinnerProps extends SpinnerProps {
+  loadingIcon?: ComponentType<any>;
+  loadingSpeed?: number;
+}
+
+const ButtonSpinner = forwardRef<ElementRef<typeof Icon>, ButtonSpinnerProps>(
+  (props, ref) => {
+    const {
+      className,
+      icon,
+      loadingIcon,
+      ...otherProps
+    } = props
+
+    const buttonContext = useContext(ButtonContext);
+
+    if (icon && !buttonContext?.loading) {
+      return (
+        <Icon
+          className={cn(
+            buttonTextVariants({
+              variant: buttonContext?.variant,
+              color: buttonContext?.color,
+              className
+            }),
+            buttonIconVariants({ size: buttonContext?.size, })
+          )}
+          icon={icon}
+          ref={ref}
+          {...otherProps}
+        />
+      );
+    }
+
+    if (buttonContext?.loading) {
+      return (
+        <Spinner
+          className={cn(
+            buttonTextVariants({
+              variant: buttonContext?.variant,
+              color: buttonContext?.color,
+              className
+            }),
+            buttonIconVariants({ size: buttonContext?.size, }),
+          )}
+          icon={loadingIcon}
+          ref={ref}
+          {...otherProps}
+        />
+      );
+    }
+
+    return null;
+  }
+);
+ButtonSpinner.displayName = 'ButtonSpinner';
+
+export { Button, ButtonIcon, ButtonSpinner, buttonTextVariants, buttonVariants };
 export type { ButtonProps };

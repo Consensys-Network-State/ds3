@@ -1,9 +1,25 @@
 import { StyleSheet } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import { Text, Button, ModeToggle, ButtonIcon } from "@ds3/react/src";
+import { Text, Button, ModeToggle, ButtonIcon, ButtonSpinner } from "@ds3/react/src";
 import { View, } from "react-native";
-import { Figma, LoaderCircle, LoaderPinwheel, Loader } from 'lucide-react-native';
+import { Figma, LoaderPinwheel, Loader } from 'lucide-react-native';
+import { useState } from "react";
+
+const ButtonClickToLoad = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onButtonPress = () => {
+    setIsLoading(!isLoading);
+  };
+
+  return (
+    <Button onPress={onButtonPress} loading={isLoading} variant="soft" color="warning">
+      <ButtonSpinner icon={Figma} duration={400} />
+      <Text>{isLoading ? "Click to stop" : "Click to load" }</Text>
+    </Button>
+  )
+}
 
 export default function Buttons() {
   return (
@@ -273,30 +289,32 @@ export default function Buttons() {
 
             <View className="flex flex-row flex-wrap gap-4">
               <Text className="flex items-center">Loading Prefix Icon</Text>
-              <Button variant="elevated">
-                <ButtonIcon icon={Loader} className="animate-spin origin-center" />
+              <Button variant="elevated" loading>
+                <ButtonSpinner />
                 <Text>Elevated</Text>
               </Button>
-              <Button variant="solid" color="primary">
-                <ButtonIcon icon={LoaderCircle} className="animate-[spin_2s_linear_infinite] origin-center" />
+              <Button variant="solid" color="primary" loading>
+                <ButtonSpinner loadingIcon={Loader} />
                 <Text>Solid</Text>
               </Button>
-              <Button variant="soft" color="secondary">
-                <ButtonIcon icon={LoaderPinwheel} className="animate-[spin_2s_linear_infinite] origin-center" />
+              <Button variant="soft" color="secondary" loading>
+                <ButtonSpinner loadingIcon={LoaderPinwheel} />
                 <Text>Soft</Text>
               </Button>
-              <Button variant="outline" color="error">
-                <ButtonIcon icon={Loader} className="animate-[spin_2s_linear_infinite] origin-center" />
+              <Button variant="outline" color="error" loading>
+                <ButtonSpinner />
                 <Text>Outline</Text>
               </Button>
-              <Button variant="dashed" color="warning">
-                <ButtonIcon icon={LoaderCircle} className="animate-[spin_2s_linear_infinite] origin-center" />
+              <Button variant="dashed" color="warning" loading>
+                <ButtonSpinner loadingIcon={Loader} />
                 <Text>Dashed</Text>
               </Button>
-              <Button variant="ghost" color="success">
-                <ButtonIcon icon={LoaderPinwheel} className="animate-[spin_2s_linear_infinite] origin-center" />
+              <Button variant="ghost" color="success" loading>
+                <ButtonSpinner loadingIcon={LoaderPinwheel} />
                 <Text>Ghost</Text>
               </Button>
+
+              <ButtonClickToLoad />
             </View>
 
             <Text className="text-heading-8">Sizes</Text>
