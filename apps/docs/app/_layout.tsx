@@ -8,7 +8,7 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
-import { ThemeProvider as DS3Provider } from "@ds3/react";
+import { ThemeProvider as DS3Provider } from "@ds3/react/src";
 import ExpoConstants from 'expo-constants';
 import "../global.css";
 
