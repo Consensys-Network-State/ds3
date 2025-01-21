@@ -20,7 +20,6 @@ export default generateConfig({
         error: 'red',
         warning: 'amber',
         success: 'grass',
-        leif:'lime'
       },
     },
     sunsetGlow: {
