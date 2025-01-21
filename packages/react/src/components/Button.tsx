@@ -1,10 +1,9 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import { createContext, forwardRef, ElementRef, useContext, ComponentType, useMemo } from 'react';
-import { Pressable, View } from 'react-native';
+import { Pressable } from 'react-native';
 import { cn } from '../utils';
 import { TextClassContext } from './Text';
 import { Icon } from './Icon';
-import * as React from "react";
 import { Spinner, SpinnerProps } from './Spinner'
 import * as Slot from '@rn-primitives/slot';
 
@@ -150,7 +149,18 @@ export type ButtonSizes = NonNullable<ButtonProps['size']>;
 export type ButtonVariant = NonNullable<ButtonProps['variant']>;
 
 const Button = forwardRef<ElementRef<typeof Pressable>, ButtonProps>(
-  ({ className, variant, color, loading = false, asChild = false, size, disabled, ...props }, ref) => {
+  (props, ref) => {
+    const {
+      className,
+      variant,
+      color,
+      loading = false,
+      asChild = false,
+      size,
+      disabled,
+      ...otherProps
+    } = props;
+
     const Component = asChild ? Slot.Pressable : Pressable;
 
     const contextValue = useMemo(() => ({
@@ -167,7 +177,7 @@ const Button = forwardRef<ElementRef<typeof Pressable>, ButtonProps>(
             ref={ref}
             role='button'
             disabled={disabled}
-            {...props}
+            {...otherProps}
           />
         </TextClassContext.Provider>
       </ButtonContext.Provider>
@@ -178,8 +188,9 @@ Button.displayName = 'Button';
 
 interface ButtonIconProps extends React.ComponentPropsWithoutRef<typeof Icon> {}
 
-const ButtonIcon = forwardRef<ElementRef<typeof Icon> | ElementRef<typeof View>, ButtonIconProps>(
-  ({ className, icon, ...props }, ref) => {
+const ButtonIcon = forwardRef<ElementRef<typeof Icon>, ButtonIconProps>(
+  (props, ref) => {
+    const { className, icon, ...otherProps } = props;
     const buttonContext = useContext(ButtonContext);
 
     return (
@@ -193,7 +204,8 @@ const ButtonIcon = forwardRef<ElementRef<typeof Icon> | ElementRef<typeof View>,
           buttonIconVariants({ size: buttonContext?.size, })
         )}
         icon={icon}
-        {...props}
+        ref={ref}
+        {...otherProps}
       />
     );
   }
@@ -228,7 +240,7 @@ const ButtonSpinner = forwardRef<ElementRef<typeof Icon>, ButtonSpinnerProps>(
             buttonIconVariants({ size: buttonContext?.size, })
           )}
           icon={icon}
-
+          ref={ref}
           {...otherProps}
         />
       );
