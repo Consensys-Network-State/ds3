@@ -4,42 +4,20 @@ import type {
   SupportedRadixColorKeys,
   ConfigColorShades,
   ConfigThemes,
+  ConfigTheme,
   ConfigColor,
   Config,
   UserConfigColor,
   UserConfigColors,
   UserConfig,
   CssVariableRecord,
-  CssVariable
+  CssVariable,
+  BoxShadowConfig
 } from './types.js'
 import _ from "lodash";
 import defaultConfig from "./default-config.js";
-// import { join } from "path";
-// import { existsSync } from "fs";
-//
-// export const loadConfig = (configFileName: string = 'ds3.config'): Config => {
-//   const tsPath = join(process.cwd(), `${configFileName}.ts`);
-//   const jsPath = join(process.cwd(), `${configFileName}.js`);
-//
-//   const configPath = existsSync(tsPath) ? tsPath : jsPath;
-//
-//   if (!existsSync(configPath)) {
-//     throw new Error(`Config file not found. Looked for ${tsPath} or ${jsPath}`);
-//   }
-//
-//   // Ensure the config file exists
-//   if (!existsSync(configPath)) {
-//     throw new Error(`Config file not found at ${configPath}`);
-//   }
-//
-//   // Dynamically import the config file (supports ESM and CJS)
-//   const rawConfig: UserConfig = require(configPath).default ?? require(configPath);
-//
-//   // Validate and transform the config using the generator
-//   return generateConfig(rawConfig);
-// }
 
-export const generateConfig = (userConfig: UserConfig) : Config => {
+export const generateConfig = (userConfig: UserConfig): Config => {
   const blueprint = _.merge(defaultConfig, userConfig || {});
 
   return {
@@ -48,6 +26,28 @@ export const generateConfig = (userConfig: UserConfig) : Config => {
   }
 }
 
+export const normalizeBoxShadowValue = (value: string | string[]): string => {
+  return Array.isArray(value) ? value.join(', ') : value;
+};
+
+export const generateBoxShadowValues = (
+  shadows: BoxShadowConfig,
+  isDark: boolean = false
+): Record<string, string> => {
+  const processedShadows: Record<string, string> = {};
+
+  Object.entries(shadows).forEach(([name, value]) => {
+    if (typeof value === 'string' || Array.isArray(value)) {
+      processedShadows[name] = normalizeBoxShadowValue(value);
+    } else {
+      const modeValue = isDark ? value.dark : value.light;
+      processedShadows[name] = normalizeBoxShadowValue(modeValue);
+    }
+  });
+
+  return processedShadows;
+};
+
 export const generateThemes = (config: UserConfig): ConfigThemes => {
   const { themes } = config;
   if (!themes) return {};
@@ -55,23 +55,32 @@ export const generateThemes = (config: UserConfig): ConfigThemes => {
   const processedThemes: ConfigThemes = {};
 
   Object.entries(themes).forEach(([themeName, theme]) => {
-    const colors = theme.colors;
-    if (!colors) return;
-
-    const lightColors = (colors.light || colors) as UserConfigColor;
-    const darkColors = (colors.dark || {}) as UserConfigColor;
-
-    const lightColorShades = generateColorValues(lightColors);
-    const darkColorShades = Object.keys(darkColors).length > 0
-      ? generateColorValues(darkColors, true)
-      : generateColorValues(lightColors, true);
-
-    processedThemes[themeName] = {
+    const { colors, boxShadow } = theme;
+    const processedTheme: ConfigTheme = {
       colors: {
-        light: lightColorShades,
-        dark: darkColorShades
+        light: {},
+        dark: {}
       }
+    };
+
+    if (colors) {
+      const lightColors = (colors.light || colors) as UserConfigColor;
+      const darkColors = (colors.dark || {}) as UserConfigColor;
+
+      processedTheme.colors.light = generateColorValues(lightColors);
+      processedTheme.colors.dark = Object.keys(darkColors).length > 0
+        ? generateColorValues(darkColors, true)
+        : generateColorValues(lightColors, true);
     }
+
+    if (boxShadow) {
+      processedTheme.boxShadow = {
+        light: generateBoxShadowValues(boxShadow),
+        dark: generateBoxShadowValues(boxShadow, true)
+      };
+    }
+
+    processedThemes[themeName] = processedTheme;
   });
 
   return processedThemes;
@@ -116,6 +125,7 @@ export const generateRadixColorValues = (color: SupportedRadixColorKeys, isDark:
 };
 
 export const generateCssVar = (color: string, index: string | number): CssVariable => (`--color-${color}-${index}`);
+export const generateShadowCssVar = (name: string): CssVariable => (`--shadow-${name}`);
 
 export function generateColorCssVars(color: string): ConfigColorShades {
   const vars: ConfigColorShades = {};
@@ -130,6 +140,14 @@ export function generateColorCssVars(color: string): ConfigColorShades {
 
   return vars;
 }
+
+export const generateShadowCssVars = (shadows: Record<string, string>): CssVariableRecord => {
+  const vars: CssVariableRecord = {};
+  Object.entries(shadows).forEach(([name, value]) => {
+    vars[generateShadowCssVar(name)] = value;
+  });
+  return vars;
+};
 
 export const generateThemeCssVars = (colors: ConfigColor): CssVariableRecord => {
   const vars: CssVariableRecord = {};

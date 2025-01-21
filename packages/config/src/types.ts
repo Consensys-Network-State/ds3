@@ -7,19 +7,22 @@ export type RadixColorKeys = keyof typeof radixColors;
 export type SupportedRadixColorKeys = ExcludeColorVariants<keyof typeof radixColors>;
 
 export type CssVariable = `--${string}`;
-
 export type alphaColor = `a${string}`;
-
 export type CssVariableRecord = Record<CssVariable, string | number>;
-
 export type ThemeName = string;
-
 export type ColorMode = typeof COLOR_MODES[keyof typeof COLOR_MODES];
+
+export type BoxShadowValue = string | string[] | {
+  light: string | string[];
+  dark: string | string[];
+};
+
+export type BoxShadowConfig = Record<string, BoxShadowValue>;
 
 export interface ConfigColorShades extends
   Record<number, string>,
   Record<alphaColor, string> {
-  [key: string]: string // todo: do i need this
+  [key: string]: string
 }
 
 export type ConfigColor = Record<string, ConfigColorShades>;
@@ -29,8 +32,14 @@ export interface ConfigColorModes {
   dark: ConfigColor;
 }
 
+export interface ConfigBoxShadow {
+  light: Record<string, string>;
+  dark: Record<string, string>;
+}
+
 export interface ConfigTheme {
   colors: ConfigColorModes;
+  boxShadow?: ConfigBoxShadow;
 }
 
 export type ConfigThemes = Record<string, ConfigTheme>;
@@ -38,12 +47,6 @@ export type ConfigThemes = Record<string, ConfigTheme>;
 export interface Config {
   blueprint: UserConfig;
   themes: ConfigThemes;
-
-  // getters
-  getTheme?: (theme: ThemeName) => ConfigThemes[ThemeName];
-  getThemeCssVars?: (theme: ThemeName, mode: ColorMode) => CssVariableRecord;
-  getColorCssVars?: (theme: ThemeName, mode: ColorMode) => ConfigColorShades;
-  getCssVar?: (color: SupportedRadixColorKeys, index: string) => CssVariableRecord;
 }
 
 export type UserConfigColor = Record<string, SupportedRadixColorKeys>;
@@ -57,6 +60,7 @@ export type UserConfigColors = Record<string, SupportedRadixColorKeys | UserConf
 
 export interface UserConfigTheme {
   colors?: UserConfigColors;
+  boxShadow?: BoxShadowConfig;
 }
 
 export type UserConfigThemes = Record<string, UserConfigTheme>;
