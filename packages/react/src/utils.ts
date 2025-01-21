@@ -1,20 +1,6 @@
-// import Clipboard from '@react-native-clipboard/clipboard';
 import { Platform, Linking } from 'react-native';
 import { ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
-
-// export const copyToClipboard = async (textToCopy: string) => {
-//   if (Platform.OS === 'web' && navigator.clipboard) {
-//     // Web-specific copy
-//     try {
-//       await navigator.clipboard.writeText(textToCopy);
-//       // eslint-disable-next-line
-//     } catch (error) {}
-//   } else {
-//     // Mobile-specific copy
-//     Clipboard.setString(textToCopy);
-//   }
-// };
+import { extendTailwindMerge } from "tailwind-merge";
 
 export const openLink = (url: string) => {
   if (Platform.OS === 'web') {
@@ -28,6 +14,34 @@ export const openLink = (url: string) => {
   }
 };
 
+const fontSizes = [
+  '2',
+  '2.5',
+  '3',
+  '3.5',
+  '4',
+  '4.5',
+  '5',
+  '5.5',
+  '6',
+  '7',
+  '8',
+  '10',
+  '12',
+  '14',
+  '16'
+];
+
+const twMergeConfig = extendTailwindMerge({
+  extend: {
+    classGroups: {
+      'font-size': [{
+        text: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', ...fontSizes]
+      }],
+    }
+  }
+});
+
 export const cn = (...inputs: ClassValue[]) => {
-  return twMerge(clsx(inputs));
-}
+  return twMergeConfig(clsx(inputs));
+};

@@ -25,7 +25,7 @@ function App() {
           <ModeToggle />
           <ThemeSwitcher />
           <Button
-            variant="secondary"
+            color="primary"
             onPress={() => setCount((count) => count + 1)}
             className="mb-4"
           >

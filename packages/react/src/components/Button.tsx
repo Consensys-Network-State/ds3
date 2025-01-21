@@ -1,85 +1,273 @@
 import { cva, type VariantProps } from 'class-variance-authority';
-import * as React from 'react';
+import { createContext, forwardRef, ElementRef, useContext, ComponentType, useMemo } from 'react';
 import { Pressable } from 'react-native';
 import { cn } from '../utils';
 import { TextClassContext } from './Text';
+import { Icon } from './Icon';
+import { Spinner, SpinnerProps } from './Spinner'
+import * as Slot from '@rn-primitives/slot';
 
 const buttonVariants = cva(
-  'group flex items-center justify-center rounded-md web:ring-offset-background web:transition-colors web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2',
+  'group flex flex-row gap-1 items-center self-start justify-center rounded-4',
   {
     variants: {
+      color: {
+        neutral: '',
+        primary: '',
+        secondary: '',
+        error: '',
+        warning: '',
+        success: '',
+      },
       variant: {
-        default: 'bg-primary web:hover:opacity-90 active:opacity-90',
-        destructive: 'bg-destructive web:hover:opacity-90 active:opacity-90',
-        outline:
-          'border border-input bg-background web:hover:bg-accent web:hover:text-accent-foreground active:bg-accent',
-        secondary: 'bg-secondary web:hover:opacity-80 active:opacity-80',
-        ghost: 'web:hover:bg-accent web:hover:text-accent-foreground active:bg-accent',
-        link: 'web:underline-offset-4 web:hover:underline web:focus:underline '
+        elevated: 'shadow-elevated web:enabled:hover:shadow-none',
+        solid: '',
+        soft: '',
+        outline: 'border',
+        dashed: 'border border-dashed',
+        ghost: '',
       },
       size: {
-        default: 'h-10 px-4 py-2 native:h-12 native:px-5 native:py-3',
-        sm: 'h-9 rounded-md px-3',
-        lg: 'h-11 rounded-md px-8 native:h-14',
+        sm: 'px-2.5 py-[0.34375rem]',
+        md: 'px-3 py-2',
+        lg: 'px-3.5 py-[0.65625rem]',
         icon: 'h-10 w-10',
       },
+
+      disabled: {
+        false: null,
+        true: ['opacity-40 web:cursor-not-allowed'],
+      },
     },
+    compoundVariants: [
+      { variant: ['solid', 'elevated'], color: 'neutral', class: 'bg-neutral-9 web:enabled:hover:bg-primary-10' },
+      { variant: ['solid', 'elevated'], color: 'primary', class: 'bg-primary-9 web:enabled:hover:bg-primary-10' },
+      { variant: ['solid', 'elevated'], color: 'secondary', class: 'bg-secondary-9 web:enabled:hover:bg-secondary-10' },
+      { variant: ['solid', 'elevated'], color: 'error', class: 'bg-error-9 web:enabled:hover:bg-error-10' },
+      { variant: ['solid', 'elevated'], color: 'warning', class: 'bg-warning-9 web:enabled:hover:bg-warning-10' },
+      { variant: ['solid', 'elevated'], color: 'success', class: 'bg-success-9 web:enabled:hover:bg-success-10' },
+
+      { variant: 'soft', color: 'neutral', class: 'bg-neutral-a3 web:enabled:hover:bg-primary-a4' },
+      { variant: 'soft', color: 'primary', class: 'bg-primary-a3 web:enabled:hover:bg-primary-a4' },
+      { variant: 'soft', color: 'secondary', class: 'bg-secondary-a3 web:enabled:hover:bg-secondary-a4' },
+      { variant: 'soft', color: 'error', class: 'bg-error-a3 web:enabled:hover:bg-error-a4' },
+      { variant: 'soft', color: 'warning', class: 'bg-warning-a3 web:enabled:hover:bg-warning-a4' },
+      { variant: 'soft', color: 'success', class: 'bg-success-a3 web:enabled:hover:bg-success-a4' },
+
+      { variant: ['outline', 'dashed'], color: 'neutral', class: 'border-neutral-a7 web:enabled:hover:border-primary-a8' },
+      { variant: ['outline', 'dashed'], color: 'primary', class: 'border-primary-a7 web:enabled:hover:border-primary-a8' },
+      { variant: ['outline', 'dashed'], color: 'secondary', class: 'border-secondary-a7 web:enabled:hover:border-secondary-a8' },
+      { variant: ['outline', 'dashed'], color: 'error', class: 'border-error-a7 web:enabled:hover:border-error-a8' },
+      { variant: ['outline', 'dashed'], color: 'warning', class: 'border-warning-a7 web:enabled:hover:border-warning-a8' },
+      { variant: ['outline', 'dashed'], color: 'success', class: 'border-success-a7 web:enabled:hover:border-success-a8' },
+
+      { variant: ['outline', 'dashed', 'ghost'], color: 'neutral', class: 'web:enabled:hover:bg-primary-a3' },
+      { variant: ['outline', 'dashed', 'ghost'], color: 'primary', class: 'web:enabled:hover:bg-primary-a3' },
+      { variant: ['outline', 'dashed', 'ghost'], color: 'secondary', class: 'web:enabled:hover:bg-secondary-a3' },
+      { variant: ['outline', 'dashed', 'ghost'], color: 'error', class: 'web:enabled:hover:bg-error-a3' },
+      { variant: ['outline', 'dashed', 'ghost'], color: 'warning', class: 'web:enabled:hover:bg-warning-a3' },
+      { variant: ['outline', 'dashed', 'ghost'], color: 'success', class: 'web:enabled:hover:bg-success-a3' },
+    ],
     defaultVariants: {
-      variant: 'default',
-      size: 'default',
+      variant: 'elevated',
+      color: 'neutral',
+      size: 'md',
+      disabled: false,
     },
   }
 );
 
+
 const buttonTextVariants = cva(
-  'web:whitespace-nowrap text-sm native:text-base font-medium text-foreground web:transition-colors',
+  '',
   {
     variants: {
+      color: {
+        neutral: 'text-neutral-a11',
+        primary: 'text-primary-a11',
+        secondary: 'text-secondary-a11',
+        error: 'text-error-a11',
+        warning: 'text-warning-a11',
+        success: 'text-success-a11',
+      },
       variant: {
-        default: 'text-primary-foreground',
-        destructive: 'text-destructive-foreground',
-        outline: 'group-active:text-accent-foreground',
-        secondary: 'text-secondary-foreground group-active:text-secondary-foreground',
-        ghost: 'group-active:text-accent-foreground',
-        link: 'text-primary group-active:underline',
+        elevated: '',
+        solid: '',
+        soft: '',
+        outline: '',
+        dashed: '',
+        ghost: '',
       },
       size: {
-        default: '',
+        sm: 'text-sm',
+        md: 'text-base',
+        lg: 'text-lg',
+        icon: '',
+      },
+    },
+    compoundVariants: [
+      { variant: ['elevated', 'solid'], class: 'text-white' },
+      { variant: ['elevated', 'solid'], color: 'warning', class: 'text-neutral-12' },
+    ],
+    defaultVariants: {
+      color: 'neutral',
+      size: 'md',
+    },
+  }
+);
+
+const buttonIconVariants = cva(
+  '',
+  {
+    variants: {
+      size: {
         sm: '',
-        lg: 'native:text-lg',
+        md: 'h-4 w-4',
+        lg: '',
         icon: '',
       },
     },
     defaultVariants: {
-      variant: 'default',
-      size: 'default',
+      size: 'md',
     },
   }
 );
 
-type ButtonProps = React.ComponentPropsWithoutRef<typeof Pressable> &
-  VariantProps<typeof buttonVariants>;
+const ButtonContext = createContext<VariantProps<typeof buttonVariants> & {
+  loading?: boolean,
+} | undefined>(undefined);
 
-const Button = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonProps>(
-  ({ className, variant, size, ...props }, ref) => {
+type PressableProps = Omit<React.ComponentPropsWithoutRef<typeof Pressable>, keyof VariantProps<typeof buttonVariants>>;
+
+interface ButtonProps extends PressableProps, VariantProps<typeof buttonVariants> {
+  loading?: boolean;
+  asChild?: boolean;
+}
+
+export type ButtonColors = NonNullable<ButtonProps['color']>;
+export type ButtonSizes = NonNullable<ButtonProps['size']>;
+export type ButtonVariant = NonNullable<ButtonProps['variant']>;
+
+const Button = forwardRef<ElementRef<typeof Pressable>, ButtonProps>(
+  (props, ref) => {
+    const {
+      className,
+      variant,
+      color,
+      loading = false,
+      asChild = false,
+      size,
+      disabled,
+      ...otherProps
+    } = props;
+
+    const Component = asChild ? Slot.Pressable : Pressable;
+
+    const contextValue = useMemo(() => ({
+      variant, color, size, loading, disabled: disabled || loading
+    }), [variant, color, size, loading, disabled]);
+
     return (
-      <TextClassContext.Provider
-        value={buttonTextVariants({ variant, size, className: 'web:pointer-events-none' })}
-      >
-        <Pressable
-          className={cn(
-            props.disabled && 'opacity-50 web:pointer-events-none',
-            buttonVariants({ variant, size, className })
-          )}
-          ref={ref}
-          role='button'
-          {...props}
-        />
-      </TextClassContext.Provider>
+      <ButtonContext.Provider value={contextValue}>
+        <TextClassContext.Provider
+          value={buttonTextVariants({ variant, color, size })}
+        >
+          <Component
+            className={buttonVariants({ variant, color, size, className, disabled })}
+            ref={ref}
+            role='button'
+            disabled={disabled}
+            {...otherProps}
+          />
+        </TextClassContext.Provider>
+      </ButtonContext.Provider>
     );
   }
 );
 Button.displayName = 'Button';
 
-export { Button, buttonTextVariants, buttonVariants };
+interface ButtonIconProps extends React.ComponentPropsWithoutRef<typeof Icon> {}
+
+const ButtonIcon = forwardRef<ElementRef<typeof Icon>, ButtonIconProps>(
+  (props, ref) => {
+    const { className, icon, ...otherProps } = props;
+    const buttonContext = useContext(ButtonContext);
+
+    return (
+      <Icon
+        className={cn(
+          buttonTextVariants({
+            variant: buttonContext?.variant,
+            color: buttonContext?.color,
+          }),
+          className,
+          buttonIconVariants({ size: buttonContext?.size, })
+        )}
+        icon={icon}
+        ref={ref}
+        {...otherProps}
+      />
+    );
+  }
+);
+ButtonIcon.displayName = 'ButtonIcon';
+
+interface ButtonSpinnerProps extends SpinnerProps {
+  loadingIcon?: ComponentType<any>;
+  loadingSpeed?: number;
+}
+
+const ButtonSpinner = forwardRef<ElementRef<typeof Icon>, ButtonSpinnerProps>(
+  (props, ref) => {
+    const {
+      className,
+      icon,
+      loadingIcon,
+      ...otherProps
+    } = props
+
+    const buttonContext = useContext(ButtonContext);
+
+    if (icon && !buttonContext?.loading) {
+      return (
+        <Icon
+          className={cn(
+            buttonTextVariants({
+              variant: buttonContext?.variant,
+              color: buttonContext?.color,
+            }),
+            className,
+            buttonIconVariants({ size: buttonContext?.size, })
+          )}
+          icon={icon}
+          ref={ref}
+          {...otherProps}
+        />
+      );
+    }
+
+    if (buttonContext?.loading) {
+      return (
+        <Spinner
+          className={cn(
+            buttonTextVariants({
+              variant: buttonContext?.variant,
+              color: buttonContext?.color,
+            }),
+            className,
+            buttonIconVariants({ size: buttonContext?.size, }),
+          )}
+          icon={loadingIcon}
+          ref={ref}
+          {...otherProps}
+        />
+      );
+    }
+
+    return null;
+  }
+);
+ButtonSpinner.displayName = 'ButtonSpinner';
+
+export { Button, ButtonIcon, ButtonSpinner, buttonTextVariants, buttonVariants };
 export type { ButtonProps };

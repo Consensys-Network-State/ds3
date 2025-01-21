@@ -6,10 +6,10 @@ module.exports = generateConfig({
       // use any radix colors - https://www.radix-ui.com/colors
       colors: {
         neutral: 'gray',
-        primary: 'violet',
-        secondary: 'teal',
+        primary: 'blue',
+        secondary: 'violet',
         error: 'red',
-        warning: 'yellow',
+        warning: 'amber',
         success: 'green',
         // add custom schemes here
       },

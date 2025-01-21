@@ -2,9 +2,9 @@ import { Config as TailwindConfig } from 'tailwindcss';
 import plugin from 'tailwindcss/plugin';
 import tailwindcssAnimate from 'tailwindcss-animate';
 import {
-  generateRadixColorValues,
   generateColorCssVars,
   generateThemeCssVars,
+  generateShadowCssVars,
 } from "./utils";
 import _ from "lodash";
 import {
@@ -16,6 +16,7 @@ import {
 } from "./types";
 import { COLOR_MODES, DEFAULT_THEME } from "./constants";
 import rnrPreset from './rnr.config';
+import type { CSSRuleObject } from 'tailwindcss/types/config';
 
 const getThemeColorKeys = (themes: ConfigThemes): string[] => {
   return _.uniq(_.flatMap(Object.values(themes), (theme: ConfigTheme) => {
@@ -41,13 +42,27 @@ const defineCssVars = (themes: ConfigThemes) =>
       const darkClassName =
         themeName === DEFAULT_THEME ? `.${COLOR_MODES.Dark}` : `.${themeName}.${COLOR_MODES.Dark}`;
 
-      // Assuming generateThemeCssVars is defined elsewhere to return valid CSS variables
-      vars[lightClassName] = generateThemeCssVars(theme.colors.light);
-      vars[darkClassName] = generateThemeCssVars(theme.colors.dark);
+      // Generate color variables
+      const lightVars = generateThemeCssVars(theme.colors.light);
+      const darkVars = generateThemeCssVars(theme.colors.dark);
+
+      // Generate shadow variables if they exist
+      if (theme.boxShadow) {
+        Object.assign(lightVars, generateShadowCssVars(theme.boxShadow.light));
+        Object.assign(darkVars, generateShadowCssVars(theme.boxShadow.dark));
+      }
+
+      vars[lightClassName] = lightVars;
+      vars[darkClassName] = darkVars;
     });
 
-    // @ts-ignore
-    addBase(vars);
+    // Convert the vars record into a CSSRuleObject
+    const cssRules: CSSRuleObject = Object.entries(vars).reduce((acc, [selector, variables]) => ({
+      ...acc,
+      [selector]: variables
+    }), {});
+
+    addBase(cssRules);
   });
 
 const assignCssVars = (themes: ConfigThemes): Record<string, ConfigColorShades> => {
@@ -56,14 +71,19 @@ const assignCssVars = (themes: ConfigThemes): Record<string, ConfigColorShades> 
   );
 };
 
-const pxToRem = (px: number, base: number = 16) => `${px / base}rem`;
+const assignShadowVars = (themes: ConfigThemes): Record<string, string> => {
+  const defaultTheme = themes[DEFAULT_THEME];
+  if (!defaultTheme?.boxShadow?.light) return {};
 
-const fontWeight = {
-  light: '300',
-  regular: '400',
-  medium: '500',
-  bold: '700',
+  return Object.fromEntries(
+    Object.keys(defaultTheme.boxShadow.light).map(key => [
+      key,
+      `var(--shadow-${key})`
+    ])
+  );
 };
+
+const pxToRem = (px: number, base: number = 16) => `${px / base}rem`;
 
 const ds3Preset = (config: Config): TailwindConfig => ({
   darkMode: 'class',
@@ -77,26 +97,33 @@ const ds3Preset = (config: Config): TailwindConfig => ({
   ],
   theme: {
     extend: {
-      colors: {
-        ...assignCssVars(config.themes),
-        tomato: generateRadixColorValues('tomato'),
-      },
+      colors: assignCssVars(config.themes),
+      boxShadow: assignShadowVars(config.themes),
       spacing: {
-        1: pxToRem(4),
-        2: pxToRem(8),
-        3: pxToRem(12),
-        4: pxToRem(16),
-        5: pxToRem(20),
-        6: pxToRem(24),
-        7: pxToRem(32),
-        8: pxToRem(40),
-        9: pxToRem(48),
-        10: pxToRem(56),
-        11: pxToRem(64),
-        12: pxToRem(80),
-        13: pxToRem(96),
-        14: pxToRem(112),
-        15: pxToRem(128),
+        0: '0rem',
+        '0.5': '0.125rem',
+        1: '0.25rem',
+        '1.5': '0.375rem',
+        2: '0.5rem',
+        '2.5': '0.625rem',
+        3: '0.75rem',
+        '3.5': '0.875rem',
+        4: '1rem',
+        5: '1.25rem',
+        6: '1.5rem',
+        7: '1.75rem',
+        8: '2rem',
+        10: '2.5rem',
+        12: '3rem',
+        14: '3.5rem',
+        16: '4rem',
+        18: '4.5rem',
+        20: '5rem',
+        24: '6rem',
+        28: '7rem',
+        32: '8rem',
+        36: '9rem',
+        40: '10rem',
       },
       borderRadius: {
         0: '0',
@@ -117,58 +144,50 @@ const ds3Preset = (config: Config): TailwindConfig => ({
         robotoSlab: ['"Roboto Slab"', 'serif'],
         libreFranklin: ['"Libre Franklin"', 'sans-serif'],
       },
-      fontWeight,
+      fontWeight: {
+        light: '300',
+        regular: '400',
+        medium: '500',
+        bold: '700',
+      },
+      lineHeight: {
+        'tight': '1.25',
+        'normal': '1.5',
+        'loose': '2',
+      },
       fontSize: {
-        1: [pxToRem(10), { lineHeight: pxToRem(15), fontWeight: fontWeight.regular }],
-        2: [pxToRem(12), { lineHeight: pxToRem(18), fontWeight: fontWeight.regular }],
-        3: [pxToRem(14), { lineHeight: pxToRem(21), fontWeight: fontWeight.regular }],
-        4: [pxToRem(16), { lineHeight: pxToRem(24), fontWeight: fontWeight.regular }],
-        5: [pxToRem(18), { lineHeight: pxToRem(27), fontWeight: fontWeight.regular }],
-        6: [pxToRem(20), { lineHeight: pxToRem(30), fontWeight: fontWeight.regular }],
-        7: [pxToRem(24), { lineHeight: pxToRem(36), fontWeight: fontWeight.regular }],
-        8: [pxToRem(26), { lineHeight: pxToRem(39), fontWeight: fontWeight.regular }],
-        9: [pxToRem(32), { lineHeight: pxToRem(48), fontWeight: fontWeight.regular }],
-        10: [pxToRem(40), { lineHeight: pxToRem(60), fontWeight: fontWeight.regular }],
-        11: [pxToRem(40), { lineHeight: pxToRem(60), fontWeight: fontWeight.regular }],
-        12: [pxToRem(50), { lineHeight: pxToRem(75), fontWeight: fontWeight.regular }],
-        13: [pxToRem(54), { lineHeight: pxToRem(81), fontWeight: fontWeight.regular }],
-        14: [pxToRem(72), { lineHeight: pxToRem(108), fontWeight: fontWeight.regular }],
-        15: [pxToRem(80), { lineHeight: pxToRem(120), fontWeight: fontWeight.regular }],
+        // font
+        2: '0.5rem',
+        '2.5': '0.625rem',
+        3: '0.75rem',
+        '3.5': '0.875rem',
+        4: '1rem',
+        '4.5': '1.125rem',
+        5: '1.25rem',
+        '5.5': '1.375rem',
+        6: '1.5rem',
+        7: '1.75rem',
+        8: '2rem',
+        10: '2.5rem',
+        12: '3rem',
+        14: '3.5rem',
+        16: '4rem',
 
-        // strong
-        'strong-1': [pxToRem(10), { lineHeight: pxToRem(15), fontWeight: fontWeight.medium }],
-        'strong-2': [pxToRem(12), { lineHeight: pxToRem(18), fontWeight: fontWeight.medium }],
-        'strong-3': [pxToRem(14), { lineHeight: pxToRem(21), fontWeight: fontWeight.medium }],
-        'strong-4': [pxToRem(16), { lineHeight: pxToRem(24), fontWeight: fontWeight.medium }],
-        'strong-5': [pxToRem(18), { lineHeight: pxToRem(27), fontWeight: fontWeight.medium }],
-        'strong-6': [pxToRem(20), { lineHeight: pxToRem(30), fontWeight: fontWeight.medium }],
-        'strong-7': [pxToRem(24), { lineHeight: pxToRem(36), fontWeight: fontWeight.medium }],
-        'strong-8': [pxToRem(26), { lineHeight: pxToRem(39), fontWeight: fontWeight.medium }],
-        'strong-9': [pxToRem(32), { lineHeight: pxToRem(48), fontWeight: fontWeight.medium }],
-        'strong-10': [pxToRem(40), { lineHeight: pxToRem(60), fontWeight: fontWeight.medium }],
-        'strong-11': [pxToRem(40), { lineHeight: pxToRem(60), fontWeight: fontWeight.medium }],
-        'strong-12': [pxToRem(50), { lineHeight: pxToRem(75), fontWeight: fontWeight.medium }],
-        'strong-13': [pxToRem(54), { lineHeight: pxToRem(81), fontWeight: fontWeight.medium }],
-        'strong-14': [pxToRem(72), { lineHeight: pxToRem(108), fontWeight: fontWeight.medium }],
-        'strong-15': [pxToRem(80), { lineHeight: pxToRem(120), fontWeight: fontWeight.medium }],
+        // text
+        'xl': ['1.25rem', { lineHeight: '1.875rem', fontWeight: '400' }],
+        'lg': ['1.125rem', { lineHeight: '1.6875rem', fontWeight: '400' }],
+        'base': ['1rem', { lineHeight: '1.5rem', fontWeight: '400' }],
+        'sm': ['0.875rem', { lineHeight: '1.3125rem', fontWeight: '400' }],
+        'xs': ['0.75rem', { lineHeight: '1.125rem', fontWeight: '400' }],
 
         // heading
-        'heading-1': [pxToRem(10), { lineHeight: pxToRem(12), fontWeight: fontWeight.medium }],
-        'heading-2': [pxToRem(12), { lineHeight: pxToRem(14), fontWeight: fontWeight.medium }],
-        'heading-3': [pxToRem(14), { lineHeight: pxToRem(16), fontWeight: fontWeight.medium }],
-        'heading-4': [pxToRem(16), { lineHeight: pxToRem(20), fontWeight: fontWeight.medium }],
-        'heading-5': [pxToRem(18), { lineHeight: pxToRem(22), fontWeight: fontWeight.medium }],
-        'heading-6': [pxToRem(20), { lineHeight: pxToRem(24), fontWeight: fontWeight.medium }],
-        'heading-7': [pxToRem(24), { lineHeight: pxToRem(28), fontWeight: fontWeight.medium }],
-        'heading-8': [pxToRem(28), { lineHeight: pxToRem(34), fontWeight: fontWeight.medium }],
-        'heading-9': [pxToRem(32), { lineHeight: pxToRem(38), fontWeight: fontWeight.medium }],
-        'heading-10': [pxToRem(40), { lineHeight: pxToRem(48), fontWeight: fontWeight.medium }],
-        'heading-11': [pxToRem(48), { lineHeight: pxToRem(58), fontWeight: fontWeight.medium }],
-        'heading-12': [pxToRem(56), { lineHeight: pxToRem(56), fontWeight: fontWeight.medium }],
-        'heading-13': [pxToRem(64), { lineHeight: pxToRem(76), fontWeight: fontWeight.medium }],
-        'heading-14': [pxToRem(72), { lineHeight: pxToRem(86), fontWeight: fontWeight.medium }],
-        'heading-15': [pxToRem(80), { lineHeight: pxToRem(96), fontWeight: fontWeight.medium }],
-      }
+        'h1': ['4rem', { lineHeight: '5rem', fontWeight: '700' }],
+        'h2': ['3rem', { lineHeight: '3.75rem', fontWeight: '700' }],
+        'h3': ['2rem', { lineHeight: '2.5rem', fontWeight: '700' }],
+        'h4': ['1.75rem', { lineHeight: '2.1875rem', fontWeight: '700' }],
+        'h5': ['1.5rem', { lineHeight: '1.875rem', fontWeight: '700' }],
+        'h6': ['1.25rem', { lineHeight: '1.5625rem', fontWeight: '700' }],
+      },
     },
   },
   safelist: [

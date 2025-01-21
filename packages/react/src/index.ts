@@ -20,7 +20,9 @@ export * from './components/TextArea';
 export * from './components/TextAreaField';
 export * from './components/Switch';
 export * from './components/SwitchField';
-
+export * from './components/Icon';
+export * from './components/Spinner';
+export * from './components/Heading';
 // icons
 export * as Icons from './icons';
 
