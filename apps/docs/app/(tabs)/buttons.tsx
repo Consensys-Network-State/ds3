@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import { Text, Button, ModeToggle } from "@ds3/react/src";
+import { Text, Button, ModeToggle, ThemeSwitcher } from "@ds3/react/src";
 import type { ButtonColors, ButtonVariant, ButtonSizes } from "@ds3/react/src";
 import { View, } from "react-native";
 import { Figma, LoaderPinwheel, Loader } from 'lucide-react-native';
@@ -99,6 +99,7 @@ export default function Buttons() {
             <Text className="text-h1">Buttons</Text>
 
             <ModeToggle />
+            <ThemeSwitcher />
 
             <Text className="text-h2">Variants</Text>
             <View className="flex flex-row flex-wrap gap-4">

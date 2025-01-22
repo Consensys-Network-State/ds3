@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import { Text, Input, ModeToggle } from "@ds3/react/src";
+import {Text, Input, ModeToggle, ThemeSwitcher} from "@ds3/react/src";
 import { View } from "react-native";
 import { Search, Eye, Mail, Lock, Loader, LoaderPinwheel } from 'lucide-react-native';
 import { useState } from "react";
@@ -221,6 +221,7 @@ export default function Inputs() {
           <Text className="text-h1">Inputs</Text>
 
           <ModeToggle />
+          <ThemeSwitcher />
 
           <Text className="text-h2">Variants</Text>
           <View className="flex flex-row flex-wrap gap-4 ">

@@ -3,6 +3,7 @@ import { useColorScheme, ColorSchemeName } from 'react-native';
 import { ThemeBase, ThemeProps } from "./Theme";
 import type { ColorMode, ThemeName, Config } from "@ds3/config";
 import { DEFAULT_MODE, DEFAULT_THEME } from "@ds3/config";
+import { PortalHost } from '@rn-primitives/portal';
 
 export interface ThemeContextType {
   theme: ThemeName;
@@ -39,6 +40,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, config, 
         {...otherProps}
       >
         {children}
+        <PortalHost />
       </ThemeBase>
     </ThemeContext.Provider>
   );
