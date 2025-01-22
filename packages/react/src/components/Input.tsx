@@ -70,7 +70,7 @@ const inputRootVariants = cva(
       { color: 'success', focused: false, disabled: false, class: 'web:hover:border-success-a8' },
 
       // Focus state
-      { color: 'neutral', focused: true, disabled: false, class: 'border-primary-a9 ring-primary' },
+      { color: 'neutral', focused: true, disabled: false, class: 'border-primary-a9' },
       { color: 'primary', focused: true, disabled: false, class: 'border-primary-a9' },
       { color: 'secondary', focused: true, disabled: false, class: 'border-secondary-a9' },
       { color: 'error', focused: true, disabled: false, class: 'border-error-a9' },
