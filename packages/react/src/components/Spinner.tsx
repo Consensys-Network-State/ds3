@@ -1,4 +1,4 @@
-import { useEffect, ComponentType, FC } from 'react';
+import { forwardRef, ComponentType, ElementRef, useEffect } from 'react';
 import Animated, {
   useAnimatedStyle,
   withRepeat,
@@ -22,7 +22,8 @@ export interface SpinnerProps extends Omit<IconProps, 'icon'> {
   direction?: 'clockwise' | 'counterclockwise';
 }
 
-const Spinner: FC<SpinnerProps> = (props) => {
+const Spinner = forwardRef<ElementRef<typeof Icon>, SpinnerProps>(
+  (props, ref) => {
   const {
     icon = LoaderCircle,
     duration = 1000,
@@ -63,10 +64,10 @@ const Spinner: FC<SpinnerProps> = (props) => {
 
   return (
     <Animated.View style={animatedStyle}>
-      <Icon icon={icon} {...otherProps} />
+      <Icon ref={ref} icon={icon} {...otherProps} />
     </Animated.View>
   );
-};
+});
 
 Spinner.displayName = 'Spinner';
 
