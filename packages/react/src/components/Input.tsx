@@ -5,6 +5,8 @@ import * as Slot from '@rn-primitives/slot';
 import { Icon } from './Icon';
 import { Spinner, SpinnerProps } from './Spinner';
 import { cn } from '../utils';
+import { Text } from "./Text";
+import { SlottableTextProps, TextRef } from '@rn-primitives/types';
 
 const inputRootVariants = cva(
   'flex flex-row items-center gap-3 px-3 py-2 rounded-4',
@@ -63,7 +65,7 @@ const inputRootVariants = cva(
       { color: 'success', focused: false, disabled: false, class: 'web:hover:border-success-a8' },
 
       // Focus state
-      { color: 'neutral', focused: true, disabled: false, class: 'border-primary-a9' },
+      { color: 'neutral', focused: true, disabled: false, class: 'border-primary-a9 ring-primary' },
       { color: 'primary', focused: true, disabled: false, class: 'border-primary-a9' },
       { color: 'secondary', focused: true, disabled: false, class: 'border-secondary-a9' },
       { color: 'error', focused: true, disabled: false, class: 'border-error-a9' },
@@ -308,8 +310,19 @@ const InputSpinner = React.forwardRef<React.ElementRef<typeof Icon>, InputSpinne
 );
 InputSpinner.displayName = 'InputSpinner';
 
+const InputText = React.forwardRef<TextRef, SlottableTextProps>(
+  (props, ref) => (
+    <Text
+      ref={ref}
+      {...props}
+    />
+  )
+);
+InputText.displayName = 'InputText';
+
 const Input = Object.assign(InputRoot, {
   Field: InputField,
+  Text: InputText,
   Icon: InputIcon,
   Spinner: InputSpinner,
 });
