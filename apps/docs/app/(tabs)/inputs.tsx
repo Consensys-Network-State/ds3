@@ -246,6 +246,49 @@ export default function Inputs() {
               </View>
             </View>
           ))}
+
+          <Text className="text-h2">TextArea</Text>
+          {inputColors.map((color) => (
+            <View key={color} className="flex flex-col gap-4">
+              <Text>{color.charAt(0).toUpperCase() + color.slice(1)}</Text>
+              <View className="flex flex-row flex-wrap gap-4">
+                {inputVariants.map((variant) => (
+                  <View key={`${variant}-${color}`} className="flex-1 min-w-[250px]">
+                    <Input
+                      multiline
+                      numberOfLines={4}
+                      variant={variant}
+                      color={color === 'neutral' ? undefined : color}
+                    >
+                      <Input.Field placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)} />
+                    </Input>
+                  </View>
+                ))}
+              </View>
+            </View>
+          ))}
+
+          <View className="flex flex-row flex-wrap gap-4">
+            <View className="flex-1 min-w-[250px]">
+              <Input multiline numberOfLines={4} loading>
+                <Input.Spinner />
+                <Input.Field placeholder="Loading" />
+              </Input>
+            </View>
+
+            <View className="flex-1 min-w-[250px]">
+              <Input multiline numberOfLines={4} disabled>
+                <Input.Field placeholder="Disabled" />
+              </Input>
+            </View>
+
+            <View className="flex-1 min-w-[250px]">
+              <Input multiline numberOfLines={4}>
+                <Input.Icon icon={Search} />
+                <Input.Field placeholder="With icon..." />
+              </Input>
+            </View>
+          </View>
         </View>
       </View>
     </ParallaxScrollView>
