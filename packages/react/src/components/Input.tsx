@@ -9,7 +9,7 @@ import { Text } from "./Text";
 import { SlottableTextProps, TextRef } from '@rn-primitives/types';
 
 const inputRootVariants = cva(
-  'flex flex-row items-center gap-3 px-3 py-2 rounded-4',
+  'flex flex-row items-center gap-3 rounded-4',
   {
     variants: {
       color: {
@@ -25,6 +25,11 @@ const inputRootVariants = cva(
         outline: 'border',
         underline: 'border-b rounded-none',
         ghost: 'border-b rounded-none border-transparent',
+      },
+      size: {
+        sm: 'px-2.5 py-[0.34375rem]',
+        md: 'px-3 py-2',
+        lg: 'px-3.5 py-[0.65625rem]',
       },
       multiline: {
         true: '',
@@ -75,6 +80,7 @@ const inputRootVariants = cva(
     defaultVariants: {
       variant: 'outline',
       color: 'neutral',
+      size: 'md',
       multiline: false,
       disabled: false,
       focused: false,
@@ -83,7 +89,7 @@ const inputRootVariants = cva(
 );
 
 const inputIconVariants = cva(
-  'h-4 w-4 flex-shrink-0',
+  'flex-shrink-0',
   {
     variants: {
       color: {
@@ -94,6 +100,11 @@ const inputIconVariants = cva(
         warning: 'text-warning-a11',
         success: 'text-success-a11',
       },
+      size: {
+        sm: 'h-3.5 w-3.5',
+        md: 'h-4 w-4',
+        lg: 'h-5 w-5',
+      },
       disabled: {
         true: 'opacity-40',
         false: null,
@@ -101,14 +112,29 @@ const inputIconVariants = cva(
     },
     defaultVariants: {
       color: 'neutral',
+      size: 'md',
       disabled: false,
     },
   }
 );
 
+const inputTextVariants = cva('', {
+  variants: {
+    size: {
+      sm: 'text-sm',
+      md: 'text-base',
+      lg: 'text-lg',
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+});
+
 const InputContext = React.createContext<{
   variant?: VariantProps<typeof inputRootVariants>['variant'];
   color?: VariantProps<typeof inputRootVariants>['color'];
+  size?: VariantProps<typeof inputRootVariants>['size'];
   disabled?: boolean;
   loading?: boolean;
   focused?: boolean;
@@ -122,6 +148,7 @@ const InputContext = React.createContext<{
 interface InputRootProps extends Omit<React.ComponentPropsWithoutRef<typeof Pressable>, keyof VariantProps<typeof inputRootVariants>> {
   variant?: VariantProps<typeof inputRootVariants>['variant'];
   color?: VariantProps<typeof inputRootVariants>['color'];
+  size?: VariantProps<typeof inputRootVariants>['size'];
   disabled?: boolean;
   loading?: boolean;
   asChild?: boolean;
@@ -130,13 +157,14 @@ interface InputRootProps extends Omit<React.ComponentPropsWithoutRef<typeof Pres
 }
 
 const InputRoot = React.forwardRef<React.ElementRef<typeof Pressable>, InputRootProps>(
-  ({ className, variant, color, disabled = false, loading = false, asChild = false, multiline = false, numberOfLines, ...props }, ref) => {
+  ({ className, variant, color, size, disabled = false, loading = false, asChild = false, multiline = false, numberOfLines, ...props }, ref) => {
     const inputRef = React.useRef<React.ElementRef<typeof TextInput>>(null);
     const [focused, setFocused] = React.useState(false);
 
     const contextValue = React.useMemo(() => ({
       variant,
       color,
+      size,
       disabled,
       loading,
       focused,
@@ -145,7 +173,7 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof Pressable>, InputRoot
       inputRef,
       multiline,
       numberOfLines
-    }), [variant, color, disabled, loading, focused, asChild, multiline, numberOfLines]);
+    }), [variant, color, size, disabled, loading, focused, asChild, multiline, numberOfLines]);
 
     const Component = asChild ? Slot.Pressable : Pressable;
 
@@ -160,7 +188,7 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof Pressable>, InputRoot
         <Component
           ref={ref}
           className={cn(
-            inputRootVariants({ variant, color, disabled, focused }),
+            inputRootVariants({ variant, color, size, disabled, focused }),
             className,
           )}
           onPress={handlePress}
@@ -199,7 +227,8 @@ const InputField = React.forwardRef<React.ElementRef<typeof TextInput>, InputFie
       <TextInput
         ref={context.inputRef}
         className={cn(
-          'flex-1 bg-transparent p-0 outline-none text-base text-neutral-a12 placeholder:text-neutral-a10',
+          'flex-1 bg-transparent p-0 outline-none text-neutral-a12 placeholder:text-neutral-a10',
+          inputTextVariants({ size: context.size }),
           context.disabled && 'web:cursor-not-allowed',
           context.multiline && 'native:min-h-[80px]',
           className
@@ -241,6 +270,7 @@ const InputIcon = React.forwardRef<React.ElementRef<typeof Icon>, InputIconProps
         className={cn(
           inputIconVariants({
             color: context.color,
+            size: context.size,
             disabled: context.disabled,
           }),
           className
@@ -279,6 +309,7 @@ const InputSpinner = React.forwardRef<React.ElementRef<typeof Icon>, InputSpinne
           className={cn(
             inputIconVariants({
               color: context.color,
+              size: context.size,
               disabled: context.disabled,
             }),
             className
@@ -296,6 +327,7 @@ const InputSpinner = React.forwardRef<React.ElementRef<typeof Icon>, InputSpinne
           className={cn(
             inputIconVariants({
               color: context.color,
+              size: context.size,
               disabled: context.disabled,
             }),
             className
@@ -327,5 +359,5 @@ const Input = Object.assign(InputRoot, {
   Spinner: InputSpinner,
 });
 
-export { Input, inputRootVariants, inputIconVariants };
+export { Input, inputRootVariants, inputIconVariants, inputTextVariants };
 export type { InputRootProps, InputFieldProps, InputIconProps };

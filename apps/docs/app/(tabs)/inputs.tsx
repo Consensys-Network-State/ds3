@@ -24,6 +24,19 @@
   type InputVariant = 'soft' | 'outline' | 'underline' | 'ghost';
   type InputColor = 'neutral' | 'primary' | 'secondary' | 'error' | 'warning' | 'success';
 
+  type InputSize = 'sm' | 'md' | 'lg';
+
+  type InputSizeOption = {
+    size: InputSize;
+    label: string;
+  };
+
+  const inputSizes: InputSizeOption[] = [
+    { size: 'lg', label: 'Large' },
+    { size: 'md', label: 'Medium' },
+    { size: 'sm', label: 'Small' }
+  ] as const;
+
   export default function Inputs() {
     const inputVariants: Array<InputVariant> = [
       'soft',
@@ -236,6 +249,27 @@
                         <Input.Field
                           placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)}
                         />
+                      </Input>
+                    </View>
+                  ))}
+                </View>
+              </View>
+            ))}
+
+            <Text className="text-h2">Sizes</Text>
+            {inputSizes.map(({ size, label }) => (
+              <View key={size} className="flex flex-col gap-4">
+                <Text>{label}</Text>
+                <View className="flex flex-row flex-wrap gap-4">
+                  {inputVariants.map((variant, index) => (
+                    <View key={`${variant}-${index}-${size}`} className="flex-1 min-w-[250px]">
+                      <Input
+                        variant={variant}
+                        color={inputColors[index] === 'neutral' ? undefined : inputColors[index]}
+                        size={size}
+                      >
+                        <Input.Icon icon={Search} />
+                        <Input.Field placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)} />
                       </Input>
                     </View>
                   ))}
