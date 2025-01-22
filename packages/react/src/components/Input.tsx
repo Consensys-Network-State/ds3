@@ -6,9 +6,6 @@ import { Icon } from './Icon';
 import { Spinner, SpinnerProps } from './Spinner';
 import { cn } from '../utils';
 
-// TODO:
-//  * sizing in mobile (flex problem)
-
 const inputRootVariants = cva(
   'flex flex-row items-center gap-3 px-3 py-2 rounded-4',
   {
@@ -200,7 +197,7 @@ const InputField = React.forwardRef<React.ElementRef<typeof TextInput>, InputFie
       <TextInput
         ref={context.inputRef}
         className={cn(
-          'flex-1 bg-transparent p-0 outline-none text-base text-neutral-a12',
+          'flex-1 bg-transparent p-0 outline-none text-base text-neutral-a12 placeholder:text-neutral-a10',
           context.disabled && 'web:cursor-not-allowed',
           context.multiline && 'native:min-h-[80px]',
           className
@@ -209,7 +206,6 @@ const InputField = React.forwardRef<React.ElementRef<typeof TextInput>, InputFie
         numberOfLines={context.numberOfLines}
         textAlignVertical={context.multiline ? 'top' : 'center'}
         editable={!context.disabled}
-        placeholderTextColor={`var(--color-neutral-a10)`}
         onFocus={(e) => {
           context.setFocused?.(true);
           onFocus?.(e);

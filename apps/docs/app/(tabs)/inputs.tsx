@@ -14,7 +14,7 @@ const InputClickToLoad = () => {
   };
 
   return (
-    <Input variant="soft" color="warning" loading={isLoading} onPress={onInputPress}>
+    <Input variant="soft" color="warning" loading={isLoading} onPress={onInputPress} className="flex-1 min-w-[250px]">
       <Input.Spinner icon={Search} />
       <Input.Field placeholder={isLoading ? "Loading..." : "Click to load"} />
     </Input>
@@ -127,11 +127,11 @@ export default function Inputs() {
           <View className="flex flex-row flex-wrap gap-4 ">
             {inputVariants.map((variant, index) => (
               <View key={`${variant}-${index}`} className="flex-1 min-w-[250px]">
-              <Input key={variant} variant={variant}>
-                <Input.Field
-                  placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)}
-                />
-              </Input>
+                <Input variant={variant}>
+                  <Input.Field
+                    placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)}
+                  />
+                </Input>
               </View>
             ))}
           </View>
@@ -144,7 +144,6 @@ export default function Inputs() {
                 {inputVariants.map((variant, index) => (
                   <View key={`${variant}-${index}`} className="flex-1 min-w-[250px]">
                     <Input
-                      key={`${color}-${variant}`}
                       variant={variant}
                       color={color === 'neutral' ? undefined : color}
                     >
@@ -188,37 +187,37 @@ export default function Inputs() {
 
           <Text className="text-h2">Loading</Text>
           <View className="flex flex-row flex-wrap gap-4">
-            <Input variant="outline" loading>
+            <Input variant="outline" loading className="flex-1 min-w-[250px]">
               <Input.Spinner />
               <Input.Field placeholder="Outline" />
             </Input>
 
-            <Input variant="soft" color="primary" loading>
+            <Input variant="soft" color="primary" loading className="flex-1 min-w-[250px]">
               <Input.Field placeholder="Soft" />
               <Input.Spinner loadingIcon={Loader} />
             </Input>
 
-            <Input variant="underline" color="secondary" loading>
+            <Input variant="underline" color="secondary" loading className="flex-1 min-w-[250px]">
               <Input.Spinner loadingIcon={LoaderPinwheel} />
               <Input.Field placeholder="Underline" />
             </Input>
 
-            <Input variant="ghost" color="error" loading>
+            <Input variant="ghost" color="error" loading className="flex-1 min-w-[250px]">
               <Input.Field placeholder="Ghost" />
               <Input.Spinner />
             </Input>
 
-            <Input variant="outline" color="warning" loading>
+            <Input variant="outline" color="warning" loading className="flex-1 min-w-[250px]">
               <Input.Spinner loadingIcon={Loader} />
               <Input.Field placeholder="With custom loader" />
             </Input>
 
-            <Input variant="soft" color="success" loading>
+            <Input variant="soft" color="success" loading className="flex-1 min-w-[250px]">
               <Input.Field placeholder="With pinwheel" />
               <Input.Spinner loadingIcon={LoaderPinwheel} />
             </Input>
 
-            <Input variant="soft" color="primary" loading disabled>
+            <Input variant="soft" color="primary" loading disabled className="flex-1 min-w-[250px]">
               <Input.Spinner />
               <Input.Field placeholder="Disabled and loading" />
             </Input>
@@ -231,17 +230,18 @@ export default function Inputs() {
             <View key={color} className="flex flex-col gap-4">
               <Text>{color.charAt(0).toUpperCase() + color.slice(1)}</Text>
               <View className="flex flex-row flex-wrap gap-4">
-                {inputVariants.map((variant) => (
-                  <Input
-                    key={`${color}-${variant}`}
-                    variant={variant}
-                    color={color === 'neutral' ? undefined : color}
-                    disabled
-                  >
-                    <Input.Field
-                      placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)}
-                    />
-                  </Input>
+                {inputVariants.map((variant, index) => (
+                  <View key={`${variant}-${index}`} className="flex-1 min-w-[250px]">
+                    <Input
+                      variant={variant}
+                      color={color === 'neutral' ? undefined : color}
+                      disabled
+                    >
+                      <Input.Field
+                        placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)}
+                      />
+                    </Input>
+                  </View>
                 ))}
               </View>
             </View>
