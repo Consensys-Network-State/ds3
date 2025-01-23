@@ -11,19 +11,6 @@ type SwitchColor = 'neutral' | 'primary' | 'secondary' | 'error' | 'warning' | '
 type SwitchSize = 'sm' | 'md' | 'lg';
 
 export default function Switches() {
-  type CheckedStateKey = `variant-${string}` | `color-${string}` | `size-${string}` | `disabled-${string}` | `icon-${string}`;
-
-  const [checkedStates, setCheckedStates] = useState<Partial<Record<CheckedStateKey, boolean>>>({
-    'variant-default-checked': true,
-    'variant-solid-0-checked': true,
-    'variant-soft-1-checked': true,
-    'variant-outline-2-checked': true,
-  });
-
-  const handleCheckedChange = (key: string) => (checked: boolean) => {
-    setCheckedStates(prev => ({ ...prev, [key]: checked }));
-  };
-
   const switchVariants: Array<SwitchVariant> = [
     'solid',
     'soft',
@@ -54,6 +41,47 @@ export default function Switches() {
     solid: 'lg',
     soft: 'md',
     outline: 'sm'
+  };
+
+  type CheckedStateKey = `variant-${string}` | `color-${string}` | `size-${string}` | `disabled-${string}` | `icon-${string}`;
+
+  const [checkedStates, setCheckedStates] = useState<Partial<Record<CheckedStateKey, boolean>>>({
+    // Variants
+    'variant-default-checked': true,
+    'variant-solid-0-checked': true,
+    'variant-soft-1-checked': true,
+    'variant-outline-2-checked': true,
+
+    // Colors - all checked
+    ...switchColors.reduce((acc, color) => ({
+      ...acc,
+      ...switchVariants.reduce((varAcc, variant, index) => ({
+        ...varAcc,
+        [`color-${color}-${variant}-${index}`]: true
+      }), {})
+    }), {}),
+
+    // Icons - all checked
+    ...switchVariants.reduce((acc, variant) => ({
+      ...acc,
+      ...switchColors.reduce((colorAcc, color, colorIndex) => ({
+        ...colorAcc,
+        [`icon-${variant}-${color}-${colorIndex}`]: true
+      }), {})
+    }), {}),
+
+    // Disabled - alternating checked states
+    ...switchColors.reduce((acc, color) => ({
+      ...acc,
+      ...switchVariants.reduce((varAcc, variant, index) => ({
+        ...varAcc,
+        [`disabled-${color}-${variant}-${index}`]: index % 2 === 0 // Alternate between true and false
+      }), {})
+    }), {}),
+  });
+
+  const handleCheckedChange = (key: string) => (checked: boolean) => {
+    setCheckedStates(prev => ({ ...prev, [key]: checked }));
   };
 
   return (
