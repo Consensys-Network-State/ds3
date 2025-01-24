@@ -122,6 +122,7 @@ const buttonIconVariants = cva(
   '',
   {
     variants: {
+      // Todo: we may want to define these globally or have the svgs scale accordingly.
       size: {
         sm: '',
         md: 'h-4 w-4',

@@ -1,8 +1,5 @@
-import { StyleSheet } from 'react-native';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import { Text, ModeToggle, } from "@ds3/react/src";
-import { View, } from "react-native";
+import { Text, } from "@ds3/react/src";
+import { View, ScrollView } from "react-native";
 
 export default function Tokens() {
 
@@ -34,21 +31,10 @@ export default function Tokens() {
   ];
 
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
-      }>
-        <View className="flex-1 items-center">
+    <ScrollView className="h-screen bg-neutral-1">
+        <View className="flex-1 items-center pb-4">
           <View className="w-full max-w-[1200px] px-4 bg-neutral-1 h-full gap-4">
-            <Text className="text-heading-12">Tokens</Text>
-
-            <ModeToggle />
+            <Text className="text-h1">Tokens</Text>
 
             <Text className="text-h2">Space</Text>
             {spacingPresets.map(({ name, width }) => (
@@ -60,19 +46,6 @@ export default function Tokens() {
 
           </View>
         </View>
-    </ParallaxScrollView>
+    </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-});

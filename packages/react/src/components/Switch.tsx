@@ -48,24 +48,21 @@ const switchRootVariants = cva(
       { variant: 'outline', checked: false, class: 'border-neutral-a7 hover:border-neutral-a8 ring-neutral-a7' },
 
       // Solid variant - Checked states
-      { variant: 'solid', color: 'neutral', checked: true, class: 'bg-primary-9 hover:bg-primary-10' },
-      { variant: 'solid', color: 'primary', checked: true, class: 'bg-primary-9 hover:bg-primary-10' },
+      { variant: 'solid', color: ['neutral', 'primary'], checked: true, class: 'bg-primary-9 hover:bg-primary-10' },
       { variant: 'solid', color: 'secondary', checked: true, class: 'bg-secondary-9 hover:bg-secondary-10' },
       { variant: 'solid', color: 'error', checked: true, class: 'bg-error-9 hover:bg-error-10' },
       { variant: 'solid', color: 'warning', checked: true, class: 'bg-warning-9 hover:bg-warning-10' },
       { variant: 'solid', color: 'success', checked: true, class: 'bg-success-9 hover:bg-success-10' },
 
       // Soft variant - Checked states
-      { variant: 'soft', color: 'neutral', checked: true, class: 'bg-primary-a3 hover:bg-primary-a4' },
-      { variant: 'soft', color: 'primary', checked: true, class: 'bg-primary-a3 hover:bg-primary-a4' },
+      { variant: 'soft', color: ['neutral', 'primary'], checked: true, class: 'bg-primary-a3 hover:bg-primary-a4' },
       { variant: 'soft', color: 'secondary', checked: true, class: 'bg-secondary-a3 hover:bg-secondary-a4' },
       { variant: 'soft', color: 'error', checked: true, class: 'bg-error-a3 hover:bg-error-a4' },
       { variant: 'soft', color: 'warning', checked: true, class: 'bg-warning-a3 hover:bg-warning-a4' },
       { variant: 'soft', color: 'success', checked: true, class: 'bg-success-a3 hover:bg-success-a4' },
 
       // Outline variant - Checked states
-      { variant: 'outline', color: 'neutral', checked: true, class: 'border-primary-a7 hover:border-primary-a8' },
-      { variant: 'outline', color: 'primary', checked: true, class: 'border-primary-a7 hover:border-primary-a8' },
+      { variant: 'outline', color: ['neutral', 'primary'], checked: true, class: 'border-primary-a7 hover:border-primary-a8' },
       { variant: 'outline', color: 'secondary', checked: true, class: 'border-secondary-a7 hover:border-secondary-a8' },
       { variant: 'outline', color: 'error', checked: true, class: 'border-error-a7 hover:border-error-a8' },
       { variant: 'outline', color: 'warning', checked: true, class: 'border-warning-a7 hover:border-warning-a8' },

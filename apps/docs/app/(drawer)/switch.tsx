@@ -1,8 +1,5 @@
-import { StyleSheet } from 'react-native';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import { Text, Switch, ModeToggle, ThemeSwitcher } from "@ds3/react/src";
-import { View } from "react-native";
+import { Text, Switch } from "@ds3/react/src";
+import { View, ScrollView } from "react-native";
 import { Figma } from 'lucide-react-native';
 import { useState } from "react";
 
@@ -85,22 +82,10 @@ export default function Switches() {
   };
 
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="switch.2"
-          style={styles.headerImage}
-        />
-      }>
-      <View className="flex-1 items-center">
-        <View className="w-full max-w-[1200px] px-4 bg-neutral-1 h-full gap-4">
+    <ScrollView className="h-screen bg-neutral-1">
+      <View className="flex-1 items-center pb-4">
+        <View className="w-full max-w-[1200px] px-4 h-full gap-4">
           <Text className="text-h1">Switches</Text>
-
-          <ModeToggle />
-          <ThemeSwitcher />
 
           <Text className="text-h2 mb-4">Variants</Text>
           <View className="flex flex-col gap-6">
@@ -215,15 +200,6 @@ export default function Switches() {
           ))}
         </View>
       </View>
-    </ParallaxScrollView>
+    </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
-  },
-});
