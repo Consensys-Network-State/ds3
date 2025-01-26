@@ -1,5 +1,8 @@
 import * as radixColors from '@radix-ui/colors';
 import { COLOR_MODES } from "./constants.js";
+// types/plugin.ts
+import type { DefaultTheme } from 'tailwindcss/types'
+import type { DeepPartial } from 'tailwindcss/types/config'
 
 type ExcludeColorVariants<T extends string> = T extends `${infer Base}${'A' | 'DarkA' | 'Dark' | 'P3' | 'DarkP3'}` ? never : T;
 
@@ -39,7 +42,7 @@ export interface ConfigBoxShadow {
 
 export interface ConfigTheme {
   colors: ConfigColorModes;
-  boxShadow?: ConfigBoxShadow;
+  boxShadow: ConfigBoxShadow;
 }
 
 export type ConfigThemes = Record<string, ConfigTheme>;

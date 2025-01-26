@@ -12,11 +12,12 @@ import {
   ConfigColorShades,
   ConfigTheme,
   ConfigThemes,
-  CssVariableRecord
+  CssVariableRecord, UserConfig
 } from "./types";
 import { COLOR_MODES, DEFAULT_THEME } from "./constants";
 import rnrPreset from './rnr.config';
 import type { CSSRuleObject } from 'tailwindcss/types/config';
+import {Ds3ConfigProcessor} from "./config-processor";
 
 const getThemeColorKeys = (themes: ConfigThemes): string[] => {
   return _.uniq(_.flatMap(Object.values(themes), (theme: ConfigTheme) => {
@@ -84,6 +85,12 @@ const assignShadowVars = (themes: ConfigThemes): Record<string, string> => {
 };
 
 const pxToRem = (px: number, base: number = 16) => `${px / base}rem`;
+
+
+export const ds3Preset2 = (userConfig: UserConfig): TailwindConfig => {
+  const configProcessor = new Ds3ConfigProcessor();
+  return configProcessor.process(userConfig);
+}
 
 const ds3Preset = (config: Config): TailwindConfig => ({
   darkMode: 'class',
