@@ -21,6 +21,7 @@ export * from './components/SwitchField';
 export * from './components/Icon';
 export * from './components/Spinner';
 export * from './components/Heading';
+export * from './components/Field';
 // icons
 export * as Icons from './icons';
 

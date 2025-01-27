@@ -1,16 +1,14 @@
 import {
   ElementRef,
   forwardRef,
-  useId,
   useRef,
   ComponentRef,
   useImperativeHandle
 } from 'react';
-import { View, TextInputProps } from 'react-native';
+import { TextInputProps } from 'react-native';
 import { Input } from "./Input";
-import { Label } from "./Label";
-import { Text } from "./Text";
-import Animated, { FadeInDown } from 'react-native-reanimated';
+import { Field } from "./Field";
+import { AlertCircle } from 'lucide-react-native';
 
 interface InputFieldProps extends TextInputProps {
   error?: string | undefined;
@@ -20,7 +18,6 @@ interface InputFieldProps extends TextInputProps {
 
 const InputField = forwardRef<ElementRef<typeof Input>, InputFieldProps>(
   (props, ref) => {
-
     const {
       error,
       label,
@@ -41,11 +38,6 @@ const InputField = forwardRef<ElementRef<typeof Input>, InputFieldProps>(
       [inputRef.current]
     );
 
-    const componentId = useId();
-    const fieldId = `${componentId}-field`;
-    const fieldErrorId = `${componentId}-field-error`;
-    const fieldDescriptionId = `${componentId}-field-description`;
-
     function handleOnLabelPress() {
       if (!inputRef.current) {
         return;
@@ -58,40 +50,28 @@ const InputField = forwardRef<ElementRef<typeof Input>, InputFieldProps>(
     }
 
     return (
-      <View>
+      <Field color={error ? "error" : "neutral"}>
         {label && (
-          <Label
-            nativeID={fieldId}
-            onPress={handleOnLabelPress}
-          >
-            {label}
-          </Label>
+          <Field.Row>
+            {error && <Field.Icon icon={AlertCircle} />}
+            <Field.Label onPress={handleOnLabelPress}>
+              {label}
+            </Field.Label>
+          </Field.Row>
         )}
 
         <Input
           ref={inputRef}
-          aria-labelledby={fieldId}
-          aria-describedby={!error ? fieldDescriptionId : fieldErrorId}
-          aria-invalid={!!error}
+          color={error ? "error" : undefined}
           {...otherProps}
         />
 
-        {description && !error && (
-          <Animated.View entering={FadeInDown}>
-            <Text nativeID={fieldDescriptionId}>
-              {description}
-            </Text>
-          </Animated.View>
+        {(description || error) && (
+          <Field.Description>
+            {error || description}
+          </Field.Description>
         )}
-
-        {error && (
-          <Animated.View entering={FadeInDown}>
-            <Text className="text-destructive" nativeID={fieldErrorId}>
-              {error}
-            </Text>
-          </Animated.View>
-        )}
-      </View>
+      </Field>
     );
   }
 );

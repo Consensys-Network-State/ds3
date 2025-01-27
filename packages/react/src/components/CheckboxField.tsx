@@ -1,9 +1,7 @@
-import { useId, forwardRef, ElementRef } from 'react';
-import { View } from 'react-native';
-import { Text } from "./Text";
-import { Label } from "./Label";
+import { forwardRef, ElementRef } from 'react';
+import { Field } from "./Field";
 import { Checkbox } from "./Checkbox";
-import Animated, { FadeInDown } from 'react-native-reanimated';
+import { AlertCircle } from 'lucide-react-native';
 import { RootProps as CheckboxProps } from '@rn-primitives/checkbox';
 
 interface CheckboxFieldProps extends CheckboxProps {
@@ -14,7 +12,6 @@ interface CheckboxFieldProps extends CheckboxProps {
 
 const CheckboxField = forwardRef<ElementRef<typeof Checkbox>, CheckboxFieldProps>(
   (props, ref) => {
-
     const {
       error,
       label,
@@ -24,54 +21,33 @@ const CheckboxField = forwardRef<ElementRef<typeof Checkbox>, CheckboxFieldProps
       ...otherProps
     } = props;
 
-    const componentId = useId();
-    const fieldId = `${componentId}-field`;
-    const fieldErrorId = `${componentId}-field-error`;
-    const fieldDescriptionId = `${componentId}-field-description`;
-
     function handleOnLabelPress() {
       onCheckedChange?.(!checked);
     }
 
     return (
-      <View>
-        <View className="flex-row gap-3 items-center">
+      <Field color={error ? "error" : "neutral"}>
+        <Field.Row>
           <Checkbox
-            ref={ref} // Forwarding the ref to the Checkbox
-            aria-labelledby={fieldId}
-            aria-describedby={!error ? fieldDescriptionId : fieldErrorId}
-            aria-invalid={!!error}
+            ref={ref}
             onCheckedChange={onCheckedChange}
             checked={checked}
             {...otherProps}
           />
-
+          {error && <Field.Icon icon={AlertCircle} />}
           {label && (
-            <Label
-              nativeID={fieldId}
-              onPress={handleOnLabelPress}
-            >
+            <Field.Label onPress={handleOnLabelPress}>
               {label}
-            </Label>
+            </Field.Label>
           )}
-        </View>
+        </Field.Row>
 
-        {description && !error && (
-          <Animated.View entering={FadeInDown}>
-            <Text nativeID={fieldDescriptionId}>
-              {description}
-            </Text>
-          </Animated.View>
+        {(description || error) && (
+          <Field.Description>
+            {error || description}
+          </Field.Description>
         )}
-
-        {error && (
-          <Animated.View entering={FadeInDown}>
-            <Text className="text-destructive" nativeID={fieldErrorId}>
-              {error}
-            </Text>
-          </Animated.View>
-        )}
-      </View>
+      </Field>
     );
   }
 );
@@ -79,3 +55,4 @@ const CheckboxField = forwardRef<ElementRef<typeof Checkbox>, CheckboxFieldProps
 CheckboxField.displayName = 'CheckboxField';
 
 export { CheckboxField };
+export type { CheckboxFieldProps };

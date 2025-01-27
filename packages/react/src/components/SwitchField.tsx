@@ -1,16 +1,13 @@
 import {
   ElementRef,
   forwardRef,
-  useId,
   useImperativeHandle,
   useRef,
   ComponentRef
 } from 'react';
-import { View } from 'react-native';
-import { Text } from "./Text";
-import { Label } from "./Label";
 import { Switch } from "./Switch";
-import Animated, { FadeInDown } from 'react-native-reanimated';
+import { Field } from "./Field";
+import { AlertCircle } from 'lucide-react-native';
 import { RootProps as SwitchProps } from '@rn-primitives/switch';
 
 interface SwitchFieldProps extends SwitchProps {
@@ -21,7 +18,6 @@ interface SwitchFieldProps extends SwitchProps {
 
 const SwitchField = forwardRef<ElementRef<typeof Switch>, SwitchFieldProps>(
   (props, ref) => {
-
     const {
       error,
       label,
@@ -44,50 +40,33 @@ const SwitchField = forwardRef<ElementRef<typeof Switch>, SwitchFieldProps>(
       [switchRef.current]
     );
 
-    const componentId = useId();
-    const fieldId = `${componentId}-field`;
-    const fieldErrorId = `${componentId}-field-error`;
-    const fieldDescriptionId = `${componentId}-field-description`;
-
     function handleOnLabelPress() {
       onCheckedChange?.(!checked);
     }
 
     return (
-      <View>
-        <View className='flex-row gap-3 items-center'>
+      <Field color={error ? "error" : "neutral"}>
+        <Field.Row>
           <Switch
             ref={switchRef}
-            aria-labelledby={fieldId}
-            aria-describedby={!error ? fieldDescriptionId : fieldErrorId}
-            aria-invalid={!!error}
             onCheckedChange={onCheckedChange}
             checked={checked}
             {...otherProps}
           />
-          {!!label && (
-            <Label className='pb-0' nativeID={fieldId} onPress={handleOnLabelPress}>
+          {error && <Field.Icon icon={AlertCircle} />}
+          {label && (
+            <Field.Label onPress={handleOnLabelPress}>
               {label}
-            </Label>
+            </Field.Label>
           )}
-        </View>
+        </Field.Row>
 
-        {description && !error && (
-          <Animated.View entering={FadeInDown}>
-            <Text nativeID={fieldDescriptionId}>
-              {description}
-            </Text>
-          </Animated.View>
+        {(description || error) && (
+          <Field.Description>
+            {error || description}
+          </Field.Description>
         )}
-
-        {error && (
-          <Animated.View entering={FadeInDown}>
-            <Text className="text-destructive" nativeID={fieldErrorId}>
-              {error}
-            </Text>
-          </Animated.View>
-        )}
-      </View>
+      </Field>
     );
   }
 );

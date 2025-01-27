@@ -3,7 +3,6 @@ import {
   Text,
   InputField,
   RadioGroupField,
-  RadioGroupFieldItem,
   SelectField,
   SelectContent,
   SelectGroup,
@@ -248,17 +247,17 @@ export default function EnhancedForm() {
                 description="Select your preferred work arrangement"
                 {...otherProps}
               >
-                <RadioGroupFieldItem
+                <RadioGroupField.Item
                   value='remote'
                   label="Remote"
                   onLabelPress={() => onChange('remote')}
                 />
-                <RadioGroupFieldItem
+                <RadioGroupField.Item
                   value='hybrid'
                   label="Hybrid"
                   onLabelPress={() => onChange('hybrid')}
                 />
-                <RadioGroupFieldItem
+                <RadioGroupField.Item
                   value='office'
                   label="Office"
                   onLabelPress={() => onChange('office')}
@@ -284,17 +283,17 @@ export default function EnhancedForm() {
                   description="How often would you prefer to be in the office?"
                   {...otherProps}
                 >
-                  <RadioGroupFieldItem
+                  <RadioGroupField.Item
                     value='1-2'
                     label="1-2 days per week"
                     onLabelPress={() => onChange('1-2')}
                   />
-                  <RadioGroupFieldItem
+                  <RadioGroupField.Item
                     value='3'
                     label="3 days per week"
                     onLabelPress={() => onChange('3')}
                   />
-                  <RadioGroupFieldItem
+                  <RadioGroupField.Item
                     value='flexible'
                     label="Flexible schedule"
                     onLabelPress={() => onChange('flexible')}

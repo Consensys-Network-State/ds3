@@ -41,6 +41,7 @@ export default function DrawerLayout() {
       <Drawer.Screen name="checkbox" options={{ title: 'Checkbox' }} />
       <Drawer.Screen name="switch" options={{ title: 'Switch' }} />
       <Drawer.Screen name="form" options={{ title: 'Form' }} />
+      <Drawer.Screen name="field" options={{ title: 'Fields' }} />
     </Drawer>
   );
 }
