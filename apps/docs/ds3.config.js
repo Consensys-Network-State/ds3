@@ -14,5 +14,35 @@ module.exports = generateConfig({
         // add custom schemes here
       },
     },
+    oceanBreeze: {
+      colors: {
+        neutral: 'slate',
+        primary: 'cyan',
+        secondary: 'blue',
+        error: 'red',
+        warning: 'amber',
+        success: 'grass',
+      },
+    },
+    sunsetGlow: {
+      colors: {
+        neutral: 'mauve',
+        primary: 'pink',
+        secondary: 'orange',
+        error: 'crimson',
+        warning: 'yellow',
+        success: 'lime',
+      },
+    },
+    forestHues: {
+      colors: {
+        neutral: 'sage',
+        primary: 'green',
+        secondary: 'brown',
+        error: 'red',
+        warning: 'orange',
+        success: 'teal',
+      },
+    }
   },
 });
