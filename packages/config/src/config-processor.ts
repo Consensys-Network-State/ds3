@@ -58,14 +58,15 @@ export class Ds3ConfigProcessor implements ConfigProcessor {
 
                 this.processors.entries().forEach(([propertyName, PropertyProcessor]) => {
                     const newVars = PropertyProcessor.generateCssVars(theme[propertyName]);
-                    if (PropertyProcessor.isModeDependent) {
-                        Object.entries(newVars).forEach(([key, value]) => {
-                            const namespace = `${themeClassPrefix}${key}`;
+                    // TODO: Account for mode agnostic settings
+                    Object.entries(newVars).forEach(([key, value]) => {
+                        const namespace = `${themeClassPrefix}${key}`;
+                        if (!!namespace) {
                             vars[namespace] = value;
-                        });
-                    } else {
-                        Object.assign(vars, newVars);
-                    }
+                        } else {
+                            Object.assign(vars, value);
+                        }
+                    });
                 });
             });
 
