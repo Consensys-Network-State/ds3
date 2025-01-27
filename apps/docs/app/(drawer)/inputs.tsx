@@ -11,9 +11,17 @@ const InputClickToLoad = () => {
   };
 
   return (
-    <Input variant="soft" color="warning" loading={isLoading} onPress={onInputPress} className="flex-1 min-w-[250px]">
+    <Input
+      variant="soft"
+      color="warning"
+      loading={isLoading}
+      onFocus={() => setIsLoading(true)}
+      onBlur={() => setIsLoading(false)}
+      className="flex-1 min-w-[250px]"
+      placeholder={isLoading ? "Loading..." : "Click to load"}
+    >
       <Input.Spinner icon={Search} />
-      <Input.Field placeholder={isLoading ? "Loading..." : "Click to load"} />
+      <Input.Field />
     </Input>
   );
 };
@@ -55,9 +63,9 @@ export default function Inputs() {
     {
       name: 'Start & End Icon',
       render: (variant: InputVariant, color: InputColor) => (
-        <Input variant={variant} color={color}>
+        <Input variant={variant} color={color}  placeholder={variant}>
           <Input.Icon icon={Search} />
-          <Input.Field placeholder={variant} />
+          <Input.Field />
           <Input.Icon icon={Eye} />
         </Input>
       ),
@@ -66,9 +74,9 @@ export default function Inputs() {
     {
       name: 'Start Only Icon',
       render: (variant: InputVariant, color: InputColor) => (
-        <Input variant={variant} color={color}>
+        <Input variant={variant} color={color} placeholder={variant}>
           <Input.Icon icon={Mail} />
-          <Input.Field placeholder={variant} />
+          <Input.Field />
         </Input>
       ),
       colors: ['secondary', 'error', 'primary', 'success'] as InputColor[]
@@ -76,8 +84,8 @@ export default function Inputs() {
     {
       name: 'End Only Icon',
       render: (variant: InputVariant, color: InputColor) => (
-        <Input variant={variant} color={color}>
-          <Input.Field placeholder={variant} />
+        <Input variant={variant} color={color} placeholder={variant}>
+          <Input.Field />
           <Input.Icon icon={Lock} />
         </Input>
       ),
@@ -89,9 +97,9 @@ export default function Inputs() {
     {
       name: 'Start & End Text',
       render: (variant: InputVariant, color: InputColor) => (
-        <Input variant={variant} color={color}>
+        <Input variant={variant} color={color} placeholder="0.00" keyboardType="numeric">
           <Input.Text className="text-sm">$</Input.Text>
-          <Input.Field placeholder="0.00" keyboardType="numeric" />
+          <Input.Field />
           <Input.Text className="text-sm">USD</Input.Text>
         </Input>
       ),
@@ -100,9 +108,9 @@ export default function Inputs() {
     {
       name: 'Start Only Text',
       render: (variant: InputVariant, color: InputColor) => (
-        <Input variant={variant} color={color}>
+        <Input variant={variant} color={color} placeholder="username">
           <Input.Text className="text-sm">@</Input.Text>
-          <Input.Field placeholder="username" />
+          <Input.Field />
         </Input>
       ),
       colors: ['secondary', 'error', 'primary', 'success'] as InputColor[]
@@ -110,8 +118,8 @@ export default function Inputs() {
     {
       name: 'End Only Text',
       render: (variant: InputVariant, color: InputColor) => (
-        <Input variant={variant} color={color}>
-          <Input.Field placeholder="Size" keyboardType="numeric" />
+        <Input variant={variant} color={color} placeholder="Size" keyboardType="numeric">
+          <Input.Field />
           <Input.Text className="text-sm">px</Input.Text>
         </Input>
       ),
@@ -123,18 +131,18 @@ export default function Inputs() {
     {
       name: 'Search Input',
       render: (variant: InputVariant, color: InputColor) => (
-        <Input variant={variant} color={color}>
+        <Input variant={variant} color={color} placeholder="Search...">
           <Input.Icon icon={Search} />
-          <Input.Field placeholder="Search..." />
+          <Input.Field />
         </Input>
       )
     },
     {
       name: 'Password Input',
       render: (variant: InputVariant, color: InputColor) => (
-        <Input variant={variant} color={color}>
+        <Input variant={variant} color={color} placeholder="Enter password" secureTextEntry>
           <Input.Icon icon={Lock} />
-          <Input.Field placeholder="Enter password" secureTextEntry />
+          <Input.Field />
           <Input.Icon icon={Eye} />
         </Input>
       )
@@ -142,21 +150,18 @@ export default function Inputs() {
     {
       name: 'Email Input',
       render: (variant: InputVariant, color: InputColor) => (
-        <Input variant={variant} color={color}>
+        <Input variant={variant} color={color} placeholder="Enter email" keyboardType="email-address">
           <Input.Icon icon={Mail} />
-          <Input.Field placeholder="Enter email" keyboardType="email-address" />
+          <Input.Field />
         </Input>
       )
     },
     {
       name: 'Currency Input',
       render: (variant: InputVariant, color: InputColor) => (
-        <Input variant={variant} color={color}>
+        <Input variant={variant} color={color} placeholder="0.00" keyboardType="decimal-pad">
           <Input.Text className="text-sm">$</Input.Text>
-          <Input.Field
-            placeholder="0.00"
-            keyboardType="decimal-pad"
-          />
+          <Input.Field />
           <Input.Icon icon={Eye} />
         </Input>
       )
@@ -164,25 +169,18 @@ export default function Inputs() {
     {
       name: 'Username Input',
       render: (variant: InputVariant, color: InputColor) => (
-        <Input variant={variant} color={color}>
+        <Input variant={variant} color={color} placeholder="username" autoCapitalize="none" autoCorrect={false}>
           <Input.Text className="text-sm">@</Input.Text>
-          <Input.Field
-            placeholder="username"
-            autoCapitalize="none"
-            autoCorrect={false}
-          />
+          <Input.Field />
         </Input>
       )
     },
     {
       name: 'Measurement Input',
       render: (variant: InputVariant, color: InputColor) => (
-        <Input variant={variant} color={color}>
+        <Input variant={variant} color={color} placeholder="100" keyboardType="numeric">
           <Input.Icon icon={Search} />
-          <Input.Field
-            placeholder="100"
-            keyboardType="numeric"
-          />
+          <Input.Field />
           <Input.Text className="text-sm">cm</Input.Text>
         </Input>
       )
@@ -190,12 +188,9 @@ export default function Inputs() {
     {
       name: 'Phone Input',
       render: (variant: InputVariant, color: InputColor) => (
-        <Input variant={variant} color={color}>
+        <Input variant={variant} color={color} placeholder="(555) 555-5555" keyboardType="phone-pad">
           <Input.Text className="text-sm">+1</Input.Text>
-          <Input.Field
-            placeholder="(555) 555-5555"
-            keyboardType="phone-pad"
-          />
+          <Input.Field />
           <Input.Icon icon={Eye} />
         </Input>
       )
@@ -212,10 +207,8 @@ export default function Inputs() {
           <View className="flex flex-row flex-wrap gap-4 ">
             {inputVariants.map((variant, index) => (
               <View key={`${variant}-${index}`} className="flex-1 min-w-[250px]">
-                <Input variant={variant}>
-                  <Input.Field
-                    placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)}
-                  />
+                <Input variant={variant} placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)}>
+                  <Input.Field />
                 </Input>
               </View>
             ))}
@@ -231,10 +224,9 @@ export default function Inputs() {
                     <Input
                       variant={variant}
                       color={color === 'neutral' ? undefined : color}
+                      placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)}
                     >
-                      <Input.Field
-                        placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)}
-                      />
+                      <Input.Field />
                     </Input>
                   </View>
                 ))}
@@ -253,9 +245,10 @@ export default function Inputs() {
                       variant={variant}
                       color={inputColors[index] === 'neutral' ? undefined : inputColors[index]}
                       size={size}
+                      placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)}
                     >
                       <Input.Icon icon={Search} />
-                      <Input.Field placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)} />
+                      <Input.Field />
                     </Input>
                   </View>
                 ))}
@@ -293,39 +286,39 @@ export default function Inputs() {
 
           <Text className="text-h2">Loading</Text>
           <View className="flex flex-row flex-wrap gap-4">
-            <Input variant="outline" loading className="flex-1 min-w-[250px]">
+            <Input variant="outline" loading className="flex-1 min-w-[250px]" placeholder="Outline">
               <Input.Spinner />
-              <Input.Field placeholder="Outline" />
+              <Input.Field />
             </Input>
 
-            <Input variant="soft" color="primary" loading className="flex-1 min-w-[250px]">
-              <Input.Field placeholder="Soft" />
+            <Input variant="soft" color="primary" loading className="flex-1 min-w-[250px]" placeholder="Soft">
+              <Input.Field />
               <Input.Spinner loadingIcon={Loader} />
             </Input>
 
-            <Input variant="underline" color="secondary" loading className="flex-1 min-w-[250px]">
+            <Input variant="underline" color="secondary" loading className="flex-1 min-w-[250px]" placeholder="Underline">
               <Input.Spinner loadingIcon={LoaderPinwheel} />
-              <Input.Field placeholder="Underline" />
+              <Input.Field />
             </Input>
 
-            <Input variant="ghost" color="error" loading className="flex-1 min-w-[250px]">
-              <Input.Field placeholder="Ghost" />
+            <Input variant="ghost" color="error" loading className="flex-1 min-w-[250px]" placeholder="Ghost" >
+              <Input.Field />
               <Input.Spinner />
             </Input>
 
-            <Input variant="outline" color="warning" loading className="flex-1 min-w-[250px]">
+            <Input variant="outline" color="warning" loading className="flex-1 min-w-[250px]" placeholder="With custom loader">
               <Input.Spinner loadingIcon={Loader} />
-              <Input.Field placeholder="With custom loader" />
+              <Input.Field />
             </Input>
 
-            <Input variant="soft" color="success" loading className="flex-1 min-w-[250px]">
-              <Input.Field placeholder="With pinwheel" />
+            <Input variant="soft" color="success" loading className="flex-1 min-w-[250px]" placeholder="With pinwheel">
+              <Input.Field />
               <Input.Spinner loadingIcon={LoaderPinwheel} />
             </Input>
 
-            <Input variant="soft" color="primary" loading disabled className="flex-1 min-w-[250px]">
+            <Input variant="soft" color="primary" loading disabled className="flex-1 min-w-[250px]" placeholder="Disabled and loading">
               <Input.Spinner />
-              <Input.Field placeholder="Disabled and loading" />
+              <Input.Field />
             </Input>
 
             <InputClickToLoad />
@@ -342,10 +335,9 @@ export default function Inputs() {
                       variant={variant}
                       color={color === 'neutral' ? undefined : color}
                       disabled
+                      placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)}
                     >
-                      <Input.Field
-                        placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)}
-                      />
+                      <Input.Field />
                     </Input>
                   </View>
                 ))}
@@ -361,12 +353,13 @@ export default function Inputs() {
                 {inputVariants.map((variant) => (
                   <View key={`${variant}-${color}`} className="flex-1 min-w-[250px]">
                     <Input
+                      placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)}
                       multiline
                       numberOfLines={4}
                       variant={variant}
                       color={color === 'neutral' ? undefined : color}
                     >
-                      <Input.Field placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)} />
+                      <Input.Field />
                     </Input>
                   </View>
                 ))}
@@ -376,22 +369,22 @@ export default function Inputs() {
 
           <View className="flex flex-row flex-wrap gap-4">
             <View className="flex-1 min-w-[250px]">
-              <Input multiline numberOfLines={4} loading>
+              <Input multiline numberOfLines={4} loading placeholder="Loading">
                 <Input.Spinner />
-                <Input.Field placeholder="Loading" />
+                <Input.Field  />
               </Input>
             </View>
 
             <View className="flex-1 min-w-[250px]">
-              <Input multiline numberOfLines={4} disabled>
-                <Input.Field placeholder="Disabled" />
+              <Input multiline numberOfLines={4} disabled placeholder="Disabled">
+                <Input.Field />
               </Input>
             </View>
 
             <View className="flex-1 min-w-[250px]">
-              <Input multiline numberOfLines={4}>
+              <Input multiline numberOfLines={4} placeholder="With icon...">
                 <Input.Icon icon={Search} />
-                <Input.Field placeholder="With icon..." />
+                <Input.Field />
               </Input>
             </View>
           </View>
