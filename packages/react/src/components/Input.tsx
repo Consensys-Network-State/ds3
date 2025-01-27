@@ -31,10 +31,6 @@ const inputRootVariants = cva(
         md: 'px-3 py-2',
         lg: 'px-3.5 py-[0.65625rem]',
       },
-      multiline: {
-        true: '',
-        false: ''
-      },
       focused: {
         true: '',
         false: null,
@@ -81,7 +77,6 @@ const inputRootVariants = cva(
       variant: 'outline',
       color: 'neutral',
       size: 'md',
-      multiline: false,
       disabled: false,
       focused: false,
     },
@@ -139,27 +134,40 @@ const InputContext = React.createContext<{
   loading?: boolean;
   focused?: boolean;
   setFocused?: (focused: boolean) => void;
-  asChild?: boolean;
   inputRef?: React.RefObject<React.ElementRef<typeof TextInput>>;
-  multiline?: boolean;
-  numberOfLines?: number;
+  fieldProps?: Omit<React.ComponentPropsWithoutRef<typeof TextInput>, 'className'>;
 } | undefined>(undefined);
 
-interface InputRootProps extends Omit<React.ComponentPropsWithoutRef<typeof Pressable>, keyof VariantProps<typeof inputRootVariants>> {
+interface InputRootProps extends
+  Omit<React.ComponentPropsWithoutRef<typeof TextInput>,
+    keyof VariantProps<typeof inputRootVariants> |
+    'editable' |
+    'textAlignVertical'
+  > {
   variant?: VariantProps<typeof inputRootVariants>['variant'];
   color?: VariantProps<typeof inputRootVariants>['color'];
   size?: VariantProps<typeof inputRootVariants>['size'];
   disabled?: boolean;
   loading?: boolean;
   asChild?: boolean;
-  multiline?: boolean;
-  numberOfLines?: number;
 }
 
-const InputRoot = React.forwardRef<React.ElementRef<typeof Pressable>, InputRootProps>(
-  ({ className, variant, color, size, disabled = false, loading = false, asChild = false, multiline = false, numberOfLines, ...props }, ref) => {
-    const inputRef = React.useRef<React.ElementRef<typeof TextInput>>(null);
+const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRootProps>(
+  ({
+     className,
+     variant,
+     color,
+     size,
+     disabled = false,
+     loading = false,
+     asChild = false,
+     children,
+     ...fieldProps
+   }, ref) => {
+    const internalInputRef = React.useRef<React.ElementRef<typeof TextInput>>(null);
     const [focused, setFocused] = React.useState(false);
+
+    const inputRef = (ref as React.RefObject<React.ElementRef<typeof TextInput>>) || internalInputRef;
 
     const contextValue = React.useMemo(() => ({
       variant,
@@ -169,11 +177,9 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof Pressable>, InputRoot
       loading,
       focused,
       setFocused,
-      asChild,
       inputRef,
-      multiline,
-      numberOfLines
-    }), [variant, color, size, disabled, loading, focused, asChild, multiline, numberOfLines]);
+      fieldProps
+    }), [variant, color, size, disabled, loading, focused, fieldProps]);
 
     const Component = asChild ? Slot.Pressable : Pressable;
 
@@ -186,70 +192,59 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof Pressable>, InputRoot
     return (
       <InputContext.Provider value={contextValue}>
         <Component
-          ref={ref}
           className={cn(
             inputRootVariants({ variant, color, size, disabled, focused }),
             className,
           )}
           onPress={handlePress}
           tabIndex={-1}
-          {...props}
-        />
+        >
+          {children || <InputField />}
+        </Component>
       </InputContext.Provider>
     );
   }
 );
 InputRoot.displayName = 'Input';
 
-interface InputFieldProps extends Omit<React.ComponentPropsWithoutRef<typeof TextInput>, 'editable'> {
-  asChild?: boolean;
+interface InputFieldProps {
+  className?: string;
 }
 
-const InputField = React.forwardRef<React.ElementRef<typeof TextInput>, InputFieldProps>(
-  ({ className, onBlur, onFocus, asChild = false, ...props }, ref) => {
-    const context = React.useContext(InputContext);
-    if (!context) {
-      throw new Error('InputField must be used within an Input');
-    }
-
-    React.useImperativeHandle(
-      ref,
-      () => {
-        if (!context.inputRef?.current) {
-          return {} as React.ComponentRef<typeof TextInput>;
-        }
-        return context.inputRef.current;
-      },
-      [context.inputRef?.current]
-    );
-
-    return (
-      <TextInput
-        ref={context.inputRef}
-        className={cn(
-          'flex-1 bg-transparent p-0 outline-none text-neutral-a12 placeholder:text-neutral-a10',
-          inputTextVariants({ size: context.size }),
-          context.disabled && 'web:cursor-not-allowed',
-          context.multiline && 'native:min-h-[80px]',
-          className
-        )}
-        multiline={context.multiline}
-        numberOfLines={context.numberOfLines}
-        textAlignVertical={context.multiline ? 'top' : 'center'}
-        editable={!context.disabled}
-        onFocus={(e) => {
-          context.setFocused?.(true);
-          onFocus?.(e);
-        }}
-        onBlur={(e) => {
-          context.setFocused?.(false);
-          onBlur?.(e);
-        }}
-        {...props}
-      />
-    );
+const InputField = ({ className }: InputFieldProps) => {
+  const context = React.useContext(InputContext);
+  if (!context) {
+    throw new Error('InputField must be used within an Input');
   }
-);
+
+  const { fieldProps = {}, setFocused, disabled, size, inputRef } = context;
+  const { multiline, onFocus, onBlur, ...otherProps } = fieldProps;
+
+  return (
+    <TextInput
+      ref={inputRef}
+      className={cn(
+        'flex-1 bg-transparent p-0 outline-none text-neutral-a12 placeholder:text-neutral-a10',
+        inputTextVariants({ size }),
+        disabled && 'web:cursor-not-allowed',
+        multiline && 'native:min-h-[80px]',
+        className
+      )}
+      multiline={multiline}
+      textAlignVertical={multiline ? 'top' : 'center'}
+      editable={!disabled}
+      onFocus={(e) => {
+        setFocused?.(true);
+        onFocus?.(e);
+      }}
+      onBlur={(e) => {
+        setFocused?.(false);
+        onBlur?.(e);
+      }}
+      {...otherProps}
+    />
+  );
+};
 InputField.displayName = 'InputField';
 
 interface InputIconProps extends React.ComponentPropsWithoutRef<typeof Icon> {
