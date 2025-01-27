@@ -1,7 +1,8 @@
 import { StyleSheet } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import { Text, Button, ModeToggle, ButtonIcon, ButtonSpinner, ButtonColors, ButtonVariant, ButtonSizes } from "@ds3/react/src";
+import { Text, Button, ModeToggle, ThemeSwitcher } from "@ds3/react/src";
+import type { ButtonColors, ButtonVariant, ButtonSizes } from "@ds3/react/src";
 import { View, } from "react-native";
 import { Figma, LoaderPinwheel, Loader } from 'lucide-react-native';
 import { useState } from "react";
@@ -15,8 +16,8 @@ const ButtonClickToLoad = () => {
 
   return (
     <Button onPress={onButtonPress} loading={isLoading} variant="soft" color="warning">
-      <ButtonSpinner icon={Figma} duration={400} />
-      <Text>{isLoading ? "Click to stop" : "Click to load" }</Text>
+      <Button.Spinner icon={Figma} duration={400} />
+      <Button.Text>{isLoading ? "Click to stop" : "Click to load" }</Button.Text>
     </Button>
   )
 }
@@ -56,9 +57,9 @@ export default function Buttons() {
       name: 'Prefix & Suffix Icon',
       render: (variant: string) => (
         <>
-          <ButtonIcon icon={Figma} />
-          <Text>{variant}</Text>
-          <ButtonIcon icon={Figma} />
+          <Button.Icon icon={Figma} />
+          <Button.Text>{variant}</Button.Text>
+          <Button.Icon icon={Figma} />
         </>
       )
     },
@@ -66,8 +67,8 @@ export default function Buttons() {
       name: 'Prefix Only Icon',
       render: (variant: string) => (
         <>
-          <ButtonIcon icon={Figma} />
-          <Text>{variant}</Text>
+          <Button.Icon icon={Figma} />
+          <Button.Text>{variant}</Button.Text>
         </>
       )
     },
@@ -75,8 +76,8 @@ export default function Buttons() {
       name: 'Suffix Only Icon',
       render: (variant: string) => (
         <>
-          <Text>{variant}</Text>
-          <ButtonIcon icon={Figma} />
+          <Button.Text>{variant}</Button.Text>
+          <Button.Icon icon={Figma} />
         </>
       )
     }
@@ -98,12 +99,13 @@ export default function Buttons() {
             <Text className="text-h1">Buttons</Text>
 
             <ModeToggle />
+            <ThemeSwitcher />
 
             <Text className="text-h2">Variants</Text>
             <View className="flex flex-row flex-wrap gap-4">
               {buttonVariants.map((variant) => (
                 <Button key={variant} variant={variant}>
-                  <Text>{variant.charAt(0).toUpperCase() + variant.slice(1)}</Text>
+                  <Button.Text>{variant.charAt(0).toUpperCase() + variant.slice(1)}</Button.Text>
                 </Button>
               ))}
             </View>
@@ -118,7 +120,7 @@ export default function Buttons() {
                     variant={variant}
                     color={color === 'neutral' ? undefined : color}
                   >
-                    <Text>{variant.charAt(0).toUpperCase() + variant.slice(1)}</Text>
+                    <Button.Text>{variant.charAt(0).toUpperCase() + variant.slice(1)}</Button.Text>
                   </Button>
                 ))}
               </View>
@@ -151,7 +153,7 @@ export default function Buttons() {
                     color={buttonColors[index] === 'neutral' ? undefined : buttonColors[index]}
                     size={size}
                   >
-                    <Text>{variant.charAt(0).toUpperCase() + variant.slice(1)}</Text>
+                    <Button.Text>{variant.charAt(0).toUpperCase() + variant.slice(1)}</Button.Text>
                   </Button>
                 ))}
               </View>
@@ -161,28 +163,33 @@ export default function Buttons() {
 
             <View className="flex flex-row flex-wrap gap-4">
               <Button variant="elevated" loading>
-                <ButtonSpinner />
-                <Text>Elevated</Text>
+                <Button.Spinner />
+                <Button.Text>Elevated</Button.Text>
               </Button>
               <Button variant="solid" color="primary" loading>
-                <ButtonSpinner loadingIcon={Loader} />
-                <Text>Solid</Text>
+                <Button.Spinner loadingIcon={Loader} />
+                <Button.Text>Solid</Button.Text>
               </Button>
               <Button variant="soft" color="secondary" loading>
-                <ButtonSpinner loadingIcon={LoaderPinwheel} />
-                <Text>Soft</Text>
+                <Button.Spinner loadingIcon={LoaderPinwheel} />
+                <Button.Text>Soft</Button.Text>
               </Button>
               <Button variant="outline" color="error" loading>
-                <Text>Outline</Text>
-                <ButtonSpinner />
+                <Button.Text>Outline</Button.Text>
+                <Button.Spinner />
               </Button>
               <Button variant="dashed" color="warning" loading>
-                <Text>Dashed</Text>
-                <ButtonSpinner loadingIcon={Loader} />
+                <Button.Text>Dashed</Button.Text>
+                <Button.Spinner loadingIcon={Loader} />
               </Button>
               <Button variant="ghost" color="success" loading>
-                <Text>Ghost</Text>
-                <ButtonSpinner loadingIcon={LoaderPinwheel} />
+                <Button.Text>Ghost</Button.Text>
+                <Button.Spinner loadingIcon={LoaderPinwheel} />
+              </Button>
+
+              <Button variant="soft" color="secondary" loading disabled>
+                <Button.Text>Disabled and loading</Button.Text>
+                <Button.Spinner loadingIcon={LoaderPinwheel} />
               </Button>
 
               <ButtonClickToLoad />
@@ -199,7 +206,7 @@ export default function Buttons() {
                     variant={variant}
                     color={color === 'neutral' ? undefined : color}
                   >
-                    <Text>{variant.charAt(0).toUpperCase() + variant.slice(1)}</Text>
+                    <Button.Text>{variant.charAt(0).toUpperCase() + variant.slice(1)}</Button.Text>
                   </Button>
                 ))}
               </View>

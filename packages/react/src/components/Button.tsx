@@ -2,10 +2,12 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { createContext, forwardRef, ElementRef, useContext, ComponentType, useMemo } from 'react';
 import { Pressable } from 'react-native';
 import { cn } from '../utils';
-import { TextClassContext } from './Text';
+import { TextClassContext, Text } from './Text';
 import { Icon } from './Icon';
 import { Spinner, SpinnerProps } from './Spinner'
 import * as Slot from '@rn-primitives/slot';
+import * as React from "react";
+import { SlottableTextProps, TextRef } from '@rn-primitives/types';
 
 const buttonVariants = cva(
   'group flex flex-row gap-1 items-center self-start justify-center rounded-4',
@@ -148,7 +150,7 @@ export type ButtonColors = NonNullable<ButtonProps['color']>;
 export type ButtonSizes = NonNullable<ButtonProps['size']>;
 export type ButtonVariant = NonNullable<ButtonProps['variant']>;
 
-const Button = forwardRef<ElementRef<typeof Pressable>, ButtonProps>(
+const ButtonRoot = forwardRef<ElementRef<typeof Pressable>, ButtonProps>(
   (props, ref) => {
     const {
       className,
@@ -184,7 +186,7 @@ const Button = forwardRef<ElementRef<typeof Pressable>, ButtonProps>(
     );
   }
 );
-Button.displayName = 'Button';
+ButtonRoot.displayName = 'Button';
 
 interface ButtonIconProps extends React.ComponentPropsWithoutRef<typeof Icon> {}
 
@@ -268,6 +270,22 @@ const ButtonSpinner = forwardRef<ElementRef<typeof Icon>, ButtonSpinnerProps>(
   }
 );
 ButtonSpinner.displayName = 'ButtonSpinner';
+
+const ButtonText = React.forwardRef<TextRef, SlottableTextProps>(
+  (props, ref) => (
+    <Text
+      ref={ref}
+      {...props}
+    />
+  )
+);
+ButtonText.displayName = 'ButtonText';
+
+const Button = Object.assign(ButtonRoot, {
+  Text: ButtonText,
+  Icon: ButtonIcon,
+  Spinner: ButtonSpinner,
+});
 
 export { Button, ButtonIcon, ButtonSpinner, buttonTextVariants, buttonVariants };
 export type { ButtonProps };
