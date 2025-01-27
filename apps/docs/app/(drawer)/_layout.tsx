@@ -34,12 +34,13 @@ export default function DrawerLayout() {
         }}
       />
 
-      <Drawer.Screen name="buttons" options={{ title: 'Buttons' }} />
-      <Drawer.Screen name="checkbox" options={{ title: 'Checkbox' }} />
-      <Drawer.Screen name="inputs" options={{ title: 'Inputs' }} />
-      <Drawer.Screen name="switch" options={{ title: 'Switch' }} />
       <Drawer.Screen name="tokens" options={{ title: 'Tokens' }} />
       <Drawer.Screen name="typography" options={{ title: 'Typography' }} />
+      <Drawer.Screen name="buttons" options={{ title: 'Buttons' }} />
+      <Drawer.Screen name="inputs" options={{ title: 'Inputs' }} />
+      <Drawer.Screen name="checkbox" options={{ title: 'Checkbox' }} />
+      <Drawer.Screen name="switch" options={{ title: 'Switch' }} />
+      <Drawer.Screen name="form" options={{ title: 'Form' }} />
     </Drawer>
   );
 }
