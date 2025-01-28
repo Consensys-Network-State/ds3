@@ -1,9 +1,10 @@
 import {
-  ElementRef,
-  forwardRef,
-  useRef,
-  ComponentRef,
-  useImperativeHandle
+    ElementRef,
+    forwardRef,
+    useRef,
+    ComponentRef,
+    useImperativeHandle,
+    ReactNode
 } from 'react';
 import { TextInputProps } from 'react-native';
 import { Input } from "./Input";
@@ -13,6 +14,7 @@ import { AlertCircle } from 'lucide-react-native';
 interface InputFieldProps extends TextInputProps {
   error?: string | undefined;
   label?: string;
+  children?: ReactNode;
   description?: string;
 }
 
@@ -21,6 +23,7 @@ const InputField = forwardRef<ElementRef<typeof Input>, InputFieldProps>(
     const {
       error,
       label,
+      children,
       description,
       ...otherProps
     } = props;
@@ -59,12 +62,13 @@ const InputField = forwardRef<ElementRef<typeof Input>, InputFieldProps>(
             </Field.Label>
           </Field.Row>
         )}
-
         <Input
           ref={inputRef}
           color={error ? "error" : undefined}
           {...otherProps}
-        />
+        >
+            {children}
+        </Input>
 
         {(description || error) && (
           <Field.Description>
