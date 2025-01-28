@@ -1,14 +1,10 @@
 import { Text, Input } from "@ds3/react/src";
 import { View, ScrollView } from "react-native";
-import { Search, Eye, Mail, Lock, Loader, LoaderPinwheel } from 'lucide-react-native';
+import { Search, Eye, Mail, Lock, Loader, LoaderPinwheel, Figma } from 'lucide-react-native';
 import { useState } from "react";
 
 const InputClickToLoad = () => {
   const [isLoading, setIsLoading] = useState(false);
-
-  const onInputPress = () => {
-    setIsLoading(!isLoading);
-  };
 
   return (
     <Input
@@ -64,9 +60,9 @@ export default function Inputs() {
       name: 'Start & End Icon',
       render: (variant: InputVariant, color: InputColor) => (
         <Input variant={variant} color={color}  placeholder={variant}>
-          <Input.Icon icon={Search} />
+          <Input.Icon icon={Figma} />
           <Input.Field />
-          <Input.Icon icon={Eye} />
+          <Input.Icon icon={Figma} />
         </Input>
       ),
       colors: ['primary', 'secondary', 'success', 'error'] as InputColor[]
@@ -75,7 +71,7 @@ export default function Inputs() {
       name: 'Start Only Icon',
       render: (variant: InputVariant, color: InputColor) => (
         <Input variant={variant} color={color} placeholder={variant}>
-          <Input.Icon icon={Mail} />
+          <Input.Icon icon={Figma} />
           <Input.Field />
         </Input>
       ),
@@ -86,7 +82,7 @@ export default function Inputs() {
       render: (variant: InputVariant, color: InputColor) => (
         <Input variant={variant} color={color} placeholder={variant}>
           <Input.Field />
-          <Input.Icon icon={Lock} />
+          <Input.Icon icon={Figma} />
         </Input>
       ),
       colors: ['success', 'primary', 'error', 'secondary'] as InputColor[]
@@ -97,10 +93,10 @@ export default function Inputs() {
     {
       name: 'Start & End Text',
       render: (variant: InputVariant, color: InputColor) => (
-        <Input variant={variant} color={color} placeholder="0.00" keyboardType="numeric">
-          <Input.Text className="text-sm">$</Input.Text>
+        <Input variant={variant} color={color} placeholder={variant}>
+          <Input.Text className="text-sm">*</Input.Text>
           <Input.Field />
-          <Input.Text className="text-sm">USD</Input.Text>
+          <Input.Text className="text-sm">*</Input.Text>
         </Input>
       ),
       colors: ['primary', 'secondary', 'success', 'error'] as InputColor[]
@@ -108,8 +104,8 @@ export default function Inputs() {
     {
       name: 'Start Only Text',
       render: (variant: InputVariant, color: InputColor) => (
-        <Input variant={variant} color={color} placeholder="username">
-          <Input.Text className="text-sm">@</Input.Text>
+        <Input variant={variant} color={color} placeholder={variant}>
+          <Input.Text className="text-sm">*</Input.Text>
           <Input.Field />
         </Input>
       ),
@@ -118,9 +114,9 @@ export default function Inputs() {
     {
       name: 'End Only Text',
       render: (variant: InputVariant, color: InputColor) => (
-        <Input variant={variant} color={color} placeholder="Size" keyboardType="numeric">
+        <Input variant={variant} color={color} placeholder={variant}>
           <Input.Field />
-          <Input.Text className="text-sm">px</Input.Text>
+          <Input.Text className="text-sm">*</Input.Text>
         </Input>
       ),
       colors: ['success', 'primary', 'error', 'secondary'] as InputColor[]
@@ -234,28 +230,6 @@ export default function Inputs() {
             </View>
           ))}
 
-          <Text className="text-h2">Sizes</Text>
-          {inputSizes.map(({ size, label }) => (
-            <View key={size} className="flex flex-col gap-4">
-              <Text>{label}</Text>
-              <View className="flex flex-row flex-wrap gap-4">
-                {inputVariants.map((variant, index) => (
-                  <View key={`${variant}-${index}-${size}`} className="flex-1 min-w-[250px]">
-                    <Input
-                      variant={variant}
-                      color={inputColors[index] === 'neutral' ? undefined : inputColors[index]}
-                      size={size}
-                      placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)}
-                    >
-                      <Input.Icon icon={Search} />
-                      <Input.Field />
-                    </Input>
-                  </View>
-                ))}
-              </View>
-            </View>
-          ))}
-
           <Text className="text-h2">Icons</Text>
           {iconLayouts.map(({ name, render, colors }) => (
             <View key={name} className="flex flex-col gap-4">
@@ -278,6 +252,29 @@ export default function Inputs() {
                 {inputVariants.map((variant, index) => (
                   <View key={`${variant}-${index}`} className="flex-1 basis-[calc(25%-12px)] min-w-[200px]">
                     {render(variant, colors[index])}
+                  </View>
+                ))}
+              </View>
+            </View>
+          ))}
+
+          <Text className="text-h2">Sizes</Text>
+          {inputSizes.map(({ size, label }) => (
+            <View key={size} className="flex flex-col gap-4">
+              <Text>{label}</Text>
+              <View className="flex flex-row flex-wrap gap-4">
+                {inputVariants.map((variant, index) => (
+                  <View key={`${variant}-${index}-${size}`} className="flex-1 min-w-[250px]">
+                    <Input
+                      variant={variant}
+                      color={inputColors[index] === 'neutral' ? undefined : inputColors[index]}
+                      size={size}
+                      placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)}
+                    >
+                      <Input.Icon icon={Figma} />
+                      <Input.Field />
+                      <Input.Text>*</Input.Text>
+                    </Input>
                   </View>
                 ))}
               </View>

@@ -1,37 +1,42 @@
-import {
-  ElementRef,
-  forwardRef,
-  useRef,
-  ComponentRef,
-  useImperativeHandle
-} from 'react';
+import * as React from 'react';
 import { TextInputProps } from 'react-native';
 import { Input } from "./Input";
-import { Field } from "./Field";
-import { AlertCircle } from 'lucide-react-native';
+import { Field, useField } from "./Field";
+import { AlertCircle, CheckCircle } from 'lucide-react-native';
 
 interface InputFieldProps extends TextInputProps {
   error?: string | undefined;
   label?: string;
   description?: string;
+  isValid?: boolean;
+  children?: React.ReactNode;
+  required?: boolean;
 }
 
-const InputField = forwardRef<ElementRef<typeof Input>, InputFieldProps>(
+const InputField = React.forwardRef<React.ElementRef<typeof Input>, InputFieldProps>(
   (props, ref) => {
     const {
       error,
       label,
       description,
+      isValid,
+      children,
+      required,
       ...otherProps
     } = props;
 
-    const inputRef = useRef<ComponentRef<typeof Input>>(null);
+    const { fieldId, descriptionId, ariaProps } = useField({
+      error,
+      required
+    });
 
-    useImperativeHandle(
+    const inputRef = React.useRef<React.ComponentRef<typeof Input>>(null);
+
+    React.useImperativeHandle(
       ref,
       () => {
         if (!inputRef.current) {
-          return {} as ComponentRef<typeof Input>;
+          return {} as React.ComponentRef<typeof Input>;
         }
         return inputRef.current;
       },
@@ -49,12 +54,15 @@ const InputField = forwardRef<ElementRef<typeof Input>, InputFieldProps>(
       }
     }
 
+    const fieldColor = error ? "error" : isValid ? "success" : "neutral";
+
     return (
-      <Field color={error ? "error" : "neutral"}>
+      <Field color={fieldColor}>
         {label && (
           <Field.Row>
             {error && <Field.Icon icon={AlertCircle} />}
-            <Field.Label onPress={handleOnLabelPress}>
+            {isValid && <Field.Icon icon={CheckCircle} color="green" />}
+            <Field.Label onPress={handleOnLabelPress} nativeID={fieldId}>
               {label}
             </Field.Label>
           </Field.Row>
@@ -62,12 +70,15 @@ const InputField = forwardRef<ElementRef<typeof Input>, InputFieldProps>(
 
         <Input
           ref={inputRef}
-          color={error ? "error" : undefined}
+          color={fieldColor}
+          {...ariaProps}
           {...otherProps}
-        />
+        >
+          {children}
+        </Input>
 
         {(description || error) && (
-          <Field.Description>
+          <Field.Description nativeID={descriptionId}>
             {error || description}
           </Field.Description>
         )}
@@ -79,3 +90,4 @@ const InputField = forwardRef<ElementRef<typeof Input>, InputFieldProps>(
 InputField.displayName = 'InputField';
 
 export { InputField };
+export type { InputFieldProps };

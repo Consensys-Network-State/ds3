@@ -19,7 +19,7 @@ const Icon = forwardRef<SVGSVGElement, IconProps>(({ icon, ...otherProps }, ref)
     },
   });
 
-  return <StyledIcon ref={ref} {...otherProps} />;
+  return <StyledIcon role="img" accessibilityRole="image" ref={ref} {...otherProps} />;
 });
 
 Icon.displayName = 'Icon';

@@ -1,22 +1,19 @@
-import {
-  ElementRef,
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-  ComponentRef
-} from 'react';
+import * as React from 'react';
 import { Switch } from "./Switch";
-import { Field } from "./Field";
-import { AlertCircle } from 'lucide-react-native';
+import { Field, useField } from "./Field";
+import { AlertCircle, CheckCircle } from 'lucide-react-native';
 import { RootProps as SwitchProps } from '@rn-primitives/switch';
 
 interface SwitchFieldProps extends SwitchProps {
   error?: string | undefined;
   label?: string;
   description?: string;
+  isValid?: boolean;
+  children?: React.ReactNode;
+  required?: boolean;
 }
 
-const SwitchField = forwardRef<ElementRef<typeof Switch>, SwitchFieldProps>(
+const SwitchField = React.forwardRef<React.ElementRef<typeof Switch>, SwitchFieldProps>(
   (props, ref) => {
     const {
       error,
@@ -24,45 +21,59 @@ const SwitchField = forwardRef<ElementRef<typeof Switch>, SwitchFieldProps>(
       description,
       onCheckedChange,
       checked,
+      isValid,
+      children,
+      required,
       ...otherProps
     } = props;
 
-    const switchRef = useRef<ComponentRef<typeof Switch>>(null);
+    const { fieldId, descriptionId, ariaProps } = useField({
+      error,
+      required
+    });
 
-    useImperativeHandle(
+    const switchRef = React.useRef<React.ComponentRef<typeof Switch>>(null);
+
+    React.useImperativeHandle(
       ref,
       () => {
         if (!switchRef.current) {
-          return {} as ComponentRef<typeof Switch>;
+          return {} as React.ComponentRef<typeof Switch>;
         }
         return switchRef.current;
       },
-      [switchRef.current]
+      []
     );
 
     function handleOnLabelPress() {
       onCheckedChange?.(!checked);
     }
 
+    const fieldColor = error ? "error" : isValid ? "success" : "neutral";
+
     return (
-      <Field color={error ? "error" : "neutral"}>
+      <Field color={fieldColor}>
         <Field.Row>
           <Switch
             ref={switchRef}
             onCheckedChange={onCheckedChange}
             checked={checked}
+            {...ariaProps}
             {...otherProps}
-          />
+          >
+            {children}
+          </Switch>
           {error && <Field.Icon icon={AlertCircle} />}
+          {isValid && <Field.Icon icon={CheckCircle} color="green" />}
           {label && (
-            <Field.Label onPress={handleOnLabelPress}>
+            <Field.Label nativeID={fieldId} onPress={handleOnLabelPress}>
               {label}
             </Field.Label>
           )}
         </Field.Row>
 
         {(description || error) && (
-          <Field.Description>
+          <Field.Description nativeID={descriptionId}>
             {error || description}
           </Field.Description>
         )}

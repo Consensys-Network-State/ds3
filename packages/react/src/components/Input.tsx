@@ -217,8 +217,8 @@ const InputField = ({ className }: InputFieldProps) => {
     throw new Error('InputField must be used within an Input');
   }
 
-  const { fieldProps = {}, setFocused, disabled, size, inputRef } = context;
-  const { multiline, onFocus, onBlur, ...otherProps } = fieldProps;
+  const { fieldProps = {}, setFocused, disabled, size, loading, inputRef } = context;
+  const { multiline, onFocus, onBlur, accessibilityState, ...otherProps } = fieldProps;
 
   return (
     <TextInput
@@ -241,6 +241,19 @@ const InputField = ({ className }: InputFieldProps) => {
         setFocused?.(false);
         onBlur?.(e);
       }}
+
+      // a11y web
+      aria-multiline={multiline}
+      aria-disabled={disabled}
+      aria-busy={loading}
+
+      // a11y native
+      accessibilityState={{
+        ...accessibilityState,
+        disabled,
+        busy: loading,
+      }}
+
       {...otherProps}
     />
   );

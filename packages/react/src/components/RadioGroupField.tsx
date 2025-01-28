@@ -1,43 +1,57 @@
-import { FC, ElementRef, forwardRef } from 'react';
-import { Field } from "./Field";
+import * as React from 'react';
+import { Field, useField } from "./Field";
 import { RadioGroup, RadioGroupItem } from "./RadioGroup";
-import { AlertCircle } from 'lucide-react-native';
+import { AlertCircle, CheckCircle } from 'lucide-react-native';
 import { RootProps as RadioGroupProps } from '@rn-primitives/radio-group';
 
 interface RadioGroupFieldProps extends RadioGroupProps {
   label?: string;
   description?: string;
   error?: string;
+  isValid?: boolean;
+  children?: React.ReactNode;
+  required?: boolean;
 }
 
-const RadioGroupField = forwardRef<ElementRef<typeof RadioGroup>, RadioGroupFieldProps>(
+const RadioGroupField = React.forwardRef<React.ElementRef<typeof RadioGroup>, RadioGroupFieldProps>(
   (props, ref) => {
     const {
       error,
       label,
       description,
       children,
+      isValid,
+      required,
       ...otherProps
     } = props;
 
+    const { fieldId, descriptionId, ariaProps } = useField({
+      error,
+      required
+    });
+
+    const fieldColor = error ? "error" : isValid ? "success" : "neutral";
+
     return (
-      <Field color={error ? "error" : "neutral"}>
+      <Field color={fieldColor}>
         {label && (
           <Field.Row>
             {error && <Field.Icon icon={AlertCircle} />}
-            <Field.Label>{label}</Field.Label>
+            {isValid && <Field.Icon icon={CheckCircle} color="green" />}
+            <Field.Label nativeID={fieldId}>{label}</Field.Label>
           </Field.Row>
         )}
 
         <RadioGroup
           ref={ref}
+          {...ariaProps}
           {...otherProps}
         >
           {children}
         </RadioGroup>
 
         {(description || error) && (
-          <Field.Description>
+          <Field.Description nativeID={descriptionId}>
             {error || description}
           </Field.Description>
         )}
@@ -54,7 +68,7 @@ interface RadioGroupFieldItemProps {
   onLabelPress?: () => void;
 }
 
-const RadioGroupFieldItem: FC<RadioGroupFieldItemProps> = ({
+const RadioGroupFieldItem: React.FC<RadioGroupFieldItemProps> = ({
                                                              label,
                                                              value,
                                                              onLabelPress
