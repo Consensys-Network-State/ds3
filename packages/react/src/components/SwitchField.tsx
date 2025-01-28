@@ -7,13 +7,14 @@ import {
 } from 'react';
 import { Switch } from "./Switch";
 import { Field } from "./Field";
-import { AlertCircle } from 'lucide-react-native';
+import { AlertCircle, CheckCircle } from 'lucide-react-native';
 import { RootProps as SwitchProps } from '@rn-primitives/switch';
 
 interface SwitchFieldProps extends SwitchProps {
   error?: string | undefined;
   label?: string;
   description?: string;
+  isValid?: boolean;
 }
 
 const SwitchField = forwardRef<ElementRef<typeof Switch>, SwitchFieldProps>(
@@ -24,6 +25,7 @@ const SwitchField = forwardRef<ElementRef<typeof Switch>, SwitchFieldProps>(
       description,
       onCheckedChange,
       checked,
+      isValid,
       ...otherProps
     } = props;
 
@@ -44,8 +46,10 @@ const SwitchField = forwardRef<ElementRef<typeof Switch>, SwitchFieldProps>(
       onCheckedChange?.(!checked);
     }
 
+    const fieldColor = error ? "error" : isValid ? "success" : "neutral";
+
     return (
-      <Field color={error ? "error" : "neutral"}>
+      <Field color={fieldColor}>
         <Field.Row>
           <Switch
             ref={switchRef}
@@ -54,6 +58,7 @@ const SwitchField = forwardRef<ElementRef<typeof Switch>, SwitchFieldProps>(
             {...otherProps}
           />
           {error && <Field.Icon icon={AlertCircle} />}
+          {isValid && <Field.Icon icon={CheckCircle} color="green" />}
           {label && (
             <Field.Label onPress={handleOnLabelPress}>
               {label}

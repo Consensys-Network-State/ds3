@@ -1,13 +1,14 @@
 import { FC, ElementRef, forwardRef } from 'react';
 import { Field } from "./Field";
 import { RadioGroup, RadioGroupItem } from "./RadioGroup";
-import { AlertCircle } from 'lucide-react-native';
+import { AlertCircle, CheckCircle } from 'lucide-react-native';
 import { RootProps as RadioGroupProps } from '@rn-primitives/radio-group';
 
 interface RadioGroupFieldProps extends RadioGroupProps {
   label?: string;
   description?: string;
   error?: string;
+  isValid?: boolean;
 }
 
 const RadioGroupField = forwardRef<ElementRef<typeof RadioGroup>, RadioGroupFieldProps>(
@@ -17,14 +18,18 @@ const RadioGroupField = forwardRef<ElementRef<typeof RadioGroup>, RadioGroupFiel
       label,
       description,
       children,
+      isValid,
       ...otherProps
     } = props;
 
+    const fieldColor = error ? "error" : isValid ? "success" : "neutral";
+
     return (
-      <Field color={error ? "error" : "neutral"}>
+      <Field color={fieldColor}>
         {label && (
           <Field.Row>
             {error && <Field.Icon icon={AlertCircle} />}
+            {isValid && <Field.Icon icon={CheckCircle} color="green" />}
             <Field.Label>{label}</Field.Label>
           </Field.Row>
         )}

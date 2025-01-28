@@ -8,12 +8,13 @@ import {
 import { TextInputProps } from 'react-native';
 import { Input } from "./Input";
 import { Field } from "./Field";
-import { AlertCircle } from 'lucide-react-native';
+import { AlertCircle, CheckCircle } from 'lucide-react-native';
 
 interface InputFieldProps extends TextInputProps {
   error?: string | undefined;
   label?: string;
   description?: string;
+  isValid?: boolean;
 }
 
 const InputField = forwardRef<ElementRef<typeof Input>, InputFieldProps>(
@@ -22,6 +23,7 @@ const InputField = forwardRef<ElementRef<typeof Input>, InputFieldProps>(
       error,
       label,
       description,
+      isValid,
       ...otherProps
     } = props;
 
@@ -49,11 +51,14 @@ const InputField = forwardRef<ElementRef<typeof Input>, InputFieldProps>(
       }
     }
 
+    const fieldColor = error ? "error" : isValid ? "success" : "neutral";
+
     return (
-      <Field color={error ? "error" : "neutral"}>
+      <Field color={fieldColor}>
         {label && (
           <Field.Row>
             {error && <Field.Icon icon={AlertCircle} />}
+            {isValid && <Field.Icon icon={CheckCircle} color="green" />}
             <Field.Label onPress={handleOnLabelPress}>
               {label}
             </Field.Label>
@@ -62,7 +67,7 @@ const InputField = forwardRef<ElementRef<typeof Input>, InputFieldProps>(
 
         <Input
           ref={inputRef}
-          color={error ? "error" : undefined}
+          color={fieldColor}
           {...otherProps}
         />
 

@@ -1,13 +1,14 @@
 import { ElementRef, forwardRef } from "react";
 import { Field } from "./Field";
 import { Select } from "./Select";
-import { AlertCircle } from 'lucide-react-native';
+import { AlertCircle, CheckCircle } from 'lucide-react-native';
 import { RootProps as SelectProps } from '@rn-primitives/select';
 
 interface SelectFieldProps extends SelectProps {
   label?: string;
   description?: string;
   error?: string;
+  isValid?: boolean;
 }
 
 const SelectField = forwardRef<ElementRef<typeof Select>, SelectFieldProps>(
@@ -16,14 +17,18 @@ const SelectField = forwardRef<ElementRef<typeof Select>, SelectFieldProps>(
       error,
       label,
       description,
+      isValid,
       ...otherProps
     } = props;
 
+    const fieldColor = error ? "error" : isValid ? "success" : "neutral";
+
     return (
-      <Field color={error ? "error" : "neutral"}>
+      <Field color={fieldColor}>
         {label && (
           <Field.Row>
             {error && <Field.Icon icon={AlertCircle} />}
+            {isValid && <Field.Icon icon={CheckCircle} color="green" />}
             <Field.Label>
               {label}
             </Field.Label>

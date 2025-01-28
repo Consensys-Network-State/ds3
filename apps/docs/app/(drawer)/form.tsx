@@ -19,7 +19,7 @@ import {
 import { View, ScrollView } from "react-native";
 import { useForm, Controller } from 'react-hook-form';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 const jobTitles: Option[] = [
   { value: 'software_engineer', label: 'Software Engineer' },
@@ -45,6 +45,31 @@ interface FormValues {
 // Default option for empty select fields
 const defaultOption: Option = { value: '', label: '' };
 
+type FieldName = keyof FormValues;
+
+const useFieldValidation = (errors: any) => {
+  // Use ref to track fields that have had errors
+  const fieldsWithPastErrors = useRef<Set<FieldName>>(new Set());
+
+  // Check and record errors
+  const hasHadError = (fieldName: FieldName) => {
+    if (errors[fieldName]) {
+      fieldsWithPastErrors.current.add(fieldName);
+      return true;
+    }
+    return fieldsWithPastErrors.current.has(fieldName);
+  };
+
+  return (fieldName: FieldName, value: any) => {
+    // Only show valid state if field has had an error in the past
+    if (!hasHadError(fieldName)) {
+      return false;
+    }
+
+    return !!value && !errors[fieldName];
+  };
+};
+
 export default function EnhancedForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -68,6 +93,7 @@ export default function EnhancedForm() {
       termsAccepted: false,
       availability: true
     },
+    mode: 'onBlur'
   });
 
   // Watch values for conditional rendering with non-null assertion
@@ -94,6 +120,8 @@ export default function EnhancedForm() {
       setIsSubmitting(false);
     }
   };
+
+  const isFieldValid = useFieldValidation(errors);
 
   return (
     <ScrollView className="h-screen bg-neutral-1">
@@ -122,12 +150,14 @@ export default function EnhancedForm() {
                 message: 'Please enter a valid name'
               }
             }}
-            render={({ field: { onChange, ...otherProps} }) => (
+            render={({ field: { name, value, onChange, ...otherProps} }) => (
               <InputField
+                value={value}
                 label="Full Name"
                 placeholder="John Doe"
                 description="Enter your legal full name"
-                error={errors?.fullName?.message}
+                error={errors?.[name]?.message}
+                isValid={isFieldValid(name, value)}
                 onChangeText={onChange}
                 {...otherProps}
               />
@@ -146,12 +176,14 @@ export default function EnhancedForm() {
                     message: 'Please enter a valid email'
                   }
                 }}
-                render={({ field: { onChange, ...otherProps } }) => (
+                render={({ field: { name, onChange, value, ...otherProps } }) => (
                   <InputField
+                    value={value}
                     label="Email"
                     placeholder="john.doe@example.com"
                     description="Your primary contact email"
-                    error={errors?.email?.message}
+                    error={errors?.[name]?.message}
+                    isValid={isFieldValid(name, value)}
                     keyboardType="email-address"
                     onChangeText={onChange}
                     {...otherProps}
@@ -170,12 +202,14 @@ export default function EnhancedForm() {
                     message: 'Please enter a valid phone number'
                   }
                 }}
-                render={({ field: { onChange, ...otherProps } }) => (
+                render={({ field: { name, onChange, value, ...otherProps } }) => (
                   <InputField
+                    value={value}
                     label="Phone Number"
                     placeholder="(123) 456-7890"
                     description="Optional but recommended"
-                    error={errors?.phone?.message}
+                    error={errors?.[name]?.message}
+                    isValid={isFieldValid(name, value)}
                     keyboardType="phone-pad"
                     onChangeText={onChange}
                     {...otherProps}
@@ -191,11 +225,12 @@ export default function EnhancedForm() {
             rules={{
               required: 'Please select a job title',
             }}
-            render={({ field: { onChange, value } }) => (
+            render={({ field: { name, onChange, value } }) => (
               <SelectField
                 label="Job Title"
                 description="Select your primary role"
-                error={errors?.jobTitle?.message}
+                error={errors?.[name]?.message}
+                isValid={isFieldValid(name, value?.value)} // Check value.value since it's an Option type
                 value={value}
                 onValueChange={onChange}
               >
@@ -237,9 +272,10 @@ export default function EnhancedForm() {
             rules={{
               required: 'Work preference is required',
             }}
-            render={({ field: { onChange, value, ...otherProps } }) => (
+            render={({ field: { name, onChange, value, ...otherProps } }) => (
               <RadioGroupField
-                error={errors?.workPreference?.message}
+                error={errors?.[name]?.message}
+                isValid={isFieldValid(name, value)}
                 value={value}
                 onValueChange={onChange}
                 className='flex-col gap-3'
@@ -273,9 +309,10 @@ export default function EnhancedForm() {
               rules={{
                 required: 'Please specify office frequency',
               }}
-              render={({ field: { onChange, value, ...otherProps } }) => (
+              render={({ field: { name, onChange, value, ...otherProps } }) => (
                 <RadioGroupField
-                  error={errors?.officeFrequency?.message}
+                  error={errors?.[name]?.message}
+                  isValid={isFieldValid(name, value)}
                   value={value}
                   onValueChange={onChange}
                   className='flex-col gap-3'
@@ -312,12 +349,14 @@ export default function EnhancedForm() {
                 message: 'Please enter a valid URL'
               }
             }}
-            render={({ field: { onChange, ...otherProps } }) => (
+            render={({ field: { name, value, onChange, ...otherProps } }) => (
               <InputField
+                value={value}
                 label="Portfolio URL"
                 placeholder="https://your-portfolio.com"
                 description="Share your work (optional)"
-                error={errors?.portfolio?.message}
+                error={errors?.[name]?.message}
+                isValid={isFieldValid(name, value)}
                 onChangeText={onChange}
                 {...otherProps}
               />
@@ -338,12 +377,13 @@ export default function EnhancedForm() {
                 message: 'Bio should not exceed 500 characters'
               }
             }}
-            render={({ field: { onChange, ...otherProps } }) => (
+            render={({ field: { value, name, onChange, ...otherProps } }) => (
               <InputField
                 label="Professional Bio"
                 placeholder="Tell us about your background and what you're looking for..."
                 description="50-500 characters"
-                error={errors?.bio?.message}
+                error={errors?.[name]?.message}
+                isValid={isFieldValid(name, value)}
                 multiline
                 numberOfLines={4}
                 onChangeText={onChange}
@@ -356,10 +396,11 @@ export default function EnhancedForm() {
             <Controller
               control={control}
               name="newsletter"
-              render={({ field: { onChange, value, ...otherProps } }) => (
+              render={({ field: { name, onChange, value, ...otherProps } }) => (
                 <SwitchField
                   onCheckedChange={onChange}
                   checked={value}
+                  isValid={isFieldValid(name, value)}
                   label="Subscribe to Newsletter"
                   description="Receive job opportunities and industry updates"
                   {...otherProps}
@@ -370,10 +411,11 @@ export default function EnhancedForm() {
             <Controller
               control={control}
               name="availability"
-              render={({ field: { onChange, value, ...otherProps } }) => (
+              render={({ field: { name, onChange, value, ...otherProps } }) => (
                 <SwitchField
                   onCheckedChange={onChange}
                   checked={value}
+                  isValid={isFieldValid(name, value)}
                   label="Available for Hire"
                   description="Let employers know you're open to opportunities"
                   {...otherProps}
@@ -387,9 +429,10 @@ export default function EnhancedForm() {
               rules={{
                 required: 'You must accept the terms and conditions',
               }}
-              render={({ field: { onChange, value, ...otherProps } }) => (
+              render={({ field: { name, onChange, value, ...otherProps } }) => (
                 <CheckboxField
-                  error={errors?.termsAccepted?.message}
+                  error={errors?.[name]?.message}
+                  isValid={isFieldValid(name, value)}
                   onCheckedChange={onChange}
                   checked={value}
                   label="Terms and Conditions"
