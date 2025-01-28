@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Switch } from "./Switch";
-import { Field } from "./Field";
+import { Field, useField } from "./Field";
 import { AlertCircle, CheckCircle } from 'lucide-react-native';
 import { RootProps as SwitchProps } from '@rn-primitives/switch';
 
@@ -10,6 +10,7 @@ interface SwitchFieldProps extends SwitchProps {
   description?: string;
   isValid?: boolean;
   children?: React.ReactNode;
+  required?: boolean;
 }
 
 const SwitchField = React.forwardRef<React.ElementRef<typeof Switch>, SwitchFieldProps>(
@@ -22,8 +23,14 @@ const SwitchField = React.forwardRef<React.ElementRef<typeof Switch>, SwitchFiel
       checked,
       isValid,
       children,
+      required,
       ...otherProps
     } = props;
+
+    const { fieldId, descriptionId, ariaProps } = useField({
+      error,
+      required
+    });
 
     const switchRef = React.useRef<React.ComponentRef<typeof Switch>>(null);
 
@@ -51,6 +58,7 @@ const SwitchField = React.forwardRef<React.ElementRef<typeof Switch>, SwitchFiel
             ref={switchRef}
             onCheckedChange={onCheckedChange}
             checked={checked}
+            {...ariaProps}
             {...otherProps}
           >
             {children}
@@ -58,14 +66,14 @@ const SwitchField = React.forwardRef<React.ElementRef<typeof Switch>, SwitchFiel
           {error && <Field.Icon icon={AlertCircle} />}
           {isValid && <Field.Icon icon={CheckCircle} color="green" />}
           {label && (
-            <Field.Label onPress={handleOnLabelPress}>
+            <Field.Label nativeID={fieldId} onPress={handleOnLabelPress}>
               {label}
             </Field.Label>
           )}
         </Field.Row>
 
         {(description || error) && (
-          <Field.Description>
+          <Field.Description nativeID={descriptionId}>
             {error || description}
           </Field.Description>
         )}

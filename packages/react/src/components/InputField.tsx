@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TextInputProps } from 'react-native';
 import { Input } from "./Input";
-import { Field } from "./Field";
+import { Field, useField } from "./Field";
 import { AlertCircle, CheckCircle } from 'lucide-react-native';
 
 interface InputFieldProps extends TextInputProps {
@@ -10,6 +10,7 @@ interface InputFieldProps extends TextInputProps {
   description?: string;
   isValid?: boolean;
   children?: React.ReactNode;
+  required?: boolean;
 }
 
 const InputField = React.forwardRef<React.ElementRef<typeof Input>, InputFieldProps>(
@@ -20,8 +21,14 @@ const InputField = React.forwardRef<React.ElementRef<typeof Input>, InputFieldPr
       description,
       isValid,
       children,
+      required,
       ...otherProps
     } = props;
+
+    const { fieldId, descriptionId, ariaProps } = useField({
+      error,
+      required
+    });
 
     const inputRef = React.useRef<React.ComponentRef<typeof Input>>(null);
 
@@ -33,7 +40,7 @@ const InputField = React.forwardRef<React.ElementRef<typeof Input>, InputFieldPr
         }
         return inputRef.current;
       },
-      []
+      [inputRef.current]
     );
 
     function handleOnLabelPress() {
@@ -55,7 +62,7 @@ const InputField = React.forwardRef<React.ElementRef<typeof Input>, InputFieldPr
           <Field.Row>
             {error && <Field.Icon icon={AlertCircle} />}
             {isValid && <Field.Icon icon={CheckCircle} color="green" />}
-            <Field.Label onPress={handleOnLabelPress}>
+            <Field.Label onPress={handleOnLabelPress} nativeID={fieldId}>
               {label}
             </Field.Label>
           </Field.Row>
@@ -64,13 +71,14 @@ const InputField = React.forwardRef<React.ElementRef<typeof Input>, InputFieldPr
         <Input
           ref={inputRef}
           color={fieldColor}
+          {...ariaProps}
           {...otherProps}
         >
           {children}
         </Input>
 
         {(description || error) && (
-          <Field.Description>
+          <Field.Description nativeID={descriptionId}>
             {error || description}
           </Field.Description>
         )}
@@ -82,3 +90,4 @@ const InputField = React.forwardRef<React.ElementRef<typeof Input>, InputFieldPr
 InputField.displayName = 'InputField';
 
 export { InputField };
+export type { InputFieldProps };

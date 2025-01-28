@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Field } from "./Field";
+import { Field, useField } from "./Field";
 import { Select } from "./Select";
 import { AlertCircle, CheckCircle } from 'lucide-react-native';
 import { RootProps as SelectProps } from '@rn-primitives/select';
@@ -10,6 +10,7 @@ interface SelectFieldProps extends SelectProps {
   error?: string;
   isValid?: boolean;
   children?: React.ReactNode;
+  required?: boolean;
 }
 
 const SelectField = React.forwardRef<React.ElementRef<typeof Select>, SelectFieldProps>(
@@ -20,8 +21,14 @@ const SelectField = React.forwardRef<React.ElementRef<typeof Select>, SelectFiel
       description,
       isValid,
       children,
+      required,
       ...otherProps
     } = props;
+
+    const { fieldId, descriptionId, ariaProps } = useField({
+      error,
+      required
+    });
 
     const fieldColor = error ? "error" : isValid ? "success" : "neutral";
 
@@ -31,7 +38,7 @@ const SelectField = React.forwardRef<React.ElementRef<typeof Select>, SelectFiel
           <Field.Row>
             {error && <Field.Icon icon={AlertCircle} />}
             {isValid && <Field.Icon icon={CheckCircle} color="green" />}
-            <Field.Label>
+            <Field.Label nativeID={fieldId}>
               {label}
             </Field.Label>
           </Field.Row>
@@ -39,13 +46,14 @@ const SelectField = React.forwardRef<React.ElementRef<typeof Select>, SelectFiel
 
         <Select
           ref={ref}
+          {...ariaProps}
           {...otherProps}
         >
           {children}
         </Select>
 
         {(description || error) && (
-          <Field.Description>
+          <Field.Description nativeID={descriptionId}>
             {error || description}
           </Field.Description>
         )}

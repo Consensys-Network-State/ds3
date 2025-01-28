@@ -152,6 +152,7 @@ export default function EnhancedForm() {
             }}
             render={({ field: { name, value, onChange, ...otherProps} }) => (
               <InputField
+                required
                 value={value}
                 label="Full Name"
                 placeholder="John Doe"
@@ -178,6 +179,7 @@ export default function EnhancedForm() {
                 }}
                 render={({ field: { name, onChange, value, ...otherProps } }) => (
                   <InputField
+                    required
                     value={value}
                     label="Email"
                     placeholder="john.doe@example.com"
@@ -227,6 +229,7 @@ export default function EnhancedForm() {
             }}
             render={({ field: { name, onChange, value } }) => (
               <SelectField
+                required
                 label="Job Title"
                 description="Select your primary role"
                 error={errors?.[name]?.message}
@@ -274,6 +277,7 @@ export default function EnhancedForm() {
             }}
             render={({ field: { name, onChange, value, ...otherProps } }) => (
               <RadioGroupField
+                required
                 error={errors?.[name]?.message}
                 isValid={isFieldValid(name, value)}
                 value={value}
@@ -311,6 +315,7 @@ export default function EnhancedForm() {
               }}
               render={({ field: { name, onChange, value, ...otherProps } }) => (
                 <RadioGroupField
+                  required
                   error={errors?.[name]?.message}
                   isValid={isFieldValid(name, value)}
                   value={value}
@@ -379,6 +384,7 @@ export default function EnhancedForm() {
             }}
             render={({ field: { value, name, onChange, ...otherProps } }) => (
               <InputField
+                required
                 label="Professional Bio"
                 placeholder="Tell us about your background and what you're looking for..."
                 description="50-500 characters"
@@ -431,6 +437,7 @@ export default function EnhancedForm() {
               }}
               render={({ field: { name, onChange, value, ...otherProps } }) => (
                 <CheckboxField
+                  required
                   error={errors?.[name]?.message}
                   isValid={isFieldValid(name, value)}
                   onCheckedChange={onChange}

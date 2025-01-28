@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Field } from "./Field";
+import { Field, useField } from "./Field";
 import { Checkbox } from "./Checkbox";
 import { AlertCircle, CheckCircle } from 'lucide-react-native';
 import { RootProps as CheckboxProps } from '@rn-primitives/checkbox';
@@ -10,6 +10,7 @@ interface CheckboxFieldProps extends CheckboxProps {
   description?: string;
   isValid?: boolean;
   children?: React.ReactNode;
+  required?: boolean;
 }
 
 const CheckboxField = React.forwardRef<React.ElementRef<typeof Checkbox>, CheckboxFieldProps>(
@@ -22,8 +23,14 @@ const CheckboxField = React.forwardRef<React.ElementRef<typeof Checkbox>, Checkb
       checked,
       isValid,
       children,
+      required,
       ...otherProps
     } = props;
+
+    const { fieldId, descriptionId, ariaProps } = useField({
+      error,
+      required
+    });
 
     function handleOnLabelPress() {
       onCheckedChange?.(!checked);
@@ -38,6 +45,7 @@ const CheckboxField = React.forwardRef<React.ElementRef<typeof Checkbox>, Checkb
             ref={ref}
             onCheckedChange={onCheckedChange}
             checked={checked}
+            {...ariaProps}
             {...otherProps}
           >
             {children}
@@ -45,14 +53,14 @@ const CheckboxField = React.forwardRef<React.ElementRef<typeof Checkbox>, Checkb
           {error && <Field.Icon icon={AlertCircle} />}
           {isValid && <Field.Icon icon={CheckCircle} color="green" />}
           {label && (
-            <Field.Label onPress={handleOnLabelPress}>
+            <Field.Label nativeID={fieldId} onPress={handleOnLabelPress}>
               {label}
             </Field.Label>
           )}
         </Field.Row>
 
         {(description || error) && (
-          <Field.Description>
+          <Field.Description nativeID={descriptionId}>
             {error || description}
           </Field.Description>
         )}

@@ -7,6 +7,43 @@ import { Text } from './Text';
 import { cn } from '../utils';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
+interface UseFieldProps {
+  error?: string;
+  required?: boolean;
+  ariaProps?: Record<string, any>;
+}
+
+export function useField({
+ error,
+ required,
+ ariaProps: extraAriaProps = {},
+}: UseFieldProps = {}) {
+
+  const id = React.useId();
+
+  const ids = React.useMemo(() => ({
+    fieldId: `${id}-field`,
+    descriptionId: `${id}-description`,
+  }), [id]);
+
+  const ariaProps = React.useMemo(() => ({
+    accessible: true,
+    'aria-labelledby': ids.fieldId,
+    accessibilityLabelledBy: ids.fieldId,
+    'aria-describedby': ids.descriptionId,
+    accessibilityDescribedBy: ids.descriptionId,
+    'aria-invalid': !!error,
+    'aria-required': !!required,
+    ...extraAriaProps
+  }), [ids.fieldId, ids.descriptionId, error, required, extraAriaProps]);
+
+  return {
+    fieldId: ids.fieldId,
+    descriptionId: ids.descriptionId,
+    ariaProps,
+  };
+}
+
 const fieldVariants = cva('', {
   variants: {
     color: {
@@ -25,8 +62,6 @@ const fieldVariants = cva('', {
 
 const FieldContext = React.createContext<{
   color?: VariantProps<typeof fieldVariants>['color'];
-  fieldId?: string;
-  fieldDescriptionId?: string;
 } | undefined>(undefined);
 
 interface FieldRootProps {
@@ -38,17 +73,11 @@ interface FieldRootProps {
 
 const FieldRoot = React.forwardRef<View, FieldRootProps>(
   ({ color, children, className, ...props }, ref) => {
-    const componentId = React.useId();
-    const fieldId = `${componentId}-field`;
-    const fieldDescriptionId = `${componentId}-field-description`;
-
     const contextValue = React.useMemo(
       () => ({
         color,
-        fieldId,
-        fieldDescriptionId,
       }),
-      [color, fieldId, fieldDescriptionId]
+      [color]
     );
 
     return (
@@ -101,7 +130,6 @@ const FieldLabel = React.forwardRef<
   return (
     <Label
       ref={ref}
-      nativeID={context.fieldId}
       className={cn(
         'flex-1',
         fieldVariants({ color: context.color }),
@@ -126,7 +154,7 @@ const FieldDescription = React.forwardRef<
     <Animated.View entering={FadeInDown}>
       <Text
         ref={ref}
-        nativeID={context.fieldDescriptionId}
+        accessibilityRole="text"
         className={cn(
           'text-sm',
           fieldVariants({ color: context.color }),
