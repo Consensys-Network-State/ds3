@@ -60,7 +60,7 @@ const Spinner = forwardRef<ElementRef<typeof Icon>, SpinnerProps>(
     return {
       transform: [{ rotate: `${rotation.value}deg` }]
     };
-  });
+  }, [rotation]);
 
   return (
     <Animated.View style={animatedStyle}>
