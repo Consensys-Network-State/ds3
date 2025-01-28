@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { Switch } from "./Switch";
+import { Switch, SwitchRootProps } from "./Switch";
 import { Field, useField } from "./Field";
 import { AlertCircle, CheckCircle } from 'lucide-react-native';
-import { RootProps as SwitchProps } from '@rn-primitives/switch';
 
-interface SwitchFieldProps extends SwitchProps {
+interface SwitchFieldProps extends SwitchRootProps {
   error?: string | undefined;
   label?: string;
   description?: string;
@@ -24,6 +23,7 @@ const SwitchField = React.forwardRef<React.ElementRef<typeof Switch>, SwitchFiel
       isValid,
       children,
       required,
+      color,
       ...otherProps
     } = props;
 
@@ -49,7 +49,8 @@ const SwitchField = React.forwardRef<React.ElementRef<typeof Switch>, SwitchFiel
       onCheckedChange?.(!checked);
     }
 
-    const fieldColor = error ? "error" : isValid ? "success" : "neutral";
+    const fieldStatusColor = error ? "error" : isValid ? "success" : "neutral";
+    const fieldColor = color || fieldStatusColor;
 
     return (
       <Field color={fieldColor}>
@@ -58,6 +59,7 @@ const SwitchField = React.forwardRef<React.ElementRef<typeof Switch>, SwitchFiel
             ref={switchRef}
             onCheckedChange={onCheckedChange}
             checked={checked}
+            color={fieldColor}
             {...ariaProps}
             {...otherProps}
           >

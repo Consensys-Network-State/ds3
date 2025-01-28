@@ -222,14 +222,14 @@ const SwitchThumb = React.forwardRef<
 ));
 SwitchThumb.displayName = 'SwitchThumb';
 
-interface SwitchProps extends SwitchPrimitives.RootProps {
+interface SwitchRootProps extends SwitchPrimitives.RootProps {
   variant?: VariantProps<typeof switchRootVariants>['variant'];
   color?: VariantProps<typeof switchRootVariants>['color'];
   size?: VariantProps<typeof switchRootVariants>['size'];
   thumbIcon?: React.ComponentProps<typeof Icon>['icon'];
 }
 
-const SwitchWeb = React.forwardRef<React.ElementRef<typeof SwitchPrimitives.Root>, SwitchProps>(
+const SwitchWeb = React.forwardRef<React.ElementRef<typeof SwitchPrimitives.Root>, SwitchRootProps>(
   ({ className, variant, color, size, checked, disabled, thumbIcon, ...props }, ref) => (
     <SwitchPrimitives.Root
       ref={ref}
@@ -250,7 +250,7 @@ const SwitchWeb = React.forwardRef<React.ElementRef<typeof SwitchPrimitives.Root
 );
 SwitchWeb.displayName = 'SwitchWeb';
 
-const SwitchNative = React.forwardRef<React.ElementRef<typeof SwitchPrimitives.Root>, SwitchProps>(
+const SwitchNative = React.forwardRef<React.ElementRef<typeof SwitchPrimitives.Root>, SwitchRootProps>(
   ({ className, variant, color, size = 'md', checked, disabled, thumbIcon, ...props }, ref) => {
     const TRANSLATE_X_MAP = {
       sm: 21,
@@ -304,4 +304,4 @@ const Switch = Platform.select({
 });
 
 export { Switch, switchRootVariants, switchThumbVariants };
-export type { SwitchProps };
+export type { SwitchRootProps };

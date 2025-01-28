@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { TextInputProps } from 'react-native';
-import { Input } from "./Input";
+import { Input, InputRootProps } from "./Input";
 import { Field, useField } from "./Field";
 import { AlertCircle, CheckCircle } from 'lucide-react-native';
 
-interface InputFormFieldProps extends TextInputProps {
+interface InputFormFieldProps extends InputRootProps {
   error?: string | undefined;
   label?: string;
   description?: string;
@@ -22,6 +21,7 @@ const InputField = React.forwardRef<React.ElementRef<typeof Input>, InputFormFie
       isValid,
       children,
       required,
+      color,
       ...otherProps
     } = props;
 
@@ -54,7 +54,8 @@ const InputField = React.forwardRef<React.ElementRef<typeof Input>, InputFormFie
       }
     }
 
-    const fieldColor = error ? "error" : isValid ? "success" : "neutral";
+    const fieldStatusColor = error ? "error" : isValid ? "success" : "neutral";
+    const fieldColor = color || fieldStatusColor;
 
     return (
       <Field color={fieldColor}>
