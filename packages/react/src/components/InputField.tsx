@@ -1,10 +1,4 @@
-import {
-  ElementRef,
-  forwardRef,
-  useRef,
-  ComponentRef,
-  useImperativeHandle
-} from 'react';
+import * as React from 'react';
 import { TextInputProps } from 'react-native';
 import { Input } from "./Input";
 import { Field } from "./Field";
@@ -15,29 +9,31 @@ interface InputFieldProps extends TextInputProps {
   label?: string;
   description?: string;
   isValid?: boolean;
+  children?: React.ReactNode;
 }
 
-const InputField = forwardRef<ElementRef<typeof Input>, InputFieldProps>(
+const InputField = React.forwardRef<React.ElementRef<typeof Input>, InputFieldProps>(
   (props, ref) => {
     const {
       error,
       label,
       description,
       isValid,
+      children,
       ...otherProps
     } = props;
 
-    const inputRef = useRef<ComponentRef<typeof Input>>(null);
+    const inputRef = React.useRef<React.ComponentRef<typeof Input>>(null);
 
-    useImperativeHandle(
+    React.useImperativeHandle(
       ref,
       () => {
         if (!inputRef.current) {
-          return {} as ComponentRef<typeof Input>;
+          return {} as React.ComponentRef<typeof Input>;
         }
         return inputRef.current;
       },
-      [inputRef.current]
+      []
     );
 
     function handleOnLabelPress() {
@@ -69,7 +65,9 @@ const InputField = forwardRef<ElementRef<typeof Input>, InputFieldProps>(
           ref={inputRef}
           color={fieldColor}
           {...otherProps}
-        />
+        >
+          {children}
+        </Input>
 
         {(description || error) && (
           <Field.Description>

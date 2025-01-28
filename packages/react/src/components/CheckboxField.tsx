@@ -1,4 +1,4 @@
-import { forwardRef, ElementRef } from 'react';
+import * as React from 'react';
 import { Field } from "./Field";
 import { Checkbox } from "./Checkbox";
 import { AlertCircle, CheckCircle } from 'lucide-react-native';
@@ -9,9 +9,10 @@ interface CheckboxFieldProps extends CheckboxProps {
   label?: string;
   description?: string;
   isValid?: boolean;
+  children?: React.ReactNode;
 }
 
-const CheckboxField = forwardRef<ElementRef<typeof Checkbox>, CheckboxFieldProps>(
+const CheckboxField = React.forwardRef<React.ElementRef<typeof Checkbox>, CheckboxFieldProps>(
   (props, ref) => {
     const {
       error,
@@ -20,6 +21,7 @@ const CheckboxField = forwardRef<ElementRef<typeof Checkbox>, CheckboxFieldProps
       onCheckedChange,
       checked,
       isValid,
+      children,
       ...otherProps
     } = props;
 
@@ -37,7 +39,9 @@ const CheckboxField = forwardRef<ElementRef<typeof Checkbox>, CheckboxFieldProps
             onCheckedChange={onCheckedChange}
             checked={checked}
             {...otherProps}
-          />
+          >
+            {children}
+          </Checkbox>
           {error && <Field.Icon icon={AlertCircle} />}
           {isValid && <Field.Icon icon={CheckCircle} color="green" />}
           {label && (

@@ -1,10 +1,4 @@
-import {
-  ElementRef,
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-  ComponentRef
-} from 'react';
+import * as React from 'react';
 import { Switch } from "./Switch";
 import { Field } from "./Field";
 import { AlertCircle, CheckCircle } from 'lucide-react-native';
@@ -15,9 +9,10 @@ interface SwitchFieldProps extends SwitchProps {
   label?: string;
   description?: string;
   isValid?: boolean;
+  children?: React.ReactNode;
 }
 
-const SwitchField = forwardRef<ElementRef<typeof Switch>, SwitchFieldProps>(
+const SwitchField = React.forwardRef<React.ElementRef<typeof Switch>, SwitchFieldProps>(
   (props, ref) => {
     const {
       error,
@@ -26,20 +21,21 @@ const SwitchField = forwardRef<ElementRef<typeof Switch>, SwitchFieldProps>(
       onCheckedChange,
       checked,
       isValid,
+      children,
       ...otherProps
     } = props;
 
-    const switchRef = useRef<ComponentRef<typeof Switch>>(null);
+    const switchRef = React.useRef<React.ComponentRef<typeof Switch>>(null);
 
-    useImperativeHandle(
+    React.useImperativeHandle(
       ref,
       () => {
         if (!switchRef.current) {
-          return {} as ComponentRef<typeof Switch>;
+          return {} as React.ComponentRef<typeof Switch>;
         }
         return switchRef.current;
       },
-      [switchRef.current]
+      []
     );
 
     function handleOnLabelPress() {
@@ -56,7 +52,9 @@ const SwitchField = forwardRef<ElementRef<typeof Switch>, SwitchFieldProps>(
             onCheckedChange={onCheckedChange}
             checked={checked}
             {...otherProps}
-          />
+          >
+            {children}
+          </Switch>
           {error && <Field.Icon icon={AlertCircle} />}
           {isValid && <Field.Icon icon={CheckCircle} color="green" />}
           {label && (

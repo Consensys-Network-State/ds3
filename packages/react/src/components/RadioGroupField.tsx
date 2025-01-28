@@ -1,4 +1,4 @@
-import { FC, ElementRef, forwardRef } from 'react';
+import * as React from 'react';
 import { Field } from "./Field";
 import { RadioGroup, RadioGroupItem } from "./RadioGroup";
 import { AlertCircle, CheckCircle } from 'lucide-react-native';
@@ -9,9 +9,10 @@ interface RadioGroupFieldProps extends RadioGroupProps {
   description?: string;
   error?: string;
   isValid?: boolean;
+  children?: React.ReactNode;
 }
 
-const RadioGroupField = forwardRef<ElementRef<typeof RadioGroup>, RadioGroupFieldProps>(
+const RadioGroupField = React.forwardRef<React.ElementRef<typeof RadioGroup>, RadioGroupFieldProps>(
   (props, ref) => {
     const {
       error,
@@ -59,7 +60,7 @@ interface RadioGroupFieldItemProps {
   onLabelPress?: () => void;
 }
 
-const RadioGroupFieldItem: FC<RadioGroupFieldItemProps> = ({
+const RadioGroupFieldItem: React.FC<RadioGroupFieldItemProps> = ({
                                                              label,
                                                              value,
                                                              onLabelPress

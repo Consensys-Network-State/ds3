@@ -1,4 +1,4 @@
-import { ElementRef, forwardRef } from "react";
+import * as React from "react";
 import { Field } from "./Field";
 import { Select } from "./Select";
 import { AlertCircle, CheckCircle } from 'lucide-react-native';
@@ -9,15 +9,17 @@ interface SelectFieldProps extends SelectProps {
   description?: string;
   error?: string;
   isValid?: boolean;
+  children?: React.ReactNode;
 }
 
-const SelectField = forwardRef<ElementRef<typeof Select>, SelectFieldProps>(
+const SelectField = React.forwardRef<React.ElementRef<typeof Select>, SelectFieldProps>(
   (props, ref) => {
     const {
       error,
       label,
       description,
       isValid,
+      children,
       ...otherProps
     } = props;
 
@@ -38,7 +40,9 @@ const SelectField = forwardRef<ElementRef<typeof Select>, SelectFieldProps>(
         <Select
           ref={ref}
           {...otherProps}
-        />
+        >
+          {children}
+        </Select>
 
         {(description || error) && (
           <Field.Description>
