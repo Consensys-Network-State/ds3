@@ -85,3 +85,4 @@ const SwitchField = React.forwardRef<React.ElementRef<typeof Switch>, SwitchFiel
 SwitchField.displayName = 'SwitchField';
 
 export { SwitchField };
+export type { SwitchFieldProps };

@@ -4,7 +4,7 @@ import { Input } from "./Input";
 import { Field, useField } from "./Field";
 import { AlertCircle, CheckCircle } from 'lucide-react-native';
 
-interface InputFieldProps extends TextInputProps {
+interface InputFormFieldProps extends TextInputProps {
   error?: string | undefined;
   label?: string;
   description?: string;
@@ -13,7 +13,7 @@ interface InputFieldProps extends TextInputProps {
   required?: boolean;
 }
 
-const InputField = React.forwardRef<React.ElementRef<typeof Input>, InputFieldProps>(
+const InputField = React.forwardRef<React.ElementRef<typeof Input>, InputFormFieldProps>(
   (props, ref) => {
     const {
       error,
@@ -90,4 +90,4 @@ const InputField = React.forwardRef<React.ElementRef<typeof Input>, InputFieldPr
 InputField.displayName = 'InputField';
 
 export { InputField };
-export type { InputFieldProps };
+export type { InputFormFieldProps };
