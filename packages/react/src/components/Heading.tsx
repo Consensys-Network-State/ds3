@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
-import { Text } from "react-native";
 import { cn } from "../utils";
+import { Text } from './Text';
 import { TextRef, SlottableTextProps } from '@rn-primitives/types';
 
 const H1 = forwardRef<TextRef, SlottableTextProps>(
