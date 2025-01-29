@@ -37,7 +37,7 @@ const SelectField = React.forwardRef<React.ElementRef<typeof Select>, SelectFiel
         {label && (
           <Field.Row>
             {error && <Field.Icon icon={AlertCircle} />}
-            {isValid && <Field.Icon icon={CheckCircle} color="green" />}
+            {isValid && <Field.Icon icon={CheckCircle} color="success" />}
             <Field.Label nativeID={fieldId}>
               {label}
             </Field.Label>

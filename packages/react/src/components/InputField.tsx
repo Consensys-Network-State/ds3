@@ -62,7 +62,7 @@ const InputField = React.forwardRef<React.ElementRef<typeof Input>, InputFormFie
         {label && (
           <Field.Row>
             {error && <Field.Icon icon={AlertCircle} />}
-            {isValid && <Field.Icon icon={CheckCircle} color="green" />}
+            {isValid && <Field.Icon icon={CheckCircle} color="success" />}
             <Field.Label onPress={handleOnLabelPress} nativeID={fieldId}>
               {label}
             </Field.Label>

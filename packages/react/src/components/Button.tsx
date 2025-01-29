@@ -125,7 +125,6 @@ const buttonIconVariants = cva(
         sm: '',
         md: 'h-4 w-4',
         lg: '',
-        icon: '',
       },
     },
     defaultVariants: {

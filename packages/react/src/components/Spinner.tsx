@@ -1,4 +1,4 @@
-import { forwardRef, ComponentType, ElementRef, useEffect } from 'react';
+import * as React from 'react'
 import Animated, {
   useAnimatedStyle,
   withRepeat,
@@ -12,7 +12,7 @@ import { LoaderCircle } from 'lucide-react-native';
 import { Icon, IconProps } from './Icon';
 
 export interface SpinnerProps extends Omit<IconProps, 'icon'> {
-  icon?: ComponentType<any>;
+  icon?: React.ComponentType<any>;
   duration?: number;
   easing?: typeof Easing.linear;
   repeat?: number;
@@ -22,52 +22,56 @@ export interface SpinnerProps extends Omit<IconProps, 'icon'> {
   direction?: 'clockwise' | 'counterclockwise';
 }
 
-const Spinner = forwardRef<ElementRef<typeof Icon>, SpinnerProps>(
+const Spinner = React.forwardRef<React.ElementRef<typeof Icon>, SpinnerProps>(
   (props, ref) => {
-  const {
-    icon = LoaderCircle,
-    duration = 1000,
-    easing = Easing.linear,
-    repeat = -1,
-    springConfig = {
-      damping: 10,
-      stiffness: 100
-    },
-    useSpring = false,
-    direction = 'clockwise',
-    ...otherProps
-  } = props;
+    const {
+      icon = LoaderCircle,
+      duration = 1000,
+      easing = Easing.linear,
+      repeat = -1,
+      springConfig = {
+        damping: 10,
+        stiffness: 100
+      },
+      useSpring = false,
+      direction = 'clockwise',
+      ...otherProps
+    } = props;
 
-  const rotation = useSharedValue(0);
+    const rotation = useSharedValue(0);
 
-  useEffect(() => {
-    rotation.value = 0;
-    rotation.value = withRepeat(
-      useSpring
-        ? withSpring(direction === 'clockwise' ? 360 : -360, springConfig)
-        : withTiming(
-          direction === 'clockwise' ? 360 : -360,
-          {
-            duration,
-            easing
-          }
-        ),
-      repeat
+    React.useEffect(() => {
+      rotation.value = 0;
+      rotation.value = withRepeat(
+        useSpring
+          ? withSpring(direction === 'clockwise' ? 360 : -360, springConfig)
+          : withTiming(
+            direction === 'clockwise' ? 360 : -360,
+            {
+              duration,
+              easing
+            }
+          ),
+        repeat
+      );
+    }, [duration, easing, repeat, direction, useSpring]);
+
+    const animatedStyle = useAnimatedStyle(() => {
+      return {
+        transform: [{ rotate: `${rotation.value}deg` }]
+      };
+    }, [rotation]);
+
+    return (
+      <Animated.View style={animatedStyle}>
+        <Icon
+          ref={ref}
+          icon={icon}
+          {...otherProps}
+        />
+      </Animated.View>
     );
-  }, [duration, easing, repeat, direction, useSpring]);
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ rotate: `${rotation.value}deg` }]
-    };
-  }, [rotation]);
-
-  return (
-    <Animated.View style={animatedStyle}>
-      <Icon ref={ref} icon={icon} {...otherProps} />
-    </Animated.View>
-  );
-});
+  });
 
 Spinner.displayName = 'Spinner';
 

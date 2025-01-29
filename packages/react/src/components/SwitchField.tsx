@@ -66,7 +66,7 @@ const SwitchField = React.forwardRef<React.ElementRef<typeof Switch>, SwitchFiel
             {children}
           </Switch>
           {error && <Field.Icon icon={AlertCircle} />}
-          {isValid && <Field.Icon icon={CheckCircle} color="green" />}
+          {isValid && <Field.Icon icon={CheckCircle} color="success" />}
           {label && (
             <Field.Label nativeID={fieldId} onPress={handleOnLabelPress}>
               {label}

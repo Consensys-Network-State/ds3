@@ -53,7 +53,7 @@ const CheckboxField = React.forwardRef<React.ElementRef<typeof Checkbox>, Checkb
             {children}
           </Checkbox>
           {error && <Field.Icon icon={AlertCircle} />}
-          {isValid && <Field.Icon icon={CheckCircle} color="green" />}
+          {isValid && <Field.Icon icon={CheckCircle} color="success" />}
           {label && (
             <Field.Label nativeID={fieldId} onPress={handleOnLabelPress}>
               {label}
