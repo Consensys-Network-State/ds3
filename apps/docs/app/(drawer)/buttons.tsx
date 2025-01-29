@@ -1,5 +1,5 @@
 import { ScrollView } from 'react-native';
-import { Text, Button } from "@ds3/react/src";
+import { Text, Button, IconButton } from "@ds3/react/src";
 import type { ButtonColors, ButtonVariant, ButtonSizes } from "@ds3/react/src";
 import { View, } from "react-native";
 import { Figma, LoaderPinwheel, Loader } from 'lucide-react-native';
@@ -112,6 +112,23 @@ export default function Buttons() {
             </View>
           ))}
 
+          <Text className="text-h2">Sizes</Text>
+          {buttonSizes.map(({ size, label }) => (
+            <View key={size} className="flex flex-row flex-wrap gap-4">
+              <Text className="flex items-center">{label}</Text>
+              {buttonVariants.map((variant, index) => (
+                <Button
+                  key={`${variant}-${index}-${size}`}
+                  variant={variant}
+                  color={buttonColors[index] === 'neutral' ? undefined : buttonColors[index]}
+                  size={size}
+                >
+                  <Button.Text>{variant.charAt(0).toUpperCase() + variant.slice(1)}</Button.Text>
+                </Button>
+              ))}
+            </View>
+          ))}
+
           <Text className="text-h2">Icons</Text>
           {iconLayouts.map(({ name, render }) => (
             <View key={name} className="flex flex-row flex-wrap gap-4">
@@ -128,19 +145,18 @@ export default function Buttons() {
             </View>
           ))}
 
-          <Text className="text-h2">Sizes</Text>
+          <Text className="text-h2">Button Icon</Text>
           {buttonSizes.map(({ size, label }) => (
             <View key={size} className="flex flex-row flex-wrap gap-4">
               <Text className="flex items-center">{label}</Text>
               {buttonVariants.map((variant, index) => (
-                <Button
-                  key={`${variant}-${index}-${size}`}
+                <IconButton
+                  key={`${variant}-${size}-icon-only`}
                   variant={variant}
                   color={buttonColors[index] === 'neutral' ? undefined : buttonColors[index]}
                   size={size}
-                >
-                  <Button.Text>{variant.charAt(0).toUpperCase() + variant.slice(1)}</Button.Text>
-                </Button>
+                  icon={Figma}
+                />
               ))}
             </View>
           ))}

@@ -33,7 +33,6 @@ const buttonVariants = cva(
         sm: 'px-2.5 py-[0.34375rem]',
         md: 'px-3 py-2',
         lg: 'px-3.5 py-[0.65625rem]',
-        icon: 'h-10 w-10',
       },
 
       disabled: {
@@ -104,7 +103,6 @@ const buttonTextVariants = cva(
         sm: 'text-sm',
         md: 'text-base',
         lg: 'text-lg',
-        icon: '',
       },
     },
     compoundVariants: [
@@ -142,16 +140,16 @@ const ButtonContext = createContext<VariantProps<typeof buttonVariants> & {
 
 type PressableProps = Omit<React.ComponentPropsWithoutRef<typeof Pressable>, keyof VariantProps<typeof buttonVariants>>;
 
-interface ButtonProps extends PressableProps, VariantProps<typeof buttonVariants> {
+interface ButtonRootProps extends PressableProps, VariantProps<typeof buttonVariants> {
   loading?: boolean;
   asChild?: boolean;
 }
 
-export type ButtonColors = NonNullable<ButtonProps['color']>;
-export type ButtonSizes = NonNullable<ButtonProps['size']>;
-export type ButtonVariant = NonNullable<ButtonProps['variant']>;
+export type ButtonColors = NonNullable<ButtonRootProps['color']>;
+export type ButtonSizes = NonNullable<ButtonRootProps['size']>;
+export type ButtonVariant = NonNullable<ButtonRootProps['variant']>;
 
-const ButtonRoot = forwardRef<ElementRef<typeof Pressable>, ButtonProps>(
+const ButtonRoot = forwardRef<ElementRef<typeof Pressable>, ButtonRootProps>(
   (props, ref) => {
     const {
       className,
@@ -176,7 +174,10 @@ const ButtonRoot = forwardRef<ElementRef<typeof Pressable>, ButtonProps>(
           value={buttonTextVariants({ variant, color, size })}
         >
           <Component
-            className={buttonVariants({ variant, color, size, className, disabled })}
+            className={cn(
+              buttonVariants({ variant, color, size, disabled }),
+              className,
+            )}
             ref={ref}
             role='button'
             disabled={disabled}
@@ -203,8 +204,8 @@ const ButtonIcon = forwardRef<ElementRef<typeof Icon>, ButtonIconProps>(
             variant: buttonContext?.variant,
             color: buttonContext?.color,
           }),
-          className,
-          buttonIconVariants({ size: buttonContext?.size, })
+          buttonIconVariants({ size: buttonContext?.size, }),
+          className
         )}
         icon={icon}
         ref={ref}
@@ -239,8 +240,8 @@ const ButtonSpinner = forwardRef<ElementRef<typeof Icon>, ButtonSpinnerProps>(
               variant: buttonContext?.variant,
               color: buttonContext?.color,
             }),
-            className,
-            buttonIconVariants({ size: buttonContext?.size, })
+            buttonIconVariants({ size: buttonContext?.size, }),
+            className
           )}
           icon={icon}
           ref={ref}
@@ -257,8 +258,8 @@ const ButtonSpinner = forwardRef<ElementRef<typeof Icon>, ButtonSpinnerProps>(
               variant: buttonContext?.variant,
               color: buttonContext?.color,
             }),
-            className,
             buttonIconVariants({ size: buttonContext?.size, }),
+            className
           )}
           icon={loadingIcon}
           ref={ref}
@@ -289,4 +290,4 @@ const Button = Object.assign(ButtonRoot, {
 });
 
 export { Button, ButtonIcon, ButtonSpinner, buttonTextVariants, buttonVariants };
-export type { ButtonProps };
+export type { ButtonRootProps, ButtonIconProps, ButtonSpinnerProps };
