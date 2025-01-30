@@ -132,6 +132,7 @@ const InputContext = React.createContext<{
   size?: VariantProps<typeof inputRootVariants>['size'];
   disabled?: boolean;
   loading?: boolean;
+  readOnly?: boolean; // Add readOnly to context
   focused?: boolean;
   setFocused?: (focused: boolean) => void;
   inputRef?: React.RefObject<React.ElementRef<typeof TextInput>>;
@@ -149,6 +150,7 @@ interface InputRootProps extends
   size?: VariantProps<typeof inputRootVariants>['size'];
   disabled?: boolean;
   loading?: boolean;
+  readOnly?: boolean; // Add readOnly prop
   asChild?: boolean;
 }
 
@@ -160,6 +162,7 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRoot
      size,
      disabled = false,
      loading = false,
+     readOnly = false,
      asChild = false,
      children,
      ...fieldProps
@@ -175,11 +178,12 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRoot
       size,
       disabled,
       loading,
+      readOnly,
       focused,
       setFocused,
       inputRef,
       fieldProps
-    }), [variant, color, size, disabled, loading, focused, fieldProps]);
+    }), [variant, color, size, disabled, loading, readOnly,  focused, fieldProps]);
 
     const Component = asChild ? Slot.Pressable : Pressable;
 
@@ -194,6 +198,7 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRoot
         <Component
           className={cn(
             inputRootVariants({ variant, color, size, disabled, focused }),
+            readOnly && 'web:cursor-text',
             className,
           )}
           onPress={handlePress}
@@ -217,7 +222,7 @@ const InputField = ({ className }: InputFieldProps) => {
     throw new Error('InputField must be used within an Input');
   }
 
-  const { fieldProps = {}, setFocused, disabled, size, loading, inputRef } = context;
+  const { fieldProps = {}, setFocused, disabled, readOnly, size, loading, inputRef } = context;
   const { multiline, onFocus, onBlur, accessibilityState, ...otherProps } = fieldProps;
 
   return (
@@ -227,12 +232,14 @@ const InputField = ({ className }: InputFieldProps) => {
         'flex-1 bg-transparent p-0 outline-none text-neutral-a12 placeholder:text-neutral-a10',
         inputTextVariants({ size }),
         disabled && 'web:cursor-not-allowed',
+        readOnly && 'web:cursor-text',
         multiline && 'native:min-h-[80px]',
         className
       )}
       multiline={multiline}
       textAlignVertical={multiline ? 'top' : 'center'}
-      editable={!disabled}
+      editable={!disabled && !readOnly}
+      selectTextOnFocus={readOnly}
       onFocus={(e) => {
         setFocused?.(true);
         onFocus?.(e);

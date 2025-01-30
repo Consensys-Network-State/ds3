@@ -1,18 +1,5 @@
-import { Platform, Linking } from 'react-native';
 import { ClassValue, clsx } from "clsx";
 import { extendTailwindMerge } from "tailwind-merge";
-
-export const openLink = (url: string) => {
-  if (Platform.OS === 'web') {
-    // Open link in a new tab for web
-    window.open(url, '_blank');
-  } else {
-    // Use Linking to open link in the default browser for React Native
-    Linking.openURL(url).catch(err => {
-      console.error("Failed to open URL: ", err);
-    });
-  }
-};
 
 const fontSizes = [
   '2',
@@ -42,6 +29,8 @@ const twMergeConfig = extendTailwindMerge({
   }
 });
 
-export const cn = (...inputs: ClassValue[]) => {
+const cn = (...inputs: ClassValue[]) => {
   return twMergeConfig(clsx(inputs));
 };
+
+export { cn };

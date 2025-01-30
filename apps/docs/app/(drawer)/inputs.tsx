@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Text, Input } from "@ds3/react/src";
 import { View, ScrollView } from "react-native";
 import { Search, Eye, Mail, Lock, Loader, LoaderPinwheel, Figma } from 'lucide-react-native';
@@ -193,6 +194,40 @@ export default function Inputs() {
     }
   ];
 
+  const readOnlyExamples = [
+    {
+      name: 'Input',
+      render: (variant: InputVariant, color: InputColor) => (
+        <Input
+          variant={variant}
+          color={color}
+          readOnly
+          value="Read only value"
+          placeholder="This input is read only"
+        >
+          <Input.Field />
+        </Input>
+      )
+    },
+    {
+      name: 'Text Area',
+      render: (variant: InputVariant, color: InputColor) => (
+        <Input
+          variant={variant}
+          color={color}
+          readOnly
+          multiline
+          numberOfLines={4}
+          value="Read only value"
+          placeholder="This input is read only"
+        >
+          <Input.Field />
+        </Input>
+      )
+    },
+  ];
+
+
   return (
     <ScrollView className="h-screen bg-neutral-1">
       <View className="flex-1 items-center pb-4">
@@ -385,6 +420,20 @@ export default function Inputs() {
               </Input>
             </View>
           </View>
+
+          <Text className="text-h2">Read Only</Text>
+          {readOnlyExamples.map(({ name, render }) => (
+            <View key={name} className="flex flex-col gap-4">
+              <Text>{name}</Text>
+              <View className="flex flex-row flex-wrap gap-4">
+                {inputVariants.map((variant, index) => (
+                  <View key={`${variant}-${index}`} className="flex-1 min-w-[250px]">
+                    {render(variant, inputColors[index] as InputColor)}
+                  </View>
+                ))}
+              </View>
+            </View>
+          ))}
 
           <Text className="text-h2">Common Examples</Text>
           {commonInputExamples.map(({ name, render }) => (

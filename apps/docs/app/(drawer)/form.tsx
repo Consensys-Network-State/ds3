@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
   SelectItem,
-  utils,
+  cn,
   SwitchField,
   CheckboxField,
   Alert,
@@ -200,7 +200,7 @@ export default function EnhancedForm() {
                 name="phone"
                 rules={{
                   pattern: {
-                    value: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4}$/,
+                    value: /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4}$/,
                     message: 'Please enter a valid phone number'
                   }
                 }}
@@ -239,7 +239,7 @@ export default function EnhancedForm() {
               >
                 <SelectTrigger>
                   <SelectValue
-                    className={utils.cn(
+                    className={cn(
                       'text-sm native:text-lg',
                       value?.value ? 'text-foreground' : 'text-muted-foreground'
                     )}
@@ -350,7 +350,7 @@ export default function EnhancedForm() {
             name="portfolio"
             rules={{
               pattern: {
-                value: /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/,
+                value: /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/,
                 message: 'Please enter a valid URL'
               }
             }}
