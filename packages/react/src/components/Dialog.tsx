@@ -4,6 +4,7 @@ import { Platform, StyleSheet, View, type ViewProps } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { X } from '../icons/X';
 import { cn } from '../utils';
+import { useTheme } from "../theme";
 
 const Dialog = DialogPrimitive.Root;
 
@@ -62,8 +63,10 @@ const DialogContent = React.forwardRef<
   DialogPrimitive.ContentProps & { portalHost?: string }
 >(({ className, children, portalHost, ...props }, ref) => {
   const { open } = DialogPrimitive.useRootContext();
+  const { containerRef } = useTheme();
+
   return (
-    <DialogPortal hostName={portalHost}>
+    <DialogPortal hostName={portalHost} container={containerRef.current as HTMLElement | null}>
       <DialogOverlay>
         <DialogPrimitive.Content
           ref={ref}

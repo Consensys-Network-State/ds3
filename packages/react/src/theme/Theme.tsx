@@ -3,14 +3,14 @@ import { vars } from "nativewind";
 import type { ColorMode, ThemeName, Config } from "@ds3/config";
 import { DEFAULT_MODE, DEFAULT_THEME, generateThemeCssVars, generateShadowCssVars } from "@ds3/config";
 import { cn } from "../utils";
-import { useMemo } from "react";
+import { useMemo, forwardRef } from "react";
 import useTheme from "./useTheme";
 
 export interface ThemeBaseProps extends ThemeProps {
   config: Config;
 }
 
-export const ThemeBase: React.FC<ThemeBaseProps> = (props) => {
+export const ThemeBase = forwardRef<View, ThemeBaseProps>((props, ref) => {
   const {
     children,
     theme = DEFAULT_THEME,
@@ -39,34 +39,39 @@ export const ThemeBase: React.FC<ThemeBaseProps> = (props) => {
   }, [theme, mode, useClass, config]);
 
   return (useClass ?
-      <View className={cn(className, themeClassName, mode)}>
+      <View ref={ref} className={cn(className, themeClassName, mode)}>
         {children}
       </View> :
-      <View style={vars(themeVars)} className={className}>
+      <View ref={ref} style={vars(themeVars)} className={className}>
         {children}
       </View>
   );
-}
+});
+
+ThemeBase.displayName = 'ThemeBase';
 
 export interface ThemeProps {
   children?: React.ReactNode;
   theme?: ThemeName;
-  mode?: ColorMode,
+  mode?: ColorMode;
   className?: string;
-  useClass?: boolean
+  useClass?: boolean;
 }
 
-export const Theme: React.FC<ThemeProps> = (props) => {
+export const Theme = forwardRef<View, ThemeProps>((props, ref) => {
   const { mode, theme, config } = useTheme();
 
   return (
     <ThemeBase
+      ref={ref}
       mode={mode as ColorMode}
       theme={theme}
       config={config}
       {...props}
     />
   );
-}
+});
+
+Theme.displayName = 'Theme';
 
 export default Theme;
