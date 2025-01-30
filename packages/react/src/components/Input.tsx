@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TextInput, Pressable } from 'react-native';
+import { TextInput, Pressable, KeyboardTypeOptions } from 'react-native';
 import { cva, type VariantProps } from 'class-variance-authority';
 import * as Slot from '@rn-primitives/slot';
 import { Icon } from './Icon';
@@ -149,9 +149,20 @@ interface InputRootProps extends
   color?: VariantProps<typeof inputRootVariants>['color'];
   size?: VariantProps<typeof inputRootVariants>['size'];
   disabled?: boolean;
+
+  // TODO: Investigate why Vite Frontend isn't getting these types from TextInput
+  placeholder?: string;
+  keyboardType?: KeyboardTypeOptions;
+  value?: string;
+  multiline?: boolean;
+  numberOfLines?: number;
+  className?: string;
+  // -----------------
+
   loading?: boolean;
   readOnly?: boolean; // Add readOnly prop
   asChild?: boolean;
+  children?: React.ReactNode;
 }
 
 const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRootProps>(
