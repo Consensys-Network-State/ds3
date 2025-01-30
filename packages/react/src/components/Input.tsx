@@ -74,7 +74,7 @@ const inputRootVariants = cva(
       { color: 'success', focused: true, disabled: false, class: 'border-success-a9' },
     ],
     defaultVariants: {
-      variant: 'soft',
+      variant: 'outline',
       color: 'neutral',
       size: 'md',
       disabled: false,
