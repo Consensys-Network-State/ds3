@@ -34,7 +34,13 @@ export default function Checkboxes() {
     { size: 'sm', label: 'Small' }
   ] as const;
 
-  type CheckedStateKey = `variant-${string}` | `color-${string}` | `size-${string}` | `disabled-${string}` | `icon-${string}`;
+  type CheckedStateKey = 
+    | `variant-${string}` 
+    | `color-${string}` 
+    | `size-${string}` 
+    | `disabled-${string}` 
+    | `icon-${string}`
+    | `parent-child-${string}`;
 
   const [checkedStates, setCheckedStates] = useState<Partial<Record<CheckedStateKey, boolean>>>({
     // Variants
@@ -51,6 +57,11 @@ export default function Checkboxes() {
         [`color-${color}-${variant}-${index}`]: true
       }), {})
     }), {}),
+
+    // Add initial states for parent-child checkboxes
+    'parent-child-primary': true,
+    'parent-child-success': true,
+    'parent-child-warning': true,
 
     // Icons - all checked
     ...checkboxColors.reduce((acc, color) => ({
@@ -173,6 +184,40 @@ export default function Checkboxes() {
               </View>
             </View>
           ))}
+
+          <Text className="text-h2 mb-4">Indeterminate</Text>
+          <View className="flex flex-col gap-4">
+            <View className="flex flex-row items-center gap-4">
+              <Checkbox
+                checked={checkboxColors.some(color => checkedStates[`parent-child-${color}`])}
+                indeterminate={
+                  !checkboxColors.every(color => checkedStates[`parent-child-${color}`]) &&
+                  checkboxColors.some(color => checkedStates[`parent-child-${color}`])
+                }
+                onCheckedChange={(checked) => {
+                  const newValue = !checkboxColors.every(color => checkedStates[`parent-child-${color}`]);
+                  const newStates = checkboxColors.reduce((acc, color) => ({
+                    ...acc,
+                    [`parent-child-${color}`]: newValue
+                  }), {});
+                  setCheckedStates(prev => ({ ...prev, ...newStates }));
+                }}
+              />
+              <Text className="text-sm text-neutral-11">Select All Colors</Text>
+            </View>
+            <View className="flex flex-col gap-2 pl-8">
+              {checkboxColors.map((color) => (
+                <View key={color} className="flex flex-row items-center gap-4">
+                  <Checkbox
+                    color={color === 'neutral' ? undefined : color}
+                    checked={Boolean(checkedStates[`parent-child-${color}`])}
+                    onCheckedChange={handleCheckedChange(`parent-child-${color}`)}
+                  />
+                  <Text className="text-sm text-neutral-11 capitalize">{color}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
 
           <Text className="text-h2">Sizes</Text>
           {checkboxSizes.map(({ size, label }) => (
