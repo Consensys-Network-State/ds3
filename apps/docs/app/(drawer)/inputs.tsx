@@ -227,6 +227,14 @@ export default function Inputs() {
     },
   ];
 
+  // Helper function to get the next color in the cycle
+  const getAccentColor = (currentColor: InputColor): InputColor => {
+    if (currentColor === 'neutral') {
+      return 'primary';
+    }
+    const index = inputColors.indexOf(currentColor);
+    return inputColors[(index + 2) % inputColors.length];
+  };
 
   return (
     <ScrollView className="h-screen bg-neutral-1">
@@ -256,6 +264,27 @@ export default function Inputs() {
                       variant={variant}
                       color={color === 'neutral' ? undefined : color}
                       placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)}
+                    >
+                      <Input.Field />
+                    </Input>
+                  </View>
+                ))}
+              </View>
+            </View>
+          ))}
+
+          <Text className="text-h2">Accent Colors</Text>
+          {inputColors.map((color) => (
+            <View key={color} className="flex flex-col gap-4">
+              <Text>{color.charAt(0).toUpperCase() + color.slice(1)}</Text>
+              <View className="flex flex-row flex-wrap gap-4">
+                {inputVariants.map((variant, index) => (
+                  <View key={`${variant}-${index}`} className="flex-1 min-w-[250px]">
+                    <Input
+                      variant={variant}
+                      color={color === 'neutral' ? undefined : color}
+                      accentColor={getAccentColor(color)}
+                      placeholder={`${variant.charAt(0).toUpperCase() + variant.slice(1)} (${getAccentColor(color)} accent)`}
                     >
                       <Input.Field />
                     </Input>

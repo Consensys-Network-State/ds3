@@ -57,16 +57,16 @@ const inputRootVariants = cva(
       { variant: ['outline', 'underline'], color: 'warning', class: 'border-warning-a7' },
       { variant: ['outline', 'underline'], color: 'success', class: 'border-success-a7' },
 
-      // Hover state
-      { color: 'neutral', focused: false, disabled: false, class: 'web:hover:border-primary-a8' },
+      // Hover states
+      { color: 'neutral', focused: false, disabled: false, class: 'web:hover:border-neutral-a8' },
       { color: 'primary', focused: false, disabled: false, class: 'web:hover:border-primary-a8' },
       { color: 'secondary', focused: false, disabled: false, class: 'web:hover:border-secondary-a8' },
       { color: 'error', focused: false, disabled: false, class: 'web:hover:border-error-a8' },
       { color: 'warning', focused: false, disabled: false, class: 'web:hover:border-warning-a8' },
       { color: 'success', focused: false, disabled: false, class: 'web:hover:border-success-a8' },
 
-      // Focus state
-      { color: 'neutral', focused: true, disabled: false, class: 'border-primary-a9' },
+      // Focus states
+      { color: 'neutral', focused: true, disabled: false, class: 'border-neutral-a9' },
       { color: 'primary', focused: true, disabled: false, class: 'border-primary-a9' },
       { color: 'secondary', focused: true, disabled: false, class: 'border-secondary-a9' },
       { color: 'error', focused: true, disabled: false, class: 'border-error-a9' },
@@ -147,6 +147,7 @@ interface InputRootProps extends
   > {
   variant?: VariantProps<typeof inputRootVariants>['variant'];
   color?: VariantProps<typeof inputRootVariants>['color'];
+  accentColor?: VariantProps<typeof inputRootVariants>['color'];
   size?: VariantProps<typeof inputRootVariants>['size'];
   disabled?: boolean;
 
@@ -170,6 +171,7 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRoot
      className,
      variant,
      color,
+     accentColor,
      size,
      disabled = false,
      loading = false,
@@ -182,10 +184,11 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRoot
     const [focused, setFocused] = React.useState(false);
 
     const inputRef = (ref as React.RefObject<React.ElementRef<typeof TextInput>>) || internalInputRef;
+    const effectiveColor = focused && accentColor ? accentColor : color;
 
     const contextValue = React.useMemo(() => ({
       variant,
-      color,
+      color: effectiveColor,
       size,
       disabled,
       loading,
@@ -194,7 +197,7 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRoot
       setFocused,
       inputRef,
       fieldProps
-    }), [variant, color, size, disabled, loading, readOnly,  focused, fieldProps]);
+    }), [variant, effectiveColor, size, disabled, loading, readOnly, focused, fieldProps]);
 
     const Component = asChild ? Slot.Pressable : Pressable;
 
@@ -208,7 +211,7 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRoot
       <InputContext.Provider value={contextValue}>
         <Component
           className={cn(
-            inputRootVariants({ variant, color, size, disabled, focused }),
+            inputRootVariants({ variant, color: effectiveColor, size, disabled, focused }),
             readOnly && 'web:cursor-text',
             className,
           )}
