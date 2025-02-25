@@ -41,33 +41,33 @@ const buttonVariants = cva(
       },
     },
     compoundVariants: [
-      { variant: ['solid', 'elevated'], color: 'neutral', class: 'bg-neutral-9 web:enabled:hover:bg-neutral-10' },
-      { variant: ['solid', 'elevated'], color: 'primary', class: 'bg-primary-9 web:enabled:hover:bg-primary-10' },
-      { variant: ['solid', 'elevated'], color: 'secondary', class: 'bg-secondary-9 web:enabled:hover:bg-secondary-10' },
-      { variant: ['solid', 'elevated'], color: 'error', class: 'bg-error-9 web:enabled:hover:bg-error-10' },
-      { variant: ['solid', 'elevated'], color: 'warning', class: 'bg-warning-9 web:enabled:hover:bg-warning-10' },
-      { variant: ['solid', 'elevated'], color: 'success', class: 'bg-success-9 web:enabled:hover:bg-success-10' },
+      { variant: ['solid', 'elevated'], color: 'neutral', class: 'bg-neutral-9 web:enabled:hover:bg-neutral-10 web:enabled:active:bg-neutral-10' },
+      { variant: ['solid', 'elevated'], color: 'primary', class: 'bg-primary-9 web:enabled:hover:bg-primary-10 web:enabled:active:bg-primary-10' },
+      { variant: ['solid', 'elevated'], color: 'secondary', class: 'bg-secondary-9 web:enabled:hover:bg-secondary-10 web:enabled:active:bg-secondary-10' },
+      { variant: ['solid', 'elevated'], color: 'error', class: 'bg-error-9 web:enabled:hover:bg-error-10 web:enabled:active:bg-error-10' },
+      { variant: ['solid', 'elevated'], color: 'warning', class: 'bg-warning-9 web:enabled:hover:bg-warning-10 web:enabled:active:bg-warning-10' },
+      { variant: ['solid', 'elevated'], color: 'success', class: 'bg-success-9 web:enabled:hover:bg-success-10 web:enabled:active:bg-success-10' },
 
-      { variant: 'soft', color: 'neutral', class: 'bg-neutral-a3 web:enabled:hover:bg-neutral-a4' },
-      { variant: 'soft', color: 'primary', class: 'bg-primary-a3 web:enabled:hover:bg-primary-a4' },
-      { variant: 'soft', color: 'secondary', class: 'bg-secondary-a3 web:enabled:hover:bg-secondary-a4' },
-      { variant: 'soft', color: 'error', class: 'bg-error-a3 web:enabled:hover:bg-error-a4' },
-      { variant: 'soft', color: 'warning', class: 'bg-warning-a3 web:enabled:hover:bg-warning-a4' },
-      { variant: 'soft', color: 'success', class: 'bg-success-a3 web:enabled:hover:bg-success-a4' },
+      { variant: 'soft', color: 'neutral', class: 'bg-neutral-a3 web:enabled:hover:bg-neutral-a4 web:enabled:active:bg-neutral-a4' },
+      { variant: 'soft', color: 'primary', class: 'bg-primary-a3 web:enabled:hover:bg-primary-a4 web:enabled:active:bg-primary-a4' },
+      { variant: 'soft', color: 'secondary', class: 'bg-secondary-a3 web:enabled:hover:bg-secondary-a4 web:enabled:active:bg-secondary-a4' },
+      { variant: 'soft', color: 'error', class: 'bg-error-a3 web:enabled:hover:bg-error-a4 web:enabled:active:bg-error-a4' },
+      { variant: 'soft', color: 'warning', class: 'bg-warning-a3 web:enabled:hover:bg-warning-a4 web:enabled:active:bg-warning-a4' },
+      { variant: 'soft', color: 'success', class: 'bg-success-a3 web:enabled:hover:bg-success-a4 web:enabled:active:bg-success-a4' },
 
-      { variant: ['outline', 'dashed'], color: 'neutral', class: 'border-neutral-a7 web:enabled:hover:border-neutral-a8' },
-      { variant: ['outline', 'dashed'], color: 'primary', class: 'border-primary-a7 web:enabled:hover:border-primary-a8' },
-      { variant: ['outline', 'dashed'], color: 'secondary', class: 'border-secondary-a7 web:enabled:hover:border-secondary-a8' },
-      { variant: ['outline', 'dashed'], color: 'error', class: 'border-error-a7 web:enabled:hover:border-error-a8' },
-      { variant: ['outline', 'dashed'], color: 'warning', class: 'border-warning-a7 web:enabled:hover:border-warning-a8' },
-      { variant: ['outline', 'dashed'], color: 'success', class: 'border-success-a7 web:enabled:hover:border-success-a8' },
+      { variant: ['outline', 'dashed'], color: 'neutral', class: 'border-neutral-a7 web:enabled:hover:border-neutral-a8 web:enabled:active:border-neutral-a8' },
+      { variant: ['outline', 'dashed'], color: 'primary', class: 'border-primary-a7 web:enabled:hover:border-primary-a8 web:enabled:active:border-primary-a8' },
+      { variant: ['outline', 'dashed'], color: 'secondary', class: 'border-secondary-a7 web:enabled:hover:border-secondary-a8 web:enabled:active:border-secondary-a8' },
+      { variant: ['outline', 'dashed'], color: 'error', class: 'border-error-a7 web:enabled:hover:border-error-a8 web:enabled:active:border-error-a8' },
+      { variant: ['outline', 'dashed'], color: 'warning', class: 'border-warning-a7 web:enabled:hover:border-warning-a8 web:enabled:active:border-warning-a8' },
+      { variant: ['outline', 'dashed'], color: 'success', class: 'border-success-a7 web:enabled:hover:border-success-a8 web:enabled:active:border-success-a8' },
 
-      { variant: ['outline', 'dashed', 'ghost'], color: 'neutral', class: 'web:enabled:hover:bg-neutral-a3' },
-      { variant: ['outline', 'dashed', 'ghost'], color: 'primary', class: 'web:enabled:hover:bg-primary-a3' },
-      { variant: ['outline', 'dashed', 'ghost'], color: 'secondary', class: 'web:enabled:hover:bg-secondary-a3' },
-      { variant: ['outline', 'dashed', 'ghost'], color: 'error', class: 'web:enabled:hover:bg-error-a3' },
-      { variant: ['outline', 'dashed', 'ghost'], color: 'warning', class: 'web:enabled:hover:bg-warning-a3' },
-      { variant: ['outline', 'dashed', 'ghost'], color: 'success', class: 'web:enabled:hover:bg-success-a3' },
+      { variant: ['outline', 'dashed', 'ghost'], color: 'neutral', class: 'web:enabled:hover:bg-neutral-a3 web:enabled:active:bg-neutral-a3' },
+      { variant: ['outline', 'dashed', 'ghost'], color: 'primary', class: 'web:enabled:hover:bg-primary-a3 web:enabled:active:bg-primary-a3' },
+      { variant: ['outline', 'dashed', 'ghost'], color: 'secondary', class: 'web:enabled:hover:bg-secondary-a3 web:enabled:active:bg-secondary-a3' },
+      { variant: ['outline', 'dashed', 'ghost'], color: 'error', class: 'web:enabled:hover:bg-error-a3 web:enabled:active:bg-error-a3' },
+      { variant: ['outline', 'dashed', 'ghost'], color: 'warning', class: 'web:enabled:hover:bg-warning-a3 web:enabled:active:bg-warning-a3' },
+      { variant: ['outline', 'dashed', 'ghost'], color: 'success', class: 'web:enabled:hover:bg-success-a3 web:enabled:active:bg-success-a3' },
     ],
     defaultVariants: {
       variant: 'elevated',
@@ -142,6 +142,7 @@ type PressableProps = Omit<React.ComponentPropsWithoutRef<typeof Pressable>, key
 interface ButtonRootProps extends PressableProps, VariantProps<typeof buttonVariants> {
   loading?: boolean;
   asChild?: boolean;
+  accentColor?: ButtonColors;
 }
 
 export type ButtonColors = NonNullable<ButtonRootProps['color']>;
@@ -154,32 +155,65 @@ const ButtonRoot = forwardRef<ElementRef<typeof Pressable>, ButtonRootProps>(
       className,
       variant,
       color,
+      accentColor,
       loading = false,
       asChild = false,
       size,
       disabled,
+      onPressIn,
+      onPressOut,
+      onHoverIn,
+      onHoverOut,
       ...otherProps
     } = props;
+
+    const [isPressed, setIsPressed] = React.useState(false);
+    const [isHovered, setIsHovered] = React.useState(false);
+    const effectiveColor = (isPressed || isHovered) && accentColor ? accentColor : color;
 
     const Component = asChild ? Slot.Pressable : Pressable;
 
     const contextValue = useMemo(() => ({
-      variant, color, size, loading, disabled: disabled || loading
-    }), [variant, color, size, loading, disabled]);
+      variant, color: effectiveColor, size, loading, disabled: disabled || loading
+    }), [variant, effectiveColor, size, loading, disabled]);
+
+    const handlePressIn = React.useCallback((event: any) => {
+      setIsPressed(true);
+      onPressIn?.(event);
+    }, [onPressIn]);
+
+    const handlePressOut = React.useCallback((event: any) => {
+      setIsPressed(false);
+      onPressOut?.(event);
+    }, [onPressOut]);
+
+    const handleHoverIn = React.useCallback((event: any) => {
+      setIsHovered(true);
+      onHoverIn?.(event);
+    }, [onHoverIn]);
+
+    const handleHoverOut = React.useCallback((event: any) => {
+      setIsHovered(false);
+      onHoverOut?.(event);
+    }, [onHoverOut]);
 
     return (
       <ButtonContext.Provider value={contextValue}>
         <TextClassContext.Provider
-          value={buttonTextVariants({ variant, color, size })}
+          value={buttonTextVariants({ variant, color: effectiveColor, size })}
         >
           <Component
             className={cn(
-              buttonVariants({ variant, color, size, disabled }),
+              buttonVariants({ variant, color: effectiveColor, size, disabled }),
               className,
             )}
             ref={ref}
             role='button'
             disabled={disabled}
+            onPressIn={handlePressIn}
+            onPressOut={handlePressOut}
+            onHoverIn={handleHoverIn}
+            onHoverOut={handleHoverOut}
             {...otherProps}
           />
         </TextClassContext.Provider>

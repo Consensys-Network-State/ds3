@@ -112,6 +112,25 @@ export default function Buttons() {
             </View>
           ))}
 
+          <Text className="text-h2">Accent Colors</Text>
+          <View className="flex flex-row flex-wrap gap-4">
+            <Button variant="soft" color="neutral" accentColor="primary">
+              <Button.Text>Neutral to Primary</Button.Text>
+            </Button>
+
+            <Button variant="outline" color="primary" accentColor="secondary">
+              <Button.Text>Primary to Secondary</Button.Text>
+            </Button>
+
+            <Button variant="ghost" color="secondary" accentColor="success">
+              <Button.Text>Secondary to Success</Button.Text>
+            </Button>
+
+            <Button variant="dashed" color="success" accentColor="error">
+              <Button.Text>Success to Error</Button.Text>
+            </Button>
+          </View>
+
           <Text className="text-h2">Sizes</Text>
           {buttonSizes.map(({ size, label }) => (
             <View key={size} className="flex flex-row flex-wrap gap-4">
