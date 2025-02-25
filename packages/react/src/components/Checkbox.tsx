@@ -6,13 +6,13 @@ import { cn } from '../utils';
 import { Icon } from "./Icon";
 
 const checkboxRootVariants = cva(
-  'shrink-0 rounded-md border-2 transition-colors focus:outline-none focus-visible:ring-2 active:ring-2 disabled:cursor-not-allowed disabled:opacity-40',
+  'shrink-0 rounded-md transition-colors focus:outline-none focus-visible:ring-2 active:ring-2 disabled:cursor-not-allowed disabled:opacity-40 box-border',
   {
     variants: {
       variant: {
-        solid: 'border-transparent',
-        soft: 'border-transparent',
-        outline: '',
+        solid: 'p-0.5',
+        soft: 'p-0.5',
+        outline: 'border-2',
       },
       color: {
         neutral: 'ring-primary-a7',
@@ -40,7 +40,7 @@ const checkboxRootVariants = cva(
       // Common - Unchecked states
       { variant: 'solid', checked: false, class: 'bg-neutral-7 hover:bg-neutral-8 ring-neutral-a7' },
       { variant: 'soft', checked: false, class: 'bg-neutral-a3 hover:bg-neutral-a4 ring-neutral-a7' },
-      { variant: 'outline', checked: false, class: 'border-neutral-a7 hover:border-neutral-a8 ring-neutral-a7' },
+      { variant: 'outline', checked: false, class: 'border-neutral-a7 hover:border-neutral-a8 ring-neutral-a7 p-0' },
 
       // Solid variant - Checked states
       { variant: 'solid', color: ['neutral', 'primary'], checked: true, class: 'bg-primary-9 hover:bg-primary-10' },
@@ -73,7 +73,7 @@ const checkboxRootVariants = cva(
 );
 
 const checkboxIconVariants = cva(
-  '',
+  'flex items-center justify-center',
   {
     variants: {
       size: {
