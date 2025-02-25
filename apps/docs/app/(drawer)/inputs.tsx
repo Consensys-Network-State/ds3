@@ -227,15 +227,6 @@ export default function Inputs() {
     },
   ];
 
-  // Helper function to get the next color in the cycle
-  const getAccentColor = (currentColor: InputColor): InputColor => {
-    if (currentColor === 'neutral') {
-      return 'primary';
-    }
-    const index = inputColors.indexOf(currentColor);
-    return inputColors[(index + 2) % inputColors.length];
-  };
-
   return (
     <ScrollView className="h-screen bg-neutral-1">
       <View className="flex-1 items-center pb-4">
@@ -274,25 +265,23 @@ export default function Inputs() {
           ))}
 
           <Text className="text-h2">Accent Colors</Text>
-          {inputColors.map((color) => (
-            <View key={color} className="flex flex-col gap-4">
-              <Text>{color.charAt(0).toUpperCase() + color.slice(1)}</Text>
-              <View className="flex flex-row flex-wrap gap-4">
-                {inputVariants.map((variant, index) => (
-                  <View key={`${variant}-${index}`} className="flex-1 min-w-[250px]">
-                    <Input
-                      variant={variant}
-                      color={color === 'neutral' ? undefined : color}
-                      accentColor={getAccentColor(color)}
-                      placeholder={`${variant.charAt(0).toUpperCase() + variant.slice(1)} (${getAccentColor(color)} accent)`}
-                    >
-                      <Input.Field />
-                    </Input>
-                  </View>
-                ))}
-              </View>
-            </View>
-          ))}
+          <View className="flex flex-row flex-wrap gap-4">
+            <Input variant="soft" color="neutral" accentColor="primary" placeholder="Neutral to Primary">
+              <Input.Field />
+            </Input>
+
+            <Input variant="outline" color="primary" accentColor="secondary" placeholder="Primary to Secondary">
+              <Input.Field />
+            </Input>
+
+            <Input variant="ghost" color="secondary" accentColor="success" placeholder="Secondary to Success">
+              <Input.Field />
+            </Input>
+
+            <Input variant="underline" color="success" accentColor="error" placeholder="Success to Error">
+              <Input.Field />
+            </Input>
+          </View>
 
           <Text className="text-h2">Icons</Text>
           {iconLayouts.map(({ name, render, colors }) => (

@@ -182,9 +182,10 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRoot
    }, ref) => {
     const internalInputRef = React.useRef<React.ElementRef<typeof TextInput>>(null);
     const [focused, setFocused] = React.useState(false);
+    const [isHovered, setIsHovered] = React.useState(false);
 
     const inputRef = (ref as React.RefObject<React.ElementRef<typeof TextInput>>) || internalInputRef;
-    const effectiveColor = focused && accentColor ? accentColor : color;
+    const effectiveColor = (focused || isHovered) && accentColor ? accentColor : color;
 
     const contextValue = React.useMemo(() => ({
       variant,
@@ -216,6 +217,8 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRoot
             className,
           )}
           onPress={handlePress}
+          onHoverIn={() => setIsHovered(true)}
+          onHoverOut={() => setIsHovered(false)}
           tabIndex={-1}
         >
           {children || <InputField />}
