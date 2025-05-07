@@ -10,7 +10,7 @@ export * from './Badge';
 export * from './Checkbox';
 export * from './CheckboxField';
 export * from './Dialog';
-export * from './Input';
+export * from './input';
 export * from './InputField';
 export * from './Label';
 export * from './RadioGroup';
