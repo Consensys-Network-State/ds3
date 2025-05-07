@@ -8,7 +8,7 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import { cn } from '../utils';
-import { Icon } from "./Icon";
+import { Icon } from "./icon";
 
 const switchRootVariants = cva(
   'flex-row h-6 w-11 shrink-0 items-center rounded-full border-2 transition-colors focus:outline-none focus-visible:ring-4 active:ring-4',

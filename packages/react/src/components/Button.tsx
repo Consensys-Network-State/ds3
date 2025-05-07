@@ -3,8 +3,8 @@ import { createContext, forwardRef, ElementRef, useContext, ComponentType, useMe
 import { Pressable } from 'react-native';
 import { cn } from '../utils';
 import { TextClassContext, Text } from './Text';
-import { Icon } from './Icon';
-import { Spinner, SpinnerProps } from './Spinner'
+import { Icon } from './icon';
+import { Spinner, SpinnerProps } from './spinner';
 import * as Slot from '@rn-primitives/slot';
 import * as React from "react";
 import { SlottableTextProps, TextRef } from '@rn-primitives/types';

@@ -3,7 +3,7 @@ import * as CheckboxPrimitive from '@rn-primitives/checkbox';
 import { Check, Minus } from 'lucide-react-native';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../utils';
-import { Icon } from "./Icon";
+import { Icon } from "./icon";
 
 const checkboxRootVariants = cva(
   'shrink-0 rounded-md transition-colors focus:outline-none focus-visible:ring-2 active:ring-2 disabled:cursor-not-allowed disabled:opacity-40 box-border',

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { Icon } from './Icon';
+import { Icon } from './icon';
 import { Label } from './Label';
 import { Text } from './Text';
 import { cn } from '../utils';
