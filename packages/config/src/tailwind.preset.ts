@@ -188,6 +188,18 @@ const ds3Preset = (config: Config): TailwindConfig => ({
         'h5': ['1.5rem', { lineHeight: '1.875rem', fontWeight: '700' }],
         'h6': ['1.25rem', { lineHeight: '1.5625rem', fontWeight: '700' }],
       },
+      animation: {
+        'spin-normal': 'spin 2s linear infinite',
+        'spin-slow': 'spin 4s linear infinite',
+        'spin-fast': 'spin 1s linear infinite',
+        'spin-reverse': 'spin 2s linear infinite reverse',
+      },
+      keyframes: {
+        spin: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+      },
     },
   },
   safelist: [

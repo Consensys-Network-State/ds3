@@ -9,14 +9,23 @@ const Spinner = React.forwardRef<React.ElementRef<typeof Icon>, SpinnerProps>(
     const {
       icon = LoaderCircle,
       className,
+      speed = 'normal',
+      direction = 'clockwise',
       ...otherProps
     } = props;
+
+    const getAnimationClass = () => {
+      const speedClass = speed === 'slow' ? 'animate-spin-slow' : 
+                        speed === 'fast' ? 'animate-spin-fast' : 
+                        'animate-spin-normal';
+      return direction === 'counterclockwise' ? 'animate-spin-reverse' : speedClass;
+    };
 
     return (
       <Icon
         ref={ref}
         icon={icon}
-        className={cn('animate-spin origin-center', className)}
+        className={cn(getAnimationClass(), 'origin-center', className)}
         {...otherProps}
       />
     );
