@@ -1,5 +1,5 @@
 export * from './Button';
-export * from './Text';
+export * from './text';
 export * from './Select';
 export * from './SelectField';
 export * from './Avatar';

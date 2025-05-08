@@ -4,7 +4,7 @@ import { useAugmentedRef } from '@rn-primitives/hooks';
 import * as Slot from '@rn-primitives/slot';
 import { Icon } from '../icon';
 import { Spinner } from '../spinner';
-import { Text } from '../Text';
+import { Text } from '../text';
 import { cn } from '../../utils';
 import { inputRootVariants, inputIconVariants, inputTextVariants } from './styles';
 import type {
