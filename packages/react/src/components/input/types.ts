@@ -1,11 +1,13 @@
 import { TextInput } from 'react-native';
+import type { VariantProps } from 'class-variance-authority';
 import type { IconProps } from '../icon/types';
 import type { SpinnerProps } from '../spinner/types';
+import { inputRootVariants } from './styles';
 
 type InputContext = {
-  variant?: 'soft' | 'outline' | 'underline' | 'ghost';
-  color?: 'neutral' | 'primary' | 'secondary' | 'error' | 'warning' | 'success';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: VariantProps<typeof inputRootVariants>['variant'];
+  color?: VariantProps<typeof inputRootVariants>['color'];
+  size?: VariantProps<typeof inputRootVariants>['size'];
   disabled?: boolean;
   loading?: boolean;
   readOnly?: boolean;
@@ -19,10 +21,10 @@ type InputRootProps = Omit<React.ComponentPropsWithoutRef<typeof TextInput>,
   'editable' |
   'textAlignVertical'
 > & {
-  variant?: 'soft' | 'outline' | 'underline' | 'ghost';
-  color?: 'neutral' | 'primary' | 'secondary' | 'error' | 'warning' | 'success';
-  accentColor?: 'neutral' | 'primary' | 'secondary' | 'error' | 'warning' | 'success';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: VariantProps<typeof inputRootVariants>['variant'];
+  color?: VariantProps<typeof inputRootVariants>['color'];
+  accentColor?: VariantProps<typeof inputRootVariants>['color'];
+  size?: VariantProps<typeof inputRootVariants>['size'];
   disabled?: boolean;
   loading?: boolean;
   readOnly?: boolean;
