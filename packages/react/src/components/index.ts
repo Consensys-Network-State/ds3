@@ -7,7 +7,7 @@ export * from './DropdownMenu';
 export * from './Card';
 export * from './Alert';
 export * from './Badge';
-export * from './Checkbox';
+export * from './checkbox';
 export * from './CheckboxField';
 export * from './Dialog';
 export * from './input';
