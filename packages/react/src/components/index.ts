@@ -22,3 +22,4 @@ export * from './spinner';
 export * from './Heading';
 export * from './Field';
 export * from './IconButton';
+export * from './animate';
