@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Pressable } from 'react-native';
-import { useAugmentedRef } from '@rn-primitives/hooks';
 import * as Slot from '@rn-primitives/slot';
 import { cn } from '../../utils';
 import { inputRootVariants, inputTextVariants } from './styles';
@@ -26,10 +25,11 @@ const InputRoot = React.forwardRef<HTMLInputElement, InputRootProps>(
     children,
     ...fieldProps
   }, ref) => {
-    const augmentedRef = useAugmentedRef({ ref });
+    const internalInputRef = React.useRef<HTMLInputElement>(null);
     const [focused, setFocused] = React.useState(false);
     const [isHovered, setIsHovered] = React.useState(false);
 
+    const inputRef = (ref as React.RefObject<HTMLInputElement>) || internalInputRef;
     const effectiveColor = (focused || isHovered) && accentColor ? accentColor : color;
 
     const contextValue = React.useMemo(() => ({
@@ -41,15 +41,15 @@ const InputRoot = React.forwardRef<HTMLInputElement, InputRootProps>(
       readOnly,
       focused,
       setFocused,
-      inputRef: augmentedRef,
+      inputRef,
       fieldProps
     }), [variant, effectiveColor, size, disabled, loading, readOnly, focused, fieldProps]);
 
     const Component = asChild ? Slot.Pressable : Pressable;
 
     const handlePress = () => {
-      if (!disabled && !loading && augmentedRef.current) {
-        augmentedRef.current.focus();
+      if (!disabled && !loading && inputRef.current) {
+        inputRef.current.focus();
       }
     };
 
