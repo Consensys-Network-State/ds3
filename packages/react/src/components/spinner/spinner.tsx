@@ -1,16 +1,21 @@
 import * as React from 'react';
-import Animated, {
-  useAnimatedStyle,
-  withRepeat,
-  withTiming,
-  useSharedValue,
-  Easing,
-} from 'react-native-reanimated';
 import { LoaderCircle } from 'lucide-react-native';
+import Animated, { 
+  withRepeat, 
+  withTiming, 
+  useSharedValue, 
+  useAnimatedStyle,
+  withSpring,
+  Easing
+} from 'react-native-reanimated';
 import { Icon } from '../icon';
 import type { SpinnerProps } from './types';
 
 const getDuration = (speed: SpinnerProps['speed']) => {
+  if (typeof speed === 'number') {
+    return speed;
+  }
+  
   switch (speed) {
     case 'slow':
       return 2000;
@@ -33,24 +38,24 @@ const Spinner = React.forwardRef<React.ElementRef<typeof Icon>, SpinnerProps>(
     const rotation = useSharedValue(0);
 
     React.useEffect(() => {
-      rotation.value = 0;
+      const config = {
+        duration: getDuration(speed),
+        easing: Easing.linear,
+      };
+
       rotation.value = withRepeat(
         withTiming(
           direction === 'clockwise' ? 360 : -360,
-          {
-            duration: getDuration(speed),
-            easing: Easing.linear,
-          }
+          config
         ),
-        -1
+        -1,
+        false
       );
     }, [speed, direction]);
 
-    const animatedStyle = useAnimatedStyle(() => {
-      return {
-        transform: [{ rotate: `${rotation.value}deg` }]
-      };
-    }, [rotation]);
+    const animatedStyle = useAnimatedStyle(() => ({
+      transform: [{ rotate: `${rotation.value}deg` }]
+    }));
 
     return (
       <Animated.View style={animatedStyle}>

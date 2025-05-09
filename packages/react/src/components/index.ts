@@ -23,4 +23,3 @@ export * from './Heading';
 export * from './field';
 export * from './fields';
 export * from './IconButton';
-export * from './animate';

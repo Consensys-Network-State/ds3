@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Platform } from 'react-native';
+import Animated, { FadeInDown, FadeOutUp } from 'react-native-reanimated';
 import { Input, InputRootProps } from "../input";
 import { Field, useField } from "../field";
 import { AlertCircle, CheckCircle } from 'lucide-react-native';
-import { Animate } from '../animate';
 
 interface InputFieldProps extends InputRootProps {
   error?: string | undefined;
@@ -78,11 +78,14 @@ const InputField = React.forwardRef<any, InputFieldProps>(
         </Input>
 
         {(description || error) && (
-          <Animate type="fadeDown" duration={200} show={true}>
+          <Animated.View
+            entering={FadeInDown.duration(200)}
+            exiting={FadeOutUp.duration(200)}
+          >
             <Field.Description nativeID={descriptionId}>
               {error || description}
             </Field.Description>
-          </Animate>
+          </Animated.View>
         )}
       </Field>
     );
