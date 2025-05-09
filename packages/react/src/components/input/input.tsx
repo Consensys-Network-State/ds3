@@ -77,11 +77,15 @@ InputRoot.displayName = 'Input';
 const InputField = ({ className }: InputFieldProps) => {
   const context = useInputContext();
   const { fieldProps = {}, setFocused, disabled, readOnly, size, loading, inputRef } = context;
-  const { multiline, onFocus, onBlur, ...otherProps } = fieldProps;
+  const { multiline, onFocus, onBlur, numberOfLines, rows, ...otherProps } = fieldProps;
 
   // Transform props for native
   const nativeProps = toNativeProps(otherProps);
   const accessibilityProps = getNativeAccessibilityProps(fieldProps);
+
+  // Calculate height based on numberOfLines or rows
+  const lineHeight = 20; // Approximate line height in pixels
+  const minHeight = multiline ? Math.max(80, (numberOfLines ?? rows ?? 1) * lineHeight) : undefined;
 
   return (
     <TextInput
@@ -91,10 +95,11 @@ const InputField = ({ className }: InputFieldProps) => {
         inputTextVariants({ size }),
         disabled && 'web:cursor-not-allowed',
         readOnly && 'web:cursor-text',
-        multiline && 'native:min-h-[80px]',
         className
       )}
+      style={multiline ? { minHeight } : undefined}
       multiline={multiline}
+      numberOfLines={multiline ? (numberOfLines ?? rows) : undefined}
       textAlignVertical={multiline ? 'top' : 'center'}
       editable={!disabled && !readOnly}
       selectTextOnFocus={readOnly}

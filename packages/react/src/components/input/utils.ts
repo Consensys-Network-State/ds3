@@ -40,6 +40,11 @@ export const toNativeProps = (props: Partial<WebInputProps & SharedInputProps> |
     nativeProps.autoCorrect = props.autoCorrect === 'on';
   }
 
+  // Convert rows to numberOfLines
+  if ('rows' in props) {
+    nativeProps.numberOfLines = props.rows;
+  }
+
   // Handle change events
   if (props.onChange) {
     nativeProps.onChangeText = (text: string) => {

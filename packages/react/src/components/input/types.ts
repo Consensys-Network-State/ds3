@@ -44,6 +44,7 @@ export type SharedInputProps = {
   autoCapitalize?: TextInputProps['autoCapitalize'];
   required?: boolean;
   loading?: boolean;
+  rows?: number;
   numberOfLines?: number;
   onFocus?: (e: WebFocusEvent | NativeFocusEvent) => void;
   onBlur?: (e: WebFocusEvent | NativeFocusEvent) => void;

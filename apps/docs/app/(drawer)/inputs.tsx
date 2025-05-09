@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, Input } from "@ds3/react/src";
+import { Text, Input, Textarea } from "@ds3/react/src";
 import { View, ScrollView } from "react-native";
 import { Search, Eye, Mail, Lock, Loader, LoaderPinwheel, Figma } from 'lucide-react-native';
 import { useState } from "react";
@@ -402,15 +402,11 @@ export default function Inputs() {
               <View className="flex flex-row flex-wrap gap-4">
                 {inputVariants.map((variant) => (
                   <View key={`${variant}-${color}`} className="flex-1 min-w-[250px]">
-                    <Input
+                    <Textarea
                       placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)}
-                      multiline
-                      numberOfLines={4}
                       variant={variant}
                       color={color === 'neutral' ? undefined : color}
-                    >
-                      <Input.Field />
-                    </Input>
+                    />
                   </View>
                 ))}
               </View>
@@ -419,23 +415,25 @@ export default function Inputs() {
 
           <View className="flex flex-row flex-wrap gap-4">
             <View className="flex-1 min-w-[250px]">
-              <Input multiline numberOfLines={4} loading placeholder="Loading">
+              <Textarea loading placeholder="Loading">
                 <Input.Spinner />
-                <Input.Field  />
-              </Input>
-            </View>
-
-            <View className="flex-1 min-w-[250px]">
-              <Input multiline numberOfLines={4} disabled placeholder="Disabled">
                 <Input.Field />
-              </Input>
+              </Textarea>
             </View>
 
             <View className="flex-1 min-w-[250px]">
-              <Input multiline numberOfLines={4} placeholder="With icon...">
+              <Textarea disabled placeholder="Disabled" />
+            </View>
+
+            <View className="flex-1 min-w-[250px]">
+              <Textarea placeholder="With icon...">
                 <Input.Icon icon={Search} />
                 <Input.Field />
-              </Input>
+              </Textarea>
+            </View>
+
+            <View className="flex-1 min-w-[250px]">
+              <Textarea numberOfLines={5} placeholder="Custom height" />
             </View>
           </View>
 
@@ -446,7 +444,17 @@ export default function Inputs() {
               <View className="flex flex-row flex-wrap gap-4">
                 {inputVariants.map((variant, index) => (
                   <View key={`${variant}-${index}`} className="flex-1 min-w-[250px]">
-                    {render(variant, inputColors[index] as InputColor)}
+                    {name === 'Text Area' ? (
+                      <Textarea
+                        variant={variant}
+                        color={inputColors[index] as InputColor}
+                        readOnly
+                        value="Read only value"
+                        placeholder="This input is read only"
+                      />
+                    ) : (
+                      render(variant, inputColors[index] as InputColor)
+                    )}
                   </View>
                 ))}
               </View>

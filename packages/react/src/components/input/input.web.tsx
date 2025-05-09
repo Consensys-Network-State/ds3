@@ -77,7 +77,7 @@ InputRoot.displayName = 'Input';
 const InputField = ({ className }: InputFieldProps) => {
   const context = useInputContext();
   const { fieldProps = {}, setFocused, disabled, readOnly, size, loading, inputRef } = context;
-  const { multiline, onFocus, onBlur, numberOfLines, ...otherProps } = fieldProps;
+  const { multiline, onFocus, onBlur, rows, numberOfLines, ...otherProps } = fieldProps;
 
   // Transform props for web
   const webProps = toWebProps(otherProps);
@@ -112,7 +112,7 @@ const InputField = ({ className }: InputFieldProps) => {
   };
 
   return multiline ? (
-    <textarea {...commonProps} rows={numberOfLines} />
+    <textarea {...commonProps} rows={rows ?? numberOfLines} />
   ) : (
     <input {...commonProps} />
   );
