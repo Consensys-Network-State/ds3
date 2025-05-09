@@ -83,20 +83,32 @@ export const toWebProps = (props: Partial<WebInputProps & SharedInputProps> | Pa
     return props as Partial<WebInputProps & SharedInputProps>;
   }
 
+  // Copy over shared props
+  const { 
+    secureTextEntry, 
+    keyboardType, 
+    onChangeText,
+    numberOfLines,
+    ...sharedProps 
+  } = props;
+
+  // Copy all shared props
+  Object.assign(webProps, sharedProps);
+
   // Convert autoCorrect to string
   if ('autoCorrect' in props) {
     webProps.autoCorrect = props.autoCorrect ? 'on' : 'off';
   }
 
   // Convert numberOfLines to rows for textarea
-  if ('numberOfLines' in props) {
-    webProps.rows = props.numberOfLines;
+  if (numberOfLines) {
+    webProps.rows = numberOfLines;
   }
 
   // Handle change events
-  if (props.onChangeText) {
+  if (onChangeText) {
     webProps.onChange = (e: WebChangeEvent) => {
-      props.onChangeText?.(e.target.value);
+      onChangeText(e.target.value);
     };
   }
 
@@ -109,7 +121,7 @@ export const toWebProps = (props: Partial<WebInputProps & SharedInputProps> | Pa
   }
 
   // Handle secure text entry
-  if (props.secureTextEntry) {
+  if (secureTextEntry) {
     webProps.type = 'password';
   }
 
