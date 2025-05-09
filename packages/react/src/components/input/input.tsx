@@ -1,18 +1,13 @@
 import * as React from 'react';
 import { TextInput, Pressable } from 'react-native';
 import * as Slot from '@rn-primitives/slot';
-import { Icon } from '../icon';
-import { Spinner } from '../spinner';
-import { Text } from '../text';
 import { cn } from '../../utils';
-import { inputRootVariants, inputIconVariants, inputTextVariants } from './styles';
+import { inputRootVariants, inputTextVariants } from './styles';
 import { InputContextProvider, useInputContext } from './context';
+import { InputIcon, InputSpinner, InputText } from './input.shared';
 import type {
   InputRootProps,
   InputFieldProps,
-  InputIconProps,
-  InputSpinnerProps,
-  InputTextProps,
 } from './types';
 
 const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRootProps>(
@@ -119,92 +114,6 @@ const InputField = ({ className }: InputFieldProps) => {
   );
 };
 InputField.displayName = 'InputField';
-
-const InputIcon = React.forwardRef<React.ElementRef<typeof Icon>, InputIconProps>(
-  ({ className, icon, ...props }, ref) => {
-    const context = useInputContext();
-
-    return (
-      <Icon
-        ref={ref}
-        icon={icon}
-        className={cn(
-          inputIconVariants({
-            color: context.color,
-            size: context.size,
-            disabled: context.disabled,
-          }),
-          className
-        )}
-        {...props}
-      />
-    );
-  }
-);
-InputIcon.displayName = 'InputIcon';
-
-const InputSpinner = React.forwardRef<React.ElementRef<typeof Icon>, InputSpinnerProps>(
-  (props, ref) => {
-    const {
-      className,
-      icon,
-      loadingIcon,
-      ...otherProps
-    } = props;
-
-    const context = useInputContext();
-
-    if (icon && !context.loading) {
-      return (
-        <Icon
-          ref={ref}
-          icon={icon}
-          className={cn(
-            inputIconVariants({
-              color: context.color,
-              size: context.size,
-              disabled: context.disabled,
-            }),
-            className
-          )}
-          {...otherProps}
-        />
-      );
-    }
-
-    if (context.loading) {
-      return (
-        <Spinner
-          ref={ref}
-          icon={loadingIcon}
-          className={cn(
-            inputIconVariants({
-              color: context.color,
-              size: context.size,
-              disabled: context.disabled,
-            }),
-            'animate-spin origin-center',
-            className
-          )}
-          {...otherProps}
-        />
-      );
-    }
-
-    return null;
-  }
-);
-InputSpinner.displayName = 'InputSpinner';
-
-const InputText = React.forwardRef<React.ElementRef<typeof Text>, InputTextProps>(
-  (props, ref) => (
-    <Text
-      ref={ref}
-      {...props}
-    />
-  )
-);
-InputText.displayName = 'InputText';
 
 const Input = Object.assign(InputRoot, {
   Field: InputField,
