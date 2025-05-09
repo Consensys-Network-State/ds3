@@ -5,7 +5,7 @@ import { cn } from '../../utils';
 import { inputRootVariants, inputTextVariants } from './styles';
 import { InputContextProvider, useInputContext } from './context';
 import { InputIcon, InputSpinner, InputText } from './input.shared';
-import { toNativeProps, getNativeAccessibilityProps, handleFocus } from './utils';
+import { toNativeProps, getInputAccessibilityProps, handleFocus } from './utils';
 import type {
   InputRootProps,
   InputFieldProps,
@@ -81,7 +81,7 @@ const InputField = ({ className }: InputFieldProps) => {
 
   // Transform props for native
   const nativeProps = toNativeProps(otherProps);
-  const accessibilityProps = getNativeAccessibilityProps(fieldProps);
+  const accessibilityProps = getInputAccessibilityProps({ disabled, loading, multiline });
 
   // Calculate height based on numberOfLines or rows
   const lineHeight = 20; // Approximate line height in pixels

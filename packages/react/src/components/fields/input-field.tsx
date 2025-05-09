@@ -3,7 +3,6 @@ import { Platform } from 'react-native';
 import { Input, InputRootProps } from "../input";
 import { Field, useField } from "../field";
 import { AlertCircle, CheckCircle } from 'lucide-react-native';
-import { getAccessibilityProps, getNativeAccessibilityProps } from '../input/utils';
 import { Animate } from '../animate';
 
 interface InputFieldProps extends InputRootProps {
@@ -51,22 +50,11 @@ const InputField = React.forwardRef<any, InputFieldProps>(
         return;
       }
 
-      debugger;
-      // The Input component handles focus internally through its context
-      if (Platform.OS === 'web') {
-        inputRef.current.focus();
-      } else {
-        inputRef.current.focus();
-      }
+      inputRef.current.focus();
     }
 
     const fieldStatusColor = error ? "error" : isValid ? "success" : "neutral";
     const fieldColor = color || fieldStatusColor;
-
-    // Get platform-specific accessibility props
-    const accessibilityProps = Platform.OS === 'web' 
-      ? getAccessibilityProps(otherProps as any)
-      : getNativeAccessibilityProps(otherProps as any);
 
     return (
       <Field color={fieldColor}>
@@ -83,7 +71,7 @@ const InputField = React.forwardRef<any, InputFieldProps>(
         <Input
           ref={inputRef}
           color={fieldColor}
-          {...accessibilityProps}
+          {...ariaProps}
           {...otherProps}
         >
           {children}

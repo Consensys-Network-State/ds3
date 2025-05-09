@@ -1,12 +1,6 @@
 import * as React from 'react';
-import { Platform } from 'react-native';
 import type { UseFieldProps } from './types';
-import { 
-  getNativeFieldAccessibilityProps, 
-  getNativeFieldElementAccessibilityProps, 
-  getWebFieldAccessibilityProps, 
-  getFieldElementAccessibilityProps 
-} from './utils';
+import { getFieldAccessibilityProps } from './utils';
 
 export function useField({
   error,
@@ -21,23 +15,12 @@ export function useField({
   }), [id]);
 
   const ariaProps = React.useMemo(() => {
-    const baseProps = Platform.select({
-      web: {
-        ...getWebFieldAccessibilityProps({ error, required }),
-        ...getFieldElementAccessibilityProps({
-          id: ids.fieldId,
-          describedBy: ids.descriptionId,
-          labelledBy: ids.fieldId,
-        }),
-      },
-      default: {
-        ...getNativeFieldAccessibilityProps({ error, required }),
-        ...getNativeFieldElementAccessibilityProps({
-          id: ids.fieldId,
-          describedBy: ids.descriptionId,
-          labelledBy: ids.fieldId,
-        }),
-      },
+    const baseProps = getFieldAccessibilityProps({
+      error,
+      required,
+      id: ids.fieldId,
+      describedBy: ids.descriptionId,
+      labelledBy: ids.fieldId,
     });
 
     return {

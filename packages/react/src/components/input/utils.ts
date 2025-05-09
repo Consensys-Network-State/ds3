@@ -6,6 +6,7 @@ import type {
   NativeFocusEvent,
   SharedInputProps
 } from './types';
+import { Platform } from 'react-native';
 
 // Type guard to check if props are web props
 const isWebProps = (props: any): props is WebInputProps => {
@@ -128,28 +129,23 @@ export const toWebProps = (props: Partial<WebInputProps & SharedInputProps> | Pa
   return webProps;
 };
 
-// Get accessibility props that work on both platforms
-export const getAccessibilityProps = (props: Partial<SharedInputProps>) => {
+// Get input-specific accessibility props for both platforms
+export const getInputAccessibilityProps = (props: Partial<SharedInputProps>) => {
   const { disabled, loading, multiline } = props;
   
-  // Return web-specific accessibility props
-  return {
-    'aria-disabled': disabled,
-    'aria-busy': loading,
-    'aria-multiline': multiline,
-  };
-};
-
-// Get native-specific accessibility props
-export const getNativeAccessibilityProps = (props: Partial<SharedInputProps>) => {
-  const { disabled, loading } = props;
-  
-  return {
-    accessibilityState: {
-      disabled,
-      busy: loading,
+  return Platform.select({
+    web: {
+      'aria-disabled': disabled,
+      'aria-busy': loading,
+      'aria-multiline': multiline,
     },
-  };
+    default: {
+      accessibilityState: {
+        disabled,
+        busy: loading,
+      },
+    },
+  });
 };
 
 // Handle focus events consistently across platforms

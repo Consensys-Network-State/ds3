@@ -5,7 +5,7 @@ import { cn } from '../../utils';
 import { inputRootVariants, inputTextVariants } from './styles';
 import { InputContextProvider, useInputContext } from './context';
 import { InputIcon, InputSpinner, InputText } from './input.shared';
-import { toWebProps, getAccessibilityProps, handleFocus } from './utils';
+import { toWebProps, getInputAccessibilityProps, handleFocus } from './utils';
 import type {
   InputRootProps,
   InputFieldProps,
@@ -81,7 +81,7 @@ const InputField = ({ className }: InputFieldProps) => {
 
   // Transform props for web
   const webProps = toWebProps(otherProps);
-  const accessibilityProps = getAccessibilityProps(fieldProps);
+  const accessibilityProps = getInputAccessibilityProps(fieldProps);
 
   // Ensure autoCorrect is a string value
   if ('autoCorrect' in webProps) {
