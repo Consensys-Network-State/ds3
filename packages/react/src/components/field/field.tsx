@@ -5,38 +5,7 @@ import { Label } from '../Label';
 import { Text } from '../Text';
 import { cn } from '../../utils';
 import { fieldVariants } from './styles';
-import { Animate } from '../animate';
-import type { FieldRootProps, FieldIconProps, FieldItemProps, UseFieldProps } from './types';
-import { getNativeFieldAccessibilityProps, getNativeFieldElementAccessibilityProps } from './utils';
-
-export function useField({
-  error,
-  required,
-  ariaProps: extraAriaProps = {},
-}: UseFieldProps = {}) {
-  const id = React.useId();
-
-  const ids = React.useMemo(() => ({
-    fieldId: `${id}-field`,
-    descriptionId: `${id}-description`,
-  }), [id]);
-
-  const ariaProps = React.useMemo(() => ({
-    ...getNativeFieldAccessibilityProps({ error, required }),
-    ...getNativeFieldElementAccessibilityProps({
-      id: ids.fieldId,
-      describedBy: ids.descriptionId,
-      labelledBy: ids.fieldId,
-    }),
-    ...extraAriaProps
-  }), [ids.fieldId, ids.descriptionId, error, required, extraAriaProps]);
-
-  return {
-    fieldId: ids.fieldId,
-    descriptionId: ids.descriptionId,
-    ariaProps,
-  };
-}
+import type { FieldRootProps, FieldIconProps, FieldItemProps } from './types';
 
 const FieldContext = React.createContext<{
   color?: FieldRootProps['color'];
