@@ -6,16 +6,14 @@ import { Spinner } from '../spinner';
 import { Text } from '../text';
 import { cn } from '../../utils';
 import { inputRootVariants, inputIconVariants, inputTextVariants } from './styles';
+import { InputContextProvider, useInputContext } from './context';
 import type {
-  InputContext,
   InputRootProps,
   InputFieldProps,
   InputIconProps,
   InputSpinnerProps,
   InputTextProps,
 } from './types';
-
-const InputContext = React.createContext<InputContext | undefined>(undefined);
 
 const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRootProps>(
   ({
@@ -60,7 +58,7 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRoot
     };
 
     return (
-      <InputContext.Provider value={contextValue}>
+      <InputContextProvider.Provider value={contextValue}>
         <Component
           className={cn(
             inputRootVariants({ variant, color: effectiveColor, size, disabled, focused }),
@@ -74,18 +72,14 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRoot
         >
           {children || <InputField />}
         </Component>
-      </InputContext.Provider>
+      </InputContextProvider.Provider>
     );
   }
 );
 InputRoot.displayName = 'Input';
 
 const InputField = ({ className }: InputFieldProps) => {
-  const context = React.useContext(InputContext);
-  if (!context) {
-    throw new Error('InputField must be used within an Input');
-  }
-
+  const context = useInputContext();
   const { fieldProps = {}, setFocused, disabled, readOnly, size, loading, inputRef } = context;
   const { multiline, onFocus, onBlur, accessibilityState, ...otherProps } = fieldProps;
 
@@ -128,10 +122,7 @@ InputField.displayName = 'InputField';
 
 const InputIcon = React.forwardRef<React.ElementRef<typeof Icon>, InputIconProps>(
   ({ className, icon, ...props }, ref) => {
-    const context = React.useContext(InputContext);
-    if (!context) {
-      throw new Error('InputIcon must be used within an Input');
-    }
+    const context = useInputContext();
 
     return (
       <Icon
@@ -161,10 +152,7 @@ const InputSpinner = React.forwardRef<React.ElementRef<typeof Icon>, InputSpinne
       ...otherProps
     } = props;
 
-    const context = React.useContext(InputContext);
-    if (!context) {
-      throw new Error('InputSpinner must be used within an Input');
-    }
+    const context = useInputContext();
 
     if (icon && !context.loading) {
       return (
