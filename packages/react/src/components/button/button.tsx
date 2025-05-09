@@ -28,6 +28,18 @@ const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRo
     const [isPressed, setIsPressed] = React.useState(false);
     const [isHovered, setIsHovered] = React.useState(false);
     const effectiveColor = (isPressed || isHovered) && accentColor ? accentColor : color;
+    const buttonRef = React.useRef<React.ElementRef<typeof Pressable>>(null);
+
+    React.useImperativeHandle(
+      ref,
+      () => {
+        if (!buttonRef.current) {
+          return {} as React.ElementRef<typeof Pressable>;
+        }
+        return buttonRef.current;
+      },
+      [buttonRef.current]
+    );
 
     const contextValue = React.useMemo(() => ({
       variant,
@@ -39,9 +51,9 @@ const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRo
       isHovered,
       setPressed: setIsPressed,
       setHovered: setIsHovered,
-      buttonRef: ref,
+      buttonRef,
       buttonProps: props,
-    }), [variant, effectiveColor, size, disabled, loading, isPressed, isHovered, ref, props]);
+    }), [variant, effectiveColor, size, disabled, loading, isPressed, isHovered, props]);
 
     const Component = asChild ? Slot.Pressable : Pressable;
 

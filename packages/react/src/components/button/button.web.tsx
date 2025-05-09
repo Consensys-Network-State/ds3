@@ -12,6 +12,18 @@ export const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
     const [isPressed, setIsPressed] = React.useState(false);
     const [isHovered, setIsHovered] = React.useState(false);
     const effectiveColor = (isPressed || isHovered) && accentColor ? accentColor : color;
+    const buttonRef = React.useRef<HTMLButtonElement>(null);
+
+    React.useImperativeHandle(
+      ref,
+      () => {
+        if (!buttonRef.current) {
+          return {} as HTMLButtonElement;
+        }
+        return buttonRef.current;
+      },
+      [buttonRef.current]
+    );
 
     const contextValue = React.useMemo(() => ({
       variant,
@@ -23,9 +35,9 @@ export const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
       isHovered,
       setPressed: setIsPressed,
       setHovered: setIsHovered,
-      buttonRef: ref,
+      buttonRef,
       buttonProps: props,
-    }), [variant, effectiveColor, size, disabled, loading, isPressed, isHovered, ref, props]);
+    }), [variant, effectiveColor, size, disabled, loading, isPressed, isHovered, props]);
 
     const handlePressIn = React.useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
       setIsPressed(true);
@@ -54,7 +66,7 @@ export const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
       <ButtonContextProvider.Provider value={contextValue}>
         <TextClassContext.Provider value={buttonTextVariants({ variant, color: effectiveColor, size })}>
           <button
-            ref={ref}
+            ref={buttonRef}
             type="button"
             className={cn(buttonVariants({ variant, color: effectiveColor, size, disabled: disabled || loading }), className)}
             disabled={disabled || loading}
