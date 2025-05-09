@@ -5,6 +5,7 @@ import { cn } from '../../utils';
 import { inputRootVariants, inputTextVariants } from './styles';
 import { InputContextProvider, useInputContext } from './context';
 import { InputIcon, InputSpinner, InputText } from './input.shared';
+import { toNativeProps, getNativeAccessibilityProps, handleFocus } from './utils';
 import type {
   InputRootProps,
   InputFieldProps,
@@ -76,7 +77,11 @@ InputRoot.displayName = 'Input';
 const InputField = ({ className }: InputFieldProps) => {
   const context = useInputContext();
   const { fieldProps = {}, setFocused, disabled, readOnly, size, loading, inputRef } = context;
-  const { multiline, onFocus, onBlur, accessibilityState, ...otherProps } = fieldProps;
+  const { multiline, onFocus, onBlur, ...otherProps } = fieldProps;
+
+  // Transform props for native
+  const nativeProps = toNativeProps(otherProps);
+  const accessibilityProps = getNativeAccessibilityProps(fieldProps);
 
   return (
     <TextInput
@@ -95,21 +100,14 @@ const InputField = ({ className }: InputFieldProps) => {
       selectTextOnFocus={readOnly}
       onFocus={(e) => {
         setFocused?.(true);
-        onFocus?.(e);
+        handleFocus(true, onFocus, undefined, e);
       }}
       onBlur={(e) => {
         setFocused?.(false);
-        onBlur?.(e);
+        handleFocus(false, undefined, onBlur, e);
       }}
-      aria-multiline={multiline}
-      aria-disabled={disabled}
-      aria-busy={loading}
-      accessibilityState={{
-        ...accessibilityState,
-        disabled,
-        busy: loading,
-      }}
-      {...otherProps}
+      {...accessibilityProps}
+      {...nativeProps}
     />
   );
 };

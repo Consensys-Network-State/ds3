@@ -6,6 +6,7 @@ import { cn } from '../../utils';
 import { inputRootVariants, inputTextVariants } from './styles';
 import { InputContextProvider, useInputContext } from './context';
 import { InputIcon, InputSpinner, InputText } from './input.shared';
+import { toWebProps, getAccessibilityProps, handleFocus } from './utils';
 import type {
   InputRootProps,
   InputFieldProps,
@@ -76,33 +77,44 @@ InputRoot.displayName = 'Input';
 const InputField = ({ className }: InputFieldProps) => {
   const context = useInputContext();
   const { fieldProps = {}, setFocused, disabled, readOnly, size, loading, inputRef } = context;
-  const { multiline, onFocus, onBlur, accessibilityState, ...otherProps } = fieldProps;
+  const { multiline, onFocus, onBlur, numberOfLines, ...otherProps } = fieldProps;
 
-  return (
-    <input
-      ref={inputRef}
-      className={cn(
-        'flex-1 bg-transparent p-0 outline-none text-neutral-a12 placeholder:text-neutral-a10',
-        inputTextVariants({ size }),
-        disabled && 'cursor-not-allowed',
-        readOnly && 'cursor-text',
-        className
-      )}
-      disabled={disabled}
-      readOnly={readOnly}
-      onFocus={(e) => {
-        setFocused?.(true);
-        onFocus?.(e);
-      }}
-      onBlur={(e) => {
-        setFocused?.(false);
-        onBlur?.(e);
-      }}
-      aria-multiline={multiline}
-      aria-disabled={disabled}
-      aria-busy={loading}
-      {...otherProps}
-    />
+  // Transform props for web
+  const webProps = toWebProps(otherProps);
+  const accessibilityProps = getAccessibilityProps(fieldProps);
+
+  // Ensure autoCorrect is a string value
+  if ('autoCorrect' in webProps) {
+    webProps.autoCorrect = webProps.autoCorrect ? 'on' : 'off';
+  }
+
+  const commonProps = {
+    ref: inputRef,
+    className: cn(
+      'flex-1 bg-transparent p-0 outline-none text-neutral-a12 placeholder:text-neutral-a10',
+      inputTextVariants({ size }),
+      disabled && 'cursor-not-allowed',
+      readOnly && 'cursor-text',
+      className
+    ),
+    disabled,
+    readOnly,
+    onFocus: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setFocused?.(true);
+      handleFocus(true, onFocus, undefined, e);
+    },
+    onBlur: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setFocused?.(false);
+      handleFocus(false, undefined, onBlur, e);
+    },
+    ...accessibilityProps,
+    ...webProps,
+  };
+
+  return multiline ? (
+    <textarea {...commonProps} rows={numberOfLines} />
+  ) : (
+    <input {...commonProps} />
   );
 };
 InputField.displayName = 'InputField';
@@ -114,4 +126,4 @@ const Input = Object.assign(InputRoot, {
   Spinner: InputSpinner,
 });
 
-export { Input }; 
+export { Input };
