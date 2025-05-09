@@ -20,6 +20,6 @@ export * from './SwitchField';
 export * from './icon';
 export * from './spinner';
 export * from './Heading';
-export * from './Field';
+export * from './field';
 export * from './IconButton';
 export * from './animate';
