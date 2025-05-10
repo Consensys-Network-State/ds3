@@ -1,11 +1,9 @@
 import type { 
-  WebChangeEvent,
   WebInputProps, 
   NativeInputProps,
-  WebFocusEvent,
-  NativeFocusEvent,
   SharedInputProps
 } from './types';
+import type { WebChangeEvent, WebFocusEvent, NativeFocusEvent } from '../../types';
 import { Platform } from 'react-native';
 
 // Type guard to check if props are web props

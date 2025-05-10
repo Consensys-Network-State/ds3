@@ -80,4 +80,4 @@ export type IconButtonProps = {
   Pick<VariantProps<typeof buttonVariants>, 'variant' | 'color'> & {
     disabled?: boolean;
     loading?: boolean;
-  } & (WebButtonProps | NativeButtonProps); 
+  } & ButtonRootProps; 

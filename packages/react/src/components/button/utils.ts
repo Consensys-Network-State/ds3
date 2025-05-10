@@ -1,4 +1,5 @@
-import type { WebButtonProps, NativeButtonProps, WebClickEvent, NativePressEvent, WebFocusEvent, NativeFocusEvent, SharedButtonProps } from './types';
+import type { WebButtonProps, NativeButtonProps, SharedButtonProps } from './types';
+import type { WebClickEvent, NativePressEvent, WebFocusEvent, NativeFocusEvent } from '../../types';
 import { AccessibilityRole } from 'react-native';
 
 export function isWebButtonProps(props: any): props is WebButtonProps {
