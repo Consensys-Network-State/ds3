@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { cn } from "../utils";
+import { cn } from "../../utils";
 import { Text } from './Text';
 import { TextRef, SlottableTextProps } from '@rn-primitives/types';
 
