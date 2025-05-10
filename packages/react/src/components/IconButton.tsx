@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority';
 import { forwardRef, ElementRef } from 'react';
-import { Button, type ButtonRootProps, type ButtonIconProps } from './Button';
+import { Button, type ButtonRootProps, type ButtonIconProps } from './button';
 import { cn } from '../utils';
 
 const iconButtonVariants = cva('flex items-center justify-center', {

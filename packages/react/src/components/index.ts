@@ -1,5 +1,14 @@
 export * from './button';
 export * from './text';
+export * from './checkbox';
+export * from './input';
+export * from './field';
+export * from './fields';
+export * from './spinner';
+export * from './switch';
+export * from './icon';
+
+
 export * from './Select';
 export * from './SelectField';
 export * from './Avatar';
@@ -7,19 +16,9 @@ export * from './DropdownMenu';
 export * from './Card';
 export * from './Alert';
 export * from './Badge';
-export * from './checkbox';
-// export * from './CheckboxField';
 export * from './Dialog';
-export * from './input';
-// export * from './InputField';
 export * from './Label';
 export * from './RadioGroup';
 export * from './RadioGroupField';
-export * from './switch';
-// export * from './SwitchField';
-export * from './icon';
-export * from './spinner';
 export * from './Heading';
-export * from './field';
-export * from './fields';
 export * from './IconButton';

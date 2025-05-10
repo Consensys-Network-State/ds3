@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import * as Slot from '@rn-primitives/slot';
 import { Icon } from './Icon';
 import { Spinner, SpinnerProps } from './Spinner';
-import { cn } from '../utils';
+import { cn } from '../../utils';
 import { Text } from "./Text";
 import { SlottableTextProps, TextRef } from '@rn-primitives/types';
 

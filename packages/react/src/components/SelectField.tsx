@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Field, useField } from "./Field";
+import { Field, useField } from "./field";
 import { Select } from "./Select";
 import { AlertCircle, CheckCircle } from 'lucide-react-native';
 import { RootProps as SelectProps } from '@rn-primitives/select';

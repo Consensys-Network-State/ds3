@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Field, useField } from "./Field";
+import { Field, useField } from "./field";
 import { RadioGroup, RadioGroupItem } from "./RadioGroup";
 import { AlertCircle, CheckCircle } from 'lucide-react-native';
 import { RootProps as RadioGroupProps } from '@rn-primitives/radio-group';

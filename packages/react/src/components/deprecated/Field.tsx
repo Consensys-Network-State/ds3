@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { Icon } from './icon';
-import { Label } from './Label';
+import { Icon } from './Icon';
+import { Label } from '../Label';
 import { Text } from './Text';
-import { cn } from '../utils';
+import { cn } from '../../utils';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
 interface UseFieldProps {
