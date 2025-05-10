@@ -25,8 +25,10 @@ export const getFieldAccessibilityProps = (props: AccessibilityProps) => {
   return {
     accessible: true,
     accessibilityState: {
+      disabled: false,
+      busy: false,
       invalid: !!error,
-      required: !!required,
+      required: !!required
     },
     accessibilityLabelledBy: labelledBy,
     accessibilityDescribedBy: describedBy,

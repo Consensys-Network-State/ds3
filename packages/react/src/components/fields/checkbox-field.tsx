@@ -5,7 +5,7 @@ import { Checkbox, CheckboxRootProps } from "../checkbox";
 import { Field, useField } from "../field";
 import { AlertCircle, CheckCircle } from 'lucide-react-native';
 
-interface CheckboxFieldProps extends CheckboxRootProps {
+interface CheckboxFormFieldProps extends CheckboxRootProps {
   error?: string | undefined;
   label?: string;
   description?: string;
@@ -14,7 +14,7 @@ interface CheckboxFieldProps extends CheckboxRootProps {
   required?: boolean;
 }
 
-const CheckboxField = React.forwardRef<any, CheckboxFieldProps>(
+const CheckboxField = React.forwardRef<any, CheckboxFormFieldProps>(
   (props, ref) => {
     const {
       error,
@@ -62,8 +62,8 @@ const CheckboxField = React.forwardRef<any, CheckboxFieldProps>(
             onCheckedChange={onCheckedChange}
             checked={checked}
             color={fieldColor}
-            {...ariaProps}
             {...otherProps}
+            {...ariaProps}
           >
             {children}
           </Checkbox>
@@ -94,4 +94,4 @@ const CheckboxField = React.forwardRef<any, CheckboxFieldProps>(
 CheckboxField.displayName = 'CheckboxField';
 
 export { CheckboxField };
-export type { CheckboxFieldProps }; 
+export type { CheckboxFormFieldProps }; 

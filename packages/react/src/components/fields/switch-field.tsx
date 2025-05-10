@@ -4,7 +4,7 @@ import { Switch, SwitchRootProps } from "../switch";
 import { Field, useField } from "../field";
 import { AlertCircle, CheckCircle } from 'lucide-react-native';
 
-interface SwitchFieldProps extends SwitchRootProps {
+interface SwitchFormFieldProps extends SwitchRootProps {
   error?: string | undefined;
   label?: string;
   description?: string;
@@ -13,7 +13,7 @@ interface SwitchFieldProps extends SwitchRootProps {
   required?: boolean;
 }
 
-const SwitchField = React.forwardRef<any, SwitchFieldProps>(
+const SwitchField = React.forwardRef<any, SwitchFormFieldProps>(
   (props, ref) => {
     const {
       error,
@@ -69,8 +69,8 @@ const SwitchField = React.forwardRef<any, SwitchFieldProps>(
         <Switch
           ref={switchRef}
           color={fieldColor}
-          {...ariaProps}
           {...otherProps}
+          {...ariaProps}
         >
           {children}
         </Switch>
@@ -93,4 +93,4 @@ const SwitchField = React.forwardRef<any, SwitchFieldProps>(
 SwitchField.displayName = 'SwitchField';
 
 export { SwitchField };
-export type { SwitchFieldProps }; 
+export type { SwitchFormFieldProps }; 
