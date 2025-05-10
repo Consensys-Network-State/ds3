@@ -3,7 +3,7 @@ import { Pressable } from 'react-native';
 import type { VariantProps } from 'class-variance-authority';
 import type { IconProps } from '../icon/types';
 import type { SpinnerProps } from '../spinner/types';
-import { buttonVariants } from './styles';
+import { buttonVariants, iconButtonVariants } from './styles';
 import type { WebClickEvent, NativePressEvent, WebFocusEvent, NativeFocusEvent } from '../../types';
 
 // Platform-specific button props
@@ -71,4 +71,13 @@ export type ButtonSpinnerProps = SpinnerProps & {
 export type ButtonTextProps = {
   className?: string;
   children?: React.ReactNode;
-}; 
+};
+
+export type IconButtonProps = {
+  icon: ButtonIconProps['icon'];
+  className?: string;
+} & VariantProps<typeof iconButtonVariants> & 
+  Pick<VariantProps<typeof buttonVariants>, 'variant' | 'color'> & {
+    disabled?: boolean;
+    loading?: boolean;
+  }; 

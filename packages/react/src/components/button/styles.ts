@@ -119,4 +119,30 @@ export const buttonIconVariants = cva(
       size: 'md',
     },
   }
-); 
+);
+
+export const iconButtonVariants = cva('flex items-center justify-center', {
+  variants: {
+    size: {
+      sm: 'p-[9px]',
+      md: 'p-[12px]',
+      lg: 'p-[15px]',
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+});
+
+export const iconSizeVariants = cva('', {
+  variants: {
+    size: {
+      sm: 'h-3.5 w-3.5',
+      md: 'h-4 w-4',
+      lg: 'h-[18px] w-[18px]',
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+}); 

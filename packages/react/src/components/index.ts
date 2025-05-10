@@ -20,4 +20,3 @@ export * from './Label';
 export * from './RadioGroup';
 export * from './RadioGroupField';
 export * from './Heading';
-export * from './IconButton';

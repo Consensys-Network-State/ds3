@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useTheme } from "./useTheme";
 import { COLOR_MODES } from "@ds3/config";
 import { MoonStar, Sun } from "lucide-react-native"
-import { IconButton } from "../components/IconButton";
+import { IconButton } from "../components/button";
 
 interface ModeToggleProps {
   className?: string;
