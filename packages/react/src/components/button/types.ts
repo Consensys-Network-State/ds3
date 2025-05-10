@@ -1,15 +1,10 @@
 import * as React from 'react';
-import { Pressable, NativeSyntheticEvent, GestureResponderEvent } from 'react-native';
+import { Pressable } from 'react-native';
 import type { VariantProps } from 'class-variance-authority';
 import type { IconProps } from '../icon/types';
 import type { SpinnerProps } from '../spinner/types';
 import { buttonVariants } from './styles';
-
-// Platform-specific event types
-export type WebClickEvent = React.MouseEvent<HTMLButtonElement>;
-export type WebFocusEvent = React.FocusEvent<HTMLButtonElement>;
-export type NativePressEvent = NativeSyntheticEvent<GestureResponderEvent>;
-export type NativeFocusEvent = NativeSyntheticEvent<GestureResponderEvent>;
+import type { WebClickEvent, NativePressEvent, WebFocusEvent, NativeFocusEvent } from '../../types';
 
 // Platform-specific button props
 export type WebButtonProps = {

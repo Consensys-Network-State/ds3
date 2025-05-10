@@ -1,15 +1,10 @@
 import * as React from 'react';
-import { TextInput, NativeSyntheticEvent, TextInputFocusEventData, TextInputProps } from 'react-native';
+import { TextInput, TextInputProps } from 'react-native';
 import type { VariantProps } from 'class-variance-authority';
 import type { IconProps } from '../icon/types';
 import type { SpinnerProps } from '../spinner/types';
 import { inputRootVariants } from './styles';
-
-// Platform-specific event types
-export type WebChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
-export type WebFocusEvent = React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>;
-export type NativeChangeEvent = NativeSyntheticEvent<TextInputFocusEventData>;
-export type NativeFocusEvent = NativeSyntheticEvent<TextInputFocusEventData>;
+import type { WebChangeEvent, NativeChangeEvent, WebFocusEvent, NativeFocusEvent } from '../../types';
 
 // Platform-specific input props
 export type WebInputProps = {
@@ -53,7 +48,7 @@ export type SharedInputProps = {
 // Unified input props
 export type UnifiedInputProps = SharedInputProps & (WebInputProps | NativeInputProps);
 
-type InputContext = {
+export type InputContext = {
   variant?: VariantProps<typeof inputRootVariants>['variant'];
   color?: VariantProps<typeof inputRootVariants>['color'];
   size?: VariantProps<typeof inputRootVariants>['size'];
@@ -66,7 +61,7 @@ type InputContext = {
   fieldProps?: UnifiedInputProps;
 };
 
-type InputRootProps = Omit<React.ComponentPropsWithoutRef<typeof TextInput>,
+export type InputRootProps = Omit<React.ComponentPropsWithoutRef<typeof TextInput>,
   'className' | 'style' | 'children'> & {
   variant?: VariantProps<typeof inputRootVariants>['variant'];
   color?: VariantProps<typeof inputRootVariants>['color'];
@@ -81,29 +76,20 @@ type InputRootProps = Omit<React.ComponentPropsWithoutRef<typeof TextInput>,
   className?: string;
 } & UnifiedInputProps;
 
-type InputFieldProps = {
+export type InputFieldProps = {
   className?: string;
 };
 
-type InputIconProps = IconProps & {
+export type InputIconProps = IconProps & {
   className?: string;
 };
 
-type InputSpinnerProps = SpinnerProps & {
+export type InputSpinnerProps = SpinnerProps & {
   className?: string;
   loadingIcon?: React.ComponentType<any>;
 };
 
-type InputTextProps = {
+export type InputTextProps = {
   className?: string;
   children?: React.ReactNode;
-};
-
-export type {
-  InputContext,
-  InputRootProps,
-  InputFieldProps,
-  InputIconProps,
-  InputSpinnerProps,
-  InputTextProps,
 }; 
