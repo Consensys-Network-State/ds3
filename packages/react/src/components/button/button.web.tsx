@@ -5,7 +5,7 @@ import { buttonVariants, buttonTextVariants } from './styles';
 import { ButtonContextProvider } from './context';
 import { ButtonIcon, ButtonSpinner, ButtonText } from './button.shared';
 import { cn } from '../../utils';
-import { TextClassContext } from '../Text';
+import { TextClassContext } from '../text';
 
 export const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
   ({ className, variant, color, accentColor, size, disabled, loading, children, onPressIn, onPressOut, onHoverIn, onHoverOut, ...props }, ref) => {

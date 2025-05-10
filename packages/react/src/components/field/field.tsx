@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View } from 'react-native';
 import { Icon } from '../icon';
 import { Label } from '../Label';
-import { Text } from '../Text';
+import { Text } from '../text';
 import { cn } from '../../utils';
 import { fieldVariants } from './styles';
 import type { FieldRootProps, FieldIconProps, FieldItemProps } from './types';

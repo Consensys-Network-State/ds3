@@ -7,6 +7,7 @@ export * from './fields';
 export * from './spinner';
 export * from './switch';
 export * from './icon';
+export * from './heading';
 
 export * from './Select';
 export * from './SelectField';
@@ -19,4 +20,3 @@ export * from './Dialog';
 export * from './Label';
 export * from './RadioGroup';
 export * from './RadioGroupField';
-export * from './Heading';
