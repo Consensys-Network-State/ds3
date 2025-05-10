@@ -2,9 +2,10 @@ import * as DialogPrimitive from '@rn-primitives/dialog';
 import * as React from 'react';
 import { Platform, StyleSheet, View, type ViewProps } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
-import { X } from '../icons/X';
 import { cn } from '../utils';
 import { useTheme } from "../theme";
+import { X } from 'lucide-react-native';
+import { Icon } from './icon';
 
 const Dialog = DialogPrimitive.Root;
 
@@ -85,10 +86,7 @@ const DialogContent = React.forwardRef<
               'absolute right-4 top-4 p-0.5 web:group rounded-sm opacity-70 web:ring-offset-background web:transition-opacity web:hover:opacity-100 web:focus:outline-none web:focus:ring-2 web:focus:ring-ring web:focus:ring-offset-2 web:disabled:pointer-events-none'
             }
           >
-            <X
-              size={Platform.OS === 'web' ? 16 : 18}
-              className={cn('text-muted-foreground', open && 'text-accent-foreground')}
-            />
+            <Icon icon={X} />
           </DialogPrimitive.Close>
         </DialogPrimitive.Content>
       </DialogOverlay>
