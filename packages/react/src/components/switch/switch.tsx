@@ -32,7 +32,7 @@ const Switch = React.forwardRef<React.ElementRef<typeof SwitchPrimitives.Root>, 
 
     const animatedThumbStyle = useAnimatedStyle(() => ({
       transform: [{ translateX: translateX.value }],
-    }));
+    }), [translateX]);
 
     return (
       <SwitchPrimitives.Root

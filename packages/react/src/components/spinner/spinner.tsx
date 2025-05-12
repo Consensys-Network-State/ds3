@@ -51,11 +51,11 @@ const Spinner = React.forwardRef<React.ElementRef<typeof Icon>, SpinnerProps>(
         -1,
         false
       );
-    }, [speed, direction]);
+    }, [speed, direction, rotation]);
 
     const animatedStyle = useAnimatedStyle(() => ({
       transform: [{ rotate: `${rotation.value}deg` }]
-    }));
+    }), [rotation]);
 
     return (
       <Animated.View style={animatedStyle}>
