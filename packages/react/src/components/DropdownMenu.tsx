@@ -10,7 +10,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 import { Check, ChevronDown, ChevronRight, ChevronUp } from 'lucide-react-native';
-import { Icon } from '../components/icon';
+import { Icon } from './icon';
 import { cn } from '../utils';
 import { TextClassContext } from './text';
 
