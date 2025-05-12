@@ -10,6 +10,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { Icon } from '../icon';
 import type { SpinnerProps } from './types';
+import { View } from 'react-native';
 
 const getDuration = (speed: SpinnerProps['speed']) => {
   if (typeof speed === 'number') {
@@ -58,13 +59,15 @@ const Spinner = React.forwardRef<React.ElementRef<typeof Icon>, SpinnerProps>(
     }), [rotation]);
 
     return (
-      <Animated.View style={animatedStyle}>
-        <Icon
-          ref={ref}
-          icon={icon}
-          {...otherProps}
-        />
-      </Animated.View>
+      <View className="web:inline-block">
+        <Animated.View style={animatedStyle}>
+          <Icon
+            ref={ref}
+            icon={icon}
+            {...otherProps}
+          />
+        </Animated.View>
+      </View>
     );
   });
 
