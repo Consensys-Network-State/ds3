@@ -7,6 +7,7 @@ import { ButtonContextProvider } from './context';
 import { ButtonIcon, ButtonSpinner, ButtonText } from './button.shared';
 import { getNativeAccessibilityProps } from './utils';
 import type { ButtonRootProps } from './types';
+import { TextClassContext } from '../text';
 
 const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRootProps>(
   ({
@@ -18,7 +19,6 @@ const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRo
     disabled = false,
     loading = false,
     asChild = false,
-    children,
     onPressIn,
     onPressOut,
     onHoverIn,
@@ -81,22 +81,22 @@ const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRo
 
     return (
       <ButtonContextProvider.Provider value={contextValue}>
-        <Component
-          className={cn(
-            buttonVariants({ variant, color: effectiveColor, size, disabled: disabled || loading }),
-            className,
-          )}
-          ref={ref}
-          disabled={disabled || loading}
-          onPressIn={handlePressIn}
-          onPressOut={handlePressOut}
-          onHoverIn={handleHoverIn}
-          onHoverOut={handleHoverOut}
-          {...accessibilityProps}
-          {...props}
-        >
-          {children}
-        </Component>
+        <TextClassContext.Provider value={buttonTextVariants({ variant, color: effectiveColor, size })}>
+          <Component
+            className={cn(
+              buttonVariants({ variant, color: effectiveColor, size, disabled: disabled || loading }),
+              className,
+            )}
+            ref={ref}
+            disabled={disabled || loading}
+            onPressIn={handlePressIn}
+            onPressOut={handlePressOut}
+            onHoverIn={handleHoverIn}
+            onHoverOut={handleHoverOut}
+            {...accessibilityProps}
+            {...props}
+          />
+        </TextClassContext.Provider>
       </ButtonContextProvider.Provider>
     );
   }
