@@ -4,8 +4,7 @@ import * as Slot from '@rn-primitives/slot';
 import { cn } from '../../utils';
 import { textVariants } from './styles';
 import type { TextProps, TextRef } from './types';
-
-const TextClassContext = React.createContext<string | undefined>(undefined);
+import { TextClassContext } from './context';
 
 const Text = React.forwardRef<TextRef, TextProps>(
   ({ className, size, weight, color, asChild = false, ...props }, ref) => {
@@ -22,4 +21,4 @@ const Text = React.forwardRef<TextRef, TextProps>(
 );
 Text.displayName = 'Text';
 
-export { Text, TextClassContext };
+export { Text };

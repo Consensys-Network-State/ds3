@@ -1,1 +1,2 @@
-export * from './useCopyToClipboard';
+// utilities
+export { useCopyToClipboard } from './useCopyToClipboard';

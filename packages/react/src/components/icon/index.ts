@@ -1,5 +1,8 @@
-'use client';
+// component
+export { Icon } from './icon';
 
-export * from './icon';
-export * from './types';
-export * from './styles'; 
+// types
+export type { IconProps, IconSizes, IconColors } from './types';
+
+// styles
+export { iconVariants } from './styles'; 

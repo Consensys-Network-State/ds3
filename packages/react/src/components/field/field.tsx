@@ -77,6 +77,7 @@ const FieldLabel = React.forwardRef<
 });
 FieldLabel.displayName = 'Field.Label';
 
+// TODO: description is broken in web
 const FieldDescription = React.forwardRef<
   React.ElementRef<typeof Text>,
   React.ComponentPropsWithoutRef<typeof Text>

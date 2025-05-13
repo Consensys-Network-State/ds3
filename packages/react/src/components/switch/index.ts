@@ -1,5 +1,11 @@
-'use client';
+// components
+export { Switch } from './switch';
 
-export * from './switch';
-export * from './types';
-export * from './styles'; 
+// todo: change this to a shared component
+export { SwitchThumb } from './switch.shared';
+
+// types
+export type { SwitchRootProps, SwitchThumbProps } from './types';
+
+// styles
+export { switchRootVariants, switchThumbVariants, switchIconVariants } from './styles'; 

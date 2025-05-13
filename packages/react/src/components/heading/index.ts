@@ -1,4 +1,5 @@
-'use client';
+// components
+export { H1, H2, H3, H4, H5, H6 } from './heading';
 
-export * from './heading';
-export * from './types'; 
+// types
+export type { HeadingProps, HeadingRef, HeadingLevel } from './types'; 

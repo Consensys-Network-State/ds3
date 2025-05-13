@@ -1,5 +1,11 @@
-'use client';
+// components
+export { Text } from './text';
 
-export * from './text';
-export * from './types';
-export * from './styles'; 
+// context
+export { TextClassContext, useTextClass } from './context';
+
+// types
+export type { TextProps, TextRef } from './types';
+
+// styles
+export { textVariants } from './styles'; 

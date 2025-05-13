@@ -1,4 +1,5 @@
-'use client';
+// components
+export { Spinner } from './spinner';
 
-export * from './spinner';
-export * from './types';
+// types
+export type { SpinnerProps } from './types';

@@ -1,6 +1,15 @@
-'use client';
+// components
+export { Checkbox } from './checkbox';
 
-export * from './checkbox';
-export * from './types';
-export * from './styles'; 
-export * from './context';
+// context
+export { CheckboxContext, useCheckboxContext } from './context';
+
+// types
+export type { 
+  CheckboxRootProps,
+  CheckboxIconProps,
+  CheckboxContextValue
+} from './types';
+
+// styles
+export { checkboxRootVariants, checkboxIconVariants } from './styles';

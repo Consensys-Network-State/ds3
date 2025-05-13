@@ -1,16 +1,12 @@
+import * as React from 'react';
 import { View, Platform } from "react-native";
 import { vars } from "nativewind";
-import type { ColorMode, ThemeName, Config } from "@ds3/config";
 import { DEFAULT_MODE, DEFAULT_THEME, generateThemeCssVars, generateShadowCssVars } from "@ds3/config";
-import { cn } from "../utils";
-import { useMemo, forwardRef } from "react";
-import useTheme from "./useTheme";
+import { cn } from "../../utils";
+import { useThemeContext } from "./context";
+import type { ThemeBaseProps, ThemeProps } from "./types";
 
-export interface ThemeBaseProps extends ThemeProps {
-  config: Config;
-}
-
-export const ThemeBase = forwardRef<View, ThemeBaseProps>((props, ref) => {
+export const ThemeBase = React.forwardRef<View, ThemeBaseProps>((props, ref) => {
   const {
     children,
     theme = DEFAULT_THEME,
@@ -22,7 +18,7 @@ export const ThemeBase = forwardRef<View, ThemeBaseProps>((props, ref) => {
 
   const themeClassName = theme === DEFAULT_THEME ? '' : theme;
 
-  const themeVars = useMemo(() => {
+  const themeVars = React.useMemo(() => {
     if (useClass) return {};
 
     const currentTheme = config.themes[theme];
@@ -50,21 +46,13 @@ export const ThemeBase = forwardRef<View, ThemeBaseProps>((props, ref) => {
 
 ThemeBase.displayName = 'ThemeBase';
 
-export interface ThemeProps {
-  children?: React.ReactNode;
-  theme?: ThemeName;
-  mode?: ColorMode;
-  className?: string;
-  useClass?: boolean;
-}
-
-export const Theme = forwardRef<View, ThemeProps>((props, ref) => {
-  const { mode, theme, config } = useTheme();
+export const Theme = React.forwardRef<View, ThemeProps>((props, ref) => {
+  const { mode, theme, config } = useThemeContext();
 
   return (
     <ThemeBase
       ref={ref}
-      mode={mode as ColorMode}
+      mode={mode}
       theme={theme}
       config={config}
       {...props}

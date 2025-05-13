@@ -1,20 +1,12 @@
 import * as React from 'react';
 import { Platform } from 'react-native';
 import Animated, { FadeInDown, FadeOutUp } from 'react-native-reanimated';
-import { Input, InputRootProps } from "../input";
+import { Input } from "../input";
 import { Field, useField } from "../field";
 import { AlertCircle, CheckCircle } from 'lucide-react-native';
+import type { InputFieldRootProps } from './types';
 
-type InputFormFieldProps = InputRootProps & {
-  error?: string | undefined;
-  label?: string;
-  description?: string;
-  isValid?: boolean;
-  children?: React.ReactNode;
-  required?: boolean;
-};
-
-const InputField = React.forwardRef<any, InputFormFieldProps>(
+const InputField = React.forwardRef<any, InputFieldRootProps>(
   (props, ref) => {
     const {
       error,
@@ -95,4 +87,3 @@ const InputField = React.forwardRef<any, InputFormFieldProps>(
 InputField.displayName = 'InputField';
 
 export { InputField };
-export type { InputFormFieldProps };

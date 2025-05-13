@@ -4,17 +4,9 @@ import Animated, { FadeInDown, FadeOutUp } from 'react-native-reanimated';
 import { Checkbox, CheckboxRootProps } from "../checkbox";
 import { Field, useField } from "../field";
 import { AlertCircle, CheckCircle } from 'lucide-react-native';
+import type { CheckboxFieldRootProps } from './types';
 
-interface CheckboxFormFieldProps extends CheckboxRootProps {
-  error?: string | undefined;
-  label?: string;
-  description?: string;
-  isValid?: boolean;
-  children?: React.ReactNode;
-  required?: boolean;
-}
-
-const CheckboxField = React.forwardRef<any, CheckboxFormFieldProps>(
+const CheckboxField = React.forwardRef<any, CheckboxFieldRootProps>(
   (props, ref) => {
     const {
       error,
@@ -94,4 +86,3 @@ const CheckboxField = React.forwardRef<any, CheckboxFormFieldProps>(
 CheckboxField.displayName = 'CheckboxField';
 
 export { CheckboxField };
-export type { CheckboxFormFieldProps }; 

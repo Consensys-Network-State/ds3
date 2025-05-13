@@ -1,6 +1,17 @@
-'use client';
+// components
+export { Field } from './field';
 
-export * from './field';
-export * from './types';
-export * from './styles'; 
-export * from './useField';
+// hooks
+export { useField } from './useField';
+
+// types
+export type { 
+  FieldRootProps,
+  FieldIconProps,
+  FieldItemProps,
+  UseFieldProps,
+  FieldColors
+} from './types';
+
+// styles
+export { fieldVariants } from './styles';

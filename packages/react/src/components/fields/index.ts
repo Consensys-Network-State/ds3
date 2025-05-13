@@ -1,5 +1,12 @@
-'use client';
+// components
+export { CheckboxField } from './checkbox-field';
+export { InputField } from './input-field';
+export { SwitchField } from './switch-field';
 
-export * from './input-field';
-export * from './checkbox-field'; 
-export * from './switch-field';
+// types
+export type {
+  FieldsProps,
+  CheckboxFieldRootProps,
+  InputFieldRootProps,
+  SwitchFieldRootProps,
+} from './types';

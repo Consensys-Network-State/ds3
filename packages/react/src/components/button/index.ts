@@ -1,7 +1,30 @@
-'use client';
+// components
+export { Button } from './button';
+export { IconButton } from './icon-button';
+export { ButtonIcon, ButtonSpinner, ButtonText } from './button.shared';
 
-export * from './button';
-export * from './icon-button';
-export * from './types';
-export * from './styles';
-export * from './context';
+// context
+export { ButtonContextProvider, useButtonContext } from './context';
+
+// types
+export type { 
+  ButtonRootProps,
+  ButtonContext,
+  ButtonIconProps,
+  ButtonSpinnerProps,
+  ButtonTextProps,
+  IconButtonProps,
+  WebButtonProps,
+  NativeButtonProps,
+  SharedButtonProps,
+  UnifiedButtonProps
+} from './types';
+
+// styles
+export { 
+  buttonVariants,
+  buttonTextVariants,
+  buttonIconVariants,
+  iconButtonVariants,
+  iconSizeVariants
+} from './styles'; 

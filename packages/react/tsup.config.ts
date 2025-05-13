@@ -15,5 +15,6 @@ export default defineConfig((options: Options) => ({
   ...options,
   esbuildOptions(options) {
     options.jsx = 'preserve';
+    options.resolveExtensions = ['.web.tsx', '.web.ts', '.tsx', '.ts'];
   },
 }));

@@ -1,19 +1,11 @@
 import * as React from 'react';
 import Animated, { FadeInDown, FadeOutUp } from 'react-native-reanimated';
-import { Switch, SwitchRootProps } from "../switch";
+import { Switch } from "../switch";
 import { Field, useField } from "../field";
 import { AlertCircle, CheckCircle } from 'lucide-react-native';
+import type { SwitchFieldRootProps } from './types';
 
-interface SwitchFormFieldProps extends SwitchRootProps {
-  error?: string | undefined;
-  label?: string;
-  description?: string;
-  isValid?: boolean;
-  children?: React.ReactNode;
-  required?: boolean;
-}
-
-const SwitchField = React.forwardRef<any, SwitchFormFieldProps>(
+const SwitchField = React.forwardRef<any, SwitchFieldRootProps>(
   (props, ref) => {
     const {
       error,
@@ -92,5 +84,4 @@ const SwitchField = React.forwardRef<any, SwitchFormFieldProps>(
 
 SwitchField.displayName = 'SwitchField';
 
-export { SwitchField };
-export type { SwitchFormFieldProps }; 
+export { SwitchField }; 
