@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as SwitchPrimitives from '@rn-primitives/switch';
 import { cn } from '../../utils';
 import { switchRootVariants } from './styles';
-import { SwitchThumb } from './switch.shared';
+import { SwitchThumb } from './Switch.shared';
 import type { SwitchRootProps } from './types';
 
 const Switch = React.forwardRef<React.ElementRef<typeof SwitchPrimitives.Root>, SwitchRootProps>(

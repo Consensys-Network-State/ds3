@@ -1,5 +1,5 @@
 // components
-export { Field } from './field';
+export { Field } from './Field';
 
 // hooks
 export { useField } from './useField';

@@ -1,5 +1,5 @@
 // components
-export { Checkbox } from './checkbox';
+export { Checkbox } from './Checkbox';
 
 // context
 export { CheckboxContext, useCheckboxContext } from './context';

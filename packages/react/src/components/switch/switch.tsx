@@ -7,7 +7,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { cn } from '../../utils';
 import { switchRootVariants } from './styles';
-import { SwitchThumb } from './switch.shared';
+import { SwitchThumb } from './Switch.shared';
 import type { SwitchRootProps } from './types';
 
 const Switch = React.forwardRef<React.ElementRef<typeof SwitchPrimitives.Root>, SwitchRootProps>(

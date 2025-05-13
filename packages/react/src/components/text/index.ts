@@ -1,5 +1,5 @@
 // components
-export { Text } from './text';
+export { Text } from './Text';
 
 // context
 export { TextClassContext, useTextClass } from './context';

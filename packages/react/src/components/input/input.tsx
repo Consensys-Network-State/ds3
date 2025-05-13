@@ -4,7 +4,7 @@ import * as Slot from '@rn-primitives/slot';
 import { cn } from '../../utils';
 import { inputRootVariants, inputTextVariants } from './styles';
 import { InputContextProvider, useInputContext } from './context';
-import { InputIcon, InputSpinner, InputText } from './input.shared';
+import { InputIcon, InputSpinner, InputText } from './Input.shared';
 import { toNativeProps, getInputAccessibilityProps, handleFocus } from './utils';
 import type {
   InputRootProps,

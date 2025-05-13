@@ -1,8 +1,8 @@
 // components
-export { Switch } from './switch';
+export { Switch } from './Switch';
 
 // todo: change this to a shared component
-export { SwitchThumb } from './switch.shared';
+export { SwitchThumb } from './Switch.shared';
 
 // types
 export type { SwitchRootProps, SwitchThumbProps } from './types';

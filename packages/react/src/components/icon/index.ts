@@ -1,5 +1,5 @@
 // component
-export { Icon } from './icon';
+export { Icon } from './Icon';
 
 // types
 export type { IconProps, IconSizes, IconColors } from './types';

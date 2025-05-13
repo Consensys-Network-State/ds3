@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button } from './button';
+import { Button } from './Button';
 import { cn } from '../../utils';
 import { iconButtonVariants, iconSizeVariants } from './styles';
 import type { IconButtonProps } from './types';

@@ -1,7 +1,7 @@
 // components
-export { Input } from './input';
-export { Textarea } from './textarea';
-export { InputIcon, InputSpinner, InputText } from './input.shared';
+export { Input } from './Input';
+export { Textarea } from './Textarea';
+export { InputIcon, InputSpinner, InputText } from './Input.shared';
 
 // context
 export { InputContextProvider, useInputContext } from './context';

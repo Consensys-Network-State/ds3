@@ -4,7 +4,7 @@ import * as Slot from '@rn-primitives/slot';
 import { cn } from '../../utils';
 import { buttonVariants, buttonTextVariants } from './styles';
 import { ButtonContextProvider } from './context';
-import { ButtonIcon, ButtonSpinner, ButtonText } from './button.shared';
+import { ButtonIcon, ButtonSpinner, ButtonText } from './Button.shared';
 import { getNativeAccessibilityProps } from './utils';
 import type { ButtonRootProps } from './types';
 import { TextClassContext } from '../text';

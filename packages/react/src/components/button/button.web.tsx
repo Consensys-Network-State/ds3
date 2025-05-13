@@ -3,7 +3,7 @@ import { ButtonRootProps } from './types';
 import { toWebProps, getAccessibilityProps } from './utils';
 import { buttonVariants, buttonTextVariants } from './styles';
 import { ButtonContextProvider } from './context';
-import { ButtonIcon, ButtonSpinner, ButtonText } from './button.shared';
+import { ButtonIcon, ButtonSpinner, ButtonText } from './Button.shared';
 import { cn } from '../../utils';
 import { TextClassContext } from '../text';
 

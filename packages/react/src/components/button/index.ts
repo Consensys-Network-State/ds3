@@ -1,7 +1,7 @@
 // components
-export { Button } from './button';
-export { IconButton } from './icon-button';
-export { ButtonIcon, ButtonSpinner, ButtonText } from './button.shared';
+export { Button } from './Button';
+export { IconButton } from './IconButton';
+export { ButtonIcon, ButtonSpinner, ButtonText } from './Button.shared';
 
 // context
 export { ButtonContextProvider, useButtonContext } from './context';

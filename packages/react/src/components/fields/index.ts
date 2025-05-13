@@ -1,7 +1,7 @@
 // components
-export { CheckboxField } from './checkbox-field';
-export { InputField } from './input-field';
-export { SwitchField } from './switch-field';
+export { CheckboxField } from './CheckboxField';
+export { InputField } from './InputField';
+export { SwitchField } from './SwitchField';
 
 // types
 export type {
