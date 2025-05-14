@@ -1,9 +1,12 @@
 import { PluginOption, transformWithEsbuild } from 'vite';
 import reactNativeWeb from 'vite-plugin-react-native-web';
 import react from '@vitejs/plugin-react';
-import { Config } from "./types";
+import { UserConfig } from "./types";
+import { generateConfig } from "./utils";
 
-function vitePlugin(command: 'serve' | 'build', config: Config): PluginOption[] {
+function vitePlugin(command: 'serve' | 'build', userConfig: UserConfig): PluginOption[] {
+  const config = generateConfig(userConfig);
+  
   return [
     react({
       babel: {

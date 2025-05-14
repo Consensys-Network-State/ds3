@@ -1,6 +1,6 @@
-import { generateConfig } from '@ds3/config'
+import { UserConfig } from '@ds3/config'
 
-export default generateConfig({
+export default {
   themes: {
     default: {
       colors: {
@@ -43,4 +43,4 @@ export default generateConfig({
       },
     }
   },
-});
+} satisfies UserConfig;

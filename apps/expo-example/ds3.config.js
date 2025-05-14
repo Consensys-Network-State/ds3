@@ -1,6 +1,4 @@
-const { generateConfig } = require('@ds3/config');
-
-module.exports = generateConfig({
+module.exports = {
   themes: {
     default: {
       colors: {
@@ -45,4 +43,4 @@ module.exports = generateConfig({
       },
     }
   },
-});
+};
