@@ -7,13 +7,16 @@ export {
   useButtonContext,
 } from './components/button';
 
-export type { 
+export type {
   ButtonRootProps as ButtonProps,
   ButtonContext,
   ButtonIconProps,
   ButtonSpinnerProps,
   ButtonTextProps,
   IconButtonProps,
+  ButtonColors,
+  ButtonVariant,
+  ButtonSizes 
 } from './components/button';
 
 // checkbox

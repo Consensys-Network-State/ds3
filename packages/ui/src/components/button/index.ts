@@ -17,7 +17,10 @@ export type {
   WebButtonProps,
   NativeButtonProps,
   SharedButtonProps,
-  UnifiedButtonProps
+  UnifiedButtonProps,
+  ButtonColors,
+  ButtonSizes,
+  ButtonVariant
 } from './types';
 
 // styles

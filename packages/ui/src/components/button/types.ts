@@ -81,3 +81,7 @@ export type IconButtonProps = {
     disabled?: boolean;
     loading?: boolean;
   } & ButtonRootProps; 
+
+export type ButtonColors = NonNullable<ButtonRootProps['color']>;
+export type ButtonSizes = NonNullable<ButtonRootProps['size']>;
+export type ButtonVariant = NonNullable<ButtonRootProps['variant']>;
