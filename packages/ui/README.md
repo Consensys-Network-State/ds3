@@ -5,13 +5,13 @@ A collection of React components built with React Native and Tailwind CSS.
 ## Installation
 
 ```bash
-npm install @ds3/react
+npm install @ds3/ui
 ```
 
 ## Usage
 
 ```tsx
-import { Button, Input, Text } from '@ds3/react';
+import { Button, Input, Text } from '@ds3/ui';
 
 export function MyComponent() {
   return (
@@ -58,7 +58,7 @@ This approach provides several benefits:
 ### Button
 
 ```tsx
-import { Button } from '@ds3/react';
+import { Button } from '@ds3/ui';
 
 export function MyComponent() {
   return (
@@ -72,7 +72,7 @@ export function MyComponent() {
 ### Input
 
 ```tsx
-import { Input } from '@ds3/react';
+import { Input } from '@ds3/ui';
 
 export function MyComponent() {
   return (
@@ -88,7 +88,7 @@ export function MyComponent() {
 Pre-built form fields that combine base components with the Field wrapper:
 
 ```tsx
-import { InputField, CheckboxField, SwitchField } from '@ds3/react';
+import { InputField, CheckboxField, SwitchField } from '@ds3/ui';
 
 export function MyForm() {
   return (
@@ -106,7 +106,7 @@ export function MyForm() {
 The package includes a theme system that supports light and dark modes:
 
 ```tsx
-import { ThemeProvider, ThemeSwitcher } from '@ds3/react';
+import { ThemeProvider, ThemeSwitcher } from '@ds3/ui';
 
 export function App() {
   return (

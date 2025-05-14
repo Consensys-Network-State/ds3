@@ -17,7 +17,7 @@ pnpm create vite
 Install dependencies:
 
 ```bash
-pnpm add @ds3/react @ds3/config react-native-web react-native-safe-area-context
+pnpm add @ds3/ui @ds3/config react-native-web react-native-safe-area-context
 ```
 
 ### DS3 Configuration
@@ -54,7 +54,7 @@ module.exports = generateConfig({
 Under `src/main.tsx`, add the following:
 
 ```tsx
-import { ThemeProvider } from "@ds3/react";
+import { ThemeProvider } from "@ds3/ui";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 // ...
@@ -87,7 +87,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    './node_modules/@ds3/react/**/*.{js,jsx,ts,tsx}',
+    './node_modules/@ds3/ui/**/*.{js,jsx,ts,tsx}',
     '!node_modules/**/*.{js,ts,jsx,tsx}',
   ],
   presets: [ds3Preset(ds3Config)]

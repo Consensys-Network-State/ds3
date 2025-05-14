@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, Input, Textarea } from "@ds3/react/src";
+import { Text, Input, Textarea } from "@ds3/ui/src";
 import { View, ScrollView } from "react-native";
 import { Search, Eye, Mail, Lock, Loader, LoaderPinwheel, Figma } from 'lucide-react-native';
 import { useState } from "react";

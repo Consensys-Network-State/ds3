@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Input, InputRootProps, Button } from '@ds3/react/src';
-import { useCopyToClipboard } from '@ds3/react/src/hooks';
+import { Input, InputRootProps, Button } from '@ds3/ui/src';
+import { useCopyToClipboard } from '@ds3/ui/src/hooks';
 import { Platform } from 'react-native';
 import { Check, Copy } from 'lucide-react-native';
 

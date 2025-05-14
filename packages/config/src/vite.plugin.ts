@@ -20,7 +20,7 @@ function vitePlugin(command: 'serve' | 'build', config: Config): PluginOption[] 
           'import.meta.env.DS3': JSON.stringify(config),
         },
         optimizeDeps: {
-          include: ['@ds3/react'],
+          include: ['@ds3/ui'],
           esbuildOptions: {
             loader: {
               '.js': 'tsx',

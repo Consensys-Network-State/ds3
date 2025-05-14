@@ -17,7 +17,7 @@ pnpm create expo@latest
 Install dependencies:
 
 ```bash
-pnpm add @ds3/react @ds3/config
+pnpm add @ds3/ui @ds3/config
 ```
 
 ### DS3 Configuration
@@ -54,7 +54,7 @@ module.exports = generateConfig({
 Under `app/_layout.tsx`, replace the `ThemeProvider`:
 
 ```tsx
-import { ThemeProvider } from "@ds3/react";
+import { ThemeProvider } from "@ds3/ui";
 import ExpoConstants from 'expo-constants';
 
 // ...
@@ -84,7 +84,7 @@ import ds3Config from "./ds3.config";
 module.exports = {
   content: [
     "./app/**/*.{js,jsx,ts,tsx}",
-    './node_modules/@ds3/react/**/*.{js,jsx,ts,tsx}',
+    './node_modules/@ds3/ui/**/*.{js,jsx,ts,tsx}',
     '!node_modules/**/*.{js,ts,jsx,tsx}',
   ],
   presets: [ds3Preset(ds3Config)],
