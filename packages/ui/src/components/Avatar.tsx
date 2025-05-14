@@ -2,7 +2,11 @@ import * as AvatarPrimitive from '@rn-primitives/avatar';
 import * as React from 'react';
 import { cn } from '../utils';
 
-const Avatar = React.forwardRef<AvatarPrimitive.RootRef, AvatarPrimitive.RootProps>(
+export type AvatarProps = AvatarPrimitive.RootProps & {
+  className?: string;
+};
+
+const Avatar = React.forwardRef<AvatarPrimitive.RootRef, AvatarProps>(
   ({ className, ...props }, ref) => (
     <AvatarPrimitive.Root
       ref={ref}
@@ -13,7 +17,11 @@ const Avatar = React.forwardRef<AvatarPrimitive.RootRef, AvatarPrimitive.RootPro
 );
 Avatar.displayName = AvatarPrimitive.Root.displayName;
 
-const AvatarImage = React.forwardRef<AvatarPrimitive.ImageRef, AvatarPrimitive.ImageProps>(
+export type AvatarImageProps = AvatarPrimitive.ImageProps & {
+  className?: string;
+};
+
+const AvatarImage = React.forwardRef<AvatarPrimitive.ImageRef, AvatarImageProps>(
   ({ className, ...props }, ref) => (
     <AvatarPrimitive.Image
       ref={ref}
@@ -24,7 +32,11 @@ const AvatarImage = React.forwardRef<AvatarPrimitive.ImageRef, AvatarPrimitive.I
 );
 AvatarImage.displayName = AvatarPrimitive.Image.displayName;
 
-const AvatarFallback = React.forwardRef<AvatarPrimitive.FallbackRef, AvatarPrimitive.FallbackProps>(
+export type AvatarFallbackProps = AvatarPrimitive.FallbackProps & {
+  className?: string;
+};
+
+const AvatarFallback = React.forwardRef<AvatarPrimitive.FallbackRef, AvatarFallbackProps>(
   ({ className, ...props }, ref) => (
     <AvatarPrimitive.Fallback
       ref={ref}

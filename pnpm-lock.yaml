@@ -146,6 +146,9 @@ importers:
       '@ds3/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@ds3/web3':
+        specifier: workspace:*
+        version: link:../../packages/web3
       '@eslint/js':
         specifier: ^9.15.0
         version: 9.15.0
@@ -598,6 +601,49 @@ importers:
       tsup:
         specifier: ^8.3.5
         version: 8.3.5(jiti@2.4.0)(postcss@8.4.49)(typescript@5.6.3)(yaml@2.6.1)
+
+  packages/web3:
+    dependencies:
+      '@ds3/ui':
+        specifier: workspace:*
+        version: link:../ui
+      class-variance-authority:
+        specifier: ^0.7.0
+        version: 0.7.0
+      ethereum-blockies-base64:
+        specifier: ^1.0.2
+        version: 1.0.2
+      lucide-react-native:
+        specifier: ^0.300.0
+        version: 0.300.0(prop-types@15.8.1)(react-native-svg@15.9.0(react-native@0.76.1(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@18.3.12)(bufferutil@4.0.8)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1))(react-native@0.76.1(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@18.3.12)(bufferutil@4.0.8)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1)
+      react:
+        specifier: ^18.0.0
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.0.0
+        version: 18.3.1(react@18.3.1)
+      truncate-eth-address:
+        specifier: ^1.0.2
+        version: 1.0.2
+      viem:
+        specifier: ^2.0.0
+        version: 2.29.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10)(zod@3.24.4)
+      wagmi:
+        specifier: ^2.0.0
+        version: 2.15.2(@tanstack/query-core@5.76.0)(@tanstack/react-query@5.76.0(react@18.3.1))(@types/react@18.3.12)(bufferutil@4.0.8)(react@18.3.1)(typescript@5.6.3)(utf-8-validate@5.0.10)(viem@2.29.2(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10)(zod@3.24.4))(zod@3.24.4)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.0.0
+        version: 18.3.12
+      '@types/react-dom':
+        specifier: ^18.0.0
+        version: 18.3.1
+      tsup:
+        specifier: ^8.0.0
+        version: 8.3.5(jiti@2.4.0)(postcss@8.4.49)(typescript@5.6.3)(yaml@2.6.1)
+      typescript:
+        specifier: ^5.0.0
+        version: 5.6.3
 
 packages:
 
@@ -6848,6 +6894,14 @@ packages:
   lru-cache@6.0.0:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
+
+  lucide-react-native@0.300.0:
+    resolution: {integrity: sha512-73sNGq2XrMjEEtro/9T0EVRrjrO0lOCykGtL+8OOuJ2NlDqn9AOIGoLh7VbmQcGDIDlykV3HMvZF043WABPCWw==}
+    peerDependencies:
+      prop-types: ^15.7.2
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0
+      react-native: '*'
+      react-native-svg: ^12.0.0 || ^13.0.0 || ^14.0.0
 
   lucide-react-native@0.454.0:
     resolution: {integrity: sha512-nkIENGAUpRH4aFcGSNGhMQYXKScizRxYEBhXfpvDY7P0mvF548OlLep2P8F1Qs4unC29WNApaHWJ2gx9KGwcPA==}
@@ -19680,6 +19734,13 @@ snapshots:
     dependencies:
       yallist: 4.0.0
     optional: true
+
+  lucide-react-native@0.300.0(prop-types@15.8.1)(react-native-svg@15.9.0(react-native@0.76.1(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@18.3.12)(bufferutil@4.0.8)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1))(react-native@0.76.1(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@18.3.12)(bufferutil@4.0.8)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1):
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.3.1
+      react-native: 0.76.1(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@18.3.12)(bufferutil@4.0.8)(react@18.3.1)(utf-8-validate@5.0.10)
+      react-native-svg: 15.9.0(react-native@0.76.1(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@18.3.12)(bufferutil@4.0.8)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1)
 
   lucide-react-native@0.454.0(react-native-svg@15.9.0(react-native@0.76.1(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@18.3.12)(bufferutil@4.0.8)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1))(react-native@0.76.1(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@18.3.12)(bufferutil@4.0.8)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1):
     dependencies:
