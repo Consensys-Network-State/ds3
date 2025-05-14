@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import { useThemeContext } from './context';
-import { COLOR_MODES } from "@ds3/config";
+import { COLOR_MODES } from "@ds3/core";
 import { MoonStar, Sun } from "lucide-react-native";
 import { IconButton } from "../button";
 import type { ModeToggleProps } from './types';

@@ -1,4 +1,4 @@
-import { UserConfig } from '@ds3/config'
+import { UserConfig } from '@ds3/core'
 
 export default {
   themes: {

@@ -1,5 +1,5 @@
 {
-  "name": "@ds3/config",
+  "name": "@ds3/core",
   "version": "1.0.0",
   "description": "",
   "main": "./dist/index.cjs",

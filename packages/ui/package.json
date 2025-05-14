@@ -32,7 +32,7 @@
     "tsup": "^8.3.5"
   },
   "dependencies": {
-    "@ds3/config": "workspace:*",
+    "@ds3/core": "workspace:*",
     "@react-native-async-storage/async-storage": "^2.0.0",
     "@rn-primitives/avatar": "^1.1.0",
     "@rn-primitives/dropdown-menu": "^1.1.0",

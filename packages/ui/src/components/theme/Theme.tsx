@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Platform } from "react-native";
 import { vars } from "nativewind";
-import { DEFAULT_MODE, DEFAULT_THEME, generateThemeCssVars, generateShadowCssVars } from "@ds3/config";
+import { DEFAULT_MODE, DEFAULT_THEME, generateThemeCssVars, generateShadowCssVars } from "@ds3/core";
 import { cn } from "../../utils";
 import { useThemeContext } from "./context";
 import type { ThemeBaseProps, ThemeProps } from "./types";

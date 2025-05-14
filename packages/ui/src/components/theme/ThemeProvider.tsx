@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { useColorScheme, View } from 'react-native';
 import { ThemeBase } from "./Theme";
-import { DEFAULT_MODE, DEFAULT_THEME } from "@ds3/config";
+import { DEFAULT_MODE, DEFAULT_THEME, ColorMode } from "@ds3/core";
 import { PortalHost } from '@rn-primitives/portal';
 import { ThemeContext } from './context';
 import type { ThemeProviderProps } from './types';
-import type { ColorMode } from "@ds3/config";
 
 export const ThemeProvider = React.forwardRef<View, ThemeProviderProps>(
   ({ children, config, ...otherProps}, ref) => {

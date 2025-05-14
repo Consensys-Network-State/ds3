@@ -17,7 +17,7 @@ pnpm create expo@latest
 Install dependencies:
 
 ```bash
-pnpm add @ds3/ui @ds3/config
+pnpm add @ds3/ui @ds3/core
 ```
 
 ### DS3 Configuration
@@ -31,7 +31,7 @@ touch ds3.config.js
 Configure `ds3.config.js`:
 
 ```js
-const { generateConfig } = require('@ds3/config');
+const { generateConfig } = require('@ds3/core');
 
 module.exports = generateConfig({
   themes: {
@@ -77,7 +77,7 @@ pnpm exec tailwindcss init
 Configure `tailwind.config.js`:
 
 ```js
-import ds3Preset from "@ds3/config/nativewind";
+import ds3Preset from "@ds3/core/nativewind";
 import ds3Config from "./ds3.config";
 
 /** @type {import('tailwindcss').Config} */
@@ -125,7 +125,7 @@ Configure `metro.config.js`:
 
 ```js
 const { getDefaultConfig } = require('expo/metro-config');
-const { withDs3 } = require('@ds3/config/metro');
+const { withDs3 } = require('@ds3/core/metro');
 
 const config = getDefaultConfig(__dirname);
 
@@ -136,7 +136,7 @@ If using a monorepo (workspace), use the following configuration instead:
 
 ```js
 const { getDefaultConfig } = require('expo/metro-config');
-const { withDs3Workspace } = require('@ds3/config/metro');
+const { withDs3Workspace } = require('@ds3/core/metro');
 
 const config = getDefaultConfig(__dirname);
 
@@ -154,7 +154,7 @@ touch app.config.js
 Configure `app.config.js`:
 
 ```js
-import withDs3 from '@ds3/config/expo';
+import withDs3 from '@ds3/core/expo';
 import ds3Config from './ds3.config';
 
 module.exports = ({ config }) => {
@@ -177,7 +177,7 @@ module.exports = function (api) {
    api.cache(true);
 
    return {
-      presets: ['@ds3/config/expo/babel'],
+      presets: ['@ds3/core/expo/babel'],
    };
 };
 ```
