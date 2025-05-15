@@ -3,6 +3,9 @@ import { Text, Input, Textarea } from "@ds3/ui/src";
 import { View, ScrollView } from "react-native";
 import { Search, Eye, Mail, Lock, Loader, LoaderPinwheel, Figma } from 'lucide-react-native';
 import { useState } from "react";
+import { Switch } from "@ds3/ui/src";
+import type { WebFocusEvent, NativeFocusEvent } from "@ds3/ui/src";
+import type { SharedInputProps, InputRootProps } from "@ds3/ui/src/components/input";
 
 const InputClickToLoad = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -38,6 +41,118 @@ const inputSizes: InputSizeOption[] = [
   { size: 'md', label: 'Medium' },
   { size: 'sm', label: 'Small' }
 ] as const;
+
+const InputEvents = () => {
+  const [inputValue, setInputValue] = useState('');
+  const [isFocused, setIsFocused] = useState(false);
+  const [useWebEvents, setUseWebEvents] = useState(false);
+  const [eventInfo, setEventInfo] = useState('No events yet');
+
+  const baseProps: Partial<InputRootProps> = {
+    variant: 'outline',
+    color: isFocused ? 'secondary' : 'primary',
+    placeholder: "Type something...",
+    className: isFocused ? "scale-105" : "scale-100",
+    value: inputValue,
+    onFocus: () => {
+      setIsFocused(true);
+      setEventInfo(useWebEvents ? 'Web Focus' : 'Native Focus');
+    },
+    onBlur: () => {
+      setIsFocused(false);
+      setEventInfo(useWebEvents ? 'Web Blur' : 'Native Blur');
+    }
+  };
+
+  const props: InputRootProps = {
+    ...baseProps,
+    ...(useWebEvents
+      ? {
+          onChange: (e: any) => {
+            setInputValue(e.target.value);
+            setEventInfo(`Web Change: ${e.target.value}`);
+          }
+        }
+      : {
+          onChangeText: (text: string) => {
+            setInputValue(text);
+            setEventInfo(`Native Change: ${text}`);
+          }
+        })
+  } as InputRootProps;
+
+  return (
+    <View className="flex flex-col gap-2">
+      <View className="flex flex-row items-center gap-2">
+        <Text className="text-sm text-neutral-11">Use Web Events:</Text>
+        <Switch
+          checked={useWebEvents}
+          onCheckedChange={setUseWebEvents}
+          disabled={false}
+          variant="soft"
+          color="secondary"
+        />
+      </View>
+      <Input {...props}>
+        <Input.Icon icon={isFocused ? Eye : Search} />
+        <Input.Field />
+      </Input>
+      <Text className="text-sm text-neutral-11">
+        Value: {inputValue}
+      </Text>
+      <Text className="text-sm text-neutral-11">
+        Event: {eventInfo}
+      </Text>
+    </View>
+  );
+};
+
+const InputFocus = () => {
+  const [isFocused, setIsFocused] = useState(false);
+  const [useWebEvents, setUseWebEvents] = useState(false);
+  const [eventInfo, setEventInfo] = useState('No focus events yet');
+
+  // Create shared props that work for both platforms
+  const sharedProps: SharedInputProps = {
+    placeholder: 'Focus me...',
+    variant: 'outline',
+    color: isFocused ? 'secondary' : 'primary',
+    onFocus: (event: WebFocusEvent | NativeFocusEvent) => {
+      console.log(useWebEvents ? 'Web Focus Event:' : 'Native Focus Event:', event);
+      setIsFocused(true);
+      setEventInfo(useWebEvents ? 'Web Focus Event' : 'Native Focus Event');
+    },
+    onBlur: (event: WebFocusEvent | NativeFocusEvent) => {
+      console.log(useWebEvents ? 'Web Blur Event:' : 'Native Blur Event:', event);
+      setIsFocused(false);
+      setEventInfo(useWebEvents ? 'Web Blur Event' : 'Native Blur Event');
+    }
+  };
+
+  return (
+    <View className="flex flex-col gap-2">
+      <View className="flex flex-row items-center gap-2">
+        <Text className="text-sm text-neutral-11">Use Web Events:</Text>
+        <Switch
+          checked={useWebEvents}
+          onCheckedChange={setUseWebEvents}
+          disabled={false}
+          variant="soft"
+          color="secondary"
+        />
+      </View>
+      <Input 
+        {...sharedProps} 
+        // {...platformProps}
+        className={isFocused ? "scale-105" : "scale-100"}
+      >
+        <Input.Icon icon={Search} />
+        <Input.Field />
+      </Input>
+      <Text className="text-sm text-neutral-11">{eventInfo}</Text>
+    </View>
+  );
+};
 
 export default function Inputs() {
   const inputVariants: Array<InputVariant> = [
@@ -225,6 +340,17 @@ export default function Inputs() {
         </Input>
       )
     },
+  ];
+
+  const eventExamples = [
+    {
+      name: 'Change Events',
+      component: InputEvents
+    },
+    {
+      name: 'Focus Events',
+      component: InputFocus
+    }
   ];
 
   return (
@@ -474,6 +600,11 @@ export default function Inputs() {
               </View>
             </View>
           ))}
+
+          <Text className="text-h2">Events</Text>
+          <View className="flex flex-row flex-wrap gap-4">
+            <InputEvents />
+          </View>
         </View>
       </View>
     </ScrollView>

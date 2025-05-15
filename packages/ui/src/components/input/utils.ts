@@ -1,168 +1,179 @@
+/**
+ * Input Component Utilities
+ * 
+ * This module provides utilities for handling cross-platform input functionality:
+ * 
+ * - Platform Detection: Type guards to identify web vs native props
+ * - Prop Conversion: Transform props between platforms
+ *   Web → Native:
+ *   • onChange(e) → onChangeText(text)
+ *   • type="password" → secureTextEntry=true
+ * 
+ *   Native → Web:
+ *   • onChangeText(text) → onChange(event)
+ *   • secureTextEntry=true → type="password"
+ *   • numberOfLines → rows
+ * 
+ * - Prop Filtering:
+ *   Web props removed: type, onChange, rows
+ *   Native props removed: onChangeText, keyboardType, secureTextEntry, numberOfLines, textAlignVertical
+ * 
+ * - Accessibility Props:
+ *   Web:
+ *   • aria-disabled={disabled}
+ *   • aria-busy={loading}
+ *   • aria-multiline={multiline}
+ *   • aria-readonly={readOnly}
+ *   • role={multiline ? "textbox" : "input"}
+ * 
+ *   Native:
+ *   • accessibilityRole={multiline ? "adjustable" : "textbox"}
+ *   • accessibilityState={{ disabled, busy: loading, readonly: readOnly }}
+ * 
+ * - Event Handling: 
+ *   • Focus/blur events normalized across platforms
+ *   • Hover events for web platform
+ */
+
 import type { 
   WebInputProps, 
   NativeInputProps,
   SharedInputProps
 } from './types';
 import type { WebChangeEvent, WebFocusEvent, NativeFocusEvent } from '../../types';
-import { Platform } from 'react-native';
+import type { AccessibilityRole } from 'react-native';
+import type { MouseEvent } from 'react';
 
-// Type guard to check if props are web props
-const isWebProps = (props: any): props is WebInputProps => {
-  return (
-    'type' in props || 
-    'onChange' in props || 
-    'selectionStart' in props || 
-    'selectionEnd' in props
-  );
-};
+/**
+ * Type guards to determine if props are web or native specific
+ */
+export function isWebInputProps(props: unknown): props is WebInputProps {
+  if (!props || typeof props !== 'object') return false;
+  const p = props as Partial<WebInputProps>;
+  return typeof p.onChange === 'function' || 'type' in p || 'rows' in p;
+}
 
-// Type guard to check if props are native props
-const isNativeProps = (props: any): props is NativeInputProps => {
-  return (
-    'onChangeText' in props || 
-    'keyboardType' in props || 
-    'secureTextEntry' in props
-  );
-};
+export function isNativeInputProps(props: unknown): props is NativeInputProps {
+  if (!props || typeof props !== 'object') return false;
+  const p = props as Partial<NativeInputProps>;
+  return typeof p.onChangeText === 'function' || 'numberOfLines' in p || 'secureTextEntry' in p;
+}
 
-// Transform web props to native props
-export const toNativeProps = (props: Partial<WebInputProps & SharedInputProps> | Partial<NativeInputProps & SharedInputProps>): Partial<NativeInputProps & SharedInputProps> => {
-  const nativeProps: Partial<NativeInputProps & SharedInputProps> = {};
+/**
+ * Filters out web-specific props that shouldn't be passed to native components
+ */
+export function filterWebProps(props: any): NativeInputProps {
+  const {
+    type,
+    onChange,
+    rows,
+    ...rest
+  } = props;
+  return rest;
+}
 
-  // If not web props, return as is
-  if (!isWebProps(props)) {
-    return props as Partial<NativeInputProps & SharedInputProps>;
+/**
+ * Filters out native-specific props that shouldn't be passed to web components
+ */
+export function filterNativeProps(props: any): WebInputProps {
+  const {
+    onChangeText,
+    keyboardType,
+    secureTextEntry,
+    numberOfLines,
+    textAlignVertical,
+    autoCorrect,
+    ...rest
+  } = props;
+  return rest;
+}
+
+/**
+ * Converts web props to native props
+ */
+export const toNativeProps = (props: WebInputProps | NativeInputProps): NativeInputProps => {
+  if (isNativeInputProps(props)) {
+    return filterWebProps(props);
   }
 
-  // Convert autoCorrect to boolean
-  if ('autoCorrect' in props) {
-    nativeProps.autoCorrect = props.autoCorrect === 'on';
-  }
+  // First extract web-specific props
+  const { onChange, type, autoComplete } = props as WebInputProps;
+  const filteredProps = filterWebProps(props);
 
-  // Convert rows to numberOfLines
-  if ('rows' in props) {
-    nativeProps.numberOfLines = props.rows;
-  }
-
-  // Handle change events
-  if (props.onChange) {
-    nativeProps.onChangeText = (text: string) => {
-      const syntheticEvent = {
+  return {
+    ...filteredProps,
+    secureTextEntry: type === 'password',
+    onChangeText: onChange ? (text: string) => {
+      onChange({
         target: { value: text },
         currentTarget: { value: text },
-        preventDefault: () => {},
-        stopPropagation: () => {},
-      } as WebChangeEvent;
-      props.onChange?.(syntheticEvent);
-    };
-  }
-
-  // Handle selection
-  if (props.selection) {
-    nativeProps.selection = {
-      start: props.selection.selectionStart ?? 0,
-      end: props.selection.selectionEnd ?? 0,
-    };
-  }
-
-  // Handle input type transformations
-  if (props.type === 'password') {
-    nativeProps.secureTextEntry = true;
-  }
-
-  return nativeProps;
+      } as WebChangeEvent);
+    } : undefined,
+  };
 };
 
-// Transform native props to web props
-export const toWebProps = (props: Partial<WebInputProps & SharedInputProps> | Partial<NativeInputProps & SharedInputProps>): Partial<WebInputProps & SharedInputProps> => {
-  const webProps: Partial<WebInputProps & SharedInputProps> = {};
-
-  // If not native props, return as is
-  if (!isNativeProps(props)) {
-    return props as Partial<WebInputProps & SharedInputProps>;
+/**
+ * Converts native props to web props
+ */
+export const toWebProps = (props: WebInputProps | NativeInputProps): WebInputProps => {
+  if (isWebInputProps(props)) {
+    return filterNativeProps(props);
   }
 
-  // Copy over shared props
-  const { 
-    secureTextEntry, 
-    keyboardType, 
-    onChangeText,
-    numberOfLines,
-    ...sharedProps 
-  } = props;
+  // First extract native-specific props
+  const { onChangeText, secureTextEntry, numberOfLines, autoCorrect } = props as NativeInputProps;
+  const filteredProps = filterNativeProps(props);
 
-  // Copy all shared props
-  Object.assign(webProps, sharedProps);
-
-  // Convert autoCorrect to string
-  if ('autoCorrect' in props) {
-    webProps.autoCorrect = props.autoCorrect ? 'on' : 'off';
-  }
-
-  // Convert numberOfLines to rows for textarea
-  if (numberOfLines) {
-    webProps.rows = numberOfLines;
-  }
-
-  // Handle change events
-  if (onChangeText) {
-    webProps.onChange = (e: WebChangeEvent) => {
-      onChangeText(e.target.value);
-    };
-  }
-
-  // Handle selection
-  if (props.selection) {
-    webProps.selection = {
-      selectionStart: props.selection.start,
-      selectionEnd: props.selection.end,
-    };
-  }
-
-  // Handle secure text entry
-  if (secureTextEntry) {
-    webProps.type = 'password';
-  }
-
-  return webProps;
+  return {
+    ...filteredProps,
+    type: secureTextEntry ? 'password' : 'text',
+    rows: numberOfLines,
+    ...(typeof autoCorrect === 'boolean' ? { autoCorrect: autoCorrect.toString() } : {}),
+    onChange: onChangeText ? (e: WebChangeEvent) => onChangeText(e.target.value) : undefined,
+  };
 };
 
-// Get input-specific accessibility props for both platforms
-export const getInputAccessibilityProps = (props: Partial<SharedInputProps>) => {
-  const { disabled, loading, multiline } = props;
-  
-  return Platform.select({
-    web: {
-      'aria-disabled': disabled,
-      'aria-busy': loading,
-      'aria-multiline': multiline,
+/**
+ * Creates accessibility props for web components
+ */
+export const getWebInputAccessibilityProps = (props: Partial<SharedInputProps>) => {
+  const { disabled, loading, multiline, readOnly } = props;
+  return {
+    'aria-disabled': disabled,
+    'aria-busy': loading,
+    'aria-multiline': multiline,
+    'aria-readonly': readOnly,
+    role: multiline ? 'textbox' : 'input',
+  };
+};
+
+/**
+ * Creates accessibility props for native components
+ */
+export const getNativeInputAccessibilityProps = (props: Partial<SharedInputProps>) => {
+  const { disabled, loading, multiline, readOnly } = props;
+  return {
+    accessibilityRole: (multiline ? 'adjustable' : 'textbox') as AccessibilityRole,
+    accessibilityState: {
+      disabled,
+      busy: loading,
+      readonly: readOnly,
     },
-    default: {
-      accessibilityState: {
-        disabled,
-        busy: loading,
-      },
-    },
-  });
+  };
 };
 
-// Handle focus events consistently across platforms
+/**
+ * Handle focus events consistently across platforms
+ */
 export const handleFocus = (
   isFocused: boolean,
   onFocus?: (e: WebFocusEvent | NativeFocusEvent) => void,
   onBlur?: (e: WebFocusEvent | NativeFocusEvent) => void,
   event?: WebFocusEvent | NativeFocusEvent
 ) => {
-  const syntheticEvent = event || {
-    target: {},
-    currentTarget: {},
-    preventDefault: () => {},
-    stopPropagation: () => {},
-  } as WebFocusEvent | NativeFocusEvent;
-
   if (isFocused && onFocus) {
-    onFocus(syntheticEvent);
+    onFocus(event || {} as WebFocusEvent | NativeFocusEvent);
   } else if (!isFocused && onBlur) {
-    onBlur(syntheticEvent);
+    onBlur(event || {} as WebFocusEvent | NativeFocusEvent);
   }
 }; 

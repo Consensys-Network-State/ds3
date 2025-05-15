@@ -1,11 +1,14 @@
 import * as React from 'react';
-import { Pressable } from 'react-native';
-import * as Slot from '@rn-primitives/slot';
+import * as Slot from '@radix-ui/react-slot';
 import { cn } from '../../utils';
 import { inputRootVariants, inputTextVariants } from './styles';
 import { InputContextProvider, useInputContext } from './context';
 import { InputIcon, InputSpinner, InputText } from './Input.shared';
-import { toWebProps, getInputAccessibilityProps, handleFocus } from './utils';
+import { 
+  toWebProps, 
+  getWebInputAccessibilityProps, 
+  handleFocus,
+} from './utils';
 import type {
   InputRootProps,
   InputFieldProps,
@@ -32,6 +35,10 @@ const InputRoot = React.forwardRef<HTMLInputElement, InputRootProps>(
     const inputRef = (ref as React.RefObject<HTMLInputElement>) || internalInputRef;
     const effectiveColor = (focused || isHovered) && accentColor ? accentColor : color;
 
+    // Memoize fieldProps separately
+    const memoizedFieldProps = React.useMemo(() => fieldProps, [fieldProps]);
+
+    // Create context value with all dependencies properly listed
     const contextValue = React.useMemo(() => ({
       variant,
       color: effectiveColor,
@@ -42,16 +49,25 @@ const InputRoot = React.forwardRef<HTMLInputElement, InputRootProps>(
       focused,
       setFocused,
       inputRef,
-      fieldProps
-    }), [variant, effectiveColor, size, disabled, loading, readOnly, focused, fieldProps]);
+      fieldProps: memoizedFieldProps
+    }), [
+      variant,
+      effectiveColor,
+      size,
+      disabled,
+      loading,
+      readOnly,
+      focused,
+      memoizedFieldProps
+    ]);
 
-    const Component = asChild ? Slot.Pressable : Pressable;
+    const Component = asChild ? Slot.Root : 'div';
 
-    const handlePress = () => {
+    const handleClick = React.useCallback(() => {
       if (!disabled && !loading && inputRef.current) {
         inputRef.current.focus();
       }
-    };
+    }, [disabled, loading]);
 
     return (
       <InputContextProvider.Provider value={contextValue}>
@@ -61,9 +77,10 @@ const InputRoot = React.forwardRef<HTMLInputElement, InputRootProps>(
             readOnly && 'cursor-text',
             className,
           )}
-          onPress={handlePress}
-          onHoverIn={() => setIsHovered(true)}
-          onHoverOut={() => setIsHovered(false)}
+          onClick={handleClick}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          role="button"
           tabIndex={-1}
         >
           {children || <InputField />}
@@ -77,16 +94,9 @@ InputRoot.displayName = 'Input';
 const InputField = ({ className }: InputFieldProps) => {
   const context = useInputContext();
   const { fieldProps = {}, setFocused, disabled, readOnly, size, loading, inputRef } = context;
-  const { multiline, onFocus, onBlur, rows, numberOfLines, ...otherProps } = fieldProps;
-
-  // Transform props for web
+  const { multiline, onFocus, onBlur, ...otherProps } = fieldProps;
   const webProps = toWebProps(otherProps);
-  const accessibilityProps = getInputAccessibilityProps(fieldProps);
-
-  // Ensure autoCorrect is a string value
-  if ('autoCorrect' in webProps) {
-    webProps.autoCorrect = webProps.autoCorrect ? 'on' : 'off';
-  }
+  const accessibilityProps = getWebInputAccessibilityProps({ disabled, loading, multiline, readOnly });
 
   const commonProps = {
     ref: inputRef,
@@ -112,7 +122,7 @@ const InputField = ({ className }: InputFieldProps) => {
   };
 
   return multiline ? (
-    <textarea {...commonProps} rows={rows ?? numberOfLines} />
+    <textarea {...commonProps} />
   ) : (
     <input {...commonProps} />
   );

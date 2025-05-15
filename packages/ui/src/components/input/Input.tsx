@@ -5,7 +5,11 @@ import { cn } from '../../utils';
 import { inputRootVariants, inputTextVariants } from './styles';
 import { InputContextProvider, useInputContext } from './context';
 import { InputIcon, InputSpinner, InputText } from './Input.shared';
-import { toNativeProps, getInputAccessibilityProps, handleFocus } from './utils';
+import { 
+  toNativeProps, 
+  getNativeInputAccessibilityProps, 
+  handleFocus 
+} from './utils';
 import type {
   InputRootProps,
   InputFieldProps,
@@ -27,11 +31,14 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRoot
   }, ref) => {
     const internalInputRef = React.useRef<React.ElementRef<typeof TextInput>>(null);
     const [focused, setFocused] = React.useState(false);
-    const [isHovered, setIsHovered] = React.useState(false);
 
     const inputRef = (ref as React.RefObject<React.ElementRef<typeof TextInput>>) || internalInputRef;
-    const effectiveColor = (focused || isHovered) && accentColor ? accentColor : color;
+    const effectiveColor = focused && accentColor ? accentColor : color;
 
+    // Memoize fieldProps separately
+    const memoizedFieldProps = React.useMemo(() => fieldProps, [fieldProps]);
+
+    // Create context value with all dependencies properly listed
     const contextValue = React.useMemo(() => ({
       variant,
       color: effectiveColor,
@@ -42,16 +49,25 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRoot
       focused,
       setFocused,
       inputRef,
-      fieldProps
-    }), [variant, effectiveColor, size, disabled, loading, readOnly, focused, fieldProps]);
+      fieldProps: memoizedFieldProps
+    }), [
+      variant,
+      effectiveColor,
+      size,
+      disabled,
+      loading,
+      readOnly,
+      focused,
+      memoizedFieldProps
+    ]);
 
     const Component = asChild ? Slot.Pressable : Pressable;
 
-    const handlePress = () => {
+    const handlePress = React.useCallback(() => {
       if (!disabled && !loading && inputRef.current) {
         inputRef.current.focus();
       }
-    };
+    }, [disabled, loading]);
 
     return (
       <InputContextProvider.Provider value={contextValue}>
@@ -62,8 +78,6 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRoot
             className,
           )}
           onPress={handlePress}
-          onHoverIn={() => setIsHovered(true)}
-          onHoverOut={() => setIsHovered(false)}
           tabIndex={-1}
         >
           {children || <InputField />}
@@ -77,15 +91,13 @@ InputRoot.displayName = 'Input';
 const InputField = ({ className }: InputFieldProps) => {
   const context = useInputContext();
   const { fieldProps = {}, setFocused, disabled, readOnly, size, loading, inputRef } = context;
-  const { multiline, onFocus, onBlur, numberOfLines, rows, ...otherProps } = fieldProps;
-
-  // Transform props for native
+  const { multiline, onFocus, onBlur, ...otherProps } = fieldProps;
   const nativeProps = toNativeProps(otherProps);
-  const accessibilityProps = getInputAccessibilityProps({ disabled, loading, multiline });
+  const accessibilityProps = getNativeInputAccessibilityProps({ disabled, loading, multiline, readOnly });
 
-  // Calculate height based on numberOfLines or rows
+  // Calculate height based on numberOfLines
   const lineHeight = 20; // Approximate line height in pixels
-  const minHeight = multiline ? Math.max(80, (numberOfLines ?? rows ?? 1) * lineHeight) : undefined;
+  const minHeight = multiline ? Math.max(80, (nativeProps.numberOfLines ?? 1) * lineHeight) : undefined;
 
   return (
     <TextInput
@@ -99,7 +111,6 @@ const InputField = ({ className }: InputFieldProps) => {
       )}
       style={multiline ? { minHeight } : undefined}
       multiline={multiline}
-      numberOfLines={multiline ? (numberOfLines ?? rows) : undefined}
       textAlignVertical={multiline ? 'top' : 'center'}
       editable={!disabled && !readOnly}
       selectTextOnFocus={readOnly}

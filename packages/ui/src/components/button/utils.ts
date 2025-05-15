@@ -1,3 +1,51 @@
+/**
+ * Button Component Utilities
+ * 
+ * This module provides utilities for handling cross-platform button functionality:
+ * 
+ * - Platform Detection:
+ *   Web indicators:
+ *   • Event handlers: onClick, onMouseDown, onMouseUp, onMouseEnter, onMouseLeave
+ *   • Props: type="button" | "submit" | "reset"
+ * 
+ *   Native indicators:
+ *   • Event handlers: onPress, onPressIn, onPressOut
+ *   • Props: hitSlop, needsOffscreenAlphaCompositing, onLayout, onTouch*
+ * 
+ * - Event Conversion:
+ *   Web → Native:
+ *   • onClick → onPress
+ *   • onMouseDown → onPressIn
+ *   • onMouseUp → onPressOut
+ *   • onFocus → onFocus
+ *   • onBlur → onBlur
+ * 
+ *   Native → Web:
+ *   • onPress → onClick
+ *   • onPressIn → onMouseDown
+ *   • onPressOut → onMouseUp
+ *   • onFocus → onFocus
+ *   • onBlur → onBlur
+ * 
+ * - Prop Filtering:
+ *   Web props removed: type, onClick, onMouseDown, onMouseUp, onMouseEnter, onMouseLeave
+ *   Native props removed: hitSlop, needsOffscreenAlphaCompositing, onLayout, onTouch*, onPress*
+ * 
+ * - Accessibility Props:
+ *   Web:
+ *   • aria-disabled={disabled}
+ *   • aria-busy={loading}
+ *   • role="button"
+ * 
+ *   Native:
+ *   • accessibilityRole="button"
+ *   • accessibilityState={{ disabled, busy: loading }}
+ * 
+ * - Event Handlers:
+ *   • Press: Manages press state and events across platforms
+ *   • Hover: Manages hover state and events (web-only)
+ */
+
 import type { WebButtonProps, NativeButtonProps, SharedButtonProps } from './types';
 import type { WebClickEvent, NativePressEvent, WebFocusEvent, NativeFocusEvent } from '../../types';
 import { AccessibilityRole, GestureResponderEvent } from 'react-native';

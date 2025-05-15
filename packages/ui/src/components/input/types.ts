@@ -4,7 +4,7 @@ import type { VariantProps } from 'class-variance-authority';
 import type { IconProps } from '../icon/types';
 import type { SpinnerProps } from '../spinner/types';
 import { inputRootVariants } from './styles';
-import type { WebChangeEvent, NativeChangeEvent, WebFocusEvent, NativeFocusEvent } from '../../types';
+import type { WebChangeEvent, WebFocusEvent, NativeFocusEvent } from '../../types';
 
 // Platform-specific input props
 export type WebInputProps = {
@@ -12,8 +12,6 @@ export type WebInputProps = {
   value?: string;
   defaultValue?: string;
   onChange?: (e: WebChangeEvent) => void;
-  selection?: { selectionStart?: number; selectionEnd?: number };
-  autoCorrect?: 'on' | 'off';
   autoComplete?: HTMLInputElement['autocomplete'];
   rows?: number;
 };
@@ -23,14 +21,19 @@ export type NativeInputProps = {
   defaultValue?: string;
   onChangeText?: (text: string) => void;
   keyboardType?: TextInputProps['keyboardType'];
-  selection?: TextInputProps['selection'];
   secureTextEntry?: boolean;
   autoCorrect?: TextInputProps['autoCorrect'];
   autoComplete?: TextInputProps['autoComplete'];
+  numberOfLines?: number;
+  textAlignVertical?: 'auto' | 'top' | 'bottom' | 'center';
 };
 
 // Shared input props
 export type SharedInputProps = {
+  variant?: VariantProps<typeof inputRootVariants>['variant'];
+  color?: VariantProps<typeof inputRootVariants>['color'];
+  accentColor?: VariantProps<typeof inputRootVariants>['color'];
+  size?: VariantProps<typeof inputRootVariants>['size'];
   placeholder?: string;
   disabled?: boolean;
   readOnly?: boolean;
@@ -39,8 +42,10 @@ export type SharedInputProps = {
   autoCapitalize?: TextInputProps['autoCapitalize'];
   required?: boolean;
   loading?: boolean;
-  rows?: number;
-  numberOfLines?: number;
+  error?: boolean;
+  asChild?: boolean;
+  className?: string;
+  children?: React.ReactNode;
   onFocus?: (e: WebFocusEvent | NativeFocusEvent) => void;
   onBlur?: (e: WebFocusEvent | NativeFocusEvent) => void;
 };
@@ -62,19 +67,7 @@ export type InputContext = {
 };
 
 export type InputRootProps = Omit<React.ComponentPropsWithoutRef<typeof TextInput>,
-  'className' | 'style' | 'children'> & {
-  variant?: VariantProps<typeof inputRootVariants>['variant'];
-  color?: VariantProps<typeof inputRootVariants>['color'];
-  accentColor?: VariantProps<typeof inputRootVariants>['color'];
-  size?: VariantProps<typeof inputRootVariants>['size'];
-  disabled?: boolean;
-  loading?: boolean;
-  readOnly?: boolean;
-  error?: boolean;
-  asChild?: boolean;
-  children?: React.ReactNode;
-  className?: string;
-} & UnifiedInputProps;
+  'className' | 'style' | 'children'> & UnifiedInputProps;
 
 export type InputFieldProps = {
   className?: string;
