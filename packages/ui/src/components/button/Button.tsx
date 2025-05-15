@@ -28,15 +28,14 @@ const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRo
 
     const nativeProps = toNativeProps(props);
     const accessibilityProps = getNativeAccessibilityProps({ disabled, loading });
-    const { onPressIn, onPressOut, ...restNativeProps } = nativeProps;
 
     const { handlePressIn, handlePressOut } = React.useMemo(
       () => createPressHandlers(
         setIsPressed,
-        onPressIn as ((e: GestureResponderEvent | NativePressEvent) => void) | null,
-        onPressOut as ((e: GestureResponderEvent | NativePressEvent) => void) | null
+        nativeProps.onPressIn as ((e: GestureResponderEvent | NativePressEvent) => void) | null,
+        nativeProps.onPressOut as ((e: GestureResponderEvent | NativePressEvent) => void) | null
       ),
-      [setIsPressed, onPressIn, onPressOut]
+      [setIsPressed, nativeProps.onPressIn, nativeProps.onPressOut]
     );
 
     const contextValue = React.useMemo(() => ({
@@ -65,7 +64,7 @@ const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRo
             onPressIn={handlePressIn}
             onPressOut={handlePressOut}
             {...accessibilityProps}
-            {...(restNativeProps as React.ComponentProps<typeof Pressable>)}
+            {...nativeProps}
           />
         </TextClassContext.Provider>
       </ButtonContextProvider.Provider>

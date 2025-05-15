@@ -107,16 +107,13 @@ export function toNativeProps(props: WebButtonProps | NativeButtonProps): Native
     return filterWebProps(props);
   }
 
-  // For web props, first filter out all web-specific props
   const filteredProps = filterWebProps(props);
-  
-  // Then map the supported web events to native events
   const { onClick, onMouseDown, onMouseUp, onFocus, onBlur } = props;
   return {
     ...filteredProps,
-    onPress: onClick ? (e: NativePressEvent) => onClick(e as unknown as WebClickEvent) : undefined,
-    onPressIn: onMouseDown ? (e: NativePressEvent) => onMouseDown(e as unknown as WebClickEvent) : undefined,
-    onPressOut: onMouseUp ? (e: NativePressEvent) => onMouseUp(e as unknown as WebClickEvent) : undefined,
+    onPress: onClick ? (e: GestureResponderEvent) => onClick(e as unknown as WebClickEvent) : undefined,
+    onPressIn: onMouseDown ? (e: GestureResponderEvent) => onMouseDown(e as unknown as WebClickEvent) : undefined,
+    onPressOut: onMouseUp ? (e: GestureResponderEvent) => onMouseUp(e as unknown as WebClickEvent) : undefined,
     onFocus: onFocus ? (e: NativeFocusEvent) => onFocus(e as unknown as WebFocusEvent) : undefined,
     onBlur: onBlur ? (e: NativeFocusEvent) => onBlur(e as unknown as WebFocusEvent) : undefined,
   };
@@ -136,10 +133,7 @@ export function toWebProps(props: WebButtonProps | NativeButtonProps): WebButton
     return filterNativeProps(props);
   }
 
-  // For native props, first filter out all native-specific props
   const filteredProps = filterNativeProps(props);
-  
-  // Then map the supported native events to web events
   const { onPress, onPressIn, onPressOut, onFocus, onBlur } = props;
   return {
     ...filteredProps,
@@ -187,18 +181,18 @@ export const getNativeAccessibilityProps = (props: Partial<SharedButtonProps>) =
  * - State management (pressed)
  * - Event type conversions between platforms
  */
-export const createPressHandlers = (
+export const createPressHandlers = <T extends GestureResponderEvent | WebClickEvent>(
   setIsPressed: (isPressed: boolean) => void,
-  onPressIn?: ((e: GestureResponderEvent | NativePressEvent) => void) | null,
-  onPressOut?: ((e: GestureResponderEvent | NativePressEvent) => void) | null,
+  onPressIn?: ((e: T) => void) | null,
+  onPressOut?: ((e: T) => void) | null,
 ) => ({
-  handlePressIn: (event: WebClickEvent | GestureResponderEvent | NativePressEvent) => {
+  handlePressIn: (event: T) => {
     setIsPressed(true);
-    onPressIn?.(event as GestureResponderEvent | NativePressEvent);
+    onPressIn?.(event);
   },
-  handlePressOut: (event: WebClickEvent | GestureResponderEvent | NativePressEvent) => {
+  handlePressOut: (event: T) => {
     setIsPressed(false);
-    onPressOut?.(event as GestureResponderEvent | NativePressEvent);
+    onPressOut?.(event);
   },
 });
 
@@ -210,15 +204,15 @@ export const createPressHandlers = (
  */
 export const createHoverHandlers = (
   setIsHovered: (isHovered: boolean) => void,
-  onHoverIn?: ((e: MouseEvent<Element>) => void) | null,
-  onHoverOut?: ((e: MouseEvent<Element>) => void) | null,
+  onMouseEnter?: ((e: MouseEvent<Element>) => void) | null,
+  onMouseLeave?: ((e: MouseEvent<Element>) => void) | null,
 ) => ({
   handleHoverIn: (event: MouseEvent<Element>) => {
     setIsHovered(true);
-    onHoverIn?.(event);
+    onMouseEnter?.(event);
   },
   handleHoverOut: (event: MouseEvent<Element>) => {
     setIsHovered(false);
-    onHoverOut?.(event);
+    onMouseLeave?.(event);
   },
 }); 

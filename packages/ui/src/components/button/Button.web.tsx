@@ -8,8 +8,6 @@ import { ButtonContextProvider } from './context';
 import { ButtonIcon, ButtonSpinner, ButtonText } from './Button.shared';
 import { cn } from '../../utils';
 import { TextClassContext } from '../text';
-import type { NativePressEvent } from '../../types';
-import { GestureResponderEvent } from 'react-native';
 
 export const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
   ({
@@ -28,25 +26,24 @@ export const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
     const effectiveColor = (isPressed || isHovered) && accentColor ? accentColor : color;
 
     const webProps = toWebProps(props);
-    const { onPressIn, onPressOut, onHoverIn, onHoverOut, ...restWebProps } = webProps;
     const accessibilityProps = getAccessibilityProps({ disabled, loading });
 
     const { handlePressIn, handlePressOut } = React.useMemo(
       () => createPressHandlers(
         setIsPressed,
-        onPressIn as ((e: GestureResponderEvent | NativePressEvent) => void) | null,
-        onPressOut as ((e: GestureResponderEvent | NativePressEvent) => void) | null
+        webProps.onMouseDown,
+        webProps.onMouseUp
       ),
-      [setIsPressed, onPressIn, onPressOut]
+      [setIsPressed, webProps.onMouseDown, webProps.onMouseUp]
     );
 
     const { handleHoverIn, handleHoverOut } = React.useMemo(
       () => createHoverHandlers(
         setIsHovered,
-        onHoverIn as ((e: MouseEvent<Element>) => void) | null,
-        onHoverOut as ((e: MouseEvent<Element>) => void) | null
+        webProps.onMouseEnter as ((e: MouseEvent<Element>) => void) | null,
+        webProps.onMouseLeave as ((e: MouseEvent<Element>) => void) | null
       ),
-      [setIsHovered, onHoverIn, onHoverOut]
+      [setIsHovered, webProps.onMouseEnter, webProps.onMouseLeave]
     );
 
     const contextValue = React.useMemo(() => ({
@@ -80,7 +77,7 @@ export const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
             onMouseEnter={handleHoverIn}
             onMouseLeave={handleHoverOut}
             {...accessibilityProps}
-            {...restWebProps}
+            {...webProps}
           />
         </TextClassContext.Provider>
       </ButtonContextProvider.Provider>

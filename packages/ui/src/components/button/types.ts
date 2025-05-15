@@ -4,7 +4,8 @@ import type { VariantProps } from 'class-variance-authority';
 import type { IconProps } from '../icon/types';
 import type { SpinnerProps } from '../spinner/types';
 import { buttonVariants, iconButtonVariants } from './styles';
-import type { WebClickEvent, NativePressEvent, WebFocusEvent, NativeFocusEvent } from '../../types';
+import type { WebClickEvent, WebFocusEvent, NativeFocusEvent } from '../../types';
+import type { GestureResponderEvent } from 'react-native';
 
 // Platform-specific button props
 export type WebButtonProps = {
@@ -18,13 +19,13 @@ export type WebButtonProps = {
   onMouseLeave?: (e: WebClickEvent) => void;
 };
 
-export type NativeButtonProps = {
-  onPress?: (e: NativePressEvent) => void;
-  onPressIn?: (e: NativePressEvent) => void;
-  onPressOut?: (e: NativePressEvent) => void;
+export interface NativeButtonProps extends SharedButtonProps {
+  onPress?: (e: GestureResponderEvent) => void;
+  onPressIn?: (e: GestureResponderEvent) => void;
+  onPressOut?: (e: GestureResponderEvent) => void;
   onFocus?: (e: NativeFocusEvent) => void;
   onBlur?: (e: NativeFocusEvent) => void;
-};
+}
 
 // Shared button props
 export type SharedButtonProps = {

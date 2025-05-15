@@ -78,6 +78,7 @@ const Click = () => {
 const Press = () => {
   const [buttonText, setButtonText] = useState('Press me');
   const [isPressed, setIsPressed] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const [useWebEvents, setUseWebEvents] = useState(false);
   const [pressTimer, setPressTimer] = useState<NodeJS.Timeout | null>(null);
 
@@ -101,10 +102,24 @@ const Press = () => {
       setPressTimer(null);
     }
 
-    // Reset text after a short delay
+    // Reset text based on hover state
     setTimeout(() => {
-      setButtonText('Press me');
+      setButtonText(isHovered ? 'Hover!' : 'Press me');
     }, 200);
+  };
+
+  const handleHoverStart = () => {
+    setIsHovered(true);
+    if (!isPressed) {
+      setButtonText('Hover!');
+    }
+  };
+
+  const handleHoverEnd = () => {
+    setIsHovered(false);
+    if (!isPressed) {
+      setButtonText('Press me');
+    }
   };
 
   return (
@@ -121,7 +136,7 @@ const Press = () => {
       </View>
       <Button 
         variant="outline" 
-        color={isPressed ? "primary" : "success"}
+        color={isPressed ? "primary" : isHovered ? "secondary" : "success"}
         {...(useWebEvents
           ? {
               onMouseDown: handlePressStart,
@@ -132,7 +147,13 @@ const Press = () => {
               onPressOut: handlePressEnd
             }
         )}
-        className={cn("min-w-[200px]", isPressed ? "scale-95" : "scale-100")}
+        onMouseEnter={handleHoverStart}
+        onMouseLeave={handleHoverEnd}
+        className={cn(
+          "min-w-[200px]",
+          isPressed ? "scale-95" : "scale-100",
+          isHovered && !isPressed ? "scale-105" : ""
+        )}
       >
         <Button.Icon icon={isPressed ? LoaderPinwheel : Figma} />
         <Button.Text>{buttonText}</Button.Text>
