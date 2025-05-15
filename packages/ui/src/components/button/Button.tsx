@@ -9,7 +9,6 @@ import { getNativeAccessibilityProps, createPressHandlers } from './utils';
 import type { ButtonRootProps } from './types';
 import { TextClassContext } from '../text';
 import { toNativeProps } from './utils';
-import type { WebButtonProps } from './types';
 import type { NativePressEvent } from '../../types';
 
 const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRootProps>(
@@ -27,13 +26,10 @@ const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRo
     const [isPressed, setIsPressed] = React.useState(false);
     const effectiveColor = isPressed && accentColor ? accentColor : color;
 
-    // Convert props first to ensure all events are properly mapped
     const nativeProps = toNativeProps(props);
-    
-    // Then extract the handlers we need
+    const accessibilityProps = getNativeAccessibilityProps({ disabled, loading });
     const { onPressIn, onPressOut, ...restNativeProps } = nativeProps;
 
-    // no need for hover handlers here as we are using native pressable
     const { handlePressIn, handlePressOut } = React.useMemo(
       () => createPressHandlers(
         setIsPressed,
@@ -55,7 +51,6 @@ const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRo
     }), [variant, effectiveColor, size, disabled, loading, isPressed, nativeProps]);
 
     const Component = asChild ? Slot.Pressable : Pressable;
-    const accessibilityProps = getNativeAccessibilityProps({ disabled, loading });
 
     return (
       <ButtonContextProvider.Provider value={contextValue}>

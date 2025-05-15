@@ -1,7 +1,7 @@
 import * as React from 'react';
 import type { MouseEvent } from 'react';
 import * as Slot from '@radix-ui/react-slot';
-import { ButtonRootProps, WebButtonProps, NativeButtonProps } from './types';
+import { ButtonRootProps } from './types';
 import { toWebProps, getAccessibilityProps, createPressHandlers, createHoverHandlers } from './utils';
 import { buttonVariants, buttonTextVariants } from './styles';
 import { ButtonContextProvider } from './context';
@@ -27,24 +27,9 @@ export const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
     const [isHovered, setIsHovered] = React.useState(false);
     const effectiveColor = (isPressed || isHovered) && accentColor ? accentColor : color;
 
-    const contextValue = React.useMemo(() => ({
-      variant,
-      color: effectiveColor,
-      size,
-      disabled: disabled || loading,
-      loading,
-      isPressed,
-      isHovered,
-      setPressed: setIsPressed,
-      setHovered: setIsHovered,
-      buttonProps: props,
-    }), [variant, effectiveColor, size, disabled, loading, isPressed, isHovered, props]);
-
-    const accessibilityProps = getAccessibilityProps({ disabled, loading });
-
-    // Extract event handlers from props
     const { onPressIn, onPressOut, onHoverIn, onHoverOut, ...restProps } = props;
     const webProps = toWebProps(restProps);
+    const accessibilityProps = getAccessibilityProps({ disabled, loading });
 
     const { handlePressIn, handlePressOut } = React.useMemo(
       () => createPressHandlers(
@@ -63,6 +48,19 @@ export const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
       ),
       [setIsHovered, onHoverIn, onHoverOut]
     );
+
+    const contextValue = React.useMemo(() => ({
+      variant,
+      color: effectiveColor,
+      size,
+      disabled: disabled || loading,
+      loading,
+      isPressed,
+      isHovered,
+      setPressed: setIsPressed,
+      setHovered: setIsHovered,
+      buttonProps: props,
+    }), [variant, effectiveColor, size, disabled, loading, isPressed, isHovered, props]);
 
     const Component = asChild ? Slot.Root : 'button';
 
