@@ -27,8 +27,8 @@ export const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
     const [isHovered, setIsHovered] = React.useState(false);
     const effectiveColor = (isPressed || isHovered) && accentColor ? accentColor : color;
 
-    const { onPressIn, onPressOut, onHoverIn, onHoverOut, ...restProps } = props;
-    const webProps = toWebProps(restProps);
+    const webProps = toWebProps(props);
+    const { onPressIn, onPressOut, onHoverIn, onHoverOut, ...restWebProps } = webProps;
     const accessibilityProps = getAccessibilityProps({ disabled, loading });
 
     const { handlePressIn, handlePressOut } = React.useMemo(
@@ -80,7 +80,7 @@ export const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
             onMouseEnter={handleHoverIn}
             onMouseLeave={handleHoverOut}
             {...accessibilityProps}
-            {...webProps}
+            {...restWebProps}
           />
         </TextClassContext.Provider>
       </ButtonContextProvider.Provider>

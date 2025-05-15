@@ -1,9 +1,11 @@
 import { ScrollView } from 'react-native';
-import { Text, Button, IconButton } from "@ds3/ui/src";
+import { Text, Button, IconButton, Switch, cn } from "@ds3/ui/src";
 import type { ButtonColors, ButtonVariant, ButtonSizes } from "@ds3/ui/src";
-import { View, } from "react-native";
+import { View } from "react-native";
 import { Figma, LoaderPinwheel, Loader } from 'lucide-react-native';
 import { useState } from "react";
+import { GestureResponderEvent } from 'react-native';
+import * as React from 'react';
 
 const ButtonClickToLoad = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,6 +21,125 @@ const ButtonClickToLoad = () => {
     </Button>
   )
 }
+
+const Click = () => {
+  const [buttonText, setButtonText] = useState('Click me');
+  const [isClicked, setIsClicked] = useState(false);
+  const [useWebEvents, setUseWebEvents] = useState(false);
+
+  const handleWebClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    console.log('Web Click Event:', event);
+    setIsClicked(true);
+    setButtonText('Web Click!');
+    setTimeout(() => {
+      setIsClicked(false);
+      setButtonText('Click me');
+    }, 500);
+  };
+
+  const handleNativePress = (event: GestureResponderEvent) => {
+    console.log('Native Press Event:', event);
+    setIsClicked(true);
+    setButtonText('Native Click!');
+    setTimeout(() => {
+      setIsClicked(false);
+      setButtonText('Click me');
+    }, 500);
+  };
+
+  return (
+    <View className="flex flex-col gap-2">
+      <View className="flex flex-row items-center gap-2">
+        <Text className="text-sm text-neutral-11">Use Web Events:</Text>
+        <Switch
+          checked={useWebEvents}
+          onCheckedChange={setUseWebEvents}
+          disabled={false}
+          variant="soft"
+          color="secondary"
+        />
+      </View>
+      <Button 
+        variant="outline" 
+        color={isClicked ? "secondary" : "primary"}
+        {...(useWebEvents
+          ? { onClick: handleWebClick }
+          : { onPress: handleNativePress }
+        )}
+        className={cn("min-w-[200px]", isClicked ? "scale-95" : "scale-100")}
+      >
+        <Button.Icon icon={isClicked ? LoaderPinwheel : Figma} />
+        <Button.Text>{buttonText}</Button.Text>
+      </Button>
+    </View>
+  );
+};
+
+const Press = () => {
+  const [buttonText, setButtonText] = useState('Press me');
+  const [isPressed, setIsPressed] = useState(false);
+  const [useWebEvents, setUseWebEvents] = useState(false);
+  const [pressTimer, setPressTimer] = useState<NodeJS.Timeout | null>(null);
+
+  const handlePressStart = () => {
+    setIsPressed(true);
+    setButtonText(useWebEvents ? 'Web Press!' : 'Native Press!');
+    
+    // Start timer for long press
+    const timer = setTimeout(() => {
+      setButtonText(useWebEvents ? 'Web Long Press!' : 'Native Long Press!');
+    }, 500);
+    setPressTimer(timer);
+  };
+
+  const handlePressEnd = () => {
+    setIsPressed(false);
+    
+    // Clear long press timer
+    if (pressTimer) {
+      clearTimeout(pressTimer);
+      setPressTimer(null);
+    }
+
+    // Reset text after a short delay
+    setTimeout(() => {
+      setButtonText('Press me');
+    }, 200);
+  };
+
+  return (
+    <View className="flex flex-col gap-2">
+      <View className="flex flex-row items-center gap-2">
+        <Text className="text-sm text-neutral-11">Use Web Events:</Text>
+        <Switch
+          checked={useWebEvents}
+          onCheckedChange={setUseWebEvents}
+          disabled={false}
+          variant="soft"
+          color="primary"
+        />
+      </View>
+      <Button 
+        variant="outline" 
+        color={isPressed ? "primary" : "success"}
+        {...(useWebEvents
+          ? {
+              onMouseDown: handlePressStart,
+              onMouseUp: handlePressEnd
+            }
+          : {
+              onPressIn: handlePressStart,
+              onPressOut: handlePressEnd
+            }
+        )}
+        className={cn("min-w-[200px]", isPressed ? "scale-95" : "scale-100")}
+      >
+        <Button.Icon icon={isPressed ? LoaderPinwheel : Figma} />
+        <Button.Text>{buttonText}</Button.Text>
+      </Button>
+    </View>
+  );
+};
 
 export default function Buttons() {
   const buttonVariants: Array<ButtonVariant> = [
@@ -232,6 +353,12 @@ export default function Buttons() {
               ))}
             </View>
           ))}
+
+          <Text className="text-h2">Events</Text>
+          <View className="flex flex-row flex-wrap gap-4">
+            <Click />
+            <Press />
+          </View>
         </View>
       </View>
     </ScrollView>
