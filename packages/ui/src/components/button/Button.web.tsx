@@ -1,29 +1,29 @@
 import * as React from 'react';
-import { ButtonRootProps } from './types';
-import { toWebProps, getAccessibilityProps } from './utils';
+import type { MouseEvent } from 'react';
+import { ButtonRootProps, WebButtonProps, NativeButtonProps } from './types';
+import { toWebProps, getAccessibilityProps, createPressHandlers, createHoverHandlers } from './utils';
 import { buttonVariants, buttonTextVariants } from './styles';
 import { ButtonContextProvider } from './context';
 import { ButtonIcon, ButtonSpinner, ButtonText } from './Button.shared';
 import { cn } from '../../utils';
 import { TextClassContext } from '../text';
+import type { NativePressEvent } from '../../types';
+import { GestureResponderEvent } from 'react-native';
 
 export const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
-  ({ className, variant, color, accentColor, size, disabled, loading, children, onPressIn, onPressOut, onHoverIn, onHoverOut, ...props }, ref) => {
+  ({
+    className,
+    variant,
+    color,
+    accentColor,
+    size,
+    disabled = false,
+    loading,
+    ...props
+  }, ref) => {
     const [isPressed, setIsPressed] = React.useState(false);
     const [isHovered, setIsHovered] = React.useState(false);
     const effectiveColor = (isPressed || isHovered) && accentColor ? accentColor : color;
-    const buttonRef = React.useRef<HTMLButtonElement>(null);
-
-    React.useImperativeHandle(
-      ref,
-      () => {
-        if (!buttonRef.current) {
-          return {} as HTMLButtonElement;
-        }
-        return buttonRef.current;
-      },
-      [buttonRef.current]
-    );
 
     const contextValue = React.useMemo(() => ({
       variant,
@@ -35,40 +35,43 @@ export const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
       isHovered,
       setPressed: setIsPressed,
       setHovered: setIsHovered,
-      buttonRef,
       buttonProps: props,
     }), [variant, effectiveColor, size, disabled, loading, isPressed, isHovered, props]);
 
-    const handlePressIn = React.useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-      setIsPressed(true);
-      onPressIn?.(event as any);
-    }, [onPressIn]);
-
-    const handlePressOut = React.useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-      setIsPressed(false);
-      onPressOut?.(event as any);
-    }, [onPressOut]);
-
-    const handleHoverIn = React.useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-      setIsHovered(true);
-      onHoverIn?.(event as any);
-    }, [onHoverIn]);
-
-    const handleHoverOut = React.useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-      setIsHovered(false);
-      onHoverOut?.(event as any);
-    }, [onHoverOut]);
-
-    const webProps = toWebProps(props);
     const accessibilityProps = getAccessibilityProps({ disabled, loading });
+
+    // Extract event handlers from props
+    const { onPressIn, onPressOut, onHoverIn, onHoverOut, ...restProps } = props;
+    const webProps = toWebProps(restProps);
+
+    const { handlePressIn, handlePressOut } = React.useMemo(
+      () => createPressHandlers(
+        setIsPressed,
+        onPressIn as ((e: GestureResponderEvent | NativePressEvent) => void) | null,
+        onPressOut as ((e: GestureResponderEvent | NativePressEvent) => void) | null
+      ),
+      [setIsPressed, onPressIn, onPressOut]
+    );
+
+    const { handleHoverIn, handleHoverOut } = React.useMemo(
+      () => createHoverHandlers(
+        setIsHovered,
+        onHoverIn as ((e: MouseEvent<Element>) => void) | null,
+        onHoverOut as ((e: MouseEvent<Element>) => void) | null
+      ),
+      [setIsHovered, onHoverIn, onHoverOut]
+    );
 
     return (
       <ButtonContextProvider.Provider value={contextValue}>
         <TextClassContext.Provider value={buttonTextVariants({ variant, color: effectiveColor, size })}>
           <button
-            ref={buttonRef}
+            ref={ref}
             type="button"
-            className={cn(buttonVariants({ variant, color: effectiveColor, size, disabled: disabled || loading }), className)}
+            className={cn(
+              buttonVariants({ variant, color: effectiveColor, size, disabled: disabled || loading }),
+              className
+            )}
             disabled={disabled || loading}
             onMouseDown={handlePressIn}
             onMouseUp={handlePressOut}
@@ -76,9 +79,7 @@ export const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
             onMouseLeave={handleHoverOut}
             {...accessibilityProps}
             {...webProps}
-          >
-            {children}
-          </button>
+          />
         </TextClassContext.Provider>
       </ButtonContextProvider.Provider>
     );
