@@ -10,8 +10,3 @@ export type WebChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaEl
 export type NativePressEvent = NativeSyntheticEvent<GestureResponderEvent>;
 export type NativeFocusEvent = NativeSyntheticEvent<TextInputFocusEventData>;
 export type NativeChangeEvent = NativeSyntheticEvent<TextInputFocusEventData>;
-
-// Unified Event Types
-export type FocusEvent = WebFocusEvent | NativeFocusEvent;
-export type ChangeEvent = WebChangeEvent | NativeChangeEvent;
-export type ClickEvent = WebClickEvent | NativePressEvent; 

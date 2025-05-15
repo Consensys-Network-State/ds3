@@ -175,3 +175,12 @@ export {
 export {
   useCopyToClipboard
 } from './hooks';
+
+export type {
+  WebClickEvent,
+  WebFocusEvent,
+  WebChangeEvent,
+  NativePressEvent,
+  NativeFocusEvent,
+  NativeChangeEvent,
+} from './types';

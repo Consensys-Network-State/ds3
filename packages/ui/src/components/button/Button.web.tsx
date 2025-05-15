@@ -1,5 +1,6 @@
 import * as React from 'react';
 import type { MouseEvent } from 'react';
+import * as Slot from '@radix-ui/react-slot';
 import { ButtonRootProps, WebButtonProps, NativeButtonProps } from './types';
 import { toWebProps, getAccessibilityProps, createPressHandlers, createHoverHandlers } from './utils';
 import { buttonVariants, buttonTextVariants } from './styles';
@@ -19,6 +20,7 @@ export const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
     size,
     disabled = false,
     loading,
+    asChild = false,
     ...props
   }, ref) => {
     const [isPressed, setIsPressed] = React.useState(false);
@@ -62,12 +64,14 @@ export const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
       [setIsHovered, onHoverIn, onHoverOut]
     );
 
+    const Component = asChild ? Slot.Root : 'button';
+
     return (
       <ButtonContextProvider.Provider value={contextValue}>
         <TextClassContext.Provider value={buttonTextVariants({ variant, color: effectiveColor, size })}>
-          <button
+          <Component
             ref={ref}
-            type="button"
+            type={asChild ? undefined : ('button' as const)}
             className={cn(
               buttonVariants({ variant, color: effectiveColor, size, disabled: disabled || loading }),
               className
@@ -94,4 +98,4 @@ const Button = Object.assign(ButtonRoot, {
   Spinner: ButtonSpinner,
 });
 
-export { Button }; 
+export { Button };
