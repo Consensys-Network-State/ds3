@@ -20,7 +20,7 @@ const AddressCard = React.forwardRef<any, AddressCardProps>(
       <div ref={ref} className={cn(addressCardVariants({ showCopyButton }), className)}>
         <div className="flex flex-row items-center">
           <AddressAvatar address={address} className={cn("w-8 h-8 mr-3", avatarClassName)} />
-          <div>
+          <div className="flex flex-col gap-1">
             {!!ensName && <Address address={address} />}
             <Address address={address} ens={false} />
           </div>

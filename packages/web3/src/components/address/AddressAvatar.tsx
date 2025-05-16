@@ -12,6 +12,11 @@ const AddressAvatar = React.forwardRef<any, AddressAvatarProps>(
     ens = true,
     ...props
   }, ref) => {
+    // Return null if address is not defined
+    if (!address) {
+      return null;
+    }
+
     const { data: ensName } = useEnsName({ address });
     const { data: ensAvatar } = useEnsAvatar({
       name: ens && ensName ? normalize(ensName as string) : ""
