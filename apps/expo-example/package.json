@@ -15,8 +15,8 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@ds3/react": "workspace:*",
-    "@ds3/config": "workspace:*",
+    "@ds3/ui": "workspace:*",
+    "@ds3/core": "workspace:*",
     "@expo/vector-icons": "^14.0.2",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",

@@ -1,4 +1,4 @@
-import { Text } from "@ds3/react/src";
+import { Text } from "@ds3/ui/src";
 import { View, ScrollView } from "react-native";
 
 export default function Typography() {

@@ -1,0 +1,3 @@
+[submodule "apoc"]
+	path = apps/apoc
+	url = git@github.com:ConsenSysMesh/apoc.git

@@ -10,7 +10,7 @@ import {
   ModeToggle,
   Text,
   ThemeSwitcher
-} from '@ds3/react';
+} from '@ds3/ui';
 
 export default function HomeScreen() {
   return (

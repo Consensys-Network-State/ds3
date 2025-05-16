@@ -1,0 +1,77 @@
+{
+  "name": "@ds3/ui",
+  "version": "1.0.0",
+  "description": "",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./src/*": "./src/*"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@tsconfig/react-native": "^3.0.5",
+    "@tsconfig/recommended": "^1.0.8",
+    "@types/react": "^18.3.11",
+    "tsup": "^8.3.5"
+  },
+  "dependencies": {
+    "@ds3/core": "workspace:*",
+    "@react-native-async-storage/async-storage": "^2.0.0",
+    "@rn-primitives/avatar": "^1.1.0",
+    "@rn-primitives/dropdown-menu": "^1.1.0",
+    "@rn-primitives/portal": "^1.1.0",
+    "@rn-primitives/select": "^1.1.0",
+    "@rn-primitives/slot": "^1.1.0",
+    "@rn-primitives/types": "^1.1.0",
+    "@rn-primitives/dialog": "^1.1.0",
+    "@rn-primitives/label": "^1.1.0",
+    "@rn-primitives/checkbox": "^1.1.0",
+    "@rn-primitives/radio-group": "^1.1.0",
+    "@rn-primitives/switch": "^1.1.0",
+    "autoprefixer": "^10.4.20",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "lucide-react-native": "^0.454.0",
+    "nativewind": "^4.1.23",
+    "postcss": "^8.4.47",
+    "react-native-reanimated": "^3.16.1",
+    "react-native-svg": "^15.8.0",
+    "tailwind-merge": "^2.5.4",
+    "tailwindcss": "^3.4.14",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-safe-area-context": "*",
+    "react-native-web": "*"
+  },
+  "peerDependenciesMeta": {
+    "react-native": {
+      "optional": true
+    },
+    "react-native-web": {
+      "optional": true
+    },
+    "react-native-safe-area-context": {
+      "optional": true
+    }
+  }
+}

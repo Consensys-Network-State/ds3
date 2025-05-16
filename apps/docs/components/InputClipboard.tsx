@@ -1,10 +1,9 @@
 import * as React from "react";
-import { Input, InputRootProps, Button } from '@ds3/react/src';
-import { useCopyToClipboard } from '@ds3/react/src/hooks';
+import { Input, InputProps, Button, useCopyToClipboard } from '@ds3/ui/src';
 import { Platform } from 'react-native';
 import { Check, Copy } from 'lucide-react-native';
 
-interface InputClipboardProps extends Omit<InputRootProps, 'readOnly' | 'children'> {
+interface InputClipboardProps extends Omit<InputProps, 'readOnly' | 'children'> {
   value: string;
   className?: string;
 }

@@ -2,8 +2,7 @@ import React from 'react';
 import { ScrollView } from 'react-native';
 import { View } from 'react-native';
 import { LoaderCircle, Loader, LoaderPinwheel, RefreshCw } from 'lucide-react-native';
-import { Text, Spinner } from '@ds3/react/src';
-import { Easing } from 'react-native-reanimated';
+import { Text, Spinner } from '@ds3/ui/src';
 
 const spinnerColors = [
   'neutral',
@@ -68,30 +67,18 @@ export default function Spinners() {
             </View>
           ))}
 
-          <Text className="text-h2">Animation Types</Text>
+          <Text className="text-h2">Animation Speeds</Text>
           <View className="flex flex-row flex-wrap gap-4">
             <View className="flex flex-row items-center gap-2">
-              <Text>Default</Text>
+              <Text>Normal</Text>
               <Spinner color="primary" size="lg" />
-            </View>
-            <View className="flex flex-row items-center gap-2">
-              <Text>Spring</Text>
-              <Spinner
-                color="primary"
-                size="lg"
-                useSpring
-                springConfig={{
-                  damping: 10,
-                  stiffness: 100
-                }}
-              />
             </View>
             <View className="flex flex-row items-center gap-2">
               <Text>Slow</Text>
               <Spinner
                 color="primary"
                 size="lg"
-                duration={2000}
+                speed="slow"
               />
             </View>
             <View className="flex flex-row items-center gap-2">
@@ -99,8 +86,16 @@ export default function Spinners() {
               <Spinner
                 color="primary"
                 size="lg"
-                duration={500}
+                speed="fast"
               />
+            </View>
+          </View>
+
+          <Text className="text-h2">Direction</Text>
+          <View className="flex flex-row flex-wrap gap-4">
+            <View className="flex flex-row items-center gap-2">
+              <Text>Clockwise</Text>
+              <Spinner color="primary" size="lg" />
             </View>
             <View className="flex flex-row items-center gap-2">
               <Text>Counterclockwise</Text>
@@ -108,42 +103,6 @@ export default function Spinners() {
                 color="primary"
                 size="lg"
                 direction="counterclockwise"
-              />
-            </View>
-          </View>
-
-          <Text className="text-h2">Custom Configurations</Text>
-          <View className="flex flex-row flex-wrap gap-4">
-            <View className="flex flex-row items-center gap-2">
-              <Text>Bouncy Spring</Text>
-              <Spinner
-                color="primary"
-                size="lg"
-                useSpring
-                springConfig={{
-                  damping: 5,
-                  stiffness: 80
-                }}
-              />
-            </View>
-            <View className="flex flex-row items-center gap-2">
-              <Text>Stiff Spring</Text>
-              <Spinner
-                color="primary"
-                size="lg"
-                useSpring
-                springConfig={{
-                  damping: 20,
-                  stiffness: 200
-                }}
-              />
-            </View>
-            <View className="flex flex-row items-center gap-2">
-              <Text>Ease In Out</Text>
-              <Spinner
-                color="primary"
-                size="lg"
-                easing={Easing.inOut(Easing.ease)}
               />
             </View>
           </View>

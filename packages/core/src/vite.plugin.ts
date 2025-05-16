@@ -1,0 +1,50 @@
+import { PluginOption, transformWithEsbuild } from 'vite';
+import reactNativeWeb from 'vite-plugin-react-native-web';
+import react from '@vitejs/plugin-react';
+import { UserConfig } from "./types";
+import { generateConfig } from "./utils";
+
+function vitePlugin(command: 'serve' | 'build', userConfig: UserConfig): PluginOption[] {
+  const config = generateConfig(userConfig);
+  
+  return [
+    react({
+      babel: {
+        presets: ['nativewind/babel'],
+      },
+    }),
+    // @ts-ignore
+    reactNativeWeb(),
+    {
+      enforce: 'pre',
+      name: 'vite-plugin-ds3',
+      config: () => ({
+        define: {
+          'import.meta.env.DS3': JSON.stringify(config),
+        },
+        optimizeDeps: {
+          include: ['@ds3/ui'],
+          esbuildOptions: {
+            loader: {
+              '.js': 'tsx',
+              '.mjs': 'jsx',
+            },
+            jsxImportSource: 'nativewind',
+          },
+        },
+      }),
+      async transform(code: string, id: string) {
+        if (command === 'build' && (id.endsWith('.js') || id.endsWith('.mjs'))) {
+          return transformWithEsbuild(code, id, {
+            loader: 'jsx',
+            jsx: 'automatic',
+            jsxImportSource: 'nativewind',
+          });
+        }
+        return null;
+      },
+    },
+  ];
+}
+
+export default vitePlugin;

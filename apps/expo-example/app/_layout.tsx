@@ -6,7 +6,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 import "../global.css";
-import { ThemeProvider as DS3Provider } from '@ds3/react'
+import { ThemeProvider as DS3Provider } from '@ds3/ui'
 import { PortalHost } from '@rn-primitives/portal';
 import ExpoConstants from 'expo-constants';
 

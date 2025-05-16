@@ -1,6 +1,4 @@
-const { generateConfig } = require('@ds3/config');
-
-module.exports = generateConfig({
+module.exports = {
   themes: {
     default: {
       // use any radix colors - https://www.radix-ui.com/colors
@@ -45,4 +43,4 @@ module.exports = generateConfig({
       },
     }
   },
-});
+};
