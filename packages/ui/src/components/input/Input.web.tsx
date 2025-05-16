@@ -6,12 +6,14 @@ import { InputContextProvider, useInputContext } from './context';
 import { InputIcon, InputSpinner, InputText } from './Input.shared';
 import { 
   toWebProps, 
-  getWebInputAccessibilityProps, 
-  handleFocus,
+  getWebInputAccessibilityProps,
 } from './utils';
 import type {
   InputRootProps,
   InputFieldProps,
+  WebInputProps,
+  WebInputBaseProps,
+  WebTextareaProps,
 } from './types';
 
 const InputRoot = React.forwardRef<HTMLInputElement, InputRootProps>(
@@ -94,12 +96,29 @@ InputRoot.displayName = 'Input';
 const InputField = ({ className }: InputFieldProps) => {
   const context = useInputContext();
   const { fieldProps = {}, setFocused, disabled, readOnly, size, loading, inputRef } = context;
-  const { multiline, onFocus, onBlur, ...otherProps } = fieldProps;
+  const { multiline, ...otherProps } = fieldProps;
+  
+  // Convert to appropriate web props type
   const webProps = toWebProps(otherProps);
   const accessibilityProps = getWebInputAccessibilityProps({ disabled, loading, multiline, readOnly });
 
-  const commonProps = {
-    ref: inputRef,
+  // Create unified event handlers for focus events
+  const handleFocus = React.useCallback((e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFocused?.(true);
+    if ('onFocus' in webProps && typeof webProps.onFocus === 'function') {
+      (webProps.onFocus as any)(e);
+    }
+  }, [webProps, setFocused]);
+
+  const handleBlur = React.useCallback((e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFocused?.(false);
+    if ('onBlur' in webProps && typeof webProps.onBlur === 'function') {
+      (webProps.onBlur as any)(e);
+    }
+  }, [webProps, setFocused]);
+
+  // Shared props for both input and textarea
+  const sharedProps = {
     className: cn(
       'flex-1 bg-transparent p-0 outline-none text-neutral-a12 placeholder:text-neutral-a10',
       inputTextVariants({ size }),
@@ -109,22 +128,29 @@ const InputField = ({ className }: InputFieldProps) => {
     ),
     disabled,
     readOnly,
-    onFocus: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setFocused?.(true);
-      handleFocus(true, onFocus, undefined, e);
-    },
-    onBlur: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setFocused?.(false);
-      handleFocus(false, undefined, onBlur, e);
-    },
     ...accessibilityProps,
-    ...webProps,
   };
 
-  return multiline ? (
-    <textarea {...commonProps} />
-  ) : (
-    <input {...commonProps} />
+  if (multiline) {
+    return (
+      <textarea
+        ref={inputRef as React.RefObject<HTMLTextAreaElement>}
+        onFocus={handleFocus as React.FocusEventHandler<HTMLTextAreaElement>}
+        onBlur={handleBlur as React.FocusEventHandler<HTMLTextAreaElement>}
+        {...sharedProps}
+        {...(webProps as WebTextareaProps)}
+      />
+    );
+  }
+
+  return (
+    <input
+      ref={inputRef}
+      onFocus={handleFocus as React.FocusEventHandler<HTMLInputElement>}
+      onBlur={handleBlur as React.FocusEventHandler<HTMLInputElement>}
+      {...sharedProps}
+      {...(webProps as WebInputBaseProps)}
+    />
   );
 };
 InputField.displayName = 'InputField';

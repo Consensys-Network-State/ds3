@@ -8,7 +8,6 @@ export { InputContextProvider, useInputContext } from './context';
 
 // types
 export type {
-  UnifiedInputProps,
   InputContext,
   InputIconProps,
   InputSpinnerProps,

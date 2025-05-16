@@ -7,8 +7,7 @@ import { InputContextProvider, useInputContext } from './context';
 import { InputIcon, InputSpinner, InputText } from './Input.shared';
 import { 
   toNativeProps, 
-  getNativeInputAccessibilityProps, 
-  handleFocus 
+  getNativeInputAccessibilityProps,
 } from './utils';
 import type {
   InputRootProps,
@@ -91,7 +90,7 @@ InputRoot.displayName = 'Input';
 const InputField = ({ className }: InputFieldProps) => {
   const context = useInputContext();
   const { fieldProps = {}, setFocused, disabled, readOnly, size, loading, inputRef } = context;
-  const { multiline, onFocus, onBlur, ...otherProps } = fieldProps;
+  const { multiline, ...otherProps } = fieldProps;
   const nativeProps = toNativeProps(otherProps);
   const accessibilityProps = getNativeInputAccessibilityProps({ disabled, loading, multiline, readOnly });
 
@@ -116,11 +115,15 @@ const InputField = ({ className }: InputFieldProps) => {
       selectTextOnFocus={readOnly}
       onFocus={(e) => {
         setFocused?.(true);
-        handleFocus(true, onFocus, undefined, e);
+        if (nativeProps.onFocus) {
+          nativeProps.onFocus(e);
+        }
       }}
       onBlur={(e) => {
         setFocused?.(false);
-        handleFocus(false, undefined, onBlur, e);
+        if (nativeProps.onBlur) {
+          nativeProps.onBlur(e);
+        }
       }}
       {...accessibilityProps}
       {...nativeProps}

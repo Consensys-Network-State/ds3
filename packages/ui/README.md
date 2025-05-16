@@ -22,6 +22,35 @@ export function MyComponent() {
 }
 ```
 
+## Cross-Platform Prop Handling
+
+This library is designed to support three distinct developer personas with a unified component library:
+
+### Developer Personas
+
+#### 1. Web-Only Developers
+If you're building exclusively for the web:
+- Use web-specific props (`onChange`, `type`, etc.)
+- Full access to web-specific features with type safety
+
+#### 2. Native-Only Developers
+If you're building exclusively for native platforms:
+- Use only React Native props (`onChangeText`, `secureTextEntry`, etc.)
+- Expect runtime warnings help identify accidental use of web props
+
+#### 3. Hybrid App Developers
+If you're building for both web and native:
+- Use only React Native props for cross-platform consistency
+- Never mix web and native props, even in web contexts
+- Write once, run anywhere with the same component API
+
+The key principle is consistency: pick one prop style based on your target platform(s) and stick with it.
+
+Key behavior:
+- Native components accept only `NativeProps`
+- Web components accpet `NativeProps` **OR** `WebProps`
+- Hybrid apps should use only `NativeProps` for all platforms
+
 ## Export Strategy
 
 This package uses a consistent export strategy to ensure optimal tree-shaking and clear public API boundaries:
