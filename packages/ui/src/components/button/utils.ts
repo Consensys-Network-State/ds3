@@ -1,205 +1,92 @@
-/**
- * Button Component Utilities
- * 
- * This module provides utilities for handling cross-platform button functionality:
- * 
- * - Platform Detection:
- *   Web indicators:
- *   • Event handlers: onClick, onMouseDown, onMouseUp, onMouseEnter, onMouseLeave
- *   • Props: type="button" | "submit" | "reset"
- * 
- *   Native indicators:
- *   • Event handlers: onPress, onPressIn, onPressOut
- *   • Props: hitSlop, needsOffscreenAlphaCompositing, onLayout, onTouch*
- * 
- * - Event Conversion:
- *   Web → Native:
- *   • onClick → onPress
- *   • onMouseDown → onPressIn
- *   • onMouseUp → onPressOut
- *   • onFocus → onFocus
- *   • onBlur → onBlur
- * 
- *   Native → Web:
- *   • onPress → onClick
- *   • onPressIn → onMouseDown
- *   • onPressOut → onMouseUp
- *   • onFocus → onFocus
- *   • onBlur → onBlur
- * 
- * - Prop Filtering:
- *   Web props removed: type, onClick, onMouseDown, onMouseUp, onMouseEnter, onMouseLeave
- *   Native props removed: hitSlop, needsOffscreenAlphaCompositing, onLayout, onTouch*, onPress*
- * 
- * - Accessibility Props:
- *   Web:
- *   • aria-disabled={disabled}
- *   • aria-busy={loading}
- *   • role="button"
- * 
- *   Native:
- *   • accessibilityRole="button"
- *   • accessibilityState={{ disabled, busy: loading }}
- * 
- * - Event Handlers:
- *   • Press: Manages press state and events across platforms
- *   • Hover: Manages hover state and events (web-only)
- */
-
-import type { WebButtonProps, NativeButtonProps, SharedButtonProps } from './types';
-import type { WebClickEvent, NativePressEvent, WebFocusEvent, NativeFocusEvent } from '../../types';
-import { AccessibilityRole, GestureResponderEvent } from 'react-native';
-import type { MouseEvent } from 'react';
+import type { 
+  WebButtonProps, 
+  NativeButtonProps,
+  SharedButtonProps,
+} from './types';
+import type { WebClickEvent } from '../../types';
+import type { AccessibilityRole, GestureResponderEvent } from 'react-native';
 
 /**
- * Type guards to determine if props are web or native specific
- * Checks for both event handlers and platform-specific props
+ * Identifies web-specific props (onClick, type, form)
+ * @returns true if props contain web-specific properties
  */
 export function isWebButtonProps(props: unknown): props is WebButtonProps {
   if (!props || typeof props !== 'object') return false;
-  
   const p = props as Partial<WebButtonProps>;
-  
-  // Check for web-specific event handlers
-  const hasWebEvents = (
-    typeof p.onClick === 'function' ||
-    typeof p.onMouseDown === 'function' ||
-    typeof p.onMouseUp === 'function' ||
-    typeof p.onMouseEnter === 'function' ||
-    typeof p.onMouseLeave === 'function'
-  );
-
-  // Check for web-specific props
-  const hasWebProps = (
-    p.type === 'button' ||
-    p.type === 'submit' ||
-    p.type === 'reset'
-  );
-
-  return hasWebEvents || hasWebProps;
+  return typeof p.onClick === 'function' || 'type' in p || 'form' in p || 'formAction' in p;
 }
 
+/**
+ * Identifies native-specific props (onPress, onPressIn, onPressOut)
+ * @returns true if props contain native-specific properties
+ */
 export function isNativeButtonProps(props: unknown): props is NativeButtonProps {
   if (!props || typeof props !== 'object') return false;
-  
   const p = props as Partial<NativeButtonProps>;
-  
-  // Check for native-specific event handlers
-  const hasNativeEvents = (
-    typeof p.onPress === 'function' ||
-    typeof p.onPressIn === 'function' ||
-    typeof p.onPressOut === 'function'
-  );
-
-  // Check for native-specific props
-  const hasNativeProps = (
-    'hitSlop' in p ||
-    'needsOffscreenAlphaCompositing' in p ||
-    'onLayout' in p ||
-    'onTouchCancel' in p ||
-    'onTouchEnd' in p ||
-    'onTouchMove' in p ||
-    'onTouchStart' in p
-  );
-
-  return hasNativeEvents || hasNativeProps;
+  return typeof p.onPress === 'function' || typeof p.onPressIn === 'function' || typeof p.onPressOut === 'function';
 }
 
 /**
- * Filters out web-specific props that shouldn't be passed to native components
+ * Native prop validator - warns if web props detected
+ * - No props are filtered out (React Native ignores unrecognized props)
+ * - Web props like onClick, type will be ignored by native components
  */
-export function filterWebProps(props: any): NativeButtonProps {
-  const {
-    type,
-    onClick,
-    onMouseDown,
-    onMouseUp,
-    onMouseEnter,
-    onMouseLeave,
-    ...rest
-  } = props;
-  return rest;
+export function toNativeProps(props: unknown): NativeButtonProps {
+  if (!props || typeof props !== 'object') {
+    return {} as NativeButtonProps;
+  }
+
+  if (isWebButtonProps(props)) {
+    console.warn('[DS3 Button] - Web props detected in native environment. This is not supported and props will be ignored.');
+  }
+
+  return props as NativeButtonProps;
 }
 
 /**
- * Filters out native-specific props that shouldn't be passed to web components
+ * Converts native props to web props for hybrid support
+ * Maps:
+ * - onPress → onClick
+ * - onPressIn → onMouseDown
+ * - onPressOut → onMouseUp
  */
-export function filterNativeProps(props: any): WebButtonProps {
+export function toWebProps(props: unknown): WebButtonProps {
+  if (!props || typeof props !== 'object') {
+    throw new Error('Props must be an object');
+  }
+
+  if (isWebButtonProps(props)) {
+    return props as WebButtonProps;
+  }
+
+  if (!isNativeButtonProps(props)) {
+    throw new Error('[DS3 Button] - Mixed props detected. Props must be either web or native, not both.');
+  }
+
   const {
-    hitSlop,
-    needsOffscreenAlphaCompositing,
-    onLayout,
-    onTouchCancel,
-    onTouchEnd,
-    onTouchMove,
-    onTouchStart,
     onPress,
     onPressIn,
     onPressOut,
     ...rest
-  } = props;
-  return rest;
-}
+  } = props as NativeButtonProps;
 
-/**
- * Converts web event handlers to native event handlers
- * Maps:
- * - onClick -> onPress
- * - onMouseDown -> onPressIn
- * - onMouseUp -> onPressOut
- * - onFocus -> onFocus
- * - onBlur -> onBlur
- */
-export function toNativeProps(props: WebButtonProps | NativeButtonProps): NativeButtonProps {
-  if (isNativeButtonProps(props)) {
-    return filterWebProps(props);
-  }
-
-  const filteredProps = filterWebProps(props);
-  const { onClick, onMouseDown, onMouseUp, onFocus, onBlur } = props;
   return {
-    ...filteredProps,
-    onPress: onClick ? (e: GestureResponderEvent) => onClick(e as unknown as WebClickEvent) : undefined,
-    onPressIn: onMouseDown ? (e: GestureResponderEvent) => onMouseDown(e as unknown as WebClickEvent) : undefined,
-    onPressOut: onMouseUp ? (e: GestureResponderEvent) => onMouseUp(e as unknown as WebClickEvent) : undefined,
-    onFocus: onFocus ? (e: NativeFocusEvent) => onFocus(e as unknown as WebFocusEvent) : undefined,
-    onBlur: onBlur ? (e: NativeFocusEvent) => onBlur(e as unknown as WebFocusEvent) : undefined,
-  };
-}
-
-/**
- * Converts native event handlers to web event handlers
- * Maps:
- * - onPress -> onClick
- * - onPressIn -> onMouseDown
- * - onPressOut -> onMouseUp
- * - onFocus -> onFocus
- * - onBlur -> onBlur
- */
-export function toWebProps(props: WebButtonProps | NativeButtonProps): WebButtonProps {
-  if (isWebButtonProps(props)) {
-    return filterNativeProps(props);
-  }
-
-  const filteredProps = filterNativeProps(props);
-  const { onPress, onPressIn, onPressOut, onFocus, onBlur } = props;
-  return {
-    ...filteredProps,
+    ...rest,
     type: 'button',
-    onClick: onPress ? (e: WebClickEvent) => onPress(e as unknown as NativePressEvent) : undefined,
-    onMouseDown: onPressIn ? (e: WebClickEvent) => onPressIn(e as unknown as NativePressEvent) : undefined,
-    onMouseUp: onPressOut ? (e: WebClickEvent) => onPressOut(e as unknown as NativePressEvent) : undefined,
-    onFocus: onFocus ? (e: WebFocusEvent) => onFocus(e as unknown as NativeFocusEvent) : undefined,
-    onBlur: onBlur ? (e: WebFocusEvent) => onBlur(e as unknown as NativeFocusEvent) : undefined,
-  };
+    onClick: onPress ? (e: WebClickEvent) => onPress(e as unknown as GestureResponderEvent) : undefined,
+    onMouseDown: onPressIn ? (e: WebClickEvent) => onPressIn(e as unknown as GestureResponderEvent) : undefined,
+    onMouseUp: onPressOut ? (e: WebClickEvent) => onPressOut(e as unknown as GestureResponderEvent) : undefined,
+  } as WebButtonProps;
 }
 
 /**
- * Creates accessibility props for web components
+ * Web accessibility props
+ * Maps:
+ * - disabled → aria-disabled
+ * - loading → aria-busy
  */
-export const getAccessibilityProps = (props: Partial<SharedButtonProps>) => {
+export const getWebButtonAccessibilityProps = (props: Partial<SharedButtonProps>) => {
   const { disabled, loading } = props;
-  
   return {
     'aria-disabled': disabled,
     'aria-busy': loading,
@@ -208,11 +95,13 @@ export const getAccessibilityProps = (props: Partial<SharedButtonProps>) => {
 };
 
 /**
- * Creates accessibility props for native components
+ * Native accessibility props
+ * Maps:
+ * - disabled → accessibilityState.disabled
+ * - loading → accessibilityState.busy
  */
-export const getNativeAccessibilityProps = (props: Partial<SharedButtonProps>) => {
+export const getNativeButtonAccessibilityProps = (props: Partial<SharedButtonProps>) => {
   const { disabled, loading } = props;
-  
   return {
     accessibilityRole: 'button' as AccessibilityRole,
     accessibilityState: {
@@ -227,7 +116,6 @@ export const getNativeAccessibilityProps = (props: Partial<SharedButtonProps>) =
  * Handles:
  * - Press events (press in/out)
  * - State management (pressed)
- * - Event type conversions between platforms
  */
 export const createPressHandlers = <T extends GestureResponderEvent | WebClickEvent>(
   setIsPressed: (isPressed: boolean) => void,
@@ -252,14 +140,14 @@ export const createPressHandlers = <T extends GestureResponderEvent | WebClickEv
  */
 export const createHoverHandlers = (
   setIsHovered: (isHovered: boolean) => void,
-  onMouseEnter?: ((e: MouseEvent<Element>) => void) | null,
-  onMouseLeave?: ((e: MouseEvent<Element>) => void) | null,
+  onMouseEnter?: ((e: React.MouseEvent<Element>) => void) | null,
+  onMouseLeave?: ((e: React.MouseEvent<Element>) => void) | null,
 ) => ({
-  handleHoverIn: (event: MouseEvent<Element>) => {
+  handleHoverIn: (event: React.MouseEvent<Element>) => {
     setIsHovered(true);
     onMouseEnter?.(event);
   },
-  handleHoverOut: (event: MouseEvent<Element>) => {
+  handleHoverOut: (event: React.MouseEvent<Element>) => {
     setIsHovered(false);
     onMouseLeave?.(event);
   },

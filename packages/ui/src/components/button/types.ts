@@ -1,31 +1,11 @@
 import * as React from 'react';
-import { Pressable } from 'react-native';
+import { Pressable, PressableProps } from 'react-native';
 import type { VariantProps } from 'class-variance-authority';
 import type { IconProps } from '../icon/types';
 import type { SpinnerProps } from '../spinner/types';
 import { buttonVariants, iconButtonVariants } from './styles';
 import type { WebClickEvent, WebFocusEvent, NativeFocusEvent } from '../../types';
 import type { GestureResponderEvent } from 'react-native';
-
-// Platform-specific button props
-export type WebButtonProps = {
-  type?: 'button' | 'submit' | 'reset';
-  onClick?: (e: WebClickEvent) => void;
-  onFocus?: (e: WebFocusEvent) => void;
-  onBlur?: (e: WebFocusEvent) => void;
-  onMouseDown?: (e: WebClickEvent) => void;
-  onMouseUp?: (e: WebClickEvent) => void;
-  onMouseEnter?: (e: WebClickEvent) => void;
-  onMouseLeave?: (e: WebClickEvent) => void;
-};
-
-export interface NativeButtonProps extends SharedButtonProps {
-  onPress?: (e: GestureResponderEvent) => void;
-  onPressIn?: (e: GestureResponderEvent) => void;
-  onPressOut?: (e: GestureResponderEvent) => void;
-  onFocus?: (e: NativeFocusEvent) => void;
-  onBlur?: (e: NativeFocusEvent) => void;
-}
 
 // Shared button props
 export type SharedButtonProps = {
@@ -40,8 +20,16 @@ export type SharedButtonProps = {
   children?: React.ReactNode;
 };
 
-// Unified button props
-export type UnifiedButtonProps = SharedButtonProps & (WebButtonProps | NativeButtonProps);
+// Platform-specific button props
+export type WebButtonBaseProps = SharedButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>;
+export type WebAnchorProps = SharedButtonProps & React.AnchorHTMLAttributes<HTMLAnchorElement>;
+
+export type WebButtonProps = WebButtonBaseProps | WebAnchorProps;
+
+export type NativeButtonProps = SharedButtonProps & PressableProps;
+
+// The main props type - order matters for type inference
+export type ButtonRootProps = NativeButtonProps | WebButtonProps;
 
 export type ButtonContext = {
   variant?: VariantProps<typeof buttonVariants>['variant'];
@@ -54,11 +42,8 @@ export type ButtonContext = {
   setPressed?: (pressed: boolean) => void;
   setHovered?: (hovered: boolean) => void;
   buttonRef?: React.RefObject<any>;
-  buttonProps?: UnifiedButtonProps;
+  buttonProps?: ButtonRootProps;
 };
-
-export type ButtonRootProps = Omit<React.ComponentPropsWithoutRef<typeof Pressable>,
-  'className' | 'style' | 'children'> & UnifiedButtonProps;
 
 export type ButtonIconProps = IconProps & {
   className?: string;

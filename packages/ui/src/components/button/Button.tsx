@@ -1,15 +1,13 @@
 import * as React from 'react';
-import { Pressable, GestureResponderEvent } from 'react-native';
+import { Pressable } from 'react-native';
 import * as Slot from '@rn-primitives/slot';
 import { cn } from '../../utils';
 import { buttonVariants, buttonTextVariants } from './styles';
 import { ButtonContextProvider } from './context';
 import { ButtonIcon, ButtonSpinner, ButtonText } from './Button.shared';
-import { getNativeAccessibilityProps, createPressHandlers } from './utils';
+import { getNativeButtonAccessibilityProps, createPressHandlers, toNativeProps } from './utils';
 import type { ButtonRootProps } from './types';
 import { TextClassContext } from '../text';
-import { toNativeProps } from './utils';
-import type { NativePressEvent } from '../../types';
 
 const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRootProps>(
   ({
@@ -27,13 +25,14 @@ const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRo
     const effectiveColor = isPressed && accentColor ? accentColor : color;
 
     const nativeProps = toNativeProps(props);
-    const accessibilityProps = getNativeAccessibilityProps({ disabled, loading });
+    const accessibilityProps = getNativeButtonAccessibilityProps({ disabled, loading });
 
+    // Handle press events
     const { handlePressIn, handlePressOut } = React.useMemo(
       () => createPressHandlers(
         setIsPressed,
-        nativeProps.onPressIn as ((e: GestureResponderEvent | NativePressEvent) => void) | null,
-        nativeProps.onPressOut as ((e: GestureResponderEvent | NativePressEvent) => void) | null
+        nativeProps.onPressIn,
+        nativeProps.onPressOut
       ),
       [setIsPressed, nativeProps.onPressIn, nativeProps.onPressOut]
     );

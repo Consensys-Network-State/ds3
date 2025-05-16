@@ -22,6 +22,59 @@ export function MyComponent() {
 }
 ```
 
+## The Slot Pattern (`asChild`)
+
+The Slot pattern allows you to replace a component's default root element with your own custom element, while preserving all styling, behavior, and accessibility features.
+
+### How It Works
+
+When you pass `asChild={true}` to a component:
+
+1. The component renders a `Slot` component instead of its default element
+2. The `Slot` captures all props from the parent component
+3. It applies those props to the first child element you provide
+4. The child element becomes the new root, inheriting all behavior
+
+### Examples
+
+```tsx
+// Regular button
+<Button variant="solid" color="primary">
+  <Button.Text>Click Me</Button.Text>
+</Button>
+
+// Button as a link using asChild
+<Button variant="solid" color="primary" asChild>
+  <a href="https://example.com">Visit Website</a>
+</Button>
+
+// Button as a router link
+<Button variant="solid" color="primary" asChild>
+  <Link to="/dashboard">Go to Dashboard</Link>
+</Button>
+```
+
+The rendered DOM with `asChild` would be essentially:
+
+```html
+<a 
+  href="https://example.com" 
+  class="ds3-button ds3-button-solid ds3-button-primary"
+  role="button"
+>
+  Visit Website
+</a>
+```
+
+### Cross-Platform Implementation
+
+Our components use different Slot implementations based on platform:
+
+- **Web**: Uses `@radix-ui/react-slot` for DOM elements
+- **Native**: Uses `@rn-primitives/slot` for React Native components
+
+This allows the same API to work seamlessly across platforms while respecting platform-specific behavior.
+
 ## Cross-Platform Prop Handling
 
 This library is designed to support three distinct developer personas with a unified component library:
