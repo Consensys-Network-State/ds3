@@ -52,7 +52,7 @@ export function toNativeProps(props: unknown): NativeButtonProps {
  */
 export function toWebProps(props: unknown): WebButtonProps {
   if (!props || typeof props !== 'object') {
-    throw new Error('Props must be an object');
+    console.warn('[DS3 Button] - Props must be an object');
   }
 
   if (isWebButtonProps(props)) {
@@ -60,22 +60,29 @@ export function toWebProps(props: unknown): WebButtonProps {
   }
 
   if (!isNativeButtonProps(props)) {
-    throw new Error('[DS3 Button] - Mixed props detected. Props must be either web or native, not both.');
+    console.warn('[DS3 Button] - Mixed props detected. Props must be either web or native, not both.');
   }
 
   const {
     onPress,
     onPressIn,
     onPressOut,
-    ...rest
+    ...restNative
   } = props as NativeButtonProps;
+
+  const {
+   onClick,
+   onMouseDown,
+   onMouseUp,
+    ...rest
+  } = restNative as WebButtonProps;
 
   return {
     ...rest,
     type: 'button',
-    onClick: onPress ? (e: WebClickEvent) => onPress(e as unknown as GestureResponderEvent) : undefined,
-    onMouseDown: onPressIn ? (e: WebClickEvent) => onPressIn(e as unknown as GestureResponderEvent) : undefined,
-    onMouseUp: onPressOut ? (e: WebClickEvent) => onPressOut(e as unknown as GestureResponderEvent) : undefined,
+    onClick: onClick || onPress,
+    onMouseDown: onMouseDown || onPressIn,
+    onMouseUp: onMouseUp || onPressOut,
   } as WebButtonProps;
 }
 

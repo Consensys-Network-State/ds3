@@ -55,16 +55,12 @@ export function toNativeProps(props: unknown): NativeInputProps {
  * - multiline → determines if <input> or <textarea>
  */
 export function toWebProps(props: unknown): WebInputProps {
-  if (!props || typeof props !== 'object') {
-    throw new Error('Props must be an object');
-  }
-
   if (isWebInputProps(props)) {
     return props;
   }
 
   if (!isNativeInputProps(props)) {
-    throw new Error('[DS3 Input] - Mixed props detected. Props must be either web or native, not both.');
+    console.warn('[DS3 Input] - Mixed props detected. Props must be either web or native, not both.');
   }
 
   const {
@@ -73,8 +69,13 @@ export function toWebProps(props: unknown): WebInputProps {
     numberOfLines,
     autoCorrect,
     multiline,
+    ...restNative
+  } = props as NativeInputProps;
+
+  const {
+    onChange,
     ...rest
-  } = props;
+  } = restNative as WebInputBaseProps;
 
   // Determine if we should use textarea props
   const isTextarea = multiline || (numberOfLines ?? 0) > 1;
@@ -82,7 +83,7 @@ export function toWebProps(props: unknown): WebInputProps {
   const baseProps = {
     ...rest,
     ...(typeof autoCorrect === 'boolean' ? { autoCorrect: autoCorrect.toString() } : {}),
-    onChange: onChangeText ? (e: WebChangeEvent) => onChangeText(e.target.value) : undefined,
+    onChange: onChangeText ? (e: WebChangeEvent) => onChangeText(e.target.value) : onChange,
   };
 
   if (isTextarea) {
