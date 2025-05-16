@@ -11,7 +11,6 @@ export type SharedInputProps = {
   accentColor?: VariantProps<typeof inputRootVariants>['color'];
   size?: VariantProps<typeof inputRootVariants>['size'];
   loading?: boolean;
-  error?: boolean;
   disabled?: boolean;
   readOnly?: boolean;
   multiline?: boolean;

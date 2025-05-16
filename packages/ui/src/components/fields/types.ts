@@ -7,6 +7,7 @@ export type FieldsProps = {
   label?: string;
   description?: string;
   isValid?: boolean;
+  error?: UseFieldProps['error'];
 };
 
 export type CheckboxFieldRootProps = CheckboxRootProps & UseFieldProps & FieldsProps;
