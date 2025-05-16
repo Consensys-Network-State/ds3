@@ -8,15 +8,18 @@ export {
 } from './components/button';
 
 export type {
-  ButtonRootProps as ButtonProps,
+  ButtonRootProps,
   ButtonContext,
   ButtonIconProps,
   ButtonSpinnerProps,
   ButtonTextProps,
   IconButtonProps,
+  WebButtonProps,
+  NativeButtonProps,
+  SharedButtonProps,
   ButtonColors,
-  ButtonVariant,
-  ButtonSizes 
+  ButtonSizes,
+  ButtonVariant
 } from './components/button';
 
 // checkbox
@@ -26,7 +29,7 @@ export {
 } from './components/checkbox';
 
 export type {
-  CheckboxRootProps as CheckboxProps,
+  CheckboxRootProps,
   CheckboxIconProps,
   CheckboxContextValue, // TODO: consistent naming
 } from './components/checkbox';
@@ -38,7 +41,7 @@ export {
 } from './components/field';
 
 export type {
-  FieldRootProps as FieldProps,
+  FieldRootProps,
   FieldIconProps,
   FieldItemProps,
   UseFieldProps,
@@ -53,9 +56,9 @@ export {
 
 export type {
   FieldsProps,
-  CheckboxFieldRootProps as CheckboxFieldProps,
-  InputFieldRootProps, // TODO: consistent naming
-  SwitchFieldRootProps as SwitchFieldProps,
+  CheckboxFieldRootProps,
+  InputFieldRootProps,
+  SwitchFieldRootProps,
 } from './components/fields';
 
 // heading
@@ -93,7 +96,7 @@ export {
 } from './components/input';
 
 export type {
-  InputRootProps as InputProps,
+  InputRootProps,
   InputContext,
   InputIconProps,
   InputSpinnerProps,
@@ -117,7 +120,7 @@ export {
 } from './components/switch';
 
 export type {
-  SwitchRootProps as SwitchProps,
+  SwitchRootProps,
   SwitchThumbProps,
 } from './components/switch';
 

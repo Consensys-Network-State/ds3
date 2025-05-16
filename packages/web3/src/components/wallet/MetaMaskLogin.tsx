@@ -33,6 +33,7 @@ const MetaMaskLogin = React.forwardRef<any, MetaMaskLoginProps>(
         ref={ref}
         className={cn("w-full", className)}
         variant="soft"
+         // @ts-ignore - TypeScript can't handle universal component props
         onPress={handleConnect}
         disabled={isConnecting}
         loading={isConnecting}

@@ -1,9 +1,9 @@
-import type { ButtonProps } from "@ds3/ui";
+import type { ButtonRootProps } from "@ds3/ui";
 
-export type DisconnectButtonProps = ButtonProps & {
+export type DisconnectButtonProps = ButtonRootProps & {
   children?: React.ReactNode;
 }
  
-export type MetaMaskLoginProps = ButtonProps & {
+export type MetaMaskLoginProps = ButtonRootProps & {
   className?: string;
-} 
+}

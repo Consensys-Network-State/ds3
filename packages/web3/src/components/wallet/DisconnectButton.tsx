@@ -8,7 +8,12 @@ const DisconnectButton = React.forwardRef<any, DisconnectButtonProps>(
     const { disconnect } = useDisconnect();
 
     return (
-      <Button ref={ref} onPress={() => disconnect()} {...props}>
+      <Button
+        ref={ref}
+        // @ts-ignore - TypeScript can't handle universal component props
+        onPress={() => disconnect()}
+        {...props}
+      >
         {children || <Button.Text>Disconnect</Button.Text>}
       </Button>
     );

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as Slot from '@radix-ui/react-slot';
-import { ButtonRootProps, WebButtonProps } from './types';
+import { ButtonRootProps } from './types';
 import { toWebProps, getWebButtonAccessibilityProps, createPressHandlers, createHoverHandlers } from './utils';
 import { buttonVariants, buttonTextVariants } from './styles';
 import { ButtonContextProvider } from './context';
