@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { Pressable, PressableProps } from 'react-native';
+import { PressableProps } from 'react-native';
 import type { VariantProps } from 'class-variance-authority';
 import type { IconProps } from '../icon/types';
 import type { SpinnerProps } from '../spinner/types';
 import { buttonVariants, iconButtonVariants } from './styles';
-import type { WebClickEvent, WebFocusEvent, NativeFocusEvent } from '../../types';
-import type { GestureResponderEvent } from 'react-native';
 
 // Shared button props
 export type SharedButtonProps = {
