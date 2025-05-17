@@ -2,14 +2,14 @@
 
 DS3 is a comprehensive design system that enables truly universal application development:
 
-- **Cross-Platform** - Build once and run everywhere with a unified codebase
-- **Universal Compatibility** - Works fully on web, fully on native, and in hybrid environments
-- **SVG Icon Support** - Use any SVG icon library seamlessly across platforms
-- **Advanced Theming** - Powerful, customizable theming with dark/light mode and color schemes
-- **Fully Accessible** - Built with accessibility in mind, including ARIA roles and proper semantics
-- **Web3 Integration** - First-class support for blockchain and Web3 applications
-- **Customizable** - Easily adaptable to your brand with configurable styles and components
-- **Multi-Framework** - Works with React and React Native, with consistent APIs across platforms
+- 🌐 **Cross-Platform** - Build once and run everywhere with a unified codebase
+- 🔄 **Universal Compatibility** - Works fully on web, fully on native, and in hybrid environments
+- 🖼️ **SVG Icon Support** - Use any SVG icon library seamlessly across platforms
+- 🎨 **Advanced Theming** - Powerful, customizable theming with dark/light mode and color schemes
+- ♿ **Fully Accessible** - Built with accessibility in mind, including ARIA roles and proper semantics
+- ⛓️ **Web3 Integration** - First-class support for blockchain and Web3 applications
+- 🛠️ **Customizable** - Easily adaptable to your brand with configurable styles and components
+- 🧩 **Multi-Framework** - Works with React and React Native, with consistent APIs across platforms
 
 ## Project Structure
 

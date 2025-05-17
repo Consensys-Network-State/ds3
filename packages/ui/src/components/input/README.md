@@ -353,7 +353,7 @@ The component exports typed event interfaces that match their platform equivalen
 - Web: [`HTMLInputElement` events](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement) like `onChange`, `onFocus`, `onBlur`
 - Native: [`TextInput` events](https://reactnative.dev/docs/textinput) like `onChangeText`, `onChange`, `onFocus`, `onBlur`
 
-For details on typed events and the dual-API approach, see the [Dual-API section](../../README.md#dual-api) in the main documentation.
+For details on typed events and the dual-API approach, see the [Dual-API Pattern](../../README.md#dual-api-pattern) in the main documentation.
 
 ### Using `asChild` for Custom Elements
 
@@ -379,7 +379,7 @@ Input implements automatic prop mapping to support cross-platform development wh
 
 > While native props can be used in web environments (automatically converted), web props should never be used in native environments.
 
-For more details on our cross-platform approach, see the [Dual-API documentation](../../../README.md#dual-api).
+For more details on our cross-platform approach, see the [Dual-API Pattern documentation](../../../README.md#dual-api-pattern).
 
 ## Accessibility
 

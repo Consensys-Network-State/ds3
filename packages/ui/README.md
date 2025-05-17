@@ -4,13 +4,13 @@ A cross-platform UI component library that provides native APIs for both web and
 
 ## Key Features
 
-- 🔄 **Dual-API Components**: Use web-specific APIs (onClick, onChange) or React Native APIs (onPress, onChangeText) with the same components
-- 🖥️ **Native Feel on Every Platform**: Components behave like native elements on each platform
-- 🧩 **Compound Component Patterns**: Flexible, composable components following modern React patterns
-- 📱 **Complete Accessibility**: Built-in accessibility features for all platforms
-- 🎨 **Consistent Theming**: Shared design tokens across platforms
-- 🌈 **Advanced Styling**: Powered by TailwindCSS and NativeWind
-- 🔌 **Flexible SVG Icon Support**: Bring any SVG icon library and use it cross-platform
+- 🌐 **Cross-Platform** - From APIs to styles, consistent components across platforms
+- 🧩 **Compound Pattern** - Flexible, composable components with a balance between simplicity and complexity
+- 🔄 **Dual-API Pattern** - Use web-specific APIs (onClick, onChange) or React Native APIs (onPress, onChangeText) with the same components
+- ♿ **Accessibility** - Built-in accessibility features for all platforms
+- 🎨 **Theming** - Shared color schemes, design tokens, and light/dark modes across platforms
+- 🌈 **Styling** - One style system for all platforms - NativeWind bridges the gap between web and native
+- 🖼️ **SVG Support** - Bring any SVG icon library and use it cross-platform
 
 ## Installation
 
@@ -37,7 +37,7 @@ DS3 UI offers a comprehensive set of cross-platform components for building mode
 
 Each component follows the same cross-platform principles with consistent APIs across web and native platforms.
 
-## Dual-API
+## Dual-API Pattern
 
 Unlike most cross-platform libraries that force you to use a lowest-common-denominator API, DS3 UI provides **platform-native APIs** for both web and React Native developers.
 
@@ -126,7 +126,7 @@ For the best developer experience and to avoid confusion:
 - **Native/hybrid development**: Use ONLY native props (`onPress`, `onChangeText`, etc.)
 - Never mix web and native APIs in the same project
 
-``tsx
+```tsx
 // ❌ INCORRECT: Mixing prop styles
 <Button 
   onClick={() => {}} // web prop
@@ -236,6 +236,10 @@ pnpm dev
 # Build the package
 pnpm build
 ```
+
+## Contributing
+
+Please read our [Contributing Guidelines](CONTRIBUTING.md) for detailed information on our development workflow, code standards, and how to submit changes.
 
 ## License
 
