@@ -101,7 +101,7 @@ function NativeInputs() {
 </Textarea>
 ```
 
-### Input and Textarea
+### `<Input />` and `<Textarea />`
 
 The main components with various styling options.
 
@@ -138,7 +138,7 @@ Plus additional props based on platform:
 - Web: All [`HTMLInputElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement) props ([`onChange`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event), [`type`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types), etc.)
 - Native: All [`TextInput`](https://reactnative.dev/docs/textinput) props ([`onChangeText`](https://reactnative.dev/docs/textinput#onchangetext), [`keyboardType`](https://reactnative.dev/docs/textinput#keyboardtype), etc.)
 
-### Input.Field
+### `<Input.Field />`
 
 Child component for the actual input field. Allows you to construct inputs with other parts.
 
@@ -154,7 +154,7 @@ Child component for the actual input field. Allows you to construct inputs with 
 |------|------|---------|-------------|
 | `className` | `string` | - | Additional class names for the input field |
 
-### Input.Text
+### `<Input.Text />`
 
 Used to add text elements before or after the input field.
 
@@ -176,7 +176,7 @@ Used to add text elements before or after the input field.
 
 For props and styling options, see the [Text Component API](/packages/ui/src/components/text).
 
-### Input.Icon
+### `<Input.Icon />`
 
 An icon for the input. Can be placed before and/or after the field.
 
@@ -200,7 +200,7 @@ import { Search, Eye } from 'lucide-react-native';
 
 For props and styling options, see the [Icon Component API](/packages/ui/src/components/icon).
 
-### Input.Spinner
+### `<Input.Spinner />`
 
 A loading spinner that automatically appears when the input's `loading` prop is true.
 

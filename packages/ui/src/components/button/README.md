@@ -69,7 +69,7 @@ Compound Usage:
 </Button>
 ```
 
-### Button
+### `<Button />`
 
 The main Button component with various styling options.
 
@@ -90,7 +90,7 @@ Plus additional props based on platform:
 - Web: All [`HTMLButtonElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement) props ([`onClick`](https://developer.mozilla.org/en-US/docs/Web/API/Element/click_event), [`type`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#attr-type), etc.)
 - Native: All [`Pressable`](https://reactnative.dev/docs/pressable) props ([`onPress`](https://reactnative.dev/docs/pressable#onpress), [`onPressIn`](https://reactnative.dev/docs/pressable#onpressin), etc.)
 
-### Button.Text
+### `<Button.Text />`
 
 Child component for button text.
 
@@ -110,7 +110,7 @@ Child component for button text.
 
 For props and styling options, see the [Text Component API](/packages/ui/src/components/text).
 
-### Button.Icon
+### `<Button.Icon />`
 
 An icon for the button. Can be placed before or after the text.
 
@@ -133,7 +133,7 @@ import { Figma } from 'lucide-react-native';
 
 For props and styling options, see the [Icon Component API](/packages/ui/src/components/icon).
 
-### Button.Spinner
+### `<Button.Spinner />`
 
 A loading spinner that automatically appears when the button's `loading` prop is true.
 
@@ -168,7 +168,7 @@ The `Button.Spinner` component:
 
 For props and styling options, see the [Spinner Component API](/packages/ui/src/components/spinner).
 
-### IconButton
+### `<IconButton />`
 
 For buttons with only an icon, use the IconButton component:
 
