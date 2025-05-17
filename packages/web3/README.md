@@ -13,10 +13,10 @@ The web3 package provides blockchain integration components and utilities:
 
 ## Features
 
-- Blockchain connection management
-- Ethereum address display and manipulation
-- Web3 specific UI components
-- Integrates with popular Ethereum libraries
+- ⛓️ **Blockchain Connection** - Comprehensive wallet connection management
+- 📝 **Ethereum Integration** - Address display, validation, and manipulation
+- 🔌 **Web3 Components** - Specialized UI components for blockchain interactions
+- 🧰 **Library Integration** - Seamless integration with popular Ethereum libraries
 
 ## Usage
 

@@ -24,7 +24,7 @@ If you're building for native platforms or hybrid apps:
 
 ## Compound Component Pattern
 
-When implementing new components, prefer using the compound component pattern for complex UI elements that have multiple related parts.
+When implementing new components, prefer using the [compound component pattern](https://www.patterns.dev/react/compound-pattern/) for complex UI elements that have multiple related parts.
 
 ### Implementation Guidelines
 

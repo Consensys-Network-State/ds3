@@ -6,10 +6,10 @@ Foundation layer for Design System 3.
 
 The core package provides the foundation for the DS3 design system, including:
 
-- Configuration tools for Vite, Tailwind, NativeWind
-- Expo/React Native configurations (Babel, Metro)
-- Environment configuration utilities
-- Build tools and base dependencies
+- ⚙️ **Configuration Tools** - Unified setup for Vite, Tailwind, and NativeWind
+- 📱 **React Native Support** - Expo and React Native configurations (Babel, Metro)
+- 🔧 **Environment Utilities** - Flexible environment configuration tools
+- 🛠️ **Build System** - Comprehensive build tools and base dependencies
 
 ## Usage
 

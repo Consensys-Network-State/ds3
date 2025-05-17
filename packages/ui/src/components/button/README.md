@@ -299,7 +299,7 @@ The component exports typed event interfaces that match their platform equivalen
 - Web: [`HTMLButtonElement` events](https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement) like `onClick`, `onFocus`
 - Native: [`Pressable` events](https://reactnative.dev/docs/pressable) like `onPress`, `onPressIn`
 
-For details on typed events and the dual-API approach, see the [Dual-API section](../../README.md#dual-api) in the main documentation.
+For details on typed events and the dual-API approach, see the [Dual-API Pattern](../../README.md#dual-api-pattern) in the main documentation.
 
 ### Using `asChild` for Custom Elements
 
@@ -336,7 +336,7 @@ Button implements automatic prop mapping to support cross-platform development w
 
 > While native props can be used in web environments, web props should never be used in native environments.
 
-For more details on our cross-platform approach, see the [Dual-API documentation](../../../README.md#dual-api).
+For more details on our cross-platform approach, see the [Dual-API Pattern documentation](../../../README.md#dual-api-pattern).
 
 ## Accessibility
 
