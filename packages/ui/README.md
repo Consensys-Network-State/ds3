@@ -234,53 +234,45 @@ One styling system, perfect everywhere:
 
 While Platform Adaptation handles the underlying implementation differences, Dual API gives you the freedom to write code in your preferred style. Whether you're a web developer or React Native developer, you can use the APIs you're most comfortable with.
 
-#### 🌟 Why It's Awesome
-
-- **Familiar APIs**: Use the patterns you already know
-- **Type Safety**: Full TypeScript support for both platforms
-- **Zero Compromise**: No need to learn new patterns
-- **Automatic Conversion**: Props map correctly between platforms
-- **Smart Detection**: Components adapt to how you use them
+**Dual API features:**
+- 🌐 **Web-first development** - Use familiar DOM APIs (`onClick`, `onChange`, `type`)
+- 📱 **Native-first development** - Use React Native APIs (`onPress`, `onChangeText`)
+- 🛡️ **Type safety** - Full TypeScript support for both platforms
+- 🔄 **Automatic conversion** - Props map correctly between platforms
+- 🧠 **Smart detection** - Components adapt to how you use them
 
 #### 📋 The Rules
 
-1. **Web Development**
+1. **🌐 Web-only Development**
    - Use ONLY web props (`onClick`, `onChange`, `type`)
    - Get full DOM access and browser features
    - Perfect for web-only applications
 
-2. **Native/Hybrid Development**
+2. **📱 Native/Hybrid Development**
    - Use ONLY native props (`onPress`, `onChangeText`)
    - Consistent with React Native patterns
    - Works across all platforms
 
-3. **Never Mix APIs**
+3. **⚠️ Never Mix APIs**
    ```tsx
-   // ❌ INCORRECT: Mixing prop styles
+   // ❌ INCORRECT: Using web props in native/hybrid code
    <Button 
-     onClick={() => {}} // web prop
-     onPress={() => {}} // native prop
-     variant="outline" 
-     color="primary"
+     onClick={() => {}} // Will be ignored on native!
+     onPress={handlePress}
    >
      <Button.Text>Mixed Props Button</Button.Text>
    </Button>
 
-   // ✅ CORRECT: Choose one style
-   // Web
+   // ✅ CORRECT: 🌐 Web-only code can use web props
    <Button 
-     onClick={handleClick}
-     variant="outline" 
-     color="primary"
+     onClick={handleClick} // Perfectly fine in web-only code!
    >
      <Button.Text>Web Button</Button.Text>
    </Button>
 
-   // Native/Hybrid
+   // ✅ CORRECT: 📱🌐  Native/hybrid code must use native props
    <Button 
      onPress={handlePress}
-     variant="outline" 
-     color="primary"
    >
      <Button.Text>Native Button</Button.Text>
    </Button>
@@ -300,30 +292,6 @@ For hybrid applications, the library automatically maps native props to web prop
 > 1. **Never use web props in native code** - they will be silently ignored
 > 2. **Never mix web and native props** - choose one style and stick with it
 
-```tsx
-// ❌ INCORRECT: Using web props in native/hybrid code
-<Button 
-  onClick={() => {}} // Will be ignored on native!
-  onPress={handlePress}
->
-  <Button.Text>Mixed Props Button</Button.Text>
-</Button>
-
-// ✅ CORRECT: Web-only code can use web props
-<Button 
-  onClick={handleClick} // Perfectly fine in web-only code!
->
-  <Button.Text>Web Button</Button.Text>
-</Button>
-
-// ✅ CORRECT: Native/hybrid code must use native props
-<Button 
-  onPress={handlePress}
->
-  <Button.Text>Native Button</Button.Text>
-</Button>
-```
-
 #### 📘 Type-Safe Events
 
 The library provides platform-specific event types for type safety:
@@ -331,12 +299,12 @@ The library provides platform-specific event types for type safety:
 ```tsx
 import type { WebClickEvent, NativePressEvent } from '@ds3/ui';
 
-// Web events
+// 🌐 Web events
 <Button onClick={(e: WebClickEvent) => console.log(e.currentTarget)}>
   Click Me
 </Button>
 
-// Native events
+// 📱 Native events
 <Button onPress={(e: NativePressEvent) => console.log(e.nativeEvent)}>
   <Button.Text>Press Me</Button.Text>
 </Button>
