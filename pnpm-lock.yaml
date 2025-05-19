@@ -467,6 +467,9 @@ importers:
 
   packages/core:
     dependencies:
+      '@ds3/theme':
+        specifier: workspace:*
+        version: link:../theme
       '@radix-ui/colors':
         specifier: ^3.0.0
         version: 3.0.0
@@ -502,11 +505,30 @@ importers:
         specifier: ^8.3.5
         version: 8.3.5(jiti@2.4.0)(postcss@8.4.49)(typescript@5.6.3)(yaml@2.6.1)
 
+  packages/theme:
+    dependencies:
+      '@radix-ui/colors':
+        specifier: ^3.0.0
+        version: 3.0.0
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+      tailwindcss:
+        specifier: ^3.4.14
+        version: 3.4.15
+    devDependencies:
+      '@types/lodash':
+        specifier: ^4.17.13
+        version: 4.17.13
+      tsup:
+        specifier: ^8.3.5
+        version: 8.3.5(jiti@2.4.0)(postcss@8.4.49)(typescript@5.6.3)(yaml@2.6.1)
+
   packages/ui:
     dependencies:
-      '@ds3/core':
+      '@ds3/theme':
         specifier: workspace:*
-        version: link:../core
+        version: link:../theme
       '@react-native-async-storage/async-storage':
         specifier: ^2.0.0
         version: 2.1.0(react-native@0.76.1(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@18.3.12)(bufferutil@4.0.8)(react@18.3.1)(utf-8-validate@5.0.10))

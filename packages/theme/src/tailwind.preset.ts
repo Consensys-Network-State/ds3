@@ -1,5 +1,5 @@
 import { Config as TailwindConfig } from 'tailwindcss';
-import plugin from 'tailwindcss/plugin';
+import plugin from 'tailwindcss/plugin.js';
 import tailwindcssAnimate from 'tailwindcss-animate';
 import {
   generateColorCssVars,
@@ -87,7 +87,7 @@ const assignShadowVars = (themes: ConfigThemes): Record<string, string> => {
 
 const pxToRem = (px: number, base: number = 16) => `${px / base}rem`;
 
-const ds3Preset = (userConfig: UserConfig): TailwindConfig => {
+export const tailwindPreset = (userConfig: UserConfig): TailwindConfig => {
   const config = generateConfig(userConfig);
   
   return {
@@ -213,5 +213,3 @@ const ds3Preset = (userConfig: UserConfig): TailwindConfig => {
     ],
   };
 };
-
-export default ds3Preset;

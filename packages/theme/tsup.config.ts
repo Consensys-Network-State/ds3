@@ -2,11 +2,7 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig({
   entry: [
-    'src/vite.plugin.ts',
-    'src/nativewind.preset.ts',
-    'src/babel.preset.ts',
-    'src/expo.preset.ts',
-    'src/metro.config.ts'
+    'src/index.ts'
   ],
   format: ['esm', 'cjs'],
   dts: true,
