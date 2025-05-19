@@ -22,18 +22,17 @@ pnpm install @ds3/core @ds3/ui
 
 DS3 UI offers a comprehensive set of cross-platform components for building modern user interfaces:
 
-- [**Button**](src/components/button/README.md) - Versatile button component with multiple variants, sizes, and states
-- [**Input**](src/components/input/README.md) - Text input field with support for validation and states
-- **Text** - Typography component with various styles and weights
-- **Dialog** - Modal dialog for displaying content
-- **Switch** - Toggle control for boolean values
-- **Checkbox** - Selection control for multiple options
-- **Select** - Dropdown selection component
-- **Avatar** - User or entity representation
-- **Card** - Container for related content
-- **Icon** - SVG icon component
-- **Badge** - Small label for status or count
-- **Spinner** - Loading indicator
+- [**Button**](src/components/button) - Versatile button component with multiple variants, sizes, and states
+- [**Checkbox**](src/components/checkbox) - Selection control for multiple options
+- [**Field**](src/components/field) - Standardized way to create accessible form fields
+- [**Fields**](src/components/fields) - Higher-level form field components for different input types
+- [**Heading**](src/components/heading) - Typography components for section headings (H1-H6)
+- [**Icon**](src/components/icon) - SVG icon component with cross-platform support
+- [**Input**](src/components/input) - Text input field with support for validation and states
+- [**Spinner**](src/components/spinner) - Loading indicator with customizable animation
+- [**Switch**](src/components/switch) - Toggle control for boolean values
+- [**Text**](src/components/text) - Typography component with various styles and weights
+- MORE COMING!
 
 Each component follows the same cross-platform principles with consistent APIs across web and native platforms.
 
