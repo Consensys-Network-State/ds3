@@ -20,6 +20,8 @@ Build sophisticated, dynamic themes with a comprehensive design system that incl
 
 🎨 **Dynamic Inheritance** - Child themes inherit from parent themes while maintaining their own overrides
 
+⚡ **Dynamic CSS Variables** - Runtime theme customization with smooth transitions and real-time updates
+
 ## 🚀 Quick Start
 
 ### Installation
@@ -298,6 +300,62 @@ These CSS variables are automatically mapped to Tailwind classes:
   </div>
 </div>
 ```
+
+### Dynamic CSS Variable Changes
+
+The theme system supports dynamic changes to CSS variables at runtime, enabling smooth transitions between themes and modes. This is particularly useful for:
+
+- Theme switching animations
+- User preference changes
+- System theme synchronization
+- Runtime theme customization
+
+#### Theme Switching
+
+When switching themes or modes, the system updates CSS variables in real-time:
+
+```typescript
+// Example of theme switching
+document.documentElement.classList.remove('light');
+document.documentElement.classList.add('dark');
+
+// Or switching to a custom theme
+document.documentElement.classList.remove('default');
+document.documentElement.classList.add('oceanBreeze');
+```
+
+The CSS variables update automatically, maintaining all color relationships and semantic mappings.
+
+#### Runtime Customization
+
+You can also customize theme variables at runtime:
+
+```typescript
+// Example of runtime color adjustment
+document.documentElement.style.setProperty('--color-primary-6', '#custom-color');
+
+// Or adjusting alpha values
+document.documentElement.style.setProperty('--color-primary-a6', 'rgba(0, 0, 0, 0.5)');
+```
+
+#### Smooth Transitions
+
+To enable smooth transitions between theme changes, add transition properties to your CSS:
+
+```css
+/* Add to your global CSS */
+:root {
+  --theme-transition-duration: 200ms;
+}
+
+* {
+  transition: background-color var(--theme-transition-duration) ease,
+              color var(--theme-transition-duration) ease,
+              border-color var(--theme-transition-duration) ease;
+}
+```
+
+This creates a smooth experience when switching between themes or modes.
 
 ## 🤝 Contributing
 
