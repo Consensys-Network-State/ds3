@@ -1,5 +1,5 @@
 import { Config } from 'tailwindcss';
-import plugin from 'tailwindcss/plugin';
+import plugin from 'tailwindcss/plugin.js';
 
 const cssVariables = {
   ':root': {

@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:deps": "pnpm core:build && pnpm ui:build && pnpm web3:build",
-    "watch:deps": "pnpm -r --filter core --filter ui --filter web3 --parallel run dev",
-    "core:build": "pnpm --filter core run build",
+    "build:deps": "pnpm theme:build && pnpm config:build && pnpm ui:build && pnpm web3:build",
+    "watch:deps": "pnpm -r --filter theme --filter config --filter ui --filter web3 --parallel run dev",
+    "theme:build": "pnpm --filter theme run build",
+    "config:build": "pnpm --filter config run build",
     "ui:build": "pnpm --filter ui run build",
     "web3:build": "pnpm --filter web3 run build",
     "apoc:dev": "pnpm --filter apoc run dev --force",
@@ -19,7 +20,7 @@
     "expo:start": "pnpm --filter expo-example run start --clear",
     "docs:start": "pnpm --filter docs run start --clear",
     "clean": "rm -rf $(find . -name 'node_modules' -type d) && rm -rf $(find . -name 'dist' -type d) && pnpm store prune",
-    "postinstall": "pnpm build:deps && patch-package"
+    "postinstall": "pnpm build:deps"
   },
   "keywords": [],
   "author": "",

@@ -1,5 +1,5 @@
 const { getDefaultConfig } = require('expo/metro-config');
-const { withDs3Workspace } = require('@ds3/core/metro');
+const { withDs3Workspace } = require('@ds3/config/metro');
 
 const config = getDefaultConfig(__dirname);
 

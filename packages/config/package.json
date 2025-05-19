@@ -1,24 +1,15 @@
 {
-  "name": "@ds3/core",
+  "name": "@ds3/config",
   "version": "1.0.0",
   "description": "",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.js"
-    },
     "./vite": {
       "types": "./dist/vite.plugin.d.ts",
       "require": "./dist/vite.plugin.cjs",
       "import": "./dist/vite.plugin.js"
-    },
-    "./tailwind": {
-      "types": "./dist/tailwind.preset.d.ts",
-      "require": "./dist/tailwind.preset.cjs",
-      "import": "./dist/tailwind.preset.js"
     },
     "./nativewind": {
       "types": "./dist/nativewind.preset.d.ts",
@@ -39,16 +30,7 @@
       "types": "./dist/metro.config.d.ts",
       "require": "./dist/metro.config.cjs",
       "import": "./dist/metro.config.js"
-    },
-    "./env": {
-      "types": "./dist/config.d.ts",
-      "require": "./dist/config.cjs",
-      "import": "./dist/config.js",
-      "default": "./dist/config.js"
     }
-  },
-  "react-native": {
-    "./env": "./dist/config.js"
   },
   "files": [
     "dist"
@@ -66,17 +48,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@radix-ui/colors": "^3.0.0",
+    "@babel/core": "^7.24.0",
+    "@ds3/theme": "workspace:*",
+    "@expo/config": "^10.0.7",
+    "@expo/metro-config": "^0.19.8",
     "@vitejs/plugin-react": "^4.3.3",
-    "lodash": "^4.17.21",
+    "babel-preset-expo": "^10.0.1",
     "nativewind": "^4.1.23",
     "tailwindcss": "^3.4.14",
     "vite": "^5.4.10",
     "vite-plugin-react-native-web": "^1.1.2"
   },
   "devDependencies": {
-    "@expo/config": "^10.0.7",
-    "@expo/metro-config": "^0.19.8",
     "@types/lodash": "^4.17.13",
     "tsup": "^8.3.5"
   }
