@@ -1,4 +1,4 @@
-import withDs3 from '@ds3/core/expo';
+import withDs3 from '@ds3/config/expo';
 import ds3Config from './ds3.config';
 
 module.exports = ({ config }) => {

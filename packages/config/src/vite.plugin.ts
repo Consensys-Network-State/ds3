@@ -4,7 +4,6 @@ import react from '@vitejs/plugin-react';
 import { UserConfig, generateConfig } from "@ds3/theme";
 
 function vitePlugin(command: 'serve' | 'build', userConfig: UserConfig): PluginOption[] {
-  console.log('vitePlugin', command, userConfig);
   const config = generateConfig(userConfig);
   
   return [
