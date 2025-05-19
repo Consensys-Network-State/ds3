@@ -1,211 +1,135 @@
 # @ds3/ui
 
-A cross-platform UI component library that provides native APIs for both web and React Native developers.
+🚀 **Ultimate cross-platform React components that feel native everywhere**
 
-## Key Features
-
-- 🌐 **Cross-Platform** - From APIs to styles, consistent components across platforms
-- 🧩 **Compound Pattern** - Flexible, composable components with a balance between simplicity and complexity
-- 🔄 **Dual-API Pattern** - Use web-specific APIs (onClick, onChange) or React Native APIs (onPress, onChangeText) with the same components
-- ♿ **Accessibility** - Built-in accessibility features for all platforms
-- 🎨 **Theming** - Shared color schemes, design tokens, and light/dark modes across platforms
-- 🌈 **Styling** - One style system for all platforms - NativeWind bridges the gap between web and native
-- 🖼️ **SVG Support** - Bring any SVG icon library and use it cross-platform
-
-## Installation
-
-```bash
-pnpm install @ds3/core @ds3/ui
-```
-
-## Components
-
-DS3 UI offers a comprehensive set of cross-platform components for building modern user interfaces:
-
-- [**Button**](src/components/button) - Versatile button component with multiple variants, sizes, and states
-- [**Checkbox**](src/components/checkbox) - Selection control for multiple options
-- [**Field**](src/components/field) - Standardized way to create accessible form fields
-- [**Fields**](src/components/fields) - Higher-level form field components for different input types
-- [**Heading**](src/components/heading) - Typography components for section headings (H1-H6)
-- [**Icon**](src/components/icon) - SVG icon component with cross-platform support
-- [**Input**](src/components/input) - Text input field with support for validation and states
-- [**Spinner**](src/components/spinner) - Loading indicator with customizable animation
-- [**Switch**](src/components/switch) - Toggle control for boolean values
-- [**Text**](src/components/text) - Typography component with various styles and weights
-- MORE COMING!
-
-Each component follows the same cross-platform principles with consistent APIs across web and native platforms.
-
-## Dual-API Pattern
-
-Unlike most cross-platform libraries that force you to use a lowest-common-denominator API, DS3 UI provides **platform-native APIs** for both web and React Native developers.
-
-DS3 UI is designed for two distinct developer personas:
-- **Web-only developers** who want familiar DOM events and HTML attributes
-- **Native/hybrid developers** who need consistent cross-platform components
-
-### Web-Only Developers
-If you're building exclusively for the web:
-- Use familiar web-specific APIs (`onClick`, `onChange`, `type`, etc.)
-- Write components just like you would with any other React web library
-- Get complete DOM access, browser features, and TypeScript type safety
+Build breathtaking interfaces for both web and React Native with a single component library that respects each platform's conventions while providing a unified developer experience.
 
 ```tsx
-// Web-familiar code
-<Button
-  type="submit"
-  onClick={handleSubmit}
-  disabled={isLoading}
->
-  Submit Form
-</Button>
+// One import. Any platform. Native everywhere.
+import { Button, Input, Icon } from '@ds3/ui';
+```
 
-<Input
-  type="email"
-  onChange={e => setEmail(e.target.value)}
-  required
-  placeholder="Enter email"
+## ✨ Standout Features
+
+🌐 **True Cross-Platform** - Components work natively on web and React Native with platform-specific optimizations
+
+🔧 **Framework Agnostic** - Seamless integration with Vite, Expo and more through @ds3/core plugins
+
+🧩 **Compound Components** - Simple by default, infinitely customizable when needed
+
+🔄 **Dual API** - Use familiar web APIs or React Native patterns - your choice, no compromise
+
+♿ **Accessibility Built-in** - Ship inclusive experiences without extra effort
+
+🎨 **Consistent Design** - Share color schemes and tokens across platforms
+
+🔌 **Pluggable Styling** - [Tailwind CSS](https://tailwindcss.com/) + [NativeWind](https://www.nativewind.dev/) for unified styling that feels native everywhere
+
+🖼️ **Universal SVG** - Use your favorite icon libraries seamlessly on any platform
+
+## 🚀 Get Started
+
+```bash
+pnpm add @ds3/core @ds3/ui
+```
+
+For detailed framework setup and configuration, see the [@ds3/core documentation](src/packages/core).
+
+## 📚 Component Library
+
+DS3 UI gives you production-ready components for building modern interfaces:
+
+### Core Components
+
+- [**Button**](src/components/button) - Pressable controls with multiple variants, states, and compositions
+- [**Checkbox**](src/components/checkbox) - Selection controls with accessible states and custom icons
+- [**Heading**](src/components/heading) - Semantic typography with consistent hierarchy across platforms
+- [**Icon**](src/components/icon) - Universal SVG rendering with perfect platform adaptation
+- [**Input**](src/components/input) - Text fields with validation, icons, and platform-specific behaviors
+- [**Spinner**](src/components/spinner) - Loading indicators with customizable animations
+- [**Switch**](src/components/switch) - Toggle controls with smooth animations
+- [**Text**](src/components/text) - Typography components with consistent styling everywhere
+
+### Form Components
+
+- [**Field**](src/components/field) - Foundational form fields with proper labeling and structure
+- [**Fields**](src/components/fields) - High-level form controls with built-in validation and accessibility
+
+### Coming Soon
+
+- **Dialog** - Modal dialog experiences
+- **Select** - Dropdown selection menus
+- **Avatar** - User representation components
+- **Card** - Content containers with flexible layouts
+- **Badge** - Status indicators and counters
+
+## 🏛️ Architectural Excellence
+
+DS3 UI is built on six powerful architectural patterns that work together to deliver exceptional developer and user experiences:
+
+### 1. 🌐 Platform Adaptation
+
+Components intelligently adapt to their environment while maintaining consistent APIs:
+
+```tsx
+// Same import, same API, platform-perfect behavior
+import { Input } from '@ds3/ui';
+
+// Works perfectly on web and native
+<Input 
+  placeholder="Enter your name"
+  color="primary"
 />
 ```
 
-### Native and Hybrid Developers
-For native-only or hybrid applications:
-- Use React Native APIs consistently (`onPress`, `onChangeText`, etc.)
-- Same component API works across all platforms
-- Native and hybrid cases share the same interfaces and approach
+DS3 UI components follow a consistent organization pattern that enables cross-platform functionality:
+
+#### Component Architecture
+
+| File | Purpose |
+|------|---------|
+| `Component.tsx` | React Native implementation |
+| `Component.web.tsx` | Web implementation |
+| `Component.shared.tsx` | Shared compound elements (Icon, Text, etc.) |
+| `context.ts` | State sharing for [compound components](#2--compound-components) |
+| `styles.ts` | Shared [CVA](https://cva.style/docs) styling definitions |
+| `utils.ts` | [Dual-API](#6--dual-api) handling |
+| `types.ts` | TypeScript type definitions |
+| `index.ts` | Named exports |
+
+#### Implementation Strategies
+
+DS3 UI uses two main approaches to implement cross-platform components:
+
+**1. Custom Implementation**
+
+Most components like `<Button />`, `<Input />`, and `<Icon />` use platform-specific implementations:
 
 ```tsx
-// Cross-platform code that works on both web and native
-<Button
-  onPress={handleSubmit}
-  disabled={isLoading}
->
-  <Button.Text>Submit Form</Button.Text>
-</Button>
+// Input.tsx (React Native specific)
+export const Input = (props) => <TextInput {...props} />;
 
-<Input
-  onChangeText={setEmail}
-  keyboardType="email-address"
-  placeholder="Enter email"
->
-  <Input.Field />
-</Input>
+// Input.web.tsx (Web specific)
+export const Input = (props) => <input {...props} />;
 ```
 
-### Type-Safe Event Handling
+**2. Primitives-Based Implementation**
 
-The library exports global type definitions for platform-specific events:
+Some components build on existing accessibility primitives:
 
 ```tsx
-import type { WebClickEvent, NativePressEvent } from '@ds3/ui';
+// Checkbox.tsx uses RN Primitives
+import * as CheckboxPrimitive from '@rn-primitives/checkbox';
 
-// Web-specific usage with familiar web APIs
-<Button onClick={(e: WebClickEvent) => console.log('Clicked!', e.currentTarget)}>
-  Click Me
-</Button>
-
-// React Native/Web-specific usage
-<Button onPress={(e: NativePressEvent) => console.log('Pressed!', e.nativeEvent)}>
-  <Button.Text>Press Me</Button.Text>
-</Button>
+// Checkbox.web.tsx uses Radix UI
+import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 ```
 
-| Web Types | Native Types | Description |
-|-----------|--------------|-------------|
-| `WebClickEvent` | `NativePressEvent` | For button click/press events |
-| `WebFocusEvent` | `NativeFocusEvent` | For focus/blur events |
-| `WebChangeEvent` | `NativeChangeEvent` | For input change events |
+These leverage [Radix UI](https://www.radix-ui.com/primitives) (web) and [RN Primitives](https://rn-primitives.vercel.app/) (React Native) for consistent behavior and accessibility.
 
-### Guiding Philosophy
+### 2. 🧩 Compound Components
 
-**Choose one API style and stick with it throughout your codebase.** 
-
-For the best developer experience and to avoid confusion:
-- **Web-only development**: Use ONLY web props (`onClick`, `onChange`, etc.)
-- **Native/hybrid development**: Use ONLY native props (`onPress`, `onChangeText`, etc.)
-- Never mix web and native APIs in the same project
-
-```tsx
-// ❌ INCORRECT: Mixing prop styles
-<Button 
-  onClick={() => {}} // web prop
-  onPress={() => {}} // native prop
-  variant="outline" 
-  color="primary"
->
-  <Button.Text>Mixed Props Button</Button.Text>
-</Button>
-```
-
-This deliberate separation ensures your code remains clean, consistent, and optimized for your specific platform needs.
-
-## The Slot Pattern (`asChild`)
-
-The Slot pattern allows you to replace a component's default root element with your own custom element, while preserving all styling, behavior, and accessibility features.
-
-### How It Works
-
-When you pass `asChild={true}` to a component:
-
-1. The component renders a `Slot` component instead of its default element
-2. The `Slot` captures all props from the parent component
-3. It applies those props to the first child element you provide
-4. The child element becomes the new root, inheriting all behavior
-
-### Examples
-
-```tsx
-// Regular button
-<Button variant="solid" color="primary">
-  <Button.Text>Click Me</Button.Text>
-</Button>
-
-// Button as a link using asChild
-<Button variant="solid" color="primary" asChild>
-  <a href="https://example.com">Visit Website</a>
-</Button>
-
-// Button as a router link
-<Button variant="solid" color="primary" asChild>
-  <Link to="/dashboard">Go to Dashboard</Link>
-</Button>
-```
-
-The rendered DOM with `asChild` would be essentially:
-
-```html
-<a 
-  href="https://example.com" 
-  class="ds3-button ds3-button-solid ds3-button-primary"
-  role="button"
->
-  Visit Website
-</a>
-```
-
-### Slot Implementation
-
-Our components use different Slot implementations based on platform:
-
-- **Web**: Uses `@radix-ui/react-slot` for DOM elements
-- **Native**: Uses `@rn-primitives/slot` for React Native components
-
-This allows the same API to work seamlessly across platforms while respecting platform-specific behavior.
-
-## Compound Component Pattern
-
-Our components use the Compound Component pattern to give you maximum flexibility in how you structure and style your UI.
-
-### What This Means For You
-
-With compound components, you can:
-
-- **Use simple or advanced APIs** - Basic usage is concise, but you can expand when needed
-- **Control exact component structure** - Position elements precisely where you want them
-- **Apply custom styling to specific parts** - Target Tailwind classes to exactly the right element
-- **Add or remove elements** - Include only the parts you need
-
-### Button Example
+Simple by default, infinitely customizable when needed:
 
 ```tsx
 // Simple usage - clean and concise
@@ -213,33 +137,195 @@ With compound components, you can:
   Sign Up
 </Button>
 
-// Advanced usage - complete control over structure and styling
-<Button color="primary" className="px-8 rounded-full">
-  <Button.Spinner loadingIcon={RefreshCw} className="mr-2 animate-spin" />
-  <Button.Text className="font-bold tracking-wide">Create Account</Button.Text>
-  <Button.Icon icon={ArrowRight} className="ml-3 text-white" />
+// Advanced usage - full control over structure and styling
+<Button variant="outline" color="primary" className="px-8 rounded-full">
+  <Button.Icon icon={Mail} className="mr-2" />
+  <Button.Text className="font-bold tracking-wide">Contact Us</Button.Text>
+  <Button.Spinner loadingIcon={RefreshCw} className="ml-3 animate-spin" />
 </Button>
 ```
 
+**Power features:**
+- ⚡ **Context sharing** - Child components automatically inherit parent state
+- 🎛️ **Precise control** - Position and style each element exactly how you want
+- 🎭 **Dynamic rendering** - Show/hide elements based on component state
+
 This pattern is used throughout our component library, giving you the perfect balance between simplicity for common cases and flexibility when you need more control.
 
-## Development
+### 3. 🔌 Framework Integration
 
-```bash
-# Install dependencies
-pnpm i
+Consistent experience across multiple React frameworks:
 
-# Watch the package and build
-pnpm dev
-
-# Build the package
-pnpm build
+```tsx
+// Works in React DOM (Vite)
+// Works in React Native (Expo)
+// Works in Next.js (coming soon)
+import { Button, Input } from '@ds3/ui';
 ```
 
-## Contributing
+**Integration features:**
+- 🏗️ **Framework plugins** - Easy setup with @ds3/core framework-specific plugins
+- 🧰 **Configuration presets** - Optimized defaults for each framework
+- 🔄 **Shared APIs** - Consistent component behavior regardless of framework
 
-Please read our [Contributing Guidelines](CONTRIBUTING.md) for detailed information on our development workflow, code standards, and how to submit changes.
+Framework-specific optimizations are handled by [@ds3/core](src/packages/core) plugins, allowing your components to work seamlessly in any React environment.
 
-## License
+### 4. ♿ Accessibility By Default
 
-MIT 
+Ship accessible experiences without extra effort:
+
+- 🔤 **ARIA mapping** - Web attributes automatically map to native equivalents
+- ⌨️ **Keyboard navigation** - Full keyboard support on every platform
+- 🗣️ **Screen reader optimization** - Proper roles and states for assistive technology
+- 🌈 **Focus management** - Visual indicators and proper focus trapping
+
+#### 🔄 Accessibility Prop Mapping
+
+The library automatically maps accessibility props between platforms. Here are a few common examples:
+
+| Web Props | Native Props | Component |
+|-----------|--------------|-----------|
+| `aria-disabled` | `accessibilityState.disabled` | Button, Input |
+| `aria-busy` | `accessibilityState.busy` | Button, Input |
+| `role="button"` | `accessibilityRole="button"` | Button |
+
+```tsx
+// Web accessibility
+<Button 
+  aria-disabled={isLoading}
+  aria-busy={isLoading}
+  role="button"
+>
+  Submit
+</Button>
+
+// Native accessibility
+<Button 
+  accessibilityState={{
+    disabled: isLoading,
+    busy: isLoading
+  }}
+  accessibilityRole="button"
+>
+  <Button.Text>Submit</Button.Text>
+</Button>
+```
+
+### 5. 🎨 Unified Styling
+
+One styling system, perfect everywhere:
+
+```tsx
+// Consistent styling API across platforms
+<Text 
+  size="lg" 
+  weight="bold" 
+  color="primary"
+  className="underline opacity-90" // Works on web and native!
+/>
+```
+
+**Style features:**
+- 🌊 **Tailwind + NativeWind** - Use familiar [Tailwind CSS](https://tailwindcss.com/) classes everywhere through [NativeWind](https://www.nativewind.dev/)
+- 🎭 **Variants** - Consistent styling API with [class-variance-authority](https://cva.style/docs) (CVA)
+- 🎛️ **Theme tokens** - Shared design tokens for colors, spacing, and typography
+
+### 6. 🔄 Dual API
+
+While Platform Adaptation handles the underlying implementation differences, Dual API gives you the freedom to write code in your preferred style. Whether you're a web developer or React Native developer, you can use the APIs you're most comfortable with.
+
+#### 🌟 Why It's Awesome
+
+- **Familiar APIs**: Use the patterns you already know
+- **Type Safety**: Full TypeScript support for both platforms
+- **Zero Compromise**: No need to learn new patterns
+- **Automatic Conversion**: Props map correctly between platforms
+- **Smart Detection**: Components adapt to how you use them
+
+#### 📋 The Rules
+
+1. **Web Development**
+   - Use ONLY web props (`onClick`, `onChange`, `type`)
+   - Get full DOM access and browser features
+   - Perfect for web-only applications
+
+2. **Native/Hybrid Development**
+   - Use ONLY native props (`onPress`, `onChangeText`)
+   - Consistent with React Native patterns
+   - Works across all platforms
+
+3. **Never Mix APIs**
+   ```tsx
+   // ❌ INCORRECT: Mixing prop styles
+   <Button 
+     onClick={() => {}} // web prop
+     onPress={() => {}} // native prop
+     variant="outline" 
+     color="primary"
+   >
+     <Button.Text>Mixed Props Button</Button.Text>
+   </Button>
+
+   // ✅ CORRECT: Choose one style
+   // Web
+   <Button 
+     onClick={handleClick}
+     variant="outline" 
+     color="primary"
+   >
+     <Button.Text>Web Button</Button.Text>
+   </Button>
+
+   // Native/Hybrid
+   <Button 
+     onPress={handlePress}
+     variant="outline" 
+     color="primary"
+   >
+     <Button.Text>Native Button</Button.Text>
+   </Button>
+   ```
+
+#### 🔄 Prop Mapping
+
+For hybrid applications, the library automatically maps native props to web props. This one-way mapping ensures React Native code works seamlessly on web. Here are a few common examples:
+
+| Native Props | Web Props | Component |
+|--------------|-----------|-----------|
+| `onPress` | `onClick` | Button |
+| `onChangeText` | `onChange` | Input |
+| `secureTextEntry` | `type="password"` | Input |
+
+> ⚠️ **Important Rules**: 
+> 1. **Never use web props in native code** - they will be silently ignored
+> 2. **Never mix web and native props** - choose one style and stick with it
+
+```tsx
+// ❌ INCORRECT: Using web props in native/hybrid code
+<Button 
+  onClick={() => {}} // Will be ignored on native!
+  onPress={handlePress}
+>
+  <Button.Text>Mixed Props Button</Button.Text>
+</Button>
+
+// ✅ CORRECT: Web-only code can use web props
+<Button 
+  onClick={handleClick} // Perfectly fine in web-only code!
+>
+  <Button.Text>Web Button</Button.Text>
+</Button>
+
+// ✅ CORRECT: Native/hybrid code must use native props
+<Button 
+  onPress={handlePress}
+>
+  <Button.Text>Native Button</Button.Text>
+</Button>
+```
+
+#### 📘 Type-Safe Events
+
+The library provides platform-specific event types for type safety:
+
+```
