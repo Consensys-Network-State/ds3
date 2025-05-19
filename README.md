@@ -17,20 +17,27 @@ This monorepo contains shared packages and applications built with those package
 
 ### Packages
 
-**[@ds3/core](packages/core/README.md)** - Foundation layer
-  - Provides configuration tools (Vite, Tailwind, NativeWind)
-  - Expo/React Native configurations (Babel, Metro)
-  - Environment configuration utilities
-  - Build tools and base dependencies
+**[@ds3/theme](packages/theme)** - Theming system
+  - Built on Radix UI Colors for accessible, consistent color usage
+  - Complete design token system (colors, spacing, typography, shadows, animations)
+  - Tailwind integration with pre-configured design tokens
+  - Light/dark mode and theme switching support
+  - Nested theme support with dynamic inheritance
 
-**[@ds3/ui](packages/ui/README.md)** - Component library
-  - Built on top of `@ds3/core`
+**[@ds3/config](packages/config)** - Build configuration layer
+  - Vite plugin and configuration presets
+  - Expo and React Native setup (Babel, Metro)
+  - TailwindCSS and NativeWind integration
+  - Unified build system for web and native platforms
+
+**[@ds3/ui](packages/ui)** - Component library
+  - Built on top of `@ds3/theme`
   - React Native Primitives integration
   - Cross-platform components (web + native)
   - TailwindCSS/NativeWind styling
   - Includes Avatar, Dialog, Checkbox, Select, and more UI components
 
-**[@ds3/web3](packages/web3/README.md)** - Blockchain integration
+**[@ds3/web3](packages/web3)** - Blockchain integration
   - Built on top of `@ds3/ui`
   - Wagmi and Viem for blockchain interactions
   - Ethereum-specific utilities
@@ -39,9 +46,10 @@ This monorepo contains shared packages and applications built with those package
 #### Package Architecture
 
 The packages follow a layered architecture:
-1. **core** → Base utilities and configurations
-2. **ui** → UI components (depends on core)
-3. **web3** → Blockchain components (depends on ui)
+2. **theme** → Theming system and design tokens
+1. **config** → Build configuration layer (depends on theme)
+3. **ui** → UI components (depends on theme)
+4. **web3** → Blockchain components (depends on ui)
 
 ### Example Applications
 
