@@ -1,43 +1,75 @@
 # @ds3/web3
 
-Blockchain integration components for Design System 3.
+> 🌐 **Web Support Only** - Native support coming soon!
 
-## Overview
+🚀 **Ultimate cross-platform blockchain components that feel native everywhere**
 
-The web3 package provides blockchain integration components and utilities:
+Build powerful Web3 interfaces that work seamlessly across web and mobile platforms, with a comprehensive set of components that handle blockchain interactions, wallet connections, and Ethereum-specific utilities.
 
-- Built on top of @ds3/ui components
-- Wagmi and Viem integration for blockchain interactions
-- Ethereum-specific utilities
-- Web3 UI components
-
-## Features
-
-- ⛓️ **Blockchain Connection** - Comprehensive wallet connection management
-- 📝 **Ethereum Integration** - Address display, validation, and manipulation
-- 🔌 **Web3 Components** - Specialized UI components for blockchain interactions
-- 🧰 **Library Integration** - Seamless integration with popular Ethereum libraries
-
-## Usage
-
-```jsx
-import { ConnectButton, Address, BlockieAvatar } from '@ds3/web3';
-
-function MyComponent() {
-  return (
-    <div>
-      <ConnectButton />
-      <Address value="0x1234..." />
-      <BlockieAvatar address="0x1234..." />
-    </div>
-  );
-}
+```tsx
+// One import. Any platform. Native everywhere.
+import { Account, Address, ChainAvatar } from '@ds3/web3';
 ```
 
-## Dependencies
+## ✨ Standout Features
 
-- @ds3/ui
-- wagmi
-- viem
-- ethereum-blockies-base64
-- truncate-eth-address 
+✨ **Built on @ds3/ui** - Leverages true cross-platform components with compound patterns, dual APIs, and unified styling through Tailwind + NativeWind
+
+🔗 **Wallet Integration** - Seamless connection with MetaMask, WalletConnect, and other popular wallets
+
+🌐 **Cross-Chain Support** - Display and interact with multiple blockchain networks through a unified interface
+
+🔍 **ENS Resolution** - Automatic resolution of Ethereum addresses to human-readable ENS names
+
+
+## 🚀 Get Started
+
+```bash
+pnpm add @ds3/core @ds3/web3
+```
+
+For detailed framework setup and configuration, see the [@ds3/core documentation](src/packages/core).
+
+## 📚 Component Library
+
+DS3 Web3 gives you production-ready components for building modern blockchain interfaces:
+
+### Account Components
+- [**Account**](src/components/account) - Display and manage connected wallet accounts with ENS resolution
+
+### Address Components
+- [**Address**](src/components/address) - Display Ethereum addresses with ENS resolution and truncation
+- [**AddressAvatar**](src/components/address) - Generate and display avatars based on Ethereum addresses
+- [**AddressCard**](src/components/address) - Card layout for displaying addresses with avatars
+
+### Chain Components
+
+- [**ChainAvatar**](src/components/chain) - Display network avatars and indicators
+- [**ChainSelector**](src/components/chain) - Network selection dropdown (coming soon)
+
+### Wallet Components
+
+- [**MetaMaskLogin**](src/components/wallet) - Connect to MetaMask wallet
+- [**DisconnectButton**](src/components/wallet) - Disconnect current wallet
+- [**WalletConnect**](src/components/wallet) - Connect to WalletConnect (coming soon)
+
+## 🛠️ Development
+
+```bash
+# Install dependencies
+pnpm i
+
+# Watch and build
+pnpm dev
+
+# Production build
+pnpm build
+```
+
+## 🤝 Contributing
+
+We welcome contributions!
+
+## 📜 License
+
+MIT 
