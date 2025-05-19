@@ -46,16 +46,16 @@ This monorepo contains shared packages and applications built with those package
 #### Package Architecture
 
 The packages follow a layered architecture:
-2. **theme** → Theming system and design tokens
-1. **config** → Build configuration layer (depends on theme)
+1. **theme** → Theming system and design tokens
+2. **config** → Build configuration layer (depends on theme)
 3. **ui** → UI components (depends on theme)
 4. **web3** → Blockchain components (depends on ui)
 
 ### Example Applications
 
-- **[vite-example](apps/vite-example/README.md)** - Example Vite.js implementation
-- **[expo-example](apps/expo-example/README.md)** - Example React Native/Expo implementation
-- **[docs](apps/docs/README.md)** - Documentation site
+- **[vite-example](apps/vite-example)** - Example Vite.js implementation
+- **[expo-example](apps/expo-example)** - Example React Native/Expo implementation
+- **[docs](apps/docs)** - Documentation site
 
 ## Usage
 
