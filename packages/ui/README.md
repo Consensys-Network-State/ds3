@@ -328,4 +328,96 @@ For hybrid applications, the library automatically maps native props to web prop
 
 The library provides platform-specific event types for type safety:
 
+```tsx
+import type { WebClickEvent, NativePressEvent } from '@ds3/ui';
+
+// Web events
+<Button onClick={(e: WebClickEvent) => console.log(e.currentTarget)}>
+  Click Me
+</Button>
+
+// Native events
+<Button onPress={(e: NativePressEvent) => console.log(e.nativeEvent)}>
+  <Button.Text>Press Me</Button.Text>
+</Button>
 ```
+
+| Web Types | Native Types | Description |
+|-----------|--------------|-------------|
+| `WebClickEvent` | `NativePressEvent` | Button click/press events |
+| `WebFocusEvent` | `NativeFocusEvent` | Focus/blur events |
+| `WebChangeEvent` | `NativeChangeEvent` | Input change events |
+
+#### 🎯 Platform Adaptation vs Dual API
+
+- **Platform Adaptation**: Handles the underlying implementation differences (DOM vs Native)
+- **Dual API**: Gives you the freedom to write code in your preferred style
+
+### 7. 🔌 Slot Pattern
+
+Replace any component part with your own elements:
+
+```tsx
+// Button as a link using asChild
+<Button variant="solid" color="primary" asChild>
+  <a href="https://example.com">Visit Website</a>
+</Button>
+
+// Button as a router link
+<Button variant="outline" color="secondary" asChild>
+  <Link to="/dashboard">Go to Dashboard</Link>
+</Button>
+```
+
+The Slot pattern allows you to replace a component's default root element with your own custom element, while preserving all styling, behavior, and accessibility features.
+
+When you pass `asChild={true}` to a component:
+
+1. The component renders a `Slot` component instead of its default element
+2. The `Slot` captures all props from the parent component
+3. It applies those props to the first child element you provide
+4. The child element becomes the new root, inheriting all behavior
+
+The rendered DOM with `asChild` would be essentially:
+
+```html
+<a 
+  href="https://example.com" 
+  class="ds3-button ds3-button-solid ds3-button-primary"
+  role="button"
+>
+  Visit Website
+</a>
+```
+
+Our components use different Slot implementations based on platform:
+
+- **Web**: Uses [`@radix-ui/react-slot`](https://www.radix-ui.com/primitives/docs/utilities/slot) for DOM elements
+- **Native**: Uses [`@rn-primitives/slot`](https://rn-primitives.vercel.app/slot/) for React Native components
+
+This allows the same API to work seamlessly across platforms while respecting platform-specific behavior.
+
+**Slot power:**
+- 🎭 **Style inheritance** - Your elements inherit DS3 styling
+- 🔌 **Behavior injection** - DS3 behaviors transfer to your elements
+- ♿ **Accessibility transfer** - Accessibility attributes preserved
+
+## 🛠️ Development
+
+```bash
+# Install dependencies
+pnpm i
+
+# Watch and build
+pnpm dev
+
+# Production build
+pnpm build
+```
+## 🤝 Contributing
+
+We welcome contributions! Check out our [Contributing Guidelines](CONTRIBUTING.md) for detailed information on our development workflow, code standards, and how to submit changes.
+
+## 📜 License
+
+MIT 
