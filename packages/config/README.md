@@ -99,7 +99,7 @@ const theme = import.meta.env.DS3;
 ```
 
 See [vite.plugin.ts](src/vite.plugin.ts) for implementation details.
-See [vite.config.ts](apps/vite-example/vite.config.ts) for usage example.
+See [vite.config.ts](../../apps/vite-example/vite.config.ts) for usage example.
 
 ### NativeWind Preset
 
@@ -121,7 +121,7 @@ export default {
 ```
 
 See [nativewind.preset.ts](src/nativewind.preset.ts) for implementation details.
-See [tailwind.config.js](apps/vite-example/tailwind.config.js) for usage example.
+See [tailwind.config.js](../../apps/vite-example/tailwind.config.js) for usage example.
 
 ### Expo Configuration
 
@@ -148,7 +148,7 @@ const theme = global.DS3;
 ```
 
 See [expo.preset.ts](src/expo.preset.ts) for implementation details.
-See [app.config.js](apps/expo-example/app.config.js) for usage example.
+See [app.config.js](../../apps/expo-example/app.config.js) for usage example.
 
 ### Babel Configuration
 
@@ -168,7 +168,7 @@ The babel preset automatically configures:
 - Proper JSX handling for React Native
 
 See [babel.preset.ts](src/babel.preset.ts) for implementation details.
-See [babel.config.js](apps/expo-example/babel.config.js) for usage example.
+See [babel.config.js](../../apps/expo-example/babel.config.js) for usage example.
 
 ### Metro Configuration
 
@@ -190,11 +190,11 @@ The Metro configuration:
 - Optimizes build performance
 
 See [metro.config.ts](src/metro.config.ts) for implementation details.
-See [metro.config.js](apps/expo-example/metro.config.js) for usage example.
+See [metro.config.js](../../apps/expo-example/metro.config.js) for usage example.
 
 For complete examples, see:
-- [Vite Example](apps/vite-example) - Web implementation
-- [Expo Example](apps/expo-example) - React Native implementation
+- [Vite Example](../../apps/vite-example) - Web implementation
+- [Expo Example](../../apps/expo-example) - React Native implementation
 
 ## 🏛️ Architecture
 
