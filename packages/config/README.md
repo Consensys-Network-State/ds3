@@ -1,5 +1,7 @@
 # @ds3/config
 
+> 🚧 **Note**: This package is under active development. While we're working hard to make it production-ready, please be aware that APIs and features may change. We welcome your feedback and contributions as we continue to improve!
+
 🔧 **Unified configuration layer for the DS3 ecosystem**
 
 Build consistent, type-safe applications across web and React Native with a single configuration layer that handles framework integration, theming, and build tooling.

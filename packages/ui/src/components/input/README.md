@@ -10,7 +10,7 @@ pnpm add @ds3/ui
 
 ## Usage Examples
 
-Both components support web and native APIs through our [dual-API pattern](../../../README.md#dual-api) and offer flexibility through our [compound component pattern](../../../README.md#compound-component-pattern).
+Both components support web and native APIs through our [Dual API](#6--dual-api) and offer flexibility through our [Compound Components](#2--compound-components).
 
 ### Web-Specific Usage
 
@@ -353,7 +353,7 @@ The component exports typed event interfaces that match their platform equivalen
 - Web: [`HTMLInputElement` events](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement) like `onChange`, `onFocus`, `onBlur`
 - Native: [`TextInput` events](https://reactnative.dev/docs/textinput) like `onChangeText`, `onChange`, `onFocus`, `onBlur`
 
-For details on typed events and the dual-API approach, see the [Dual-API Pattern](../../README.md#dual-api-pattern) in the main documentation.
+For details on typed events and the dual-API approach, see the [Dual API](#6--dual-api).
 
 ### Using `asChild` for Custom Elements
 
@@ -379,7 +379,7 @@ Input implements automatic prop mapping to support cross-platform development wh
 
 > While native props can be used in web environments (automatically converted), web props should never be used in native environments.
 
-For more details on our cross-platform approach, see the [Dual-API Pattern documentation](../../../README.md#dual-api-pattern).
+For more details on our cross-platform approach, see the [Dual API](#6--dual-api).
 
 ## Accessibility
 

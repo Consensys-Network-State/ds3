@@ -10,7 +10,7 @@ pnpm add @ds3/ui
 
 ## Usage Examples
 
-The Button component supports both web and native APIs through our [dual-API pattern](../../../README.md#dual-api) and offers flexibility through our [compound component pattern](../../../README.md#compound-component-pattern).
+The Button component supports both web and native APIs through our [Dual API](#6--dual-api) and offers flexibility through our [Compound Components](#2--compound-components).
 
 ### Web-Specific Usage
 
@@ -47,7 +47,7 @@ function NativeButton() {
 }
 ```
 
-> **Note**: Choose one API style and stick with it throughout your codebase. See the [Guiding Philosophy](../../../README.md#guiding-philosophy) for more details.
+> **Note**: Choose one API style and stick with it throughout your codebase. See the [Dual API](#6--dual-api) for more details.
 
 ## Component API
 
@@ -299,7 +299,7 @@ The component exports typed event interfaces that match their platform equivalen
 - Web: [`HTMLButtonElement` events](https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement) like `onClick`, `onFocus`
 - Native: [`Pressable` events](https://reactnative.dev/docs/pressable) like `onPress`, `onPressIn`
 
-For details on typed events and the dual-API approach, see the [Dual-API Pattern](../../README.md#dual-api-pattern) in the main documentation.
+For details on typed events and the dual-API approach, see the [Dual API](#6--dual-api).
 
 ### Using `asChild` for Custom Elements
 
@@ -336,7 +336,7 @@ Button implements automatic prop mapping to support cross-platform development w
 
 > While native props can be used in web environments, web props should never be used in native environments.
 
-For more details on our cross-platform approach, see the [Dual-API Pattern documentation](../../../README.md#dual-api-pattern).
+For more details on our cross-platform approach, see the [Dual API](#6--dual-api).
 
 ## Accessibility
 

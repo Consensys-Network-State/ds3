@@ -10,7 +10,7 @@ pnpm add @ds3/ui
 
 ## Usage Examples
 
-The component supports web and native APIs through our [dual-API pattern](../../../README.md#dual-api) and offers flexibility through our [compound component pattern](../../../README.md#compound-component-pattern).
+The component supports web and native APIs through our [Dual API](#6--dual-api) and offers flexibility through our [Compound Components](#2--compound-components).
 
 ### Basic Usage
 
@@ -147,4 +147,4 @@ The component automatically applies appropriate accessibility attributes for eac
 | State | `aria-checked={checked}` | `accessibilityState={{ checked }}` |
 | Disabled | `aria-disabled={disabled}` | `accessibilityState={{ disabled }}` |
 
-For more details on our cross-platform approach, see the [Dual-API Pattern documentation](../../../README.md#dual-api-pattern). 
+For more details on our cross-platform approach, see the [Dual API](#6--dual-api). 

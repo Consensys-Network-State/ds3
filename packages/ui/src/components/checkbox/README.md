@@ -10,7 +10,7 @@ pnpm add @ds3/ui
 
 ## Usage Examples
 
-The Checkbox component supports web and native APIs through our [dual-API pattern](../../../README.md#dual-api) and offers flexibility through our [compound component pattern](../../../README.md#compound-component-pattern).
+The Checkbox component supports web and native APIs through our [Dual API](#6--dual-api) and offers flexibility through our [Compound Components](#2--compound-components).
 
 ### Basic Usage
 
@@ -213,4 +213,4 @@ The Checkbox component automatically implements proper accessibility attributes 
 | Disabled | `aria-disabled={disabled}` | `accessibilityState={{ disabled }}` |
 | Indeterminate | `aria-checked="mixed"` | `accessibilityState={{ mixed: true }}` |
 
-For more details on our cross-platform approach to accessibility, see the [Dual-API Pattern documentation](../../../README.md#dual-api-pattern). 
+For more details on our cross-platform approach to accessibility, see the [Dual API](#6--dual-api). 

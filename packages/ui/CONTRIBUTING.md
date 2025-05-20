@@ -1,27 +1,5 @@
 # Contributing Guidelines
 
-## Dual-API Component
-
-### Web-Only Development
-If you're building exclusively for the web:
-- Use web-specific props (`onChange`, `type`, etc.)
-- Write code as you would for any React web application
-- Leverage standard HTML attributes and DOM events
-
-### Native-Only or Hybrid Development
-If you're building for native platforms or hybrid apps:
-- Use only React Native props (`onChangeText`, `onPress`, etc.)
-- Never mix web and native props, even in web contexts
-- Write once, run anywhere with the same component API
-
-### Key Concepts
-
-- **Choose your API**: Pick the API style based on your platform target
-- **Be consistent**: Don't mix web and native APIs in the same codebase
-- **Native components**: Accept only `NativeProps`
-- **Web components**: Accept both `NativeProps` AND `WebProps`
-- **Hybrid apps**: Should use only `NativeProps` for consistency
-
 ## Compound Component Pattern
 
 When implementing new components, prefer using the [compound component pattern](https://www.patterns.dev/react/compound-pattern/) for complex UI elements that have multiple related parts.

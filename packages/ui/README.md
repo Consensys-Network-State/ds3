@@ -1,5 +1,7 @@
 # @ds3/ui
 
+> 🚧 **Note**: This package is under active development. While we're working hard to make it production-ready, please be aware that APIs and features may change. We welcome your feedback and contributions as we continue to improve!
+
 🚀 **Ultimate cross-platform React components that feel native everywhere**
 
 Build breathtaking interfaces for both web and React Native with a single component library that respects each platform's conventions while providing a unified developer experience.
@@ -150,7 +152,7 @@ Simple by default, infinitely customizable when needed:
 - 🎛️ **Precise control** - Position and style each element exactly how you want
 - 🎭 **Dynamic rendering** - Show/hide elements based on component state
 
-This pattern is used throughout our component library, giving you the perfect balance between simplicity for common cases and flexibility when you need more control.
+For a deeper dive into the pattern, see the [Patterns.dev guide](https://www.patterns.dev/react/compound-pattern/).
 
 ### 3. 🔌 Framework Integration
 

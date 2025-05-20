@@ -1,5 +1,7 @@
 # Design System 3
 
+> 🚧 **Note**: DS3 is currently under active development. While we're working hard to make it production-ready, please be aware that APIs and features may change. We welcome your feedback and contributions as we continue to improve!
+
 DS3 is a comprehensive design system that enables truly universal application development:
 
 - 🌐 **Cross-Platform** - Build once and run everywhere with a unified codebase

@@ -1,5 +1,7 @@
 # @ds3/theme
 
+> 🚧 **Note**: This package is under active development. While we're working hard to make it production-ready, please be aware that APIs and features may change. We welcome your feedback and contributions as we continue to improve!
+
 🎨 **Complex theming made simple**
 
 Build sophisticated, dynamic themes with a comprehensive design system that includes colors, spacing, typography, shadows, and animations. Our color system handles nested themes, mode switching, and semantic color mapping with ease.
@@ -221,6 +223,16 @@ Each Radix color comes in four variants:
 - Dark mode alpha color (e.g., `blueDarkA`)
 
 ### Semantic Color Mapping
+
+| Semantic Color | Purpose | Default Mapping |
+|----------------|---------|----------------|
+| `neutral` | Base UI elements, text, borders | `gray` |
+| `primary` | Main actions, brand identity | `blue` |
+| `secondary` | Alternative actions, accents | `violet` |
+| `error` | Error states, destructive actions | `red` |
+| `warning` | Warning states, cautionary actions | `amber` |
+| `success` | Success states, positive actions | `green` |
+| `info` | Information states, neutral actions | `blue` |
 
 When you map a semantic color to a Radix color, DS3 automatically generates all necessary variants:
 - Light mode colors (1-12 steps)
