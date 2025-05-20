@@ -25,23 +25,31 @@ This monorepo contains shared packages and applications built with those package
   - Tailwind integration with pre-configured design tokens
   - Light/dark mode and theme switching support
   - Nested theme support with dynamic inheritance
+  - Dynamic CSS variable system for runtime customization
 
 **[@ds3/config](packages/config)** - Build configuration layer
+  - Unified configuration layer for the DS3 ecosystem
   - Vite plugin and configuration presets
   - Expo and React Native setup (Babel, Metro)
   - TailwindCSS and NativeWind integration
-  - Unified build system for web and native platforms
+  - Runtime theme injection system
+  - Workspace optimization for monorepos
 
 **[@ds3/ui](packages/ui)** - Component library
   - Built on top of `@ds3/theme`
   - React Native Primitives integration
   - Cross-platform components (web + native)
   - TailwindCSS/NativeWind styling
+  - Compound components pattern for flexible composition
+  - Dual API system for web and native development
+  - Slot pattern for component customization
   - Includes Avatar, Dialog, Checkbox, Select, and more UI components
 
 **[@ds3/web3](packages/web3)** - Blockchain integration
   - Built on top of `@ds3/ui`
-  - Wagmi and Viem for blockchain interactions
+  - Wallet integration (MetaMask, WalletConnect)
+  - Cross-chain support for multiple networks
+  - ENS resolution for human-readable addresses
   - Ethereum-specific utilities
   - Web3 UI components
 
