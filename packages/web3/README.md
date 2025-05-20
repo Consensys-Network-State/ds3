@@ -27,10 +27,10 @@ import { Account, Address, ChainAvatar } from '@ds3/web3';
 ## 🚀 Get Started
 
 ```bash
-pnpm add @ds3/core @ds3/web3
+pnpm add @ds3/web3
 ```
 
-For detailed framework setup and configuration, see the [@ds3/core documentation](src/packages/core).
+For detailed framework setup and configuration, see the [@ds3/config documentation](.../config).
 
 ## 📚 Component Library
 

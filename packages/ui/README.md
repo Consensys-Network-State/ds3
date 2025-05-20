@@ -15,7 +15,7 @@ import { Button, Input, Icon } from '@ds3/ui';
 
 🌐 **True Cross-Platform** - Components work natively on web and React Native with platform-specific optimizations
 
-🔧 **Framework Agnostic** - Seamless integration with Vite, Expo and more through @ds3/core plugins
+🔧 **Framework Agnostic** - Seamless integration with Vite, Expo and more through [@ds3/config](../config) plugins
 
 🧩 **Compound Components** - Simple by default, infinitely customizable when needed
 
@@ -32,10 +32,10 @@ import { Button, Input, Icon } from '@ds3/ui';
 ## 🚀 Get Started
 
 ```bash
-pnpm add @ds3/core @ds3/ui
+pnpm add @ds3/ui
 ```
 
-For detailed framework setup and configuration, see the [@ds3/core documentation](src/packages/core).
+For detailed framework setup and configuration, see the [@ds3/config documentation](../config).
 
 ## 📚 Component Library
 
@@ -166,11 +166,11 @@ import { Button, Input } from '@ds3/ui';
 ```
 
 **Integration features:**
-- 🏗️ **Framework plugins** - Easy setup with @ds3/core framework-specific plugins
+- 🏗️ **Framework plugins** - Easy setup with [@ds3/config](../config)  framework-specific plugins
 - 🧰 **Configuration presets** - Optimized defaults for each framework
 - 🔄 **Shared APIs** - Consistent component behavior regardless of framework
 
-Framework-specific optimizations are handled by [@ds3/core](src/packages/core) plugins, allowing your components to work seamlessly in any React environment.
+Framework-specific optimizations are handled by [@ds3/config](../config) plugins, allowing your components to work seamlessly in any React environment.
 
 ### 4. ♿ Accessibility By Default
 
