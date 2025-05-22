@@ -17,7 +17,7 @@ pnpm create vite
 Install dependencies:
 
 ```bash
-pnpm add @ds3/ui @ds3/core react-native-web react-native-safe-area-context
+pnpm add @ds3/config @ds3/ui react-native-web react-native-safe-area-context
 ```
 
 ### DS3 Configuration
@@ -31,7 +31,7 @@ touch ds3.config.js
 Configure `ds3.config.js`:
 
 ```js
-const { generateConfig } = require('@ds3/core');
+const { generateConfig } = require('@ds3/theme');
 
 module.exports = generateConfig({
   themes: {
@@ -79,7 +79,7 @@ pnpm exec tailwindcss init -p
 Configure `tailwind.config.js`:
 
 ```js
-import ds3Preset from "@ds3/core/nativewind";
+import ds3Preset from "@ds3/config/nativewind";
 import ds3Config from "./ds3.config";
 
 /** @type {import('tailwindcss').Config} */
@@ -108,7 +108,7 @@ Replace `vite.config.ts` with the following:
 
 ```js
 import { defineConfig } from 'vite'
-import ds3Plugin from '@ds3/core/vite';
+import ds3Plugin from '@ds3/config/vite';
 import ds3Config from "./ds3.config";
 
 export default defineConfig(({ command }) => {
