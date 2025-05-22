@@ -17,7 +17,7 @@ pnpm create expo@latest
 Install dependencies:
 
 ```bash
-pnpm add @ds3/config @ds3/ui
+pnpm add @consensys/ui-config @consensys/ui
 ```
 
 ### DS3 Configuration
@@ -31,7 +31,7 @@ touch ds3.config.js
 Configure `ds3.config.js`:
 
 ```js
-const { generateConfig } = require('@ds3/theme');
+const { generateConfig } = require('@consensys/ui-theme');
 
 module.exports = generateConfig({
   themes: {
@@ -54,7 +54,7 @@ module.exports = generateConfig({
 Under `app/_layout.tsx`, replace the `ThemeProvider`:
 
 ```tsx
-import { ThemeProvider } from "@ds3/ui";
+import { ThemeProvider } from "@consensys/ui";
 import ExpoConstants from 'expo-constants';
 
 // ...
@@ -77,14 +77,14 @@ pnpm exec tailwindcss init
 Configure `tailwind.config.js`:
 
 ```js
-import ds3Preset from "@ds3/config/nativewind";
+import ds3Preset from "@consensys/ui-config/nativewind";
 import ds3Config from "./ds3.config";
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./app/**/*.{js,jsx,ts,tsx}",
-    './node_modules/@ds3/ui/**/*.{js,jsx,ts,tsx}',
+    './node_modules/@consensys/ui/**/*.{js,jsx,ts,tsx}',
     '!node_modules/**/*.{js,ts,jsx,tsx}',
   ],
   presets: [ds3Preset(ds3Config)],
@@ -125,7 +125,7 @@ Configure `metro.config.js`:
 
 ```js
 const { getDefaultConfig } = require('expo/metro-config');
-const { withDs3 } = require('@ds3/config/metro');
+const { withDs3 } = require('@consensys/ui-config/metro');
 
 const config = getDefaultConfig(__dirname);
 
@@ -136,7 +136,7 @@ If using a monorepo (workspace), use the following configuration instead:
 
 ```js
 const { getDefaultConfig } = require('expo/metro-config');
-const { withDs3Workspace } = require('@ds3/config/metro');
+const { withDs3Workspace } = require('@consensys/ui-config/metro');
 
 const config = getDefaultConfig(__dirname);
 
@@ -154,7 +154,7 @@ touch app.config.js
 Configure `app.config.js`:
 
 ```js
-import withDs3 from '@ds3/config/expo';
+import withDs3 from '@consensys/ui-config/expo';
 import ds3Config from './ds3.config';
 
 module.exports = ({ config }) => {
@@ -177,7 +177,7 @@ module.exports = function (api) {
    api.cache(true);
 
    return {
-      presets: ['@ds3/config/expo/babel'],
+      presets: ['@consensys/ui-config/expo/babel'],
    };
 };
 ```

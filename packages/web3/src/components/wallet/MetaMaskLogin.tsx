@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Text, cn } from "@ds3/ui";
+import { Button, Text, cn } from "@consensys/ui";
 import { useConnect, Connector } from "wagmi";
 import type { MetaMaskLoginProps } from './types';
 import { MetaMask } from '../../icons/MetaMask';

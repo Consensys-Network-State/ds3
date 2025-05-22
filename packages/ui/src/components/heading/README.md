@@ -5,7 +5,7 @@ The `<Heading />` components provide cross-platform typography elements for sect
 ## Installation
 
 ```bash
-pnpm add @ds3/ui
+pnpm add @consensys/ui
 ```
 
 ## Usage Examples
@@ -13,7 +13,7 @@ pnpm add @ds3/ui
 The Heading components allow you to create properly styled and semantic headings across platforms.
 
 ```tsx
-import { H1, H2, H3, H4, H5, H6 } from '@ds3/ui';
+import { H1, H2, H3, H4, H5, H6 } from '@consensys/ui';
 
 function PageHeadings() {
   return (

@@ -1,4 +1,4 @@
-# @ds3/ui
+# @consensys/ui
 
 > 🚧 **Note**: This package is under active development. While we're working hard to make it production-ready, please be aware that APIs and features may change. We welcome your feedback and contributions as we continue to improve!
 
@@ -8,14 +8,14 @@ Build breathtaking interfaces for both web and React Native with a single compon
 
 ```tsx
 // One import. Any platform. Native everywhere.
-import { Button, Input, Icon } from '@ds3/ui';
+import { Button, Input, Icon } from '@consensys/ui';
 ```
 
 ## ✨ Standout Features
 
 🌐 **True Cross-Platform** - Components work natively on web and React Native with platform-specific optimizations
 
-🔧 **Framework Agnostic** - Seamless integration with Vite, Expo and more through [@ds3/config](../config) plugins
+🔧 **Framework Agnostic** - Seamless integration with Vite, Expo and more through [@consensys/ui-config](../config) plugins
 
 🧩 **Compound Components** - Simple by default, infinitely customizable when needed
 
@@ -32,10 +32,10 @@ import { Button, Input, Icon } from '@ds3/ui';
 ## 🚀 Get Started
 
 ```bash
-pnpm add @ds3/ui
+pnpm add @consensys/ui
 ```
 
-For detailed framework setup and configuration, see the [@ds3/config documentation](../config).
+For detailed framework setup and configuration, see the [@consensys/ui-config documentation](../config).
 
 ## 📚 Component Library
 
@@ -75,7 +75,7 @@ Components intelligently adapt to their environment while maintaining consistent
 
 ```tsx
 // Same import, same API, platform-perfect behavior
-import { Input } from '@ds3/ui';
+import { Input } from '@consensys/ui';
 
 // Works perfectly on web and native
 <Input 
@@ -162,15 +162,15 @@ Consistent experience across multiple React frameworks:
 // Works in React DOM (Vite)
 // Works in React Native (Expo)
 // Works in Next.js (coming soon)
-import { Button, Input } from '@ds3/ui';
+import { Button, Input } from '@consensys/ui';
 ```
 
 **Integration features:**
-- 🏗️ **Framework plugins** - Easy setup with [@ds3/config](../config)  framework-specific plugins
+- 🏗️ **Framework plugins** - Easy setup with [@consensys/ui-config](../config)  framework-specific plugins
 - 🧰 **Configuration presets** - Optimized defaults for each framework
 - 🔄 **Shared APIs** - Consistent component behavior regardless of framework
 
-Framework-specific optimizations are handled by [@ds3/config](../config) plugins, allowing your components to work seamlessly in any React environment.
+Framework-specific optimizations are handled by [@consensys/ui-config](../config) plugins, allowing your components to work seamlessly in any React environment.
 
 ### 4. ♿ Accessibility By Default
 
@@ -299,7 +299,7 @@ For hybrid applications, the library automatically maps native props to web prop
 The library provides platform-specific event types for type safety:
 
 ```tsx
-import type { WebClickEvent, NativePressEvent } from '@ds3/ui';
+import type { WebClickEvent, NativePressEvent } from '@consensys/ui';
 
 // 🌐 Web events
 <Button onClick={(e: WebClickEvent) => console.log(e.currentTarget)}>

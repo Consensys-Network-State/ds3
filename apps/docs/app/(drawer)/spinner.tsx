@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView } from 'react-native';
 import { View } from 'react-native';
 import { LoaderCircle, Loader, LoaderPinwheel, RefreshCw } from 'lucide-react-native';
-import { Text, Spinner } from '@ds3/ui/src';
+import { Text, Spinner } from '@consensys/ui/src';
 
 const spinnerColors = [
   'neutral',

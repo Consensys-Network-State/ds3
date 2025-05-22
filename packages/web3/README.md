@@ -1,4 +1,4 @@
-# @ds3/web3
+# @consensys/ui-web3
 
 > 🚧 **Note**: This package is under active development. While we're working hard to make it production-ready, please be aware that APIs and features may change. We welcome your feedback and contributions as we continue to improve!
 >
@@ -10,12 +10,12 @@ Build powerful Web3 interfaces that work seamlessly across web and mobile platfo
 
 ```tsx
 // One import. Any platform. Native everywhere.
-import { Account, Address, ChainAvatar } from '@ds3/web3';
+import { Account, Address, ChainAvatar } from '@consensys/ui-web3';
 ```
 
 ## ✨ Standout Features
 
-✨ **Built on @ds3/ui** - Leverages true cross-platform components with compound patterns, dual APIs, and unified styling through Tailwind + NativeWind
+✨ **Built on @consensys/ui** - Leverages true cross-platform components with compound patterns, dual APIs, and unified styling through Tailwind + NativeWind
 
 🔗 **Wallet Integration** - Seamless connection with MetaMask, WalletConnect, and other popular wallets
 
@@ -27,10 +27,10 @@ import { Account, Address, ChainAvatar } from '@ds3/web3';
 ## 🚀 Get Started
 
 ```bash
-pnpm add @ds3/web3
+pnpm add @consensys/ui-web3
 ```
 
-For detailed framework setup and configuration, see the [@ds3/config documentation](.../config).
+For detailed framework setup and configuration, see the [@consensys/ui-config documentation](.../config).
 
 ## 📚 Component Library
 

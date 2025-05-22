@@ -5,7 +5,7 @@ The `<Input />` and `<Textarea />` components provide cross-platform text input 
 ## Installation
 
 ```bash
-pnpm add @ds3/ui
+pnpm add @consensys/ui
 ```
 
 ## Usage Examples
@@ -15,8 +15,8 @@ Both components support web and native APIs through our [Dual API](#6--dual-api)
 ### Web-Specific Usage
 
 ```tsx
-import { Input, Textarea } from '@ds3/ui';
-import type { WebChangeEvent } from '@ds3/ui';
+import { Input, Textarea } from '@consensys/ui';
+import type { WebChangeEvent } from '@consensys/ui';
 
 function WebInputs() {
   // Using web-specific APIs
@@ -41,7 +41,7 @@ function WebInputs() {
 ### Native/Hybrid Usage
 
 ```tsx
-import { Input, Textarea } from '@ds3/ui';
+import { Input, Textarea } from '@consensys/ui';
 
 function NativeInputs() {
   // Using React Native APIs
@@ -327,7 +327,7 @@ Change the color on focus/hover:
 The component supports platform-specific event handling:
 
 ```tsx
-import type { WebChangeEvent, WebFocusEvent, NativeFocusEvent } from '@ds3/ui';
+import type { WebChangeEvent, WebFocusEvent, NativeFocusEvent } from '@consensys/ui';
 
 // Web events
 <Input

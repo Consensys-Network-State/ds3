@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { Text, Input, Textarea } from "@ds3/ui/src";
+import { Text, Input, Textarea } from "@consensys/ui/src";
 import { View, ScrollView } from "react-native";
 import { Search, Eye, Mail, Lock, Loader, LoaderPinwheel, Figma } from 'lucide-react-native';
 import { useState } from "react";
-import { Switch } from "@ds3/ui/src";
-import type { WebFocusEvent, NativeFocusEvent } from "@ds3/ui/src";
-import type { SharedInputProps, InputRootProps } from "@ds3/ui/src/components/input";
+import { Switch } from "@consensys/ui/src";
+import type { WebFocusEvent, NativeFocusEvent } from "@consensys/ui/src";
+import type { SharedInputProps, InputRootProps } from "@consensys/ui/src/components/input";
 
 const InputClickToLoad = () => {
   const [isLoading, setIsLoading] = useState(false);

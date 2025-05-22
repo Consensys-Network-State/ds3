@@ -19,7 +19,7 @@ This monorepo contains shared packages and applications built with those package
 
 ### Packages
 
-**[@ds3/theme](packages/theme)** - Theming system
+**[@consensys/ui-theme](packages/theme)** - Theming system
   - Built on Radix UI Colors for accessible, consistent color usage
   - Complete design token system (colors, spacing, typography, shadows, animations)
   - Tailwind integration with pre-configured design tokens
@@ -27,7 +27,7 @@ This monorepo contains shared packages and applications built with those package
   - Nested theme support with dynamic inheritance
   - Dynamic CSS variable system for runtime customization
 
-**[@ds3/config](packages/config)** - Build configuration layer
+**[@consensys/ui-config](packages/config)** - Build configuration layer
   - Unified configuration layer for the DS3 ecosystem
   - Vite plugin and configuration presets
   - Expo and React Native setup (Babel, Metro)
@@ -35,8 +35,8 @@ This monorepo contains shared packages and applications built with those package
   - Runtime theme injection system
   - Workspace optimization for monorepos
 
-**[@ds3/ui](packages/ui)** - Component library
-  - Built on top of `@ds3/theme`
+**[@consensys/ui](packages/ui)** - Component library
+  - Built on top of `@consensys/ui-theme`
   - React Native Primitives integration
   - Cross-platform components (web + native)
   - TailwindCSS/NativeWind styling
@@ -45,8 +45,8 @@ This monorepo contains shared packages and applications built with those package
   - Slot pattern for component customization
   - Includes Avatar, Dialog, Checkbox, Select, and more UI components
 
-**[@ds3/web3](packages/web3)** - Blockchain integration
-  - Built on top of `@ds3/ui`
+**[@consensys/ui-web3](packages/web3)** - Blockchain integration
+  - Built on top of `@consensys/ui`
   - Wallet integration (MetaMask, WalletConnect)
   - Cross-chain support for multiple networks
   - ENS resolution for human-readable addresses

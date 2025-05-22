@@ -17,7 +17,7 @@ pnpm create vite
 Install dependencies:
 
 ```bash
-pnpm add @ds3/config @ds3/ui react-native-web react-native-safe-area-context
+pnpm add @consensys/ui-config @consensys/ui react-native-web react-native-safe-area-context
 ```
 
 ### DS3 Configuration
@@ -31,7 +31,7 @@ touch ds3.config.js
 Configure `ds3.config.js`:
 
 ```js
-const { generateConfig } = require('@ds3/theme');
+const { generateConfig } = require('@consensys/ui-theme');
 
 module.exports = generateConfig({
   themes: {
@@ -54,7 +54,7 @@ module.exports = generateConfig({
 Under `src/main.tsx`, add the following:
 
 ```tsx
-import { ThemeProvider } from "@ds3/ui";
+import { ThemeProvider } from "@consensys/ui";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 // ...
@@ -79,7 +79,7 @@ pnpm exec tailwindcss init -p
 Configure `tailwind.config.js`:
 
 ```js
-import ds3Preset from "@ds3/config/nativewind";
+import ds3Preset from "@consensys/ui-config/nativewind";
 import ds3Config from "./ds3.config";
 
 /** @type {import('tailwindcss').Config} */
@@ -87,7 +87,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    './node_modules/@ds3/ui/**/*.{js,jsx,ts,tsx}',
+    './node_modules/@consensys/ui/**/*.{js,jsx,ts,tsx}',
     '!node_modules/**/*.{js,ts,jsx,tsx}',
   ],
   presets: [ds3Preset(ds3Config)]
@@ -108,7 +108,7 @@ Replace `vite.config.ts` with the following:
 
 ```js
 import { defineConfig } from 'vite'
-import ds3Plugin from '@ds3/config/vite';
+import ds3Plugin from '@consensys/ui-config/vite';
 import ds3Config from "./ds3.config";
 
 export default defineConfig(({ command }) => {

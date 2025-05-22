@@ -10,15 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@ds3/config": "workspace:*",
-    "@ds3/ui": "workspace:*",
+    "@consensys/ui-config": "workspace:*",
+    "@consensys/ui": "workspace:*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@ds3/ui": "workspace:*",
-    "@ds3/config": "workspace:*",
-    "@ds3/theme": "workspace:*",
+    "@consensys/ui": "workspace:*",
+    "@consensys/ui-config": "workspace:*",
+    "@consensys/ui-theme": "workspace:*",
     "@eslint/js": "^9.13.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",

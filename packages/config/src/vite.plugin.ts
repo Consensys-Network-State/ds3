@@ -1,7 +1,7 @@
 import { PluginOption, transformWithEsbuild } from 'vite';
 import reactNativeWeb from 'vite-plugin-react-native-web';
 import react from '@vitejs/plugin-react';
-import { UserConfig, generateConfig } from "@ds3/theme";
+import { UserConfig, generateConfig } from "@consensys/ui-theme";
 
 function vitePlugin(command: 'serve' | 'build', userConfig: UserConfig): PluginOption[] {
   const config = generateConfig(userConfig);
@@ -22,7 +22,7 @@ function vitePlugin(command: 'serve' | 'build', userConfig: UserConfig): PluginO
           'import.meta.env.DS3': JSON.stringify(config),
         },
         optimizeDeps: {
-          include: ['@ds3/ui'],
+          include: ['@consensys/ui'],
           esbuildOptions: {
             loader: {
               '.js': 'tsx',

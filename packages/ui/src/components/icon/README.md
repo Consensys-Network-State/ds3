@@ -5,7 +5,7 @@ The `<Icon />` component provides a cross-platform way to render SVG icons that 
 ## Installation
 
 ```bash
-pnpm add @ds3/ui
+pnpm add @consensys/ui
 ```
 
 ## Usage Examples
@@ -13,7 +13,7 @@ pnpm add @ds3/ui
 The Icon component allows you to use any SVG icon library across platforms.
 
 ```tsx
-import { Icon } from '@ds3/ui';
+import { Icon } from '@consensys/ui';
 import { Mail, Heart, ArrowRight } from 'lucide-react-native';
 
 function MyIcons() {

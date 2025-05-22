@@ -1,4 +1,4 @@
-# @ds3/theme
+# @consensys/ui-theme
 
 > 🚧 **Note**: This package is under active development. While we're working hard to make it production-ready, please be aware that APIs and features may change. We welcome your feedback and contributions as we continue to improve!
 
@@ -29,14 +29,14 @@ Build sophisticated, dynamic themes with a comprehensive design system that incl
 ### Installation
 
 ```bash
-pnpm add @ds3/theme
+pnpm add @consensys/ui-theme
 ```
 
 ### Tailwind Configuration
 
 ```javascript
 // tailwind.config.js
-import { tailwindPreset } from '@ds3/theme';
+import { tailwindPreset } from '@consensys/ui-theme';
 
 export default {
   presets: [tailwindPreset({
@@ -83,7 +83,7 @@ Create custom themes by mapping semantic colors to different Radix colors:
 
 ```typescript
 // tailwind.config.js
-import { tailwindPreset } from '@ds3/theme';
+import { tailwindPreset } from '@consensys/ui-theme';
 
 export default {
   presets: [tailwindPreset({
@@ -169,7 +169,7 @@ The theme package provides a complete set of design tokens through the Tailwind 
 
 ```typescript
 // tailwind.config.js
-import { tailwindPreset } from '@ds3/theme';
+import { tailwindPreset } from '@consensys/ui-theme';
 
 export default {
   presets: [tailwindPreset({
