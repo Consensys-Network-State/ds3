@@ -1,4 +1,4 @@
-import { TextProps } from "@ds3/ui";
+import { TextProps } from "@consensys/ui";
 
 export interface AddressProps extends TextProps {
   address?: `0x${string}`;

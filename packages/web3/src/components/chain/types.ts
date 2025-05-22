@@ -1,4 +1,4 @@
-import { AvatarProps } from "@ds3/ui";
+import { AvatarProps } from "@consensys/ui";
  
 export interface ChainAvatarProps extends AvatarProps {
   chainId: number;

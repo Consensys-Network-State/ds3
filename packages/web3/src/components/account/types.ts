@@ -1,4 +1,4 @@
-import type { ButtonRootProps } from "@ds3/ui";
+import type { ButtonRootProps } from "@consensys/ui";
 
 export type AccountProps = ButtonRootProps & {
   className?: string;

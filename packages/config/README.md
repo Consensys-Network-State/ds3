@@ -1,15 +1,15 @@
-# @ds3/config
+# @consensys/ui-config
 
 > 🚧 **Note**: This package is under active development. While we're working hard to make it production-ready, please be aware that APIs and features may change. We welcome your feedback and contributions as we continue to improve!
 
-🔧 **Unified configuration layer for the DS3 ecosystem**
+🔧 **Unified configuration layer for the CUI ecosystem**
 
 Build consistent, type-safe applications across web and React Native with a single configuration layer that handles framework integration, theming, and build tooling.
 
 ```tsx
 // One configuration. Any platform. Native everywhere.
-import { vitePlugin } from '@ds3/config/vite';
-import { nativewindPreset } from '@ds3/config/nativewind';
+import { vitePlugin } from '@consensys/ui-config/vite';
+import { nativewindPreset } from '@consensys/ui-config/nativewind';
 ```
 
 ## ✨ Standout Features
@@ -29,14 +29,14 @@ import { nativewindPreset } from '@ds3/config/nativewind';
 ## 🚀 Get Started
 
 ```bash
-pnpm add @ds3/config
+pnpm add @consensys/ui-config
 ```
 
 ### Theme Configuration & Runtime Access
 
 The configuration system follows a three-step process to make your theme available throughout your application:
 
-1. **Configuration**: Define your theme settings in `ds3.config.ts`
+1. **Configuration**: Define your theme settings in `theme.config.ts`
 2. **Processing**: The configuration is processed and transformed into a runtime theme object
 3. **Injection**: The theme object is injected into your application's global scope
 
@@ -46,11 +46,11 @@ Each platform has its own way of accessing global variables:
 
 ### Theme Configuration
 
-For detailed theme configuration options, see the [@ds3/theme documentation](../theme/README.md).
+For detailed theme configuration options, see the [@consensys/ui-theme documentation](../theme/README.md).
 
 ```typescript
-// ds3.config.ts
-import { UserConfig } from '@ds3/theme'
+// theme.config.ts
+import { UserConfig } from '@consensys/ui-theme'
 
 export default {
   themes: {
@@ -77,12 +77,12 @@ The Vite plugin provides optimized defaults for web development:
 ```typescript
 // vite.config.ts
 import { defineConfig } from 'vite'
-import ds3Plugin from '@ds3/config/vite';
-import ds3Config from "./ds3.config";
+import cui from '@consensys/ui-config/vite';
+import themeConfig from "./theme.config";
 
 export default defineConfig(({ command }) => ({
   plugins: [
-    ds3Plugin(command, ds3Config),
+    cui(command, themeConfig),
   ],
 }));
 ```
@@ -90,12 +90,12 @@ export default defineConfig(({ command }) => ({
 The plugin automatically:
 - Configures React and React Native Web
 - Sets up NativeWind babel preset
-- Injects theme configuration into `import.meta.env.DS3`
-- Optimizes dependencies for [@ds3/ui](../ui/README.md) components
+- Injects theme configuration into `import.meta.env.CUI`
+- Optimizes dependencies for [@consensys/ui](../ui/README.md) components
 
 You can access the theme configuration in your application using:
 ```typescript
-const theme = import.meta.env.DS3;
+const theme = import.meta.env.CUI;
 ```
 
 See [vite.plugin.ts](src/vite.plugin.ts) for implementation details.
@@ -107,16 +107,16 @@ The NativeWind preset combines Tailwind and React Native styling:
 
 ```javascript
 // tailwind.config.js
-import ds3Preset from "@ds3/config/nativewind";
-import ds3Config from "./ds3.config";
+import nativewindPreset from "@consensys/ui-config/nativewind";
+import themeConfig from "./theme.config";
 
 export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    './node_modules/@ds3/ui/**/*.{js,jsx,ts,tsx}',
+    './node_modules/@consensys/ui/**/*.{js,jsx,ts,tsx}',
   ],
-  presets: [ds3Preset(ds3Config)]
+  presets: [nativewindPreset(themeConfig)]
 }
 ```
 
@@ -129,22 +129,22 @@ Expo-specific configurations for React Native development:
 
 ```javascript
 // app.config.js
-import withDs3 from '@ds3/config/expo';
-import ds3Config from './ds3.config';
+import withCui from '@consensys/ui-config/expo';
+import themeConfig from './theme.config';
 
 module.exports = ({ config }) => {
-  return withDs3({ config, ds3Config });
+  return withCui({ config, themeConfig });
 };
 ```
 
 The Expo configuration:
 - Processes and validates your theme configuration
-- Injects the theme into `global.DS3` for runtime access
+- Injects the theme into `global.CUI` for runtime access
 - Ensures consistent theming across your React Native application
 
 You can access the theme configuration in your application using:
 ```typescript
-const theme = global.DS3;
+const theme = global.CUI;
 ```
 
 See [expo.preset.ts](src/expo.preset.ts) for implementation details.
@@ -157,7 +157,7 @@ See [app.config.js](../../apps/expo-example/app.config.js) for usage example.
 module.exports = function (api) {
   api.cache(true);
   return {
-    presets: ['@ds3/config/expo/babel'],
+    presets: ['@consensys/ui-config/expo/babel'],
   };
 };
 ```
@@ -177,10 +177,10 @@ Metro bundler configuration for React Native:
 ```javascript
 // metro.config.js
 const { getDefaultConfig } = require('expo/metro-config');
-const { withDs3Workspace } = require('@ds3/config/metro');
+const { withCuiWorkspace } = require('@consensys/ui-config/metro');
 
 const config = getDefaultConfig(__dirname);
-module.exports = withDs3Workspace(config);
+module.exports = withCuiWorkspace(config);
 ```
 
 The Metro configuration:
@@ -198,10 +198,10 @@ For complete examples, see:
 
 ## 🏛️ Architecture
 
-@ds3/config provides a unified configuration layer that ties together the entire DS3 ecosystem:
+@consensys/ui-config provides a unified configuration layer that ties together the entire CUI ecosystem:
 
 1. **Single Source of Truth**
-   - One `ds3.config.ts` file configures everything
+   - One `theme.config.ts` file configures everything
    - Type-safe configuration with `UserConfig` type
    - Consistent theming across all platforms
 

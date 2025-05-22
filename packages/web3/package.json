@@ -1,5 +1,5 @@
 {
-  "name": "@ds3/web3",
+  "name": "@consensys/ui-web3",
   "version": "0.1.0",
   "private": true,
   "exports": {
@@ -24,7 +24,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@ds3/ui": "workspace:*",
+    "@consensys/ui": "workspace:*",
     "wagmi": "^2.0.0",
     "viem": "^2.0.0",
     "class-variance-authority": "^0.7.0",

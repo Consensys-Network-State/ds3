@@ -15,7 +15,7 @@ import {
   Alert,
   AlertDescription,
   Option
-} from '@ds3/ui/src';
+} from '@consensys/ui/src';
 import { View, ScrollView } from "react-native";
 import { useForm, Controller } from 'react-hook-form';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';

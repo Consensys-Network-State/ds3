@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button } from "@ds3/ui";
+import { Button } from "@consensys/ui";
 import { useDisconnect } from 'wagmi';
 import type { DisconnectButtonProps } from './types';
 

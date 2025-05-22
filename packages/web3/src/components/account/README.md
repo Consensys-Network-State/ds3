@@ -5,7 +5,7 @@ The `<Account />` component provides a user-friendly interface for displaying an
 ## Installation
 
 ```bash
-pnpm add @ds3/web3
+pnpm add @consensys/ui-web3
 ```
 
 ## Usage Examples
@@ -13,7 +13,7 @@ pnpm add @ds3/web3
 ### Basic Usage
 
 ```tsx
-import { Account } from '@ds3/web3';
+import { Account } from '@consensys/ui-web3';
 
 function MyApp() {
   return (
@@ -25,7 +25,7 @@ function MyApp() {
 ### With Custom Styling
 
 ```tsx
-import { Account } from '@ds3/web3';
+import { Account } from '@consensys/ui-web3';
 
 function MyApp() {
   return (
@@ -59,12 +59,12 @@ The main component that displays the connected wallet account with a dropdown me
 
 The Account component relies on the following:
 - `wagmi` for wallet connection and ENS resolution
-- `@ds3/ui` for UI components
+- `@consensys/ui` for UI components
 - `lucide-react-native` for icons
 
 ## Styling
 
-The component uses the following UI components from `@ds3/ui`:
+The component uses the following UI components from `@consensys/ui`:
 - `Button`
 - `Text`
 - `DropdownMenu` and related components

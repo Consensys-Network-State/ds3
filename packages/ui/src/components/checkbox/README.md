@@ -5,7 +5,7 @@ The `<Checkbox />` component provides a cross-platform checkbox control that ada
 ## Installation
 
 ```bash
-pnpm add @ds3/ui
+pnpm add @consensys/ui
 ```
 
 ## Usage Examples
@@ -15,7 +15,7 @@ The Checkbox component supports web and native APIs through our [Dual API](#6--d
 ### Basic Usage
 
 ```tsx
-import { Checkbox } from '@ds3/ui';
+import { Checkbox } from '@consensys/ui';
 import { useState } from 'react';
 
 function BasicCheckbox() {
@@ -33,7 +33,7 @@ function BasicCheckbox() {
 ### Compound Usage with Custom Icon
 
 ```tsx
-import { Checkbox } from '@ds3/ui';
+import { Checkbox } from '@consensys/ui';
 import { X } from 'lucide-react-native';
 import { useState } from 'react';
 
@@ -56,7 +56,7 @@ function CustomIconCheckbox() {
 ### Indeterminate State
 
 ```tsx
-import { Checkbox } from '@ds3/ui';
+import { Checkbox } from '@consensys/ui';
 import { useState } from 'react';
 
 function IndeterminateCheckbox() {

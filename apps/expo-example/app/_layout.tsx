@@ -6,7 +6,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 import "../global.css";
-import { ThemeProvider as DS3Provider } from '@ds3/ui'
+import { ThemeProvider as CUIProvider } from '@consensys/ui'
 import { PortalHost } from '@rn-primitives/portal';
 import ExpoConstants from 'expo-constants';
 
@@ -33,13 +33,13 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <DS3Provider className="flex-1" config={ExpoConstants?.expoConfig?.extra?.DS3}>
+      <CUIProvider className="flex-1" config={ExpoConstants?.expoConfig?.extra?.CUI}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
         </Stack>
         <StatusBar style="auto" />
-      </DS3Provider>
+      </CUIProvider>
       <PortalHost />
     </ThemeProvider>
   );

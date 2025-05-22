@@ -5,7 +5,7 @@ The `<Field />` component provides a standardized way to create accessible form 
 ## Installation
 
 ```bash
-pnpm add @ds3/ui
+pnpm add @consensys/ui
 ```
 
 ## Usage Examples
@@ -13,7 +13,7 @@ pnpm add @ds3/ui
 The Field component is a foundational element designed to be used with various form control components.
 
 ```tsx
-import { Field, Text } from '@ds3/ui';
+import { Field, Text } from '@consensys/ui';
 import { Mail } from 'lucide-react-native';
 
 function BasicField() {
@@ -229,7 +229,7 @@ The Field component supports six color variants that are applied to labels, desc
 The `useField` hook helps manage accessibility props and IDs for your custom field implementations.
 
 ```tsx
-import { useField } from '@ds3/ui';
+import { useField } from '@consensys/ui';
 
 function CustomField({ error, required, ...props }) {
   const { fieldId, descriptionId, ariaProps } = useField({
@@ -305,4 +305,4 @@ Field is typically used as the foundation for higher-level form components:
 </Field>
 ```
 
-Many form components in the DS3 library like `<InputField />`, `<CheckboxField />`, and `<SwitchField />` are built on top of the base Field component. 
+Many form components in the CUI library like `<InputField />`, `<CheckboxField />`, and `<SwitchField />` are built on top of the base Field component. 

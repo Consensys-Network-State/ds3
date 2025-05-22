@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEnsName } from "wagmi";
-import { cn, Button, copyToClipboard } from "@ds3/ui";
+import { cn, Button, copyToClipboard } from "@consensys/ui";
 import { Copy } from 'lucide-react-native';
 import { addressCardVariants } from './styles';
 import type { AddressCardProps } from './types';

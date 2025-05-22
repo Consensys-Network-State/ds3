@@ -37,7 +37,7 @@ export function toNativeProps(props: unknown): NativeButtonProps {
   }
 
   if (isWebButtonProps(props)) {
-    console.warn('[DS3 Button] - Web props detected in native environment. This is not supported and props will be ignored.');
+    console.warn('[CUI Button] - Web props detected in native environment. This is not supported and props will be ignored.');
   }
 
   return props as NativeButtonProps;
@@ -52,7 +52,7 @@ export function toNativeProps(props: unknown): NativeButtonProps {
  */
 export function toWebProps(props: unknown): WebButtonProps {
   if (!props || typeof props !== 'object') {
-    console.warn('[DS3 Button] - Props must be an object');
+    console.warn('[CUI Button] - Props must be an object');
   }
 
   if (isWebButtonProps(props)) {
@@ -60,7 +60,7 @@ export function toWebProps(props: unknown): WebButtonProps {
   }
 
   if (!isNativeButtonProps(props)) {
-    console.warn('[DS3 Button] - Mixed props detected. Props must be either web or native, not both.');
+    console.warn('[CUI Button] - Mixed props detected. Props must be either web or native, not both.');
   }
 
   const {

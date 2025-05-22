@@ -1,4 +1,4 @@
-# @ds3/theme
+# @consensys/ui-theme
 
 > 🚧 **Note**: This package is under active development. While we're working hard to make it production-ready, please be aware that APIs and features may change. We welcome your feedback and contributions as we continue to improve!
 
@@ -29,14 +29,14 @@ Build sophisticated, dynamic themes with a comprehensive design system that incl
 ### Installation
 
 ```bash
-pnpm add @ds3/theme
+pnpm add @consensys/ui-theme
 ```
 
 ### Tailwind Configuration
 
 ```javascript
 // tailwind.config.js
-import { tailwindPreset } from '@ds3/theme';
+import { tailwindPreset } from '@consensys/ui-theme';
 
 export default {
   presets: [tailwindPreset({
@@ -83,7 +83,7 @@ Create custom themes by mapping semantic colors to different Radix colors:
 
 ```typescript
 // tailwind.config.js
-import { tailwindPreset } from '@ds3/theme';
+import { tailwindPreset } from '@consensys/ui-theme';
 
 export default {
   presets: [tailwindPreset({
@@ -169,7 +169,7 @@ The theme package provides a complete set of design tokens through the Tailwind 
 
 ```typescript
 // tailwind.config.js
-import { tailwindPreset } from '@ds3/theme';
+import { tailwindPreset } from '@consensys/ui-theme';
 
 export default {
   presets: [tailwindPreset({
@@ -199,7 +199,7 @@ For detailed configuration options, see the [Tailwind preset source](src/tailwin
 
 ### Radix Color Foundation
 
-DS3's color system is built on top of Radix UI Colors, providing a robust foundation for accessible and consistent color usage. Each color in our system follows Radix's 12-step scale:
+CUI's color system is built on top of Radix UI Colors, providing a robust foundation for accessible and consistent color usage. Each color in our system follows Radix's 12-step scale:
 
 ```
 1  - Lightest
@@ -234,7 +234,7 @@ Each Radix color comes in four variants:
 | `success` | Success states, positive actions | `green` |
 | `info` | Information states, neutral actions | `blue` |
 
-When you map a semantic color to a Radix color, DS3 automatically generates all necessary variants:
+When you map a semantic color to a Radix color, CUI automatically generates all necessary variants:
 - Light mode colors (1-12 steps)
 - Dark mode colors (1-12 steps)
 - Alpha variants for both modes

@@ -5,13 +5,13 @@ The `<Spinner />` component provides a cross-platform loading animation that ada
 ## Installation
 
 ```bash
-pnpm add @ds3/ui
+pnpm add @consensys/ui
 ```
 
 ## Usage Examples
 
 ```tsx
-import { Spinner } from '@ds3/ui';
+import { Spinner } from '@consensys/ui';
 import { Loader, RefreshCw } from 'lucide-react-native';
 
 // Basic usage
