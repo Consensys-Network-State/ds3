@@ -305,4 +305,4 @@ Field is typically used as the foundation for higher-level form components:
 </Field>
 ```
 
-Many form components in the DS3 library like `<InputField />`, `<CheckboxField />`, and `<SwitchField />` are built on top of the base Field component. 
+Many form components in the CUI library like `<InputField />`, `<CheckboxField />`, and `<SwitchField />` are built on top of the base Field component. 

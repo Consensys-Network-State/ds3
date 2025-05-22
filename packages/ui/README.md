@@ -39,7 +39,7 @@ For detailed framework setup and configuration, see the [@consensys/ui-config do
 
 ## 📚 Component Library
 
-DS3 UI gives you production-ready components for building modern interfaces:
+CUI UI gives you production-ready components for building modern interfaces:
 
 ### Core Components
 
@@ -67,7 +67,7 @@ DS3 UI gives you production-ready components for building modern interfaces:
 
 ## 🏛️ Architectural Excellence
 
-DS3 UI is built on six powerful architectural patterns that work together to deliver exceptional developer and user experiences:
+CUI UI is built on six powerful architectural patterns that work together to deliver exceptional developer and user experiences:
 
 ### 1. 🌐 Platform Adaptation
 
@@ -84,7 +84,7 @@ import { Input } from '@consensys/ui';
 />
 ```
 
-DS3 UI components follow a consistent organization pattern that enables cross-platform functionality:
+CUI UI components follow a consistent organization pattern that enables cross-platform functionality:
 
 #### Component Architecture
 
@@ -101,7 +101,7 @@ DS3 UI components follow a consistent organization pattern that enables cross-pl
 
 #### Implementation Strategies
 
-DS3 UI uses two main approaches to implement cross-platform components:
+CUI UI uses two main approaches to implement cross-platform components:
 
 **1. Custom Implementation**
 
@@ -353,7 +353,7 @@ The rendered DOM with `asChild` would be essentially:
 ```html
 <a 
   href="https://example.com" 
-  class="ds3-button ds3-button-solid ds3-button-primary"
+  class="bg-neutral-a11"
   role="button"
 >
   Visit Website
@@ -368,8 +368,8 @@ Our components use different Slot implementations based on platform:
 This allows the same API to work seamlessly across platforms while respecting platform-specific behavior.
 
 **Slot power:**
-- 🎭 **Style inheritance** - Your elements inherit DS3 styling
-- 🔌 **Behavior injection** - DS3 behaviors transfer to your elements
+- 🎭 **Style inheritance** - Your elements inherit CUI styling
+- 🔌 **Behavior injection** - CUI behaviors transfer to your elements
 - ♿ **Accessibility transfer** - Accessibility attributes preserved
 
 ## 🛠️ Development

@@ -8,7 +8,7 @@ import './index.css'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <SafeAreaProvider>
-      <ThemeProvider config={import.meta.env.DS3}>
+      <ThemeProvider config={import.meta.env.CUI}>
         <App />
       </ThemeProvider>
     </SafeAreaProvider>

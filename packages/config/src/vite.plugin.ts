@@ -16,10 +16,10 @@ function vitePlugin(command: 'serve' | 'build', userConfig: UserConfig): PluginO
     reactNativeWeb(),
     {
       enforce: 'pre',
-      name: 'vite-plugin-ds3',
+      name: 'vite-plugin-cui',
       config: () => ({
         define: {
-          'import.meta.env.DS3': JSON.stringify(config),
+          'import.meta.env.CUI': JSON.stringify(config),
         },
         optimizeDeps: {
           include: ['@consensys/ui'],

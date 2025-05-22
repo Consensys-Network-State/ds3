@@ -39,7 +39,7 @@ export function toNativeProps(props: unknown): NativeInputProps {
   }
 
   if (isWebInputProps(props)) {
-    console.warn('[DS3 Input] - Web props detected in native environemtn. This is not supported and props will be ignored.');
+    console.warn('[CUI Input] - Web props detected in native environemtn. This is not supported and props will be ignored.');
   }
 
   return props as NativeInputProps;
@@ -60,7 +60,7 @@ export function toWebProps(props: unknown): WebInputProps {
   }
 
   if (!isNativeInputProps(props)) {
-    console.warn('[DS3 Input] - Mixed props detected. Props must be either web or native, not both.');
+    console.warn('[CUI Input] - Mixed props detected. Props must be either web or native, not both.');
   }
 
   const {

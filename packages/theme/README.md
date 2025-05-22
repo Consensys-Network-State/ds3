@@ -199,7 +199,7 @@ For detailed configuration options, see the [Tailwind preset source](src/tailwin
 
 ### Radix Color Foundation
 
-DS3's color system is built on top of Radix UI Colors, providing a robust foundation for accessible and consistent color usage. Each color in our system follows Radix's 12-step scale:
+CUI's color system is built on top of Radix UI Colors, providing a robust foundation for accessible and consistent color usage. Each color in our system follows Radix's 12-step scale:
 
 ```
 1  - Lightest
@@ -234,7 +234,7 @@ Each Radix color comes in four variants:
 | `success` | Success states, positive actions | `green` |
 | `info` | Information states, neutral actions | `blue` |
 
-When you map a semantic color to a Radix color, DS3 automatically generates all necessary variants:
+When you map a semantic color to a Radix color, CUI automatically generates all necessary variants:
 - Light mode colors (1-12 steps)
 - Dark mode colors (1-12 steps)
 - Alpha variants for both modes

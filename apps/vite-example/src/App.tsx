@@ -44,7 +44,7 @@ function App() {
         </a>
       </div>
 
-      <h1>Vite + DS3</h1>
+      <h1>Vite + CUI</h1>
 
       <div className="card">
         <div className="flex gap-4">

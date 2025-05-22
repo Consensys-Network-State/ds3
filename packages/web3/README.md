@@ -34,7 +34,7 @@ For detailed framework setup and configuration, see the [@consensys/ui-config do
 
 ## 📚 Component Library
 
-DS3 Web3 gives you production-ready components for building modern blockchain interfaces:
+CUI Web3 gives you production-ready components for building modern blockchain interfaces:
 
 ### Account Components
 - [**Account**](src/components/account) - Display and manage connected wallet accounts with ENS resolution

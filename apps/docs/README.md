@@ -1,4 +1,4 @@
-# DS3 Documentation
+# CUI Documentation
 
 ## Deploy to Vercel
 
