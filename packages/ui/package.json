@@ -1,7 +1,7 @@
 {
   "name": "@consensys/ui",
   "version": "0.0.1",
-  "description": "",
+  "description": "Consensys UI component library",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -73,5 +73,8 @@
     "react-native-safe-area-context": {
       "optional": true
     }
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
