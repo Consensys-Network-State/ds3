@@ -18,11 +18,6 @@
     "docs:start": "pnpm --filter docs run start --clear",
     "clean": "rm -rf $(find . -name 'node_modules' -type d) && rm -rf $(find . -name 'dist' -type d) && pnpm store prune",
     "postinstall": "pnpm build:deps",
-    "publish:packages": "pnpm -r publish",
-    "publish:ui": "pnpm --filter @consensys/ui publish",
-    "publish:theme": "pnpm --filter @consensys/ui-theme publish",
-    "publish:config": "pnpm --filter @consensys/ui-config publish",
-    "publish:web3": "pnpm --filter @consensys/ui-web3 publish",
     "changeset": "changeset",
     "version": "changeset version",
     "release": "pnpm build:deps && changeset publish"

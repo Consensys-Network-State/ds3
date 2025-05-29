@@ -1,6 +1,6 @@
 {
   "name": "@consensys/ui-web3",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Consensys Web3 UI components",
   "exports": {
     ".": {
@@ -45,4 +45,4 @@
   "publishConfig": {
     "access": "public"
   }
-} 
+}

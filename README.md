@@ -128,6 +128,32 @@ Clean up node_modules and dist folders:
 pnpm clean
 ```
 
+### Versioning and Publishing
+
+We use [Changesets](https://github.com/changesets/changesets) for versioning and publishing our packages. This ensures consistent versioning across our monorepo and maintains a detailed changelog.
+
+To create a new changeset:
+```bash
+pnpm changeset
+```
+
+To update versions based on changesets:
+```bash
+pnpm version
+```
+
+To build and publish packages:
+```bash
+pnpm release
+```
+
+The typical workflow is:
+1. Make your changes
+2. Create a changeset (`pnpm changeset`)
+3. Update versions (`pnpm version`)
+4. Commit the changes (version bumps and changelog updates)
+5. Build and publish (`pnpm release`)
+
 ## License
 
 MIT License - Copyright (c) 2024 ConsenSys Mesh
