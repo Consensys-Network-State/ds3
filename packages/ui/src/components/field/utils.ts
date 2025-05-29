@@ -1,4 +1,3 @@
-import type { UseFieldProps } from './types';
 import { Platform } from 'react-native';
 
 type AccessibilityProps = {

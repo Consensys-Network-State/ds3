@@ -1,4 +1,4 @@
-import { cva, type VariantProps } from 'class-variance-authority';
+import type { VariantProps } from 'class-variance-authority';
 import { fieldVariants } from './styles';
 import { Icon } from '../icon';
 

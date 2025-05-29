@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { Platform } from 'react-native';
 import Animated, { FadeInDown, FadeOutUp } from 'react-native-reanimated';
-import { Checkbox, CheckboxRootProps } from "../checkbox";
+import { Checkbox } from "../checkbox";
 import { Field, useField } from "../field";
 import { AlertCircle, CheckCircle } from 'lucide-react-native';
 import type { CheckboxFieldRootProps } from './types';

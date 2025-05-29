@@ -18,7 +18,6 @@ const ChainAvatar = React.forwardRef<any, ChainAvatarProps>(
     return (
       <Avatar
         ref={ref}
-        alt="chain-logo"
         className={cn("w-5 h-5", className)}
         {...props}
       >
