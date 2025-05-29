@@ -1,8 +1,8 @@
 ---
-"@consensys/ui-config": minor
-"@consensys/ui-theme": minor
-"@consensys/ui-web3": minor
-"@consensys/ui": minor
+"@consensys/ui-config": patch
+"@consensys/ui-theme": patch
+"@consensys/ui-web3": patch
+"@consensys/ui": patch
 ---
 
 Initial CUI publish
