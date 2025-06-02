@@ -1,5 +1,11 @@
 # @consensys/ui-config
 
+## 0.0.4
+
+### Patch Changes
+
+- Upgrading babel-preset-expo to 13.1.11
+
 ## 0.0.3
 
 ### Patch Changes
