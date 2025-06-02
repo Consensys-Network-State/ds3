@@ -1,5 +1,11 @@
 # @consensys/ui-config
 
+## 0.0.5
+
+### Patch Changes
+
+- Adding buffer polyfill
+
 ## 0.0.4
 
 ### Patch Changes
