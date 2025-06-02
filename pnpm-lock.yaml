@@ -318,8 +318,8 @@ importers:
         specifier: ^5.4.10
         version: 5.4.19(@types/node@22.15.21)(lightningcss@1.30.1)(terser@5.39.2)
       vite-plugin-react-native-web:
-        specifier: ^1.1.2
-        version: 1.2.0
+        specifier: ^2.1.1
+        version: 2.1.1
     devDependencies:
       '@types/lodash':
         specifier: ^4.17.13
@@ -470,9 +470,6 @@ importers:
       react-dom:
         specifier: ^18.0.0
         version: 18.3.1(react@18.3.1)
-      truncate-eth-address:
-        specifier: ^1.0.2
-        version: 1.0.2
       viem:
         specifier: ^2.0.0
         version: 2.30.0(bufferutil@4.0.9)(typescript@5.6.3)(utf-8-validate@5.0.10)(zod@3.25.20)
@@ -7133,9 +7130,6 @@ packages:
     resolution: {integrity: sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==}
     hasBin: true
 
-  truncate-eth-address@1.0.2:
-    resolution: {integrity: sha512-MLGSzEIDam9XdBQejtCpQfdbgXfYTEkQseqpz+Pcqu6SEvvVC4mYniWFp4n8VG+KOi6jYVtUfA6cqWecSvS3rw==}
-
   ts-api-utils@2.1.0:
     resolution: {integrity: sha512-CUgTZL1irw8u29bzrOD/nH85jqyc74D6SshFgujOIA7osm2Rz7dYH77agkx7H4FBNxDq7Cjf+IjaX/8zwFW+ZQ==}
     engines: {node: '>=18.12'}
@@ -7447,8 +7441,8 @@ packages:
       typescript:
         optional: true
 
-  vite-plugin-react-native-web@1.2.0:
-    resolution: {integrity: sha512-mHe6XIv3wEQIvUlHJp8Nx5M2G+sGPQE9knkVfYn13xePXx+r0ie8TCuoMPZzdC01s4H1QtlhvPtojaa29+T3Jg==}
+  vite-plugin-react-native-web@2.1.1:
+    resolution: {integrity: sha512-1Dsuf/p2muYwAqjyDC3LpcO8gTI+Ab2SjUZA7GzlMq1ZMnypUGQyFslIHJ7v3kpz30CLJFfPu2eqTDXDcRfGqQ==}
     engines: {node: '>=14.0.0'}
 
   vite@5.4.19:
@@ -10347,7 +10341,7 @@ snapshots:
       '@babel/template': 7.27.2
       '@react-native/babel-plugin-codegen': 0.73.4(@babel/preset-env@7.27.2(@babel/core@7.27.1))
       babel-plugin-transform-flow-enums: 0.0.2(@babel/core@7.27.1)
-      react-refresh: 0.14.0
+      react-refresh: 0.14.2
     transitivePeerDependencies:
       - '@babel/preset-env'
       - supports-color
@@ -15174,8 +15168,8 @@ snapshots:
   ox@0.6.7(typescript@5.6.3)(zod@3.25.20):
     dependencies:
       '@adraffy/ens-normalize': 1.11.0
-      '@noble/curves': 1.8.1
-      '@noble/hashes': 1.7.1
+      '@noble/curves': 1.9.1
+      '@noble/hashes': 1.8.0
       '@scure/bip32': 1.6.2
       '@scure/bip39': 1.5.4
       abitype: 1.0.8(typescript@5.6.3)(zod@3.25.20)
@@ -15188,7 +15182,7 @@ snapshots:
   ox@0.6.9(typescript@5.6.3)(zod@3.22.4):
     dependencies:
       '@adraffy/ens-normalize': 1.11.0
-      '@noble/curves': 1.8.2
+      '@noble/curves': 1.9.1
       '@noble/hashes': 1.7.2
       '@scure/bip32': 1.6.2
       '@scure/bip39': 1.5.4
@@ -15202,7 +15196,7 @@ snapshots:
   ox@0.6.9(typescript@5.6.3)(zod@3.25.20):
     dependencies:
       '@adraffy/ens-normalize': 1.11.0
-      '@noble/curves': 1.8.2
+      '@noble/curves': 1.9.1
       '@noble/hashes': 1.7.2
       '@scure/bip32': 1.6.2
       '@scure/bip39': 1.5.4
@@ -16424,8 +16418,6 @@ snapshots:
 
   tree-kill@1.2.2: {}
 
-  truncate-eth-address@1.0.2: {}
-
   ts-api-utils@2.1.0(typescript@5.6.3):
     dependencies:
       typescript: 5.6.3
@@ -16686,7 +16678,7 @@ snapshots:
       - utf-8-validate
       - zod
 
-  vite-plugin-react-native-web@1.2.0:
+  vite-plugin-react-native-web@2.1.1:
     dependencies:
       flow-remove-types: 2.272.0
 

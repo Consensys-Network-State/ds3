@@ -5,7 +5,6 @@ import Animated, {
   withTiming, 
   useSharedValue, 
   useAnimatedStyle,
-  withSpring,
   Easing
 } from 'react-native-reanimated';
 import { Icon } from '../icon';

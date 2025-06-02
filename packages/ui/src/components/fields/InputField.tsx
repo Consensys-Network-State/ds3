@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Platform } from 'react-native';
 import Animated, { FadeInDown, FadeOutUp } from 'react-native-reanimated';
 import { Input } from "../input";
 import { Field, useField } from "../field";

@@ -13,6 +13,17 @@ export const ThemeProvider = React.forwardRef<View, ThemeProviderProps>(
     const [mode, setMode] = React.useState<ColorMode>(currentMode || DEFAULT_MODE);
     const containerRef = React.useRef<React.ElementRef<typeof ThemeBase>>(null);
 
+    React.useImperativeHandle(
+      ref,
+      () => {
+        if (!containerRef.current) {
+          return {} as View;
+        }
+        return containerRef.current;
+      },
+      [containerRef.current]
+    );
+
     React.useEffect(() => {
       if (currentMode) {
         setMode(currentMode as ColorMode);

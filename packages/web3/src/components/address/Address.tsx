@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEnsName } from "wagmi";
 import { Text } from '@consensys/ui';
-import truncateEthAddress from 'truncate-eth-address';
+import { truncateEthAddress } from '../../utils';
 import type { AddressProps } from './types';
 
 const Address = React.forwardRef<any, AddressProps>(

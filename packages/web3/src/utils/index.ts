@@ -1,0 +1,1 @@
+export { truncateEthAddress } from "./truncate-eth";

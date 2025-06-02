@@ -9,3 +9,5 @@ export type { ChainAvatarProps } from './components/chain';
 
 export { DisconnectButton, MetaMaskLogin } from './components/wallet';
 export type { DisconnectButtonProps, MetaMaskLoginProps } from './components/wallet'; 
+
+export { truncateEthAddress } from './utils';

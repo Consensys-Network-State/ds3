@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { TextInput } from 'react-native';
 import type { InputContext as InputContextType } from './types';
 
 export const InputContextProvider = React.createContext<InputContextType | undefined>(undefined);

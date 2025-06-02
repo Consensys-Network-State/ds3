@@ -1,6 +1,6 @@
 {
   "name": "@consensys/ui-web3",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Consensys Web3 UI components",
   "exports": {
     ".": {
@@ -29,7 +29,6 @@
     "viem": "^2.0.0",
     "class-variance-authority": "^0.7.0",
     "lucide-react-native": "^0.300.0",
-    "truncate-eth-address": "^1.0.2",
     "ethereum-blockies-base64": "^1.0.2"
   },
   "peerDependencies": {

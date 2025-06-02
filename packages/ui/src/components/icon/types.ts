@@ -1,4 +1,4 @@
-import { cva, type VariantProps } from 'class-variance-authority';
+import type { VariantProps } from 'class-variance-authority';
 import { iconVariants } from './styles';
 
 export type IconColors = NonNullable<VariantProps<typeof iconVariants>['color']>;

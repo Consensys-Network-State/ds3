@@ -1,5 +1,5 @@
 import { VariantProps } from 'class-variance-authority';
-import { checkboxRootVariants, checkboxIconVariants } from './styles';
+import { checkboxRootVariants } from './styles';
 import { Icon } from '../icon';
 import * as CheckboxPrimitive from '@rn-primitives/checkbox';
 

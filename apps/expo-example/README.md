@@ -181,3 +181,34 @@ module.exports = function (api) {
    };
 };
 ```
+
+## Additional Resources
+
+### Tree Shaking
+To enable tree shaking in your Expo app (experimental feature in SDK 52+), see the [official Expo tree shaking documentation](https://docs.expo.dev/guides/tree-shaking/#enabling-tree-shaking).
+
+Add the following configuration to your `metro.config.js`:
+
+```js
+const { getDefaultConfig } = require('expo/metro-config');
+const { withCui} = require('@consensys/ui-config/metro');
+
+const config = getDefaultConfig(__dirname);
+
+config.transformer.getTransformOptions = async () => ({
+  transform: {
+    experimentalImportSupport: true,
+    inlineRequires: true,
+  },
+});
+
+module.exports = withCui(config);
+
+```
+
+And add this to your `.env` file:
+
+```bash
+EXPO_UNSTABLE_METRO_OPTIMIZE_GRAPH=1
+EXPO_UNSTABLE_TREE_SHAKING=1
+```
