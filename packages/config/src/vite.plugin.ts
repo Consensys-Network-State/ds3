@@ -3,7 +3,18 @@ import reactNativeWeb from 'vite-plugin-react-native-web';
 import react from '@vitejs/plugin-react';
 import { UserConfig, generateConfig } from "@consensys/ui-theme";
 
-function vitePlugin(command: 'serve' | 'build', userConfig: UserConfig): PluginOption[] {
+type FileExtension = '.js' | '.mjs' | '.tsx' | '.ts';
+type LoaderType = 'jsx' | 'tsx' | 'ts';
+
+const FILE_EXTENSIONS: FileExtension[] = ['.js', '.mjs', '.tsx', '.ts'];
+const LOADER_MAP: Record<FileExtension, LoaderType> = {
+  '.js': 'jsx',
+  '.mjs': 'jsx',
+  '.tsx': 'tsx',
+  '.ts': 'ts',
+};
+
+function vitePlugin(userConfig: UserConfig): PluginOption[] {
   const config = generateConfig(userConfig);
   
   return [
@@ -22,20 +33,17 @@ function vitePlugin(command: 'serve' | 'build', userConfig: UserConfig): PluginO
           'import.meta.env.CUI': JSON.stringify(config),
         },
         optimizeDeps: {
-          include: ['@consensys/ui'],
           esbuildOptions: {
-            loader: {
-              '.js': 'tsx',
-              '.mjs': 'jsx',
-            },
+            loader: LOADER_MAP,
             jsxImportSource: 'nativewind',
           },
         },
       }),
       async transform(code: string, id: string) {
-        if (command === 'build' && (id.endsWith('.js') || id.endsWith('.mjs'))) {
+        if (FILE_EXTENSIONS.some(ext => id.endsWith(ext))) {
+          const extension = FILE_EXTENSIONS.find(ext => id.endsWith(ext)) as FileExtension;
           return transformWithEsbuild(code, id, {
-            loader: 'jsx',
+            loader: LOADER_MAP[extension],
             jsx: 'automatic',
             jsxImportSource: 'nativewind',
           });

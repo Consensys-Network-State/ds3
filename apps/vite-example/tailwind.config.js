@@ -6,8 +6,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    './node_modules/@consensys/ui/**/*.{js,jsx,ts,tsx}',
-    '!node_modules/**/*.{js,ts,jsx,tsx}',
+    "./node_modules/@consensys/ui/src/**/*.{js,jsx,ts,tsx}"
   ],
   presets: [cui(themeConfig)]
 }
