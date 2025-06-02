@@ -308,6 +308,9 @@ importers:
       babel-preset-expo:
         specifier: ^13.1.11
         version: 13.1.11(@babel/core@7.27.1)
+      buffer:
+        specifier: ^6.0.3
+        version: 6.0.3
       nativewind:
         specifier: ^4.1.23
         version: 4.1.23(react-native-reanimated@3.16.7(@babel/core@7.27.1)(react-native@0.76.1(@babel/core@7.27.1)(@babel/preset-env@7.27.2(@babel/core@7.27.1))(@types/react@18.3.22)(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1))(react-native-safe-area-context@4.12.0(react-native@0.76.1(@babel/core@7.27.1)(@babel/preset-env@7.27.2(@babel/core@7.27.1))(@types/react@18.3.22)(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1))(react-native-svg@15.12.0(react-native@0.76.1(@babel/core@7.27.1)(@babel/preset-env@7.27.2(@babel/core@7.27.1))(@types/react@18.3.22)(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1))(react-native@0.76.1(@babel/core@7.27.1)(@babel/preset-env@7.27.2(@babel/core@7.27.1))(@types/react@18.3.22)(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1)(tailwindcss@3.4.17)

@@ -32,6 +32,12 @@ function vitePlugin(userConfig: UserConfig): PluginOption[] {
         define: {
           'import.meta.env.CUI': JSON.stringify(config),
         },
+        resolve: {
+          alias: {
+            // Polyfill Buffer for react-native-svg compatibility
+            buffer: 'buffer/',
+          },
+        },
         optimizeDeps: {
           esbuildOptions: {
             loader: LOADER_MAP,
