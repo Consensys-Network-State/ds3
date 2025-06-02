@@ -1,6 +1,6 @@
 {
   "name": "@consensys/ui-web3",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Consensys UI Web3 component library",
   "main": "./src/index.ts",
   "module": "./src/index.ts",
@@ -39,4 +39,4 @@
   "publishConfig": {
     "access": "public"
   }
-} 
+}
