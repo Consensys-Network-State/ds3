@@ -8,7 +8,10 @@ Build sophisticated, dynamic themes with a comprehensive design system that incl
 
 ## ✨ Standout Features
 
-🎨 **Radix Colors** - Built on [Radix UI Colors](https://www.radix-ui.com/colors) for accessible, consistent color usage with semantic mapping
+🎨 **Flexible Color System** - Three ways to define colors:
+- **Radix Preset Colors** - Use pre-defined Radix UI color palettes
+- **Radix Color Generator** - Generate custom color scales with semantic mapping
+- **Custom Palettes** - Create fully customizable color scales with any valid CSS color
 
 🎯 **Design Token System** - Complete set of pre-configured tokens for colors, spacing, typography, shadows, and animations
 
@@ -62,20 +65,163 @@ export default {
 ### Simple Usage
 
 ```html
-<!-- Light mode -->
-<div class="light">
-  <button class="bg-primary hover:bg-primary-7 text-white px-4 py-2 rounded">
-    Click me
-  </button>
-</div>
+<!-- Recommended: Apply theme to the HTML element -->
+<html class="light">
+  <body>
+    <button class="bg-primary hover:bg-primary-7 text-white px-4 py-2 rounded">
+      Click me
+    </button>
+  </body>
+</html>
 
-<!-- Dark mode -->
+<!-- Alternative: Apply theme to any element -->
 <div class="dark">
   <button class="bg-primary hover:bg-primary-7 text-white px-4 py-2 rounded">
     Click me
   </button>
 </div>
 ```
+
+## 🎨 Defining Color Palettes
+
+Before diving into the different ways to define colors, it's important to understand how colors are mapped to semantic roles in your UI:
+
+Semantic colors help maintain consistency and meaning across your application. Instead of using colors directly (like `blue` or `red`), semantic colors describe the purpose of the color (like `primary` or `error`). This makes it easier to:
+- Maintain a consistent design language
+- Update your color scheme without changing component logic
+- Support multiple themes and color modes
+- Ensure accessibility by using colors with clear meaning
+
+Here's how colors are mapped to semantic roles in your UI:
+
+| Semantic Color | Purpose | Default Mapping |
+|----------------|---------|----------------|
+| `neutral` | Base UI elements, text, borders | `gray` |
+| `primary` | Main actions, brand identity | `blue` |
+| `secondary` | Alternative actions, accents | `violet` |
+| `error` | Error states, destructive actions | `red` |
+| `warning` | Warning states, cautionary actions | `amber` |
+| `success` | Success states, positive actions | `green` |
+| `info` | Information states, neutral actions | `blue` |
+
+> 💡 **Tip**: While these are the recommended semantic colors, you can use any semantic name that makes sense for your application. For example, you might use `brand`, `accent`, or `surface` instead of or in addition to these defaults.
+
+The theme system supports three ways to define colors:
+
+### 1. Radix Preset Colors
+
+Use pre-defined [Radix UI Colors](https://www.radix-ui.com/colors) palettes for consistent, accessible colors:
+
+```typescript
+// tailwind.config.js
+import { tailwindPreset } from '@consensys/ds3-theme';
+
+export default {
+  presets: [tailwindPreset({
+    themes: {
+      default: {
+        colors: {
+          neutral: 'gray',
+          primary: 'blue',
+          secondary: 'violet',
+          error: 'red',
+          warning: 'amber',
+          success: 'green',
+          info: 'blue',
+        }
+      }
+    }
+  })],
+};
+```
+
+### 2. Radix Color Generator
+
+Generate custom color scales with semantic mapping using the [Radix UI Colors Custom](https://www.radix-ui.com/colors/custom) algorithm:
+
+```typescript
+// tailwind.config.js
+import { tailwindPreset } from '@consensys/ds3-theme';
+
+export default {
+  presets: [tailwindPreset({
+    themes: {
+      default: {
+        colors: {
+          // Minimal configuration - just accent color
+          primary: {
+            accent: '#FF3366'  // Required: Base accent color
+          },
+
+          // Light/dark mode accent colors
+          secondary: {
+            accent: {          // Required: Base accent colors
+              light: '#0066FF',
+              dark: '#0033CC'
+            }
+          },
+
+          // Complete configuration
+          tertiary: {
+            accent: '#FF3366',  // Required: Base accent color
+            gray: '#8B8D98',    // Optional: Gray scale color
+            background: {       // Optional: Background colors
+              light: '#FFFFFF',
+              dark: '#000000'
+            }
+          }
+        }
+      }
+    }
+  })],
+};
+```
+
+### 3. Custom Palettes
+
+Create fully customizable color scales with any valid CSS color:
+
+```typescript
+// tailwind.config.js
+import { tailwindPreset } from '@consensys/ds3-theme';
+
+export default {
+  presets: [tailwindPreset({
+    themes: {
+      default: {
+        colors: {
+          primary: {
+            light: {
+              // Any valid CSS color string is supported
+              'cardBg': '#FF3366',
+              'overlay': 'rgba(0, 0, 0, 0.5)',
+              'gradient': 'linear-gradient(to right, #FF3366, #0066FF)',
+
+              // Numeric keys are supported
+              1: '#E6F7FF',
+              2: '#BAE7FF',
+
+              // Alpha variants with any key
+              a1: 'rgba(24, 144, 255, 0.05)',
+              a13: 'rgba(24, 144, 255, 0.13)',
+              a100: 'rgba(24, 144, 255, 0.1)'
+            },
+            dark: {
+              // Dark mode is optional
+              'primary': '#001A4D',
+              // ...
+            }
+          }
+        }
+      }
+    }
+  })],
+};
+```
+
+> 💡 **Tip**: If you don't specify dark mode colors, the system will automatically use the light mode colors for dark mode. This is useful when you want to maintain the same color scheme across both modes or when you're just getting started with theming.
+
+> 💡 **Tip**: You can mix and match all three color configuration types within a single theme to create the perfect color system for your needs.
 
 ## 🎨 Creating Custom Themes
 
@@ -121,22 +267,15 @@ Then use your custom theme with the appropriate mode class:
 
 ```html
 <!-- Ocean Breeze theme in light mode -->
-<div class="oceanBreeze light">
-  <button class="bg-primary hover:bg-primary-7 text-white">
-    Ocean Breeze Button
-  </button>
-  <p class="text-primary-11">Text using primary color</p>
-  <div class="bg-primary-a5">Semi-transparent background</div>
-</div>
-
-<!-- Ocean Breeze theme in dark mode -->
-<div class="oceanBreeze dark">
-  <button class="bg-primary hover:bg-primary-7 text-white">
-    Ocean Breeze Button
-  </button>
-  <p class="text-primary-11">Text using primary color</p>
-  <div class="bg-primary-a5">Semi-transparent background</div>
-</div>
+<html class="oceanBreeze light">
+  <body>
+    <button class="bg-primary hover:bg-primary-7 text-white">
+      Ocean Breeze Button
+    </button>
+    <p class="text-primary-11">Text using primary color</p>
+    <div class="bg-primary-a5">Semi-transparent background</div>
+  </body>
+</html>
 ```
 
 ### Nested Themes
@@ -145,23 +284,27 @@ Create different theme zones within your application:
 
 ```html
 <!-- Root theme (default) -->
-<div class="light">
-  <!-- Main content with default theme -->
-  <main>
-    <button class="bg-primary">Default Theme Button</button>
-  </main>
+<html class="light">
+  <body>
+    <!-- Main content with default theme -->
+    <main>
+      <button class="bg-primary">Default Theme Button</button>
+    </main>
 
-  <!-- Nested Ocean Breeze theme -->
-  <div class="oceanBreeze dark">
-    <button class="bg-primary">Ocean Breeze Dark Button</button>
-  </div>
+    <!-- Force this button to dark mode -->
+    <div class="dark">
+      <button class="bg-primary">Ocean Breeze Dark Button</button>
+    </div>
 
-  <!-- Another nested theme -->
-  <div class="sunset light">
-    <button class="bg-primary">Sunset Theme Light Button</button>
-  </div>
-</div>
+    <!-- Nested Ocean Breeze theme -->
+    <div class="oceanBreeze dark">
+      <button class="bg-primary">Sunset Theme Light Button</button>
+    </div>
+  </body>
+</html>
 ```
+
+> 💡 **Note**: You can specify just the theme name (e.g., `oceanBreeze`) and it will inherit the parent's mode, or you can override the mode by specifying both theme and mode (e.g., `oceanBreeze dark`).
 
 ## 🎯 Design Tokens
 
@@ -197,52 +340,27 @@ For detailed configuration options, see the [Tailwind preset source](src/tailwin
 
 ## 🔧 How It Works
 
-### Radix Color Foundation
+The theme system processes your configuration in three simple steps:
 
-DS3's color system is built on top of Radix UI Colors, providing a robust foundation for accessible and consistent color usage. Each color in our system follows Radix's 12-step scale:
+1. **Read Configuration**
+   - Extracts Radix preset colors and their alpha variants
+   - Generates custom color palettes using the Radix algorithm
+   - Consumes any custom color definitions
 
-```
-1  - Lightest
-2  - Very Light
-3  - Light
-4  - Light-Medium
-5  - Medium-Light
-6  - Medium (DEFAULT)
-7  - Medium-Dark
-8  - Dark-Medium
-9  - Dark
-10 - Very Dark
-11 - Darkest
-12 - Alpha variants
-```
+2. **Generate CSS Variables**
+   The system processes your theme configuration in three steps:
 
-Each Radix color comes in four variants:
-- Base color (e.g., `blue`)
-- Dark mode color (e.g., `blueDark`)
-- Alpha color (e.g., `blueA`)
-- Dark mode alpha color (e.g., `blueDarkA`)
+   1. Generates CSS variables for each theme and mode
+   2. Injects these variables into the CSS runtime environment using Tailwind's `addBase` plugin
+   3. Registers the variables with Tailwind's theme system for utility class generation
 
-### Semantic Color Mapping
+   This process enables Tailwind to generate utility classes that reference these CSS variables, making them available throughout your application. For example:
+   - `bg-primary-1` → Sets background to the lightest primary color
+   - `text-neutral-11` → Sets text to a dark neutral color
+   - `border-error-6` → Sets border to a medium error color
+   - `bg-primary-a5` → Sets background to a semi-transparent primary color
 
-| Semantic Color | Purpose | Default Mapping |
-|----------------|---------|----------------|
-| `neutral` | Base UI elements, text, borders | `gray` |
-| `primary` | Main actions, brand identity | `blue` |
-| `secondary` | Alternative actions, accents | `violet` |
-| `error` | Error states, destructive actions | `red` |
-| `warning` | Warning states, cautionary actions | `amber` |
-| `success` | Success states, positive actions | `green` |
-| `info` | Information states, neutral actions | `blue` |
-
-When you map a semantic color to a Radix color, DS3 automatically generates all necessary variants:
-- Light mode colors (1-12 steps)
-- Dark mode colors (1-12 steps)
-- Alpha variants for both modes
-- CSS variables namespaced to the current theme and mode
-
-### Generated CSS Structure
-
-The system generates CSS variables for each theme and mode combination:
+   The CSS variables below are what makes this possible - they're injected into the runtime environment and automatically update when switching themes or modes. This means your Tailwind utility classes will automatically adapt to the current theme and mode:
 
 ```css
 /* Light mode (default theme) */
@@ -282,7 +400,8 @@ The system generates CSS variables for each theme and mode combination:
 }
 ```
 
-These CSS variables are automatically mapped to Tailwind classes:
+3. **Use in HTML**
+   These CSS variables are automatically mapped to Tailwind classes:
 
 ```html
 <!-- Default theme in light mode -->
@@ -313,16 +432,7 @@ These CSS variables are automatically mapped to Tailwind classes:
 </div>
 ```
 
-### Dynamic CSS Variable Changes
-
-The theme system supports dynamic changes to CSS variables at runtime, enabling smooth transitions between themes and modes. This is particularly useful for:
-
-- Theme switching animations
-- User preference changes
-- System theme synchronization
-- Runtime theme customization
-
-#### Theme Switching
+## Theme Switching
 
 When switching themes or modes, the system updates CSS variables in real-time:
 
@@ -338,9 +448,9 @@ document.documentElement.classList.add('oceanBreeze');
 
 The CSS variables update automatically, maintaining all color relationships and semantic mappings.
 
-#### Runtime Customization
+## Runtime Customization
 
-You can also customize theme variables at runtime:
+You can customize theme variables at runtime:
 
 ```typescript
 // Example of runtime color adjustment
@@ -350,7 +460,7 @@ document.documentElement.style.setProperty('--color-primary-6', '#custom-color')
 document.documentElement.style.setProperty('--color-primary-a6', 'rgba(0, 0, 0, 0.5)');
 ```
 
-#### Smooth Transitions
+### Smooth Transitions
 
 To enable smooth transitions between theme changes, add transition properties to your CSS:
 
@@ -369,10 +479,48 @@ To enable smooth transitions between theme changes, add transition properties to
 
 This creates a smooth experience when switching between themes or modes.
 
+## 🛠️ Utility Functions
+
+The theme package provides several utility functions that you can use directly in your code:
+
+### Color Generation Utilities
+
+```typescript
+import { generateRadixColors, getColorScaleObject } from '@consensys/ds3-theme';
+
+// Generate a complete color scale from a base color
+const colors = generateRadixColors({
+  appearance: 'light',  // or 'dark'
+  accent: '#3D63DD',    // Your brand color
+  gray: '#8B8D98',      // Your neutral color
+  background: '#FFFFFF' // Your background color
+});
+
+// Convert the generated colors into a usable color scale object
+const colorScale = getColorScaleObject({
+  isDarkMode: false,
+  name: 'blue',
+  contrast: colors.accentContrast,
+  scale: colors.accentScale,
+  scaleWideGamut: colors.accentScaleWideGamut,
+  scaleAlpha: colors.accentScaleAlpha,
+  scaleAlphaWideGamut: colors.accentScaleAlphaWideGamut,
+  surface: colors.accentSurface,
+  surfaceWideGamut: colors.accentSurfaceWideGamut,
+});
+```
+
+The generated color scale includes:
+- Base colors (1-12 steps)
+- Alpha variants for transparency
+- Wide gamut color variants for modern displays
+- Surface colors for overlays and backgrounds
+- Contrast colors for text and icons
+
 ## 🤝 Contributing
 
 Contributions welcome!
 
 ## 📜 License
 
-MIT License - Copyright (c) 2024 ConsenSys Mesh
+MIT License - Copyright (c) 2025 ConsenSys Inc
