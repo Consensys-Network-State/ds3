@@ -1,4 +1,4 @@
-# @consensys/ui-web3
+# @consensys/ds3-web3
 
 ## 0.0.3
 
@@ -6,7 +6,7 @@
 
 - Comsume src
 - Updated dependencies
-  - @consensys/ui@0.0.3
+  - @consensys/ds3@0.0.3
 
 ## 0.0.2
 

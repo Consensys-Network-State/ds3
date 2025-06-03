@@ -13,7 +13,7 @@ import {
   cn,
   openLink,
   copyToClipboard
-} from "@consensys/ui";
+} from "@consensys/ds3";
 import { useAccount, useDisconnect } from "wagmi";
 import { ChevronDown, Copy, ExternalLink, LogOut } from 'lucide-react-native';
 import { accountRootVariants } from './styles';

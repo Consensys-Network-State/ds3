@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text } from "@consensys/ui/src";
+import { Text } from "@consensys/ds3/src";
 import { View, ScrollView } from "react-native";
 import { InputClipboard } from "@/components/InputClipboard";
 

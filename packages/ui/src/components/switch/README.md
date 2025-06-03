@@ -5,7 +5,7 @@ The `<Switch />` component provides a cross-platform toggle switch that adapts t
 ## Installation
 
 ```bash
-pnpm add @consensys/ui
+pnpm add @consensys/ds3
 ```
 
 ## Usage Examples
@@ -15,7 +15,7 @@ The component supports web and native APIs through our [Dual API](#6--dual-api) 
 ### Basic Usage
 
 ```tsx
-import { Switch } from '@consensys/ui';
+import { Switch } from '@consensys/ds3';
 import { useState } from 'react';
 
 function BasicSwitch() {
@@ -34,7 +34,7 @@ function BasicSwitch() {
 ### With Icon
 
 ```tsx
-import { Switch } from '@consensys/ui';
+import { Switch } from '@consensys/ds3';
 import { useState } from 'react';
 import { Check } from 'lucide-react-native';
 

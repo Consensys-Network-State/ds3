@@ -2,7 +2,7 @@ import { withNativeWind } from 'nativewind/metro';
 import { MetroConfig } from '@expo/metro-config';
 import path from 'path';
 
-export function withCui(config: MetroConfig, options: { input?: string } = {}): MetroConfig {
+export function withDs3(config: MetroConfig, options: { input?: string } = {}): MetroConfig {
   const nativeWindOptions = {
     input: options.input || './global.css',
   };
@@ -12,7 +12,7 @@ export function withCui(config: MetroConfig, options: { input?: string } = {}): 
   return withNativeWind(config, nativeWindOptions);
 }
 
-export function withCuiWorkspace(
+export function withDs3Workspace(
   config: MetroConfig,
   options: { input?: string, projectRoot?: string } = {}
 ): MetroConfig {
@@ -26,7 +26,7 @@ export function withCuiWorkspace(
     path.resolve(monorepoRoot, 'node_modules'),
   ];
 
-  return withCui(config, { input: options.input });
+  return withDs3(config, { input: options.input });
 }
 
 

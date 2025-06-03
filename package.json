@@ -1,29 +1,25 @@
 {
-  "name": "consensys-ui",
+  "name": "consensys-ds3",
   "version": "0.0.1",
   "description": "Consensys UI component library and design system",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:deps": "pnpm theme:build && pnpm config:build",
-    "watch:deps": "pnpm -r --filter ui-theme --filter ui-config --parallel run dev",
-    "theme:build": "pnpm --filter ui-theme run build",
-    "config:build": "pnpm --filter ui-config run build",
-    "vite:dev": "pnpm --filter vite-example run dev --force",
-    "vite:build": "pnpm --filter vite-example run build",
-    "vite:preview": "pnpm --filter vite-example run preview",
-    "expo:start": "pnpm --filter expo-example run start --clear",
+    "watch:deps": "pnpm -r --filter ds3-theme --filter ds3-config --parallel run dev",
+    "theme:build": "pnpm --filter ds3-theme run build",
+    "config:build": "pnpm --filter ds3-config run build",
     "docs:start": "pnpm --filter docs run start --clear",
     "clean": "rm -rf $(find . -name 'node_modules' -type d) && rm -rf $(find . -name 'dist' -type d) && pnpm store prune",
     "postinstall": "pnpm build:deps",
     "changeset": "changeset"
   },
-  "keywords": ["consensys", "ui", "components", "design-system"],
+  "keywords": ["consensys", "ui", "ds3", "components", "design-system"],
   "author": "Consensys Inc.",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Consensys-Network-State/consensys-ui"
+    "url": "https://github.com/Consensys-Network-State/ds3"
   },
   "publishConfig": {
     "access": "public"

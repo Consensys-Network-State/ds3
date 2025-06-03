@@ -8,7 +8,7 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
-import { ThemeProvider as CUIProvider } from "@consensys/ui/src";
+import { ThemeProvider as DS3Provider } from "@consensys/ds3/src";
 import ExpoConstants from 'expo-constants';
 import "../global.css";
 
@@ -33,13 +33,13 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <CUIProvider className="flex-1" config={ExpoConstants?.expoConfig?.extra?.CUI}>
+      <DS3Provider className="flex-1" config={ExpoConstants?.expoConfig?.extra?.DS3}>
         <Stack>
           <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
         </Stack>
         <StatusBar style="auto" />
-      </CUIProvider>
+      </DS3Provider>
     </ThemeProvider>
   );
 }

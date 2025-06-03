@@ -1,4 +1,4 @@
-import type { ButtonRootProps } from "@consensys/ui";
+import type { ButtonRootProps } from "@consensys/ds3";
 
 export type DisconnectButtonProps = ButtonRootProps & {
   children?: React.ReactNode;

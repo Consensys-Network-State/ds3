@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEnsAvatar, useEnsName } from "wagmi";
 import { normalize } from 'viem/ens';
-import { Avatar, AvatarImage, cn } from "@consensys/ui";
+import { Avatar, AvatarImage, cn } from "@consensys/ds3";
 import makeBlockie from 'ethereum-blockies-base64';
 import type { AddressAvatarProps } from './types';
 

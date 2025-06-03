@@ -1,4 +1,4 @@
-# @consensys/ui-web3
+# @consensys/ds3-web3
 
 > 🚧 **Note**: This package is under active development. While we're working hard to make it production-ready, please be aware that APIs and features may change. We welcome your feedback and contributions as we continue to improve!
 >
@@ -10,12 +10,12 @@ Build powerful Web3 interfaces that work seamlessly across web and mobile platfo
 
 ```tsx
 // One import. Any platform. Native everywhere.
-import { Account, Address, ChainAvatar } from '@consensys/ui-web3';
+import { Account, Address, ChainAvatar } from '@consensys/ds3-web3';
 ```
 
 ## ✨ Standout Features
 
-✨ **Built on @consensys/ui** - Leverages true cross-platform components with compound patterns, dual APIs, and unified styling through Tailwind + NativeWind
+✨ **Built on @consensys/ds3** - Leverages true cross-platform components with compound patterns, dual APIs, and unified styling through Tailwind + NativeWind
 
 🔗 **Wallet Integration** - Seamless connection with MetaMask, WalletConnect, and other popular wallets
 
@@ -27,14 +27,14 @@ import { Account, Address, ChainAvatar } from '@consensys/ui-web3';
 ## 🚀 Get Started
 
 ```bash
-pnpm add @consensys/ui-web3
+pnpm add @consensys/ds3-web3
 ```
 
-For detailed framework setup and configuration, see the [@consensys/ui-config documentation](.../config).
+For detailed framework setup and configuration, see the [@consensys/ds3-config documentation](.../config).
 
 ## 📚 Component Library
 
-CUI Web3 gives you production-ready components for building modern blockchain interfaces:
+DS3 Web3 gives you production-ready components for building modern blockchain interfaces:
 
 ### Account Components
 - [**Account**](src/components/account) - Display and manage connected wallet accounts with ENS resolution

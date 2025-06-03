@@ -1,5 +1,5 @@
 import type { View } from 'react-native';
-import type { ColorMode, ThemeName, Config } from "@consensys/ui-theme";
+import type { ColorMode, ThemeName, Config } from "@consensys/ds3-theme";
 
 export interface ThemeProps {
   children?: React.ReactNode;

@@ -1,4 +1,4 @@
-# @consensys/ui-config
+# @consensys/ds3-config
 
 ## 0.0.5
 

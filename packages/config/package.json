@@ -1,5 +1,5 @@
 {
-  "name": "@consensys/ui-config",
+  "name": "@consensys/ds3-config",
   "version": "0.0.5",
   "description": "",
   "main": "./dist/index.cjs",
@@ -49,7 +49,7 @@
   "license": "ISC",
   "dependencies": {
     "@babel/core": "^7.24.0",
-    "@consensys/ui-theme": "workspace:*",
+    "@consensys/ds3-theme": "workspace:*",
     "@expo/config": "^10.0.7",
     "@expo/metro-config": "^0.19.8",
     "@vitejs/plugin-react": "^4.3.3",

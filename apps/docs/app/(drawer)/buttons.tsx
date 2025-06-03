@@ -1,6 +1,6 @@
 import { ScrollView } from 'react-native';
-import { Text, Button, IconButton, Switch, cn } from "@consensys/ui/src";
-import type { ButtonColors, ButtonVariant, ButtonSizes } from "@consensys/ui/src";
+import { Text, Button, IconButton, Switch, cn } from "@consensys/ds3/src";
+import type { ButtonColors, ButtonVariant, ButtonSizes } from "@consensys/ds3/src";
 import { View } from "react-native";
 import { Figma, LoaderPinwheel, Loader } from 'lucide-react-native';
 import { useState } from "react";

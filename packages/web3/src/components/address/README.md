@@ -5,7 +5,7 @@ The Address components provide a set of utilities for displaying and interacting
 ## Installation
 
 ```bash
-pnpm add @consensys/ui-web3
+pnpm add @consensys/ds3-web3
 ```
 
 ## Usage Examples
@@ -13,7 +13,7 @@ pnpm add @consensys/ui-web3
 ### Basic Address Display
 
 ```tsx
-import { Address } from '@consensys/ui-web3';
+import { Address } from '@consensys/ds3-web3';
 
 function MyApp() {
   return (
@@ -25,7 +25,7 @@ function MyApp() {
 ### Address with Avatar
 
 ```tsx
-import { AddressAvatar } from '@consensys/ui-web3';
+import { AddressAvatar } from '@consensys/ds3-web3';
 
 function MyApp() {
   return (
@@ -37,7 +37,7 @@ function MyApp() {
 ### Address Card
 
 ```tsx
-import { AddressCard } from '@consensys/ui-web3';
+import { AddressCard } from '@consensys/ds3-web3';
 
 function MyApp() {
   return (
@@ -95,12 +95,12 @@ A component that displays an address with its avatar in a card layout.
 
 The Address components rely on the following:
 - `wagmi` for ENS resolution
-- `@consensys/ui` for UI components
+- `@consensys/ds3` for UI components
 - `truncate-eth-address` for address truncation
 
 ## Styling
 
-The components use the following UI components from `@consensys/ui`:
+The components use the following UI components from `@consensys/ds3`:
 - `Text`
 - `Card` (for AddressCard)
 

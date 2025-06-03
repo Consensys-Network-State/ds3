@@ -1,4 +1,4 @@
-# @consensys/ui
+# @consensys/ds3
 
 > 🚧 **Note**: This package is under active development. While we're working hard to make it production-ready, please be aware that APIs and features may change. We welcome your feedback and contributions as we continue to improve!
 
@@ -8,14 +8,14 @@ Build breathtaking interfaces for both web and React Native with a single compon
 
 ```tsx
 // One import. Any platform. Native everywhere.
-import { Button, Input, Icon } from '@consensys/ui';
+import { Button, Input, Icon } from '@consensys/ds3';
 ```
 
 ## ✨ Standout Features
 
 🌐 **True Cross-Platform** - Components work natively on web and React Native with platform-specific optimizations
 
-🔧 **Framework Agnostic** - Seamless integration with Vite, Expo and more through [@consensys/ui-config](../config) plugins
+🔧 **Framework Agnostic** - Seamless integration with Vite, Expo and more through [@consensys/ds3-config](../config) plugins
 
 🧩 **Compound Components** - Simple by default, infinitely customizable when needed
 
@@ -32,14 +32,14 @@ import { Button, Input, Icon } from '@consensys/ui';
 ## 🚀 Get Started
 
 ```bash
-pnpm add @consensys/ui
+pnpm add @consensys/ds3
 ```
 
-For detailed framework setup and configuration, see the [@consensys/ui-config documentation](../config).
+For detailed framework setup and configuration, see the [@consensys/ds3-config documentation](../config).
 
 ## 📚 Component Library
 
-CUI UI gives you production-ready components for building modern interfaces:
+DS3 UI gives you production-ready components for building modern interfaces:
 
 ### Core Components
 
@@ -67,7 +67,7 @@ CUI UI gives you production-ready components for building modern interfaces:
 
 ## 🏛️ Architectural Excellence
 
-CUI UI is built on six powerful architectural patterns that work together to deliver exceptional developer and user experiences:
+DS3 UI is built on six powerful architectural patterns that work together to deliver exceptional developer and user experiences:
 
 ### 1. 🌐 Platform Adaptation
 
@@ -75,7 +75,7 @@ Components intelligently adapt to their environment while maintaining consistent
 
 ```tsx
 // Same import, same API, platform-perfect behavior
-import { Input } from '@consensys/ui';
+import { Input } from '@consensys/ds3';
 
 // Works perfectly on web and native
 <Input 
@@ -84,7 +84,7 @@ import { Input } from '@consensys/ui';
 />
 ```
 
-CUI UI components follow a consistent organization pattern that enables cross-platform functionality:
+DS3 UI components follow a consistent organization pattern that enables cross-platform functionality:
 
 #### Component Architecture
 
@@ -101,7 +101,7 @@ CUI UI components follow a consistent organization pattern that enables cross-pl
 
 #### Implementation Strategies
 
-CUI UI uses two main approaches to implement cross-platform components:
+DS3 UI uses two main approaches to implement cross-platform components:
 
 **1. Custom Implementation**
 
@@ -162,15 +162,15 @@ Consistent experience across multiple React frameworks:
 // Works in React DOM (Vite)
 // Works in React Native (Expo)
 // Works in Next.js (coming soon)
-import { Button, Input } from '@consensys/ui';
+import { Button, Input } from '@consensys/ds3';
 ```
 
 **Integration features:**
-- 🏗️ **Framework plugins** - Easy setup with [@consensys/ui-config](../config)  framework-specific plugins
+- 🏗️ **Framework plugins** - Easy setup with [@consensys/ds3-config](../config)  framework-specific plugins
 - 🧰 **Configuration presets** - Optimized defaults for each framework
 - 🔄 **Shared APIs** - Consistent component behavior regardless of framework
 
-Framework-specific optimizations are handled by [@consensys/ui-config](../config) plugins, allowing your components to work seamlessly in any React environment.
+Framework-specific optimizations are handled by [@consensys/ds3-config](../config) plugins, allowing your components to work seamlessly in any React environment.
 
 ### 4. ♿ Accessibility By Default
 
@@ -299,7 +299,7 @@ For hybrid applications, the library automatically maps native props to web prop
 The library provides platform-specific event types for type safety:
 
 ```tsx
-import type { WebClickEvent, NativePressEvent } from '@consensys/ui';
+import type { WebClickEvent, NativePressEvent } from '@consensys/ds3';
 
 // 🌐 Web events
 <Button onClick={(e: WebClickEvent) => console.log(e.currentTarget)}>
@@ -368,8 +368,8 @@ Our components use different Slot implementations based on platform:
 This allows the same API to work seamlessly across platforms while respecting platform-specific behavior.
 
 **Slot power:**
-- 🎭 **Style inheritance** - Your elements inherit CUI styling
-- 🔌 **Behavior injection** - CUI behaviors transfer to your elements
+- 🎭 **Style inheritance** - Your elements inherit DS3 styling
+- 🔌 **Behavior injection** - DS3 behaviors transfer to your elements
 - ♿ **Accessibility transfer** - Accessibility attributes preserved
 
 ## 🛠️ Development

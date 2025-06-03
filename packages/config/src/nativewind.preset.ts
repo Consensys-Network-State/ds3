@@ -1,7 +1,7 @@
 import { hairlineWidth } from "nativewind/theme";
 // @ts-ignore
 import nativeWindPreset from 'nativewind/preset';
-import { tailwindPreset, UserConfig } from '@consensys/ui-theme';
+import { tailwindPreset, UserConfig } from '@consensys/ds3-theme';
 import { Config as TailwindConfig } from 'tailwindcss';
 
 const nativewindPreset = (userConfig: UserConfig): TailwindConfig => ({

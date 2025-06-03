@@ -5,13 +5,13 @@ The `<Text />` component provides a cross-platform way to render text that adapt
 ## Installation
 
 ```bash
-pnpm add @consensys/ui
+pnpm add @consensys/ds3
 ```
 
 ## Usage Examples
 
 ```tsx
-import { Text } from '@consensys/ui';
+import { Text } from '@consensys/ds3';
 
 function TextExamples() {
   return (
@@ -127,7 +127,7 @@ import { Pressable } from 'react-native';
 The Text component can receive default styling from a parent context:
 
 ```tsx
-import { TextClassContext } from '@consensys/ui';
+import { TextClassContext } from '@consensys/ds3';
 
 <TextClassContext.Provider value="italic text-primary-9">
   <Text>This will inherit the context styles</Text>

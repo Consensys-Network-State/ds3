@@ -1,7 +1,7 @@
 import { PluginOption, transformWithEsbuild } from 'vite';
 import reactNativeWeb from 'vite-plugin-react-native-web';
 import react from '@vitejs/plugin-react';
-import { UserConfig, generateConfig } from "@consensys/ui-theme";
+import { UserConfig, generateConfig } from "@consensys/ds3-theme";
 
 type FileExtension = '.js' | '.mjs' | '.tsx' | '.ts';
 type LoaderType = 'jsx' | 'tsx' | 'ts';
@@ -27,10 +27,10 @@ function vitePlugin(userConfig: UserConfig): PluginOption[] {
     reactNativeWeb(),
     {
       enforce: 'pre',
-      name: 'vite-plugin-cui',
+      name: 'vite-plugin-ds3',
       config: () => ({
         define: {
-          'import.meta.env.CUI': JSON.stringify(config),
+          'import.meta.env.DS3': JSON.stringify(config),
         },
         resolve: {
           alias: {

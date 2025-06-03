@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
 import { View } from 'react-native';
-import { Text, Icon } from '@consensys/ui/src';
+import { Text, Icon } from '@consensys/ds3/src';
 import { Figma } from 'lucide-react-native';
 
 const iconColors = [

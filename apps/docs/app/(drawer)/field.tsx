@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, ScrollView } from 'react-native';
-import { Text, Card, Field, InputField, Input, SwitchField, CheckboxField, Checkbox } from '@consensys/ui/src';
+import { Text, Card, Field, InputField, Input, SwitchField, CheckboxField, Checkbox } from '@consensys/ds3/src';
 import { Figma, X, Check } from 'lucide-react-native';
 
 const DemoComponent = () => (

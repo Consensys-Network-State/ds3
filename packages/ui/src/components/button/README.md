@@ -5,7 +5,7 @@ The `<Button />` component provides a cross-platform button that adapts to both 
 ## Installation
 
 ```bash
-pnpm add @consensys/ui
+pnpm add @consensys/ds3
 ```
 
 ## Usage Examples
@@ -15,7 +15,7 @@ The Button component supports both web and native APIs through our [Dual API](#6
 ### Web-Specific Usage
 
 ```tsx
-import { Button } from '@consensys/ui';
+import { Button } from '@consensys/ds3';
 
 function WebButton() {
   // Using web-specific APIs
@@ -33,7 +33,7 @@ function WebButton() {
 ### Native/Hybrid Usage
 
 ```tsx
-import { Button } from '@consensys/ui';
+import { Button } from '@consensys/ds3';
 
 function NativeButton() {
   // Using React Native APIs
@@ -173,7 +173,7 @@ For props and styling options, see the [Spinner Component API](/packages/ui/src/
 For buttons with only an icon, use the IconButton component:
 
 ```tsx
-import { IconButton } from '@consensys/ui';
+import { IconButton } from '@consensys/ds3';
 import { Figma } from 'lucide-react-native';
 
 // Web example
@@ -277,7 +277,7 @@ Change the color on hover/press:
 Each platform has its own event handling system:
 
 ```tsx
-import type { WebClickEvent, NativePressEvent } from '@consensys/ui';
+import type { WebClickEvent, NativePressEvent } from '@consensys/ds3';
 
 // Web events
 <Button

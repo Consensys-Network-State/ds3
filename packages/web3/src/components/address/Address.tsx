@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEnsName } from "wagmi";
-import { Text } from '@consensys/ui';
+import { Text } from '@consensys/ds3';
 import { truncateEthAddress } from '../../utils';
 import type { AddressProps } from './types';
 

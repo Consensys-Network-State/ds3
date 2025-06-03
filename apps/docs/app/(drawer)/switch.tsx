@@ -1,4 +1,4 @@
-import { Text, Switch } from "@consensys/ui/src";
+import { Text, Switch } from "@consensys/ds3/src";
 import { View, ScrollView } from "react-native";
 import { Figma } from 'lucide-react-native';
 import { useState } from "react";

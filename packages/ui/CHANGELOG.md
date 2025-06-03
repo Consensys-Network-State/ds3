@@ -1,4 +1,4 @@
-# @consensys/ui
+# @consensys/ds3
 
 ## 0.0.3
 

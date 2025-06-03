@@ -5,7 +5,7 @@ The Wallet components provide utilities for wallet connection, disconnection, an
 ## Installation
 
 ```bash
-pnpm add @consensys/ui-web3
+pnpm add @consensys/ds3-web3
 ```
 
 ## Usage Examples
@@ -13,7 +13,7 @@ pnpm add @consensys/ui-web3
 ### MetaMask Login
 
 ```tsx
-import { MetaMaskLogin } from '@consensys/ui-web3';
+import { MetaMaskLogin } from '@consensys/ds3-web3';
 
 function MyApp() {
   return (
@@ -25,7 +25,7 @@ function MyApp() {
 ### Disconnect Button
 
 ```tsx
-import { DisconnectButton } from '@consensys/ui-web3';
+import { DisconnectButton } from '@consensys/ds3-web3';
 
 function MyApp() {
   return (
@@ -71,12 +71,12 @@ A component that provides a button to disconnect the current wallet.
 
 The Wallet components rely on the following:
 - `wagmi` for wallet connection and management
-- `@consensys/ui` for UI components
+- `@consensys/ds3` for UI components
 - `lucide-react-native` for icons
 
 ## Styling
 
-The components use the following UI components from `@consensys/ui`:
+The components use the following UI components from `@consensys/ds3`:
 - `Button`
 - `Icon`
 

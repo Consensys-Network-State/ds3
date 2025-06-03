@@ -5,7 +5,7 @@ The Chain components provide utilities for displaying and interacting with block
 ## Installation
 
 ```bash
-pnpm add @consensys/ui-web3
+pnpm add @consensys/ds3-web3
 ```
 
 ## Usage Examples
@@ -13,7 +13,7 @@ pnpm add @consensys/ui-web3
 ### Chain Avatar
 
 ```tsx
-import { ChainAvatar } from '@consensys/ui-web3';
+import { ChainAvatar } from '@consensys/ds3-web3';
 
 function MyApp() {
   return (
@@ -44,12 +44,12 @@ A component that displays an avatar representing a blockchain network.
 ## Dependencies
 
 The Chain components rely on the following:
-- `@consensys/ui` for UI components
+- `@consensys/ds3` for UI components
 - `wagmi` for chain information
 
 ## Styling
 
-The components use the following UI components from `@consensys/ui`:
+The components use the following UI components from `@consensys/ds3`:
 - `Avatar`
 
 You can customize the appearance using the `className` prop.

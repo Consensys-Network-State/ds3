@@ -1,4 +1,4 @@
-import { Text, Checkbox } from "@consensys/ui/src";
+import { Text, Checkbox } from "@consensys/ds3/src";
 import { View, ScrollView } from "react-native";
 import { useState } from "react";
 import { Check, Minus, X } from 'lucide-react-native';

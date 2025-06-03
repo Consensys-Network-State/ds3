@@ -1,4 +1,4 @@
-# @consensys/ui-theme
+# @consensys/ds3-theme
 
 ## 0.0.1
 

@@ -7,7 +7,7 @@ These components are built on top of the base [`<Field />`](../field/README.md) 
 ## Installation
 
 ```bash
-pnpm add @consensys/ui
+pnpm add @consensys/ds3
 ```
 
 ## Components
@@ -34,7 +34,7 @@ A higher-level component that combines `<Input />` with a label, description, an
 ### Usage
 
 ```tsx
-import { InputField, Input } from '@consensys/ui';
+import { InputField, Input } from '@consensys/ds3';
 import { Eye } from 'lucide-react-native';
 
 // Basic usage
@@ -62,7 +62,7 @@ import { Eye } from 'lucide-react-native';
 ### Form Integration Example
 
 ```tsx
-import { InputField } from '@consensys/ui';
+import { InputField } from '@consensys/ds3';
 import { Controller, useForm } from 'react-hook-form';
 
 function LoginForm() {
@@ -116,7 +116,7 @@ A higher-level component that combines `<Switch />` with a label, description, a
 ### Usage
 
 ```tsx
-import { SwitchField } from '@consensys/ui';
+import { SwitchField } from '@consensys/ds3';
 import { useState } from 'react';
 
 function NotificationPreferences() {
@@ -137,7 +137,7 @@ function NotificationPreferences() {
 ### Form Integration Example
 
 ```tsx
-import { SwitchField } from '@consensys/ui';
+import { SwitchField } from '@consensys/ds3';
 import { Controller, useForm } from 'react-hook-form';
 
 function PreferenceForm() {
@@ -185,7 +185,7 @@ A higher-level component that combines `<Checkbox />` with a label, description,
 ### Usage
 
 ```tsx
-import { CheckboxField, Checkbox } from '@consensys/ui';
+import { CheckboxField, Checkbox } from '@consensys/ds3';
 import { Check } from 'lucide-react-native';
 import { useState } from 'react';
 
@@ -209,7 +209,7 @@ function TermsAndConditions() {
 ### Form Integration Example
 
 ```tsx
-import { CheckboxField } from '@consensys/ui';
+import { CheckboxField } from '@consensys/ds3';
 import { Controller, useForm } from 'react-hook-form';
 
 function SignupForm() {

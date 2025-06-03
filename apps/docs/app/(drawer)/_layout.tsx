@@ -2,7 +2,7 @@ import { Drawer } from 'expo-router/drawer';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Colors } from '@/constants/Colors';
 import { View } from 'react-native';
-import { ModeToggle, ThemeSwitcher } from "@consensys/ui/src";
+import { ModeToggle, ThemeSwitcher } from "@consensys/ds3/src";
 
 export default function DrawerLayout() {
   const colorScheme = useColorScheme();

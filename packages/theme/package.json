@@ -1,5 +1,5 @@
 {
-  "name": "@consensys/ui-theme",
+  "name": "@consensys/ds3-theme",
   "version": "0.0.1",
   "description": "",
   "main": "./dist/index.cjs",

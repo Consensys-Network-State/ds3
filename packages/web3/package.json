@@ -1,5 +1,5 @@
 {
-  "name": "@consensys/ui-web3",
+  "name": "@consensys/ds3-web3",
   "version": "0.0.3",
   "description": "Consensys UI Web3 component library",
   "main": "./src/index.ts",
@@ -20,7 +20,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@consensys/ui": "workspace:*",
+    "@consensys/ds3": "workspace:*",
     "wagmi": "^2.0.0",
     "viem": "^2.0.0",
     "class-variance-authority": "^0.7.0",

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Input, InputProps, Button, useCopyToClipboard } from '@consensys/ui/src';
+import { Input, InputProps, Button, useCopyToClipboard } from '@consensys/ds3/src';
 import { Platform } from 'react-native';
 import { Check, Copy } from 'lucide-react-native';
 

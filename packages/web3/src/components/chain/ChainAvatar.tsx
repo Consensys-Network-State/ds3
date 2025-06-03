@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { polygon, optimism, arbitrum, linea } from 'viem/chains';
-import { Avatar, AvatarImage, cn } from "@consensys/ui";
+import { Avatar, AvatarImage, cn } from "@consensys/ds3";
 import type { ChainAvatarProps } from './types';
 
 const ChainAvatar = React.forwardRef<any, ChainAvatarProps>(

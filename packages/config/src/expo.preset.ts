@@ -1,5 +1,5 @@
 import { ExpoConfig } from '@expo/config';
-import { UserConfig, generateConfig } from "@consensys/ui-theme";
+import { UserConfig, generateConfig } from "@consensys/ds3-theme";
 
 export default function (config: ExpoConfig, userConfig: UserConfig): ExpoConfig {
   const processedConfig = generateConfig(userConfig);
@@ -8,7 +8,7 @@ export default function (config: ExpoConfig, userConfig: UserConfig): ExpoConfig
     ...config,
     extra: {
       ...(config.extra || {}),
-      CUI: processedConfig,
+      DS3: processedConfig,
     },
   };
 }

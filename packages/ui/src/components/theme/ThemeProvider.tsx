@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useColorScheme, View } from 'react-native';
 import { ThemeBase } from "./Theme";
-import { DEFAULT_MODE, DEFAULT_THEME, ColorMode } from "@consensys/ui-theme";
+import { DEFAULT_MODE, DEFAULT_THEME, ColorMode } from "@consensys/ds3-theme";
 import { PortalHost } from '@rn-primitives/portal';
 import { ThemeContext } from './context';
 import type { ThemeProviderProps } from './types';
