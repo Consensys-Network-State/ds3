@@ -49,17 +49,33 @@ export interface Config {
   themes: ConfigThemes;
 }
 
-export type UserConfigColor = Record<string, SupportedRadixColorKeys>;
+export type CustomColorScale = Record<string, string>;
 
-export interface UserConfigColorMode {
-  light?: UserConfigColor;
-  dark?: UserConfigColor;
-}
+export type HexColor = `#${string}`;
+export type GeneratedColorConfig = {
+  accent: HexColor;
+  gray?: HexColor;
+  background?: {
+    light?: HexColor;
+    dark?: HexColor;
+  };
+};
 
-export type UserConfigColors = Record<string, SupportedRadixColorKeys | UserConfigColorMode>;
+export type ColorConfig = 
+  | SupportedRadixColorKeys  // Radix color name
+  | GeneratedColorConfig     // Generated color
+  | {                        // Custom palette
+      light: CustomColorScale;
+      dark?: CustomColorScale;  // Optional dark mode
+    };
+
+export type UserConfigColors = Record<string, ColorConfig>;
 
 export interface UserConfigTheme {
-  colors?: UserConfigColors;
+  colors?: UserConfigColors | {
+    light?: UserConfigColors;
+    dark?: UserConfigColors;
+  };
   boxShadow?: BoxShadowConfig;
 }
 

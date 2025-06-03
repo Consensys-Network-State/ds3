@@ -7,15 +7,18 @@ import type {
   ConfigTheme,
   ConfigColor,
   Config,
-  UserConfigColor,
   UserConfigColors,
   UserConfig,
   CssVariableRecord,
   CssVariable,
-  BoxShadowConfig
+  BoxShadowConfig,
+  GeneratedColorConfig,
+  CustomColorScale
 } from './types.js'
 import _ from "lodash";
 import defaultConfig from "./default-config.js";
+import { COLOR_GENERATOR_DEFAULTS } from './constants.js';
+import { generateRadixColors, getColorScaleObject } from './generateRadixColors.js';
 
 export const generateConfig = (userConfig: UserConfig): Config => {
   const blueprint = _.merge(defaultConfig, userConfig || {});
@@ -64,13 +67,16 @@ export const generateThemes = (config: UserConfig): ConfigThemes => {
     };
 
     if (colors) {
-      const lightColors = (colors.light || colors) as UserConfigColor;
-      const darkColors = (colors.dark || {}) as UserConfigColor;
-
-      processedTheme.colors.light = generateColorValues(lightColors);
-      processedTheme.colors.dark = Object.keys(darkColors).length > 0
-        ? generateColorValues(darkColors, true)
-        : generateColorValues(lightColors, true);
+      // Handle both direct colors and light/dark mode specific colors
+      if ('light' in colors || 'dark' in colors) {
+        const colorConfig = colors as { light?: UserConfigColors; dark?: UserConfigColors };
+        processedTheme.colors.light = generateColorValues(colorConfig.light || {});
+        processedTheme.colors.dark = generateColorValues(colorConfig.dark || {}, true);
+      } else {
+        const colorConfig = colors as UserConfigColors;
+        processedTheme.colors.light = generateColorValues(colorConfig);
+        processedTheme.colors.dark = generateColorValues(colorConfig, true);
+      }
     }
 
     if (boxShadow) {
@@ -88,9 +94,44 @@ export const generateThemes = (config: UserConfig): ConfigThemes => {
 
 export const generateColorValues = (colors: UserConfigColors, isDark: boolean = false): ConfigColor => {
   const vars: ConfigColor = {};
+  
   Object.entries(colors).forEach(([colorName, color]) => {
-    Object.assign(vars, { [colorName]: generateRadixColorValues(color as SupportedRadixColorKeys, isDark)});
+    if (typeof color === 'string') {
+      // Handle Radix color names
+      vars[colorName] = generateRadixColorValues(color, isDark);
+    } else if ('accent' in color) {
+      // Handle generated colors
+      const config = color as GeneratedColorConfig;
+      const generatedColors = generateRadixColors({
+        appearance: isDark ? 'dark' : 'light',
+        accent: config.accent,
+        gray: config.gray || COLOR_GENERATOR_DEFAULTS.gray,
+        background: config.background?.[isDark ? 'dark' : 'light'] || 
+                   COLOR_GENERATOR_DEFAULTS.background[isDark ? 'dark' : 'light']
+      });
+      
+      const colorScale = getColorScaleObject({
+        scale: generatedColors.accentScale,
+        scaleWideGamut: generatedColors.accentScaleWideGamut,
+        scaleAlpha: generatedColors.accentScaleAlpha,
+        scaleAlphaWideGamut: generatedColors.accentScaleAlphaWideGamut,
+        contrast: generatedColors.accentContrast,
+        surface: generatedColors.accentSurface,
+        surfaceWideGamut: generatedColors.accentSurfaceWideGamut,
+      });
+
+      // Combine base colors and alpha colors
+      vars[colorName] = {
+        ...colorScale.base,
+        ...colorScale.alpha
+      };
+    } else if ('light' in color) {
+      // Handle custom palettes
+      const palette = color as { light: CustomColorScale; dark?: CustomColorScale };
+      vars[colorName] = isDark && palette.dark ? palette.dark : palette.light;
+    }
   });
+
   return vars;
 };
 
