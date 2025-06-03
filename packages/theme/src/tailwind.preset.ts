@@ -1,71 +1,13 @@
 import { Config as TailwindConfig } from 'tailwindcss';
-import plugin from 'tailwindcss/plugin.js';
 import tailwindcssAnimate from 'tailwindcss-animate';
-import {
-  generateColorCssVars,
-  generateThemeCssVars,
-  generateShadowCssVars,
-  generateConfig,
-} from "./utils";
-import _ from "lodash";
-import {
-  Config,
-  ConfigColorShades,
-  ConfigTheme,
-  ConfigThemes,
-  CssVariableRecord,
-  UserConfig
-} from "./types";
+import type { ConfigThemes, ConfigColorShades, UserConfig } from "./types";
 import { COLOR_MODES, DEFAULT_THEME } from "./constants";
 import rnrPreset from './rnr.config';
+import { generateConfig, getThemeColorKeys } from './theme.js';
+import { generateThemeVars, generateColorCssVars } from './css-vars.js';
+import { pxToRem } from './utils.js';
+import plugin from 'tailwindcss/plugin.js';
 import type { CSSRuleObject } from 'tailwindcss/types/config';
-
-const getThemeColorKeys = (themes: ConfigThemes): string[] => {
-  return _.uniq(_.flatMap(Object.values(themes), (theme: ConfigTheme) => {
-    const colors = theme.colors;
-
-    const mergedTheme = _.merge(
-      {},
-      _.omit(colors, [COLOR_MODES.Light, COLOR_MODES.Dark]),
-      colors[COLOR_MODES.Light] || {},
-      colors[COLOR_MODES.Dark] || {}
-    );
-    return Object.keys(mergedTheme);
-  }));
-};
-
-const defineCssVars = (themes: ConfigThemes) =>
-  plugin(({ addBase }) => {
-    const vars: Record<string, CssVariableRecord> = {};
-
-    Object.entries(themes).forEach(([themeName, theme]) => {
-      const lightClassName =
-        themeName === DEFAULT_THEME ? `.${COLOR_MODES.Light}` : `.${themeName}.${COLOR_MODES.Light}`;
-      const darkClassName =
-        themeName === DEFAULT_THEME ? `.${COLOR_MODES.Dark}` : `.${themeName}.${COLOR_MODES.Dark}`;
-
-      // Generate color variables
-      const lightVars = generateThemeCssVars(theme.colors.light);
-      const darkVars = generateThemeCssVars(theme.colors.dark);
-
-      // Generate shadow variables if they exist
-      if (theme.boxShadow) {
-        Object.assign(lightVars, generateShadowCssVars(theme.boxShadow.light));
-        Object.assign(darkVars, generateShadowCssVars(theme.boxShadow.dark));
-      }
-
-      vars[lightClassName] = lightVars;
-      vars[darkClassName] = darkVars;
-    });
-
-    // Convert the vars record into a CSSRuleObject
-    const cssRules: CSSRuleObject = Object.entries(vars).reduce((acc, [selector, variables]) => ({
-      ...acc,
-      [selector]: variables
-    }), {});
-
-    addBase(cssRules);
-  });
 
 const assignCssVars = (themes: ConfigThemes): Record<string, ConfigColorShades> => {
   return Object.fromEntries(
@@ -85,7 +27,15 @@ const assignShadowVars = (themes: ConfigThemes): Record<string, string> => {
   );
 };
 
-const pxToRem = (px: number, base: number = 16) => `${px / base}rem`;
+export const defineCssVars = (themes: ConfigThemes) =>
+  plugin(({ addBase }) => {
+    const vars = generateThemeVars(themes);
+    const cssRules: CSSRuleObject = Object.entries(vars).reduce((acc, [selector, variables]) => ({
+      ...acc,
+      [selector]: variables
+    }), {});
+    addBase(cssRules);
+  });
 
 export const tailwindPreset = (userConfig: UserConfig): TailwindConfig => {
   const config = generateConfig(userConfig);

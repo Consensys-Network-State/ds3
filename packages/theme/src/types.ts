@@ -49,11 +49,12 @@ export interface Config {
   themes: ConfigThemes;
 }
 
-export type CustomColorScale = Record<string, string>;
-
 export type HexColor = `#${string}`;
 export type GeneratedColorConfig = {
-  accent: HexColor;
+  accent: HexColor | {
+    light: HexColor;
+    dark?: HexColor;  // Optional dark mode accent
+  };
   gray?: HexColor;
   background?: {
     light?: HexColor;
@@ -65,8 +66,8 @@ export type ColorConfig =
   | SupportedRadixColorKeys  // Radix color name
   | GeneratedColorConfig     // Generated color
   | {                        // Custom palette
-      light: CustomColorScale;
-      dark?: CustomColorScale;  // Optional dark mode
+      light: ConfigColorShades;
+      dark?: ConfigColorShades;  // Optional dark mode
     };
 
 export type UserConfigColors = Record<string, ColorConfig>;
