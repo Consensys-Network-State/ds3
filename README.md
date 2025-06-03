@@ -61,11 +61,13 @@ The packages follow a layered architecture:
 3. **ui** → UI components (depends on theme)
 4. **web3** → Blockchain components (depends on ui)
 
-### Example Applications
+### Template Repositories
 
-- **[vite-example](apps/vite-example)** - Example Vite.js implementation
-- **[expo-example](apps/expo-example)** - Example React Native/Expo implementation
+- **[ds3-vite-template](https://github.com/Consensys-Network-State/ds3-vite-template)** - Official Vite.js template with DS3 setup
+- **[ds3-expo-template](https://github.com/Consensys-Network-State/ds3-expo-template)** - Official React Native/Expo template with DS3 setup
 - **[docs](apps/docs)** - Documentation site
+
+> Next.js template with DS3 setup is coming soon!
 
 ## Usage
 
@@ -89,32 +91,11 @@ pnpm watch:deps
 
 Build individual packages:
 ```bash
-pnpm core:build
-pnpm ui:build
-pnpm web3:build
+pnpm theme:build
+pnpm config:build
 ```
 
-### Running Examples
-
-Start Vite example:
-```bash
-pnpm vite:dev
-```
-
-Build Vite example:
-```bash
-pnpm vite:build
-```
-
-Preview built Vite example:
-```bash
-pnpm vite:preview
-```
-
-Start Expo example:
-```bash
-pnpm expo:start
-```
+### Running Docs
 
 Start documentation site:
 ```bash
