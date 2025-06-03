@@ -1,6 +1,6 @@
 {
   "name": "@consensys/ds3-web3",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Consensys UI Web3 component library",
   "main": "./src/index.ts",
   "module": "./src/index.ts",
