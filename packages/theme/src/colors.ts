@@ -8,7 +8,7 @@ import type {
   GeneratedColorConfig,
 } from './types.js';
 import { COLOR_GENERATOR_DEFAULTS } from './constants.js';
-import { generateRadixColors, getColorScaleObject } from './generateRadixColors.js';
+import { generateRadixColors, getColorScaleObject } from './radix-colors/generateRadixColors.js';
 
 export const generateColorValues = (colors: UserConfigColors, isDark: boolean = false): ConfigColor => {
   const vars: ConfigColor = {};
