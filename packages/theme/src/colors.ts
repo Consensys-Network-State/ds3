@@ -1,4 +1,4 @@
-import * as radixColors from "@radix-ui/colors";
+import * as radixColors from "./radix-colors";
 import type {
   RadixColorKeys,
   SupportedRadixColorKeys,
@@ -42,10 +42,14 @@ export const generateColorValues = (colors: UserConfigColors, isDark: boolean = 
         surfaceWideGamut: generatedColors.accentSurfaceWideGamut,
       });
 
-      // Combine base colors and alpha colors
+      // Combine base colors, alpha colors, and utility colors
       vars[colorName] = {
         ...colorScale.base,
-        ...colorScale.alpha
+        ...colorScale.alpha,
+        contrast: colorScale.base.contrast,
+        surface: colorScale.base.surface,
+        indicator: colorScale.base.indicator,
+        track: colorScale.base.track
       };
     } else if ('light' in color) {
       // Handle custom palettes
@@ -60,9 +64,11 @@ export const generateColorValues = (colors: UserConfigColors, isDark: boolean = 
 export const generateRadixColorValues = (color: SupportedRadixColorKeys, isDark: boolean = false): ConfigColorShades => {
   const colorKey = isDark ? `${color}Dark` as RadixColorKeys : color;
   const alphaKey = isDark ? `${color}DarkA` as RadixColorKeys : `${color}A` as RadixColorKeys;
+  const utilsKey = isDark ? `${color}DarkUtils` as RadixColorKeys : `${color}Utils` as RadixColorKeys;
 
-  const colors = radixColors[colorKey];
-  const alphaColors = radixColors[alphaKey];
+  const colors = radixColors[colorKey] as Record<string, string>;
+  const alphaColors = radixColors[alphaKey] as Record<string, string>;
+  const utilsColors = radixColors[utilsKey] as Record<string, string>;
 
   const shades: ConfigColorShades = {};
 
@@ -82,6 +88,12 @@ export const generateRadixColorValues = (color: SupportedRadixColorKeys, isDark:
     });
   } else {
     console.warn(`Invalid radix alpha color "${color}A".`);
+  }
+
+  if (utilsColors) {
+    Object.entries(utilsColors).forEach(([key, value]) => {
+      shades[key as keyof ConfigColorShades] = value;
+    });
   }
 
   return shades;
