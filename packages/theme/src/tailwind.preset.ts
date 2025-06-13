@@ -27,7 +27,7 @@ const assignShadowVars = (themes: ConfigThemes): Record<string, string> => {
   );
 };
 
-export const defineCssVars = (themes: ConfigThemes) =>
+export const injectCssVars = (themes: ConfigThemes) =>
   plugin(({ addBase }) => {
     const vars = generateThemeVars(themes);
     const cssRules: CSSRuleObject = Object.entries(vars).reduce((acc, [selector, variables]) => ({
@@ -35,6 +35,36 @@ export const defineCssVars = (themes: ConfigThemes) =>
       [selector]: variables
     }), {});
     addBase(cssRules);
+  });
+
+export const resetStyles = () =>
+  plugin(({ addBase }) => {
+    addBase({
+      'body': {
+        '@apply text-base text-neutral-12 bg-neutral-1': {},
+      },
+      'h1': {
+        '@apply text-h1': {},
+      },
+      'h2': {
+        '@apply text-h2': {},
+      },
+      'h3': {
+        '@apply text-h3': {},
+      },
+      'h4': {
+        '@apply text-h4': {},
+      },
+      'h5': {
+        '@apply text-h5': {},
+      },
+      'h6': {
+        '@apply text-h6': {},
+      },
+      'p': {
+        '@apply text-base': {},
+      }
+    });
   });
 
 export const tailwindPreset = (userConfig: UserConfig): TailwindConfig => {
@@ -47,7 +77,8 @@ export const tailwindPreset = (userConfig: UserConfig): TailwindConfig => {
       rnrPreset,
     ],
     plugins: [
-      defineCssVars(config.themes),
+      resetStyles(),
+      injectCssVars(config.themes),
       tailwindcssAnimate,
     ],
     theme: {

@@ -29,7 +29,7 @@ export const ThemeSwitcher = ({ className }: ThemeSwitcherProps) => {
 
   return (
     <Select
-      defaultValue={{ value: theme, label: theme }}
+      value={{ value: theme, label: theme }}
       onValueChange={(item) => setTheme(item?.value as string)}
     >
       <SelectTrigger ref={triggerRef} className={className}>

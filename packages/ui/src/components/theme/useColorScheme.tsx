@@ -1,0 +1,62 @@
+import * as React from 'react';
+import { useColorScheme as useNativeWindColorScheme } from 'nativewind';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { DEFAULT_MODE, DEFAULT_THEME, ColorMode, COLOR_MODES } from "@consensys/ds3-theme";
+
+export const THEME_MODE_KEY = '@ds3-theme-mode';
+export const THEME_NAME_KEY = '@ds3-theme-name';
+
+export const useColorScheme = () => {
+  const { colorScheme, setColorScheme } = useNativeWindColorScheme();
+  const [theme, setTheme] = React.useState(DEFAULT_THEME);
+  const [mode, setMode] = React.useState<ColorMode | null>(null);
+
+  // Load saved mode and theme on mount
+  React.useEffect(() => {
+    Promise.all([
+      AsyncStorage.getItem(THEME_MODE_KEY),
+      AsyncStorage.getItem(THEME_NAME_KEY)
+    ]).then(([savedMode, savedTheme]) => {
+      const newMode = savedMode as ColorMode || DEFAULT_MODE;
+      setMode(newMode);
+      setColorScheme(newMode === COLOR_MODES.System ? 'system' : newMode);
+      if (savedTheme) {
+        setTheme(savedTheme);
+      }
+    }).catch(() => {
+      setMode(DEFAULT_MODE);
+      setColorScheme('system');
+    });
+  }, []);
+
+  // Save mode when it changes
+  React.useEffect(() => {
+    if (mode) {
+      AsyncStorage.setItem(THEME_MODE_KEY, mode).catch(console.warn);
+    }
+  }, [mode]);
+
+  // Save theme when it changes
+  React.useEffect(() => {
+    if (theme === DEFAULT_THEME) {
+      AsyncStorage.removeItem(THEME_NAME_KEY).catch(console.warn);
+    } else {
+      AsyncStorage.setItem(THEME_NAME_KEY, theme).catch(console.warn);
+    }
+  }, [theme]);
+
+  // Update NativeWind color scheme when mode changes
+  React.useEffect(() => {
+    if (mode) {
+      setColorScheme(mode === COLOR_MODES.System ? 'system' : mode);
+    }
+  }, [mode, setColorScheme]);
+
+  return {
+    theme,
+    setTheme,
+    mode,
+    setMode,
+    currentMode: colorScheme
+  };
+}; 

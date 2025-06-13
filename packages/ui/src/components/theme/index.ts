@@ -3,9 +3,9 @@ export { ThemeProvider } from './ThemeProvider';
 export { Theme } from './Theme';
 export { ThemeSwitcher } from './ThemeSwitcher';
 export { ModeToggle } from './ModeToggle';
-
-// context
-export { ThemeContext, useThemeContext } from './context';
+export { useThemeContext } from './context';
+export { useThemeColors } from './useThemeColors';
+export { useColorScheme } from './useColorScheme';
 
 // types
 export type {
