@@ -13,12 +13,10 @@ export const ThemeProvider = React.forwardRef<View, ThemeProviderProps>(
 
     if (!mode) return null;
 
-    const effectiveMode = currentMode || COLOR_MODES.Light;
-
     return (
       <ThemeContext.Provider value={{
         theme,
-        mode: effectiveMode,
+        mode: currentMode,
         selectedMode: mode,
         setTheme,
         setMode,
@@ -28,7 +26,7 @@ export const ThemeProvider = React.forwardRef<View, ThemeProviderProps>(
           ref={ref}
           config={config}
           theme={theme}
-          mode={effectiveMode}
+          mode={currentMode}
           {...otherProps}
         >
           {children}

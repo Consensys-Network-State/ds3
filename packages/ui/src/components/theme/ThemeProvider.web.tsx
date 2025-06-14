@@ -28,7 +28,7 @@ export const ThemeProvider = React.forwardRef<View, ThemeProviderProps>(
       }
 
       if (mode === COLOR_MODES.System) {
-        root.classList.add(currentMode || COLOR_MODES.Light);
+        root.classList.add(currentMode);
       } else {
         root.classList.add(mode);
       }
@@ -36,12 +36,10 @@ export const ThemeProvider = React.forwardRef<View, ThemeProviderProps>(
 
     if (!mode) return null;
 
-    const effectiveMode = currentMode || COLOR_MODES.Light;
-
     return (
       <ThemeContext.Provider value={{
         theme,
-        mode: effectiveMode,
+        mode: currentMode,
         selectedMode: mode,
         setTheme,
         setMode,

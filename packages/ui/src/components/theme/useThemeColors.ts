@@ -15,7 +15,7 @@ export function useThemeColors(): ThemeColors {
   const { theme, config } = useThemeContext();
   const { currentMode } = useColorScheme();
   const currentTheme = config.themes[theme];
-  const colors = currentTheme.colors[currentMode || COLOR_MODES.Light];
+  const colors = currentTheme.colors[currentMode];
 
   // Transform the colors object to make it easier to use
   const transformedColors = {} as ThemeColors;

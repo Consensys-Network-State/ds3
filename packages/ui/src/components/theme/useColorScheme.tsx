@@ -6,6 +6,8 @@ import { DEFAULT_MODE, DEFAULT_THEME, ColorMode, COLOR_MODES } from "@consensys/
 export const THEME_MODE_KEY = '@ds3-theme-mode';
 export const THEME_NAME_KEY = '@ds3-theme-name';
 
+type ColorScheme = typeof COLOR_MODES.Light | typeof COLOR_MODES.Dark;
+
 export const useColorScheme = () => {
   const { colorScheme, setColorScheme } = useNativeWindColorScheme();
   const [theme, setTheme] = React.useState(DEFAULT_THEME);
@@ -48,7 +50,7 @@ export const useColorScheme = () => {
   // Update NativeWind color scheme when mode changes
   React.useEffect(() => {
     if (mode) {
-      setColorScheme(mode === COLOR_MODES.System ? 'system' : mode);
+      setColorScheme(mode);
     }
   }, [mode, setColorScheme]);
 
@@ -57,6 +59,6 @@ export const useColorScheme = () => {
     setTheme,
     mode,
     setMode,
-    currentMode: colorScheme
+    currentMode: colorScheme as ColorScheme
   };
 }; 
