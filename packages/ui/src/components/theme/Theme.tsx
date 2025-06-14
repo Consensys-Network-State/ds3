@@ -1,52 +1,45 @@
 import * as React from 'react';
-import { View, Platform } from "react-native";
-import { vars } from "nativewind";
-import { DEFAULT_MODE, DEFAULT_THEME, generateThemeCssVars, generateShadowCssVars } from "@consensys/ds3-theme";
-import { cn } from "../../utils";
-import { useThemeContext } from "./context";
-import type { ThemeBaseProps, ThemeProps } from "./types";
+import { View } from 'react-native';
+import { vars } from 'nativewind';
+import { DEFAULT_MODE, DEFAULT_THEME, generateThemeCssVars, generateShadowCssVars, COLOR_MODES } from '@consensys/ds3-theme';
+import { useThemeContext } from './context';
+import type { ThemeBaseProps, ThemeProps } from './types';
 
-export const ThemeBase = React.forwardRef<View, ThemeBaseProps>((props, ref) => {
+export const ThemeBase = React.forwardRef<View, ThemeBaseProps>((props, ref): React.ReactElement => {
   const {
     children,
     theme = DEFAULT_THEME,
     mode = DEFAULT_MODE,
     className,
-    useClass = Platform.OS === "web",
     config,
   } = props;
 
-  const themeClassName = theme === DEFAULT_THEME ? '' : theme;
+  const effectiveMode = mode === COLOR_MODES.System ? COLOR_MODES.Light : mode;
 
   const themeVars = React.useMemo(() => {
-    if (useClass) return {};
-
     const currentTheme = config.themes[theme];
     const variables = {
-      ...generateThemeCssVars(currentTheme.colors[mode])
+      ...generateThemeCssVars(currentTheme.colors[effectiveMode])
     };
 
     // Add shadow variables if they exist
     if (currentTheme.boxShadow) {
-      Object.assign(variables, generateShadowCssVars(currentTheme.boxShadow[mode]));
+      Object.assign(variables, generateShadowCssVars(currentTheme.boxShadow[effectiveMode]));
     }
 
     return variables;
-  }, [theme, mode, useClass, config]);
+  }, [theme, effectiveMode, config]);
 
-  return (useClass ?
-      <View ref={ref} className={cn(className, themeClassName, mode)}>
-        {children}
-      </View> :
-      <View ref={ref} style={vars(themeVars)} className={className}>
-        {children}
-      </View>
+  return (
+    <View ref={ref} style={vars(themeVars)} className={className}>
+      {children}
+    </View>
   );
 });
 
 ThemeBase.displayName = 'ThemeBase';
 
-export const Theme = React.forwardRef<View, ThemeProps>((props, ref) => {
+export const Theme = React.forwardRef<View, ThemeProps>((props, ref): React.ReactElement => {
   const { mode, theme, config } = useThemeContext();
 
   return (
@@ -60,6 +53,4 @@ export const Theme = React.forwardRef<View, ThemeProps>((props, ref) => {
   );
 });
 
-Theme.displayName = 'Theme';
-
-export default Theme;
+Theme.displayName = 'Theme'; 

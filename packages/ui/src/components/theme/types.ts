@@ -16,10 +16,10 @@ export interface ThemeBaseProps extends ThemeProps {
 export type ThemeContextType = {
   theme: ThemeName;
   mode: ColorMode;
+  selectedMode: ColorMode;
   setTheme: (theme: ThemeName) => void;
   setMode: (mode: ColorMode) => void;
   config: Config;
-  containerRef: React.RefObject<View>;
 };
 
 export type ThemeProviderProps = ThemeProps & {

@@ -142,6 +142,8 @@ export {
   ThemeSwitcher,
   ModeToggle,
   useThemeContext,
+  useThemeColors,
+  useColorScheme,
 } from './components/theme';
 
 export type {
