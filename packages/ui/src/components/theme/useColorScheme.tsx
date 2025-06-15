@@ -31,34 +31,26 @@ export const useColorScheme = () => {
     });
   }, []);
 
-  // Save mode when it changes
-  React.useEffect(() => {
-    if (mode) {
-      AsyncStorage.setItem(THEME_MODE_KEY, mode).catch(console.warn);
-    }
-  }, [mode]);
+  const handleModeChange = React.useCallback((newMode: ColorMode) => {
+    setMode(newMode);
+    setColorScheme(newMode === COLOR_MODES.System ? 'system' : newMode);
+    AsyncStorage.setItem(THEME_MODE_KEY, newMode).catch(console.warn);
+  }, [setColorScheme]);
 
-  // Save theme when it changes
-  React.useEffect(() => {
-    if (theme === DEFAULT_THEME) {
+  const handleThemeChange = React.useCallback((newTheme: string) => {
+    setTheme(newTheme);
+    if (newTheme === DEFAULT_THEME) {
       AsyncStorage.removeItem(THEME_NAME_KEY).catch(console.warn);
     } else {
-      AsyncStorage.setItem(THEME_NAME_KEY, theme).catch(console.warn);
+      AsyncStorage.setItem(THEME_NAME_KEY, newTheme).catch(console.warn);
     }
-  }, [theme]);
-
-  // Update NativeWind color scheme when mode changes
-  React.useEffect(() => {
-    if (mode) {
-      setColorScheme(mode);
-    }
-  }, [mode, setColorScheme]);
+  }, []);
 
   return {
     theme,
-    setTheme,
+    setTheme: handleThemeChange,
     mode,
-    setMode,
+    setMode: handleModeChange,
     currentMode: colorScheme as ColorScheme
   };
 }; 

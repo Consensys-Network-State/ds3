@@ -17,8 +17,6 @@ export const ThemeProvider = React.forwardRef<View, ThemeProviderProps>(
     );
 
     React.useEffect(() => {
-      if (!mode) return;
-
       const root = document.documentElement;
       const themeClasses = Object.keys(config.themes);
       root.classList.remove(...themeClasses, COLOR_MODES.Light, COLOR_MODES.Dark, COLOR_MODES.System);
@@ -27,20 +25,20 @@ export const ThemeProvider = React.forwardRef<View, ThemeProviderProps>(
         root.classList.add(theme);
       }
 
-      if (mode === COLOR_MODES.System) {
+      if (!mode && currentMode) {
         root.classList.add(currentMode);
-      } else {
+      } else if (mode === COLOR_MODES.System) {
+        root.classList.add(currentMode);
+      } else if (mode) {
         root.classList.add(mode);
       }
     }, [theme, currentMode, mode, config.themes]);
-
-    if (!mode) return null;
 
     return (
       <ThemeContext.Provider value={{
         theme,
         mode: currentMode,
-        selectedMode: mode,
+        selectedMode: mode ?? COLOR_MODES.System,
         setTheme,
         setMode,
         config
@@ -52,4 +50,4 @@ export const ThemeProvider = React.forwardRef<View, ThemeProviderProps>(
   }
 );
 
-ThemeProvider.displayName = 'ThemeProvider'; 
+ThemeProvider.displayName = 'ThemeProvider';
