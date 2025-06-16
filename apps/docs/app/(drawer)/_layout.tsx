@@ -1,6 +1,7 @@
 import { Drawer } from 'expo-router/drawer';
 import { View } from 'react-native';
-import { ModeToggle, ThemeSwitcher, useThemeColors } from "@consensys/ds3";
+import { ModeToggle, ThemeSwitcher, useThemeColors, Button, openLink } from "@consensys/ds3";
+import { Github } from 'lucide-react-native';
 
 export default function DrawerLayout() {
   const colors = useThemeColors();
@@ -21,7 +22,7 @@ export default function DrawerLayout() {
         headerStyle: {
           backgroundColor: colors.neutral1,
           borderBottomColor: colors.neutral5,
-          borderBottomWidth: 0.5,
+          borderBottomWidth: 1,
         },
         headerRight: HeaderRight,
         drawerStyle: {
@@ -29,10 +30,6 @@ export default function DrawerLayout() {
         },
         drawerActiveTintColor: colors.primary11,
         drawerInactiveTintColor: colors.neutral11,
-        drawerActiveBackgroundColor: colors.neutral3,
-        drawerLabelStyle: {
-          color: colors.neutral12,
-        },
       }}
     >
       <Drawer.Screen
