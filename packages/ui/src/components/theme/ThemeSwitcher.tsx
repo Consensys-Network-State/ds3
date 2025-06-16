@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useThemeContext } from './context';
+import { useTheme } from './useTheme';
 import {
   Select,
   SelectContent,
@@ -23,9 +23,9 @@ export const ThemeSwitcher = ({ className }: ThemeSwitcherProps) => {
     right: 12,
   };
 
-  const { theme, setTheme, config } = useThemeContext();
-  const themes = config.themes;
-  const themeKeys = Object.keys(themes);
+  const { theme, setTheme, config } = useTheme();
+  const themes = config?.themes;
+  const themeKeys = themes ? Object.keys(themes) : [];
 
   return (
     <Select

@@ -1,38 +1,25 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { COLOR_MODES } from "@consensys/ds3-theme";
 import { PortalHost } from '@rn-primitives/portal';
-import { ThemeContext } from './context';
 import type { ThemeProviderProps } from './types';
-import { useColorScheme } from './useColorScheme';
+import { useTheme } from './useTheme';
 import { ThemeBase } from './Theme';
 
 export const ThemeProvider = React.forwardRef<View, ThemeProviderProps>(
   ({ children, config, ...otherProps }, ref) => {
-    const { theme, setTheme, mode, setMode, currentMode } = useColorScheme();
-
-    if (!mode) return null;
+    const { currentMode, theme } = useTheme(config);
 
     return (
-      <ThemeContext.Provider value={{
-        theme,
-        mode: currentMode,
-        selectedMode: mode,
-        setTheme,
-        setMode,
-        config
-      }}>
-        <ThemeBase
-          ref={ref}
-          config={config}
-          theme={theme}
-          mode={currentMode}
-          {...otherProps}
-        >
-          {children}
-        </ThemeBase>
+      <ThemeBase
+        ref={ref}
+        config={config}
+        theme={theme}
+        mode={currentMode}
+        {...otherProps}
+      >
+        {children}
         <PortalHost />
-      </ThemeContext.Provider>
+      </ThemeBase>
     );
   }
 );

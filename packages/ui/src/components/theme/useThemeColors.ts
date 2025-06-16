@@ -1,7 +1,5 @@
-import { useThemeContext } from './context';
-import { useColorScheme } from './useColorScheme';
+import { useTheme } from './useTheme';
 import type { ConfigColorShades, ConfigColorModes } from '@consensys/ds3-theme';
-import { COLOR_MODES } from '@consensys/ds3-theme';
 
 type ColorKey = keyof ConfigColorModes['light'];
 type ShadeKey = keyof ConfigColorShades;
@@ -12,10 +10,13 @@ type ThemeColors = {
 };
 
 export function useThemeColors(): ThemeColors {
-  const { theme, config } = useThemeContext();
-  const { currentMode } = useColorScheme();
-  const currentTheme = config.themes[theme];
-  const colors = currentTheme.colors[currentMode];
+  const { theme, config, currentMode } = useTheme();
+  const currentTheme = config?.themes[theme];
+  const colors = currentTheme?.colors[currentMode];
+
+  if (!colors) {
+    return {} as ThemeColors;
+  }
 
   // Transform the colors object to make it easier to use
   const transformedColors = {} as ThemeColors;

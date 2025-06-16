@@ -6,21 +6,11 @@ export interface ThemeProps {
   theme?: ThemeName;
   mode?: ColorMode;
   className?: string;
-  useClass?: boolean;
 }
 
 export interface ThemeBaseProps extends ThemeProps {
   config: Config;
 }
-
-export type ThemeContextType = {
-  theme: ThemeName;
-  mode: ColorMode;
-  selectedMode: ColorMode;
-  setTheme: (theme: ThemeName) => void;
-  setMode: (mode: ColorMode) => void;
-  config: Config;
-};
 
 export type ThemeProviderProps = ThemeProps & {
   config: Config;

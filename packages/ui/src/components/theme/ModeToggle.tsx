@@ -1,17 +1,17 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { useThemeContext } from './context';
 import { COLOR_MODES } from "@consensys/ds3-theme";
 import { MoonStar, Sun, SunMoon } from "lucide-react-native";
 import { IconButton } from "../button";
+import { useTheme } from './useTheme';
 import type { ModeToggleProps } from './types';
 
 export const ModeToggle = React.forwardRef<View, ModeToggleProps>(
   ({ className }, ref) => {
-    const { selectedMode, setMode } = useThemeContext();
+    const { mode, setMode } = useTheme();
 
     const cycleMode = () => {
-      switch (selectedMode) {
+      switch (mode) {
         case COLOR_MODES.Light:
           setMode(COLOR_MODES.Dark);
           break;
@@ -24,7 +24,7 @@ export const ModeToggle = React.forwardRef<View, ModeToggleProps>(
     };
 
     const getIcon = () => {
-      switch (selectedMode) {
+      switch (mode) {
         case COLOR_MODES.Dark:
           return MoonStar;
         case COLOR_MODES.Light:

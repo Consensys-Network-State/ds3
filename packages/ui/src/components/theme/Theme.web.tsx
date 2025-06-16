@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DEFAULT_MODE, DEFAULT_THEME } from "@consensys/ds3-theme";
 import { cn } from "../../utils";
-import { useThemeContext } from "./context";
+import { useTheme } from "./useTheme";
 import type { ThemeBaseProps, ThemeProps } from "./types";
 
 export const ThemeBase = React.forwardRef<HTMLDivElement, ThemeBaseProps>((props, ref) => {
@@ -24,12 +24,16 @@ export const ThemeBase = React.forwardRef<HTMLDivElement, ThemeBaseProps>((props
 ThemeBase.displayName = 'ThemeBase';
 
 export const Theme = React.forwardRef<HTMLDivElement, ThemeProps>((props, ref) => {
-  const { mode, theme, config } = useThemeContext();
+  const { currentMode, theme, config } = useTheme();
+
+  if (!config) {
+    return <div ref={ref} {...props} />;
+  }
 
   return (
     <ThemeBase
       ref={ref}
-      mode={mode}
+      mode={currentMode}
       theme={theme}
       config={config}
       {...props}

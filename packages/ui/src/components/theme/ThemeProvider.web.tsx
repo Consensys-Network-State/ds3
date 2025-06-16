@@ -1,14 +1,12 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import { DEFAULT_THEME, COLOR_MODES } from "@consensys/ds3-theme";
-import { PortalHost } from '@rn-primitives/portal';
-import { ThemeContext } from './context';
 import type { ThemeProviderProps } from './types';
-import { useColorScheme } from './useColorScheme';
+import { useTheme } from './useTheme';
 
 export const ThemeProvider = React.forwardRef<View, ThemeProviderProps>(
   ({ children, config }, ref) => {
-    const { theme, setTheme, mode, setMode, currentMode } = useColorScheme();
+    const { mode, currentMode, isLoaded, theme } = useTheme(config);
 
     React.useImperativeHandle(
       ref,
@@ -17,6 +15,8 @@ export const ThemeProvider = React.forwardRef<View, ThemeProviderProps>(
     );
 
     React.useEffect(() => {
+      if (!isLoaded) return;
+
       const root = document.documentElement;
       const themeClasses = Object.keys(config.themes);
       root.classList.remove(...themeClasses, COLOR_MODES.Light, COLOR_MODES.Dark, COLOR_MODES.System);
@@ -32,21 +32,13 @@ export const ThemeProvider = React.forwardRef<View, ThemeProviderProps>(
       } else if (mode) {
         root.classList.add(mode);
       }
-    }, [theme, currentMode, mode, config.themes]);
+    }, [theme, currentMode, mode, config.themes, isLoaded]);
 
-    return (
-      <ThemeContext.Provider value={{
-        theme,
-        mode: currentMode,
-        selectedMode: mode ?? COLOR_MODES.System,
-        setTheme,
-        setMode,
-        config
-      }}>
-        {children}
-        <PortalHost />
-      </ThemeContext.Provider>
-    );
+    if (!isLoaded) {
+      return null;
+    }
+
+    return children;
   }
 );
 
