@@ -1,7 +1,11 @@
+/**
+ * Theme configuration for DS3
+ * @see https://github.com/Consensys-Network-State/ds3/tree/main/packages/theme
+ * @type {import('@consensys/ds3-theme').UserConfig}
+ */
 module.exports = {
   themes: {
     default: {
-      // use any radix colors - https://www.radix-ui.com/colors
       colors: {
         neutral: 'gray',
         primary: 'blue',
@@ -9,7 +13,6 @@ module.exports = {
         error: 'red',
         warning: 'amber',
         success: 'green',
-        // add custom schemes here
       },
     },
     oceanBreeze: {
