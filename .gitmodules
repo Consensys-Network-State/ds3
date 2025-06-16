@@ -1,3 +1,9 @@
-[submodule "apoc"]
-	path = apps/apoc
-	url = git@github.com:ConsenSysMesh/apoc.git
+[submodule "apps/ds3-vite-template"]
+	path = apps/ds3-vite-template
+	url = git@github.com:Consensys-Network-State/ds3-vite-template.git
+	branch = monorepo
+
+[submodule "apps/ds3-expo-template"]
+	path = apps/ds3-expo-template
+	url = git@github.com:Consensys-Network-State/ds3-expo-template.git
+	branch = monorepo
