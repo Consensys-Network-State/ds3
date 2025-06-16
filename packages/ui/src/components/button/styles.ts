@@ -95,10 +95,15 @@ export const buttonTextVariants = cva(
       },
     },
     compoundVariants: [
-      { variant: ['elevated', 'solid'], class: 'text-white' },
-      { variant: ['elevated', 'solid'], color: 'warning', class: 'text-neutral-12' },
+      { variant: ['elevated', 'solid'], color: 'neutral', class: 'text-neutral-contrast' },
+      { variant: ['elevated', 'solid'], color: 'primary', class: 'text-primary-contrast' },
+      { variant: ['elevated', 'solid'], color: 'secondary', class: 'text-secondary-contrast' },
+      { variant: ['elevated', 'solid'], color: 'error', class: 'text-error-contrast' },
+      { variant: ['elevated', 'solid'], color: 'warning', class: 'text-warning-contrast' },
+      { variant: ['elevated', 'solid'], color: 'success', class: 'text-success-contrast' },
     ],
     defaultVariants: {
+      variant: 'elevated',
       color: 'neutral',
       size: 'md',
     },
