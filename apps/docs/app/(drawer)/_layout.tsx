@@ -1,11 +1,9 @@
 import { Drawer } from 'expo-router/drawer';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { Colors } from '@/constants/Colors';
 import { View } from 'react-native';
-import { ModeToggle, ThemeSwitcher } from "@consensys/ds3";
+import { ModeToggle, ThemeSwitcher, useThemeColors } from "@consensys/ds3";
 
 export default function DrawerLayout() {
-  const colorScheme = useColorScheme();
+  const colors = useThemeColors();
 
   const HeaderRight = () => (
     <View className="flex-row items-center gap-2 mr-4">
@@ -18,22 +16,22 @@ export default function DrawerLayout() {
     <Drawer
       screenOptions={{
         headerShown: true,
-        headerTintColor: Colors[colorScheme ?? 'light'].tint,
+        headerTintColor: colors.neutral12,
         headerTitleAlign: 'left',
         headerStyle: {
-          backgroundColor: Colors[colorScheme ?? 'light'].background,
-          borderBottomColor: colorScheme === 'dark' ? '#2A2B2C' : '#E6E6E6',
+          backgroundColor: colors.neutral1,
+          borderBottomColor: colors.neutral5,
           borderBottomWidth: 0.5,
         },
         headerRight: HeaderRight,
         drawerStyle: {
-          backgroundColor: Colors[colorScheme ?? 'light'].background,
+          backgroundColor: colors.neutral1,
         },
-        drawerActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        drawerInactiveTintColor: Colors[colorScheme ?? 'light'].text,
-        drawerActiveBackgroundColor: colorScheme === 'dark' ? '#2A2B2C' : '#F5F5F5',
+        drawerActiveTintColor: colors.primary11,
+        drawerInactiveTintColor: colors.neutral11,
+        drawerActiveBackgroundColor: colors.neutral3,
         drawerLabelStyle: {
-          color: Colors[colorScheme ?? 'light'].text,
+          color: colors.neutral12,
         },
       }}
     >
