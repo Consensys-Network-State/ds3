@@ -21,8 +21,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsup",
-    "dev": "tsup --watch",
-    "generate:colors": "tsx src/radix-colors/generateAllPalettes.ts"
+    "dev": "tsup --watch"
   },
   "keywords": [],
   "author": "",
@@ -37,10 +36,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.17.13",
-    "@types/node": "^20.11.30",
-    "tsx": "^4.7.1",
-    "tsup": "^8.3.5",
-    "typescript": "^5.4.2"
+    "tsup": "^8.3.5"
   },
   "publishConfig": {
     "access": "public"
