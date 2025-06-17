@@ -5,6 +5,8 @@ import { DEFAULT_THEME, ColorMode, COLOR_MODES, Config } from "@consensys/ds3-th
 import { create } from 'zustand';
 import { persist, PersistStorage } from 'zustand/middleware';
 
+const DEBUG = false;
+
 export type ColorScheme = typeof COLOR_MODES.Light | typeof COLOR_MODES.Dark;
 
 interface ThemeState {
@@ -20,36 +22,40 @@ interface ThemeState {
   setConfig: (config: Config) => void;
 }
 
-type PersistedState = Pick<ThemeState, 'theme' | 'mode' | 'currentMode'>;
+type PersistedState = Pick<ThemeState, 'theme' | 'mode'>;
 
 const STORAGE_KEY = '@ds3-theme';
+
+const isValidMode = (mode: any): mode is ColorMode => {
+  return mode === COLOR_MODES.Light || mode === COLOR_MODES.Dark || mode === COLOR_MODES.System;
+};
 
 const useThemeStore = create<ThemeState>()(
   persist(
     (set, get) => ({
       theme: DEFAULT_THEME,
       mode: COLOR_MODES.System,
-      currentMode: 'light',
+      currentMode: COLOR_MODES.Light,
       isLoaded: false,
       config: undefined,
       setTheme: (theme) => {
         const current = get().theme;
         if (current !== theme) {
-          // console.log('🔄 Theme changing to:', theme);
+          if (DEBUG) console.log('🔄 Theme chanrging to:', theme);
           set({ theme });
         }
       },
       setMode: (mode) => {
         const current = get().mode;
         if (current !== mode) {
-          // console.log('🔄 Mode changing to:', mode);
+          if (DEBUG) console.log('🔄 Mode changing to:', mode);
           set({ mode });
         }
       },
       setCurrentMode: (currentMode) => {
         const current = get().currentMode;
         if (current !== currentMode) {
-          // console.log('🔄 CurrentMode changing to:', currentMode);
+          if (DEBUG) console.log('🔄 CurrentMode changing to:', currentMode);
           set({ currentMode });
         }
       },
@@ -62,8 +68,15 @@ const useThemeStore = create<ThemeState>()(
       setConfig: (config) => {
         const current = get().config;
         if (current !== config) {
-          // console.log('🔄 Config changing to:', config?.themes ? Object.keys(config.themes) : 'undefined');
+          if (DEBUG) console.log('🔄 Config changing to:', config?.themes ? Object.keys(config.themes) : 'undefined');
           set({ config });
+
+          // Prevent invalid theme in local storage
+          const state = get();
+          const validTheme = config?.themes[state.theme] ? state.theme : DEFAULT_THEME;
+          if (state.theme !== validTheme) {
+            set({ theme: validTheme });
+          }
         }
       },
     }),
@@ -78,6 +91,17 @@ const useThemeStore = create<ThemeState>()(
             try {
               const parsed = JSON.parse(value);
               if (!parsed.state) return null;
+
+              // Prevent invalid mode in local storage
+              const state = parsed.state;
+              if (!isValidMode(state.mode)) {
+                state.mode = COLOR_MODES.System;
+              }
+              
+              // Set currentMode based on mode
+              if (state.mode !== COLOR_MODES.System) {
+                state.currentMode = state.mode as ColorScheme;
+              }
 
               return {
                 state: parsed.state,
@@ -101,7 +125,6 @@ const useThemeStore = create<ThemeState>()(
       partialize: (state) => ({
         theme: state.theme,
         mode: state.mode,
-        currentMode: state.currentMode,
       }),
     }
   )
@@ -129,27 +152,16 @@ export const useTheme = (config?: Config) => {
     }
   }, [config, setConfig]);
 
-  // Validate theme before using it
-  const validTheme = React.useMemo(() => {
-    const currentConfig = config || storedConfig;
-    if (!currentConfig) return theme;
-    return currentConfig.themes[theme] ? theme : DEFAULT_THEME;
-  }, [theme, config, storedConfig]);
-
-  // Update theme if it's invalid
-  React.useEffect(() => {
-    if (theme !== validTheme) {
-      setTheme(validTheme);
-    }
-  }, [theme, validTheme, setTheme]);
-
-  // Update currentMode based on system preference when in system mode
+  // Sync currentMode with system preference when in system mode
+  // This ensures the UI stays in sync with system theme changes
   React.useEffect(() => {
     if (mode === COLOR_MODES.System && colorScheme) {
       setCurrentMode(colorScheme as ColorScheme);
     }
   }, [colorScheme, mode]);
 
+  // Initialize theme system on mount
+  // Sets up initial color scheme and marks theme system as ready
   React.useEffect(() => {
     if (!isLoaded) {
       setColorScheme(mode);
@@ -157,6 +169,9 @@ export const useTheme = (config?: Config) => {
     }
   }, [isLoaded, mode, setColorScheme, setLoaded]);
 
+  // Handle theme mode changes
+  // For system mode: use system preference
+  // For light/dark: use selected mode directly
   const handleModeChange = React.useCallback((newMode: ColorMode) => {
     setMode(newMode);
     if (newMode === COLOR_MODES.System) {
@@ -168,7 +183,7 @@ export const useTheme = (config?: Config) => {
   }, [colorScheme, setColorScheme]);
 
   return {
-    theme: validTheme,
+    theme,
     mode,
     currentMode,
     isLoaded,
