@@ -197,18 +197,9 @@ importers:
       '@types/lodash':
         specifier: ^4.17.13
         version: 4.17.17
-      '@types/node':
-        specifier: ^20.11.30
-        version: 20.19.0
       tsup:
         specifier: ^8.3.5
         version: 8.5.0(jiti@1.21.7)(postcss@8.5.3)(tsx@4.20.3)(typescript@5.6.3)(yaml@2.8.0)
-      tsx:
-        specifier: ^4.7.1
-        version: 4.20.3
-      typescript:
-        specifier: ^5.4.2
-        version: 5.6.3
 
   packages/ui:
     dependencies:
@@ -10745,7 +10736,6 @@ snapshots:
   '@types/node@22.15.21':
     dependencies:
       undici-types: 6.21.0
-    optional: true
 
   '@types/prop-types@15.7.14': {}
 
@@ -13002,6 +12992,7 @@ snapshots:
   get-tsconfig@4.10.1:
     dependencies:
       resolve-pkg-maps: 1.0.0
+    optional: true
 
   getenv@1.0.0: {}
 
@@ -13700,7 +13691,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 20.19.0
+      '@types/node': 22.15.21
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -15165,7 +15156,8 @@ snapshots:
 
   resolve-from@5.0.0: {}
 
-  resolve-pkg-maps@1.0.0: {}
+  resolve-pkg-maps@1.0.0:
+    optional: true
 
   resolve-workspace-root@2.0.0: {}
 
@@ -15755,6 +15747,7 @@ snapshots:
       get-tsconfig: 4.10.1
     optionalDependencies:
       fsevents: 2.3.3
+    optional: true
 
   type-detect@4.0.8: {}
 
