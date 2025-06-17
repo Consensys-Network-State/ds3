@@ -141,13 +141,14 @@ export {
   Theme,
   ThemeSwitcher,
   ModeToggle,
-  useThemeContext,
+  useThemeColors,
+  useTheme,
+  useColorScheme,
 } from './components/theme';
 
 export type {
   ThemeProps,
   ThemeBaseProps,
-  ThemeContextType,
   ThemeProviderProps,
   ThemeSwitcherProps,
   ModeToggleProps,

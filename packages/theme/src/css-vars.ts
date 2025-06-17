@@ -14,6 +14,7 @@ export const generateShadowCssVar = (name: string): CssVariable => (`--shadow-${
 export const generateColorCssVars = (color: string): ConfigColorShades => {
   const vars: ConfigColorShades = {};
 
+  // Add base colors
   for (let i = 1; i <= 12; i++) {
     if (i === 1) {
       vars['DEFAULT'] = `var(${generateColorCssVar(color, 6)})`;
@@ -21,6 +22,12 @@ export const generateColorCssVars = (color: string): ConfigColorShades => {
     vars[i] = `var(${generateColorCssVar(color, i)})`;
     vars[`a${i}`] = `var(${generateColorCssVar(color, `a${i}`)})`;
   }
+
+  // Add utility colors
+  vars.contrast = `var(${generateColorCssVar(color, 'contrast')})`;
+  vars.surface = `var(${generateColorCssVar(color, 'surface')})`;
+  vars.indicator = `var(${generateColorCssVar(color, 'indicator')})`;
+  vars.track = `var(${generateColorCssVar(color, 'track')})`;
 
   return vars;
 };

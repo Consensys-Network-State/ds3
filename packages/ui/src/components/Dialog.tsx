@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Platform, StyleSheet, View, type ViewProps } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { cn } from '../utils';
-import { useThemeContext } from "./theme";
 import { X } from 'lucide-react-native';
 import { Icon } from './icon';
 
@@ -64,10 +63,9 @@ const DialogContent = React.forwardRef<
   DialogPrimitive.ContentProps & { portalHost?: string }
 >(({ className, children, portalHost, ...props }, ref) => {
   const { open } = DialogPrimitive.useRootContext();
-  const { containerRef } = useThemeContext();
 
   return (
-    <DialogPortal hostName={portalHost} container={containerRef.current as HTMLElement | null}>
+    <DialogPortal hostName={portalHost}>
       <DialogOverlay>
         <DialogPrimitive.Content
           ref={ref}

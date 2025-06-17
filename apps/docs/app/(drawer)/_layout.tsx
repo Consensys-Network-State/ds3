@@ -1,11 +1,10 @@
 import { Drawer } from 'expo-router/drawer';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { Colors } from '@/constants/Colors';
 import { View } from 'react-native';
-import { ModeToggle, ThemeSwitcher } from "@consensys/ds3/src";
+import { ModeToggle, ThemeSwitcher, useThemeColors, Button, openLink } from "@consensys/ds3";
+import { Github } from 'lucide-react-native';
 
 export default function DrawerLayout() {
-  const colorScheme = useColorScheme();
+  const colors = useThemeColors();
 
   const HeaderRight = () => (
     <View className="flex-row items-center gap-2 mr-4">
@@ -18,11 +17,19 @@ export default function DrawerLayout() {
     <Drawer
       screenOptions={{
         headerShown: true,
-        headerTintColor: Colors[colorScheme ?? 'light'].tint,
+        headerTintColor: colors.neutral12,
+        headerTitleAlign: 'left',
         headerStyle: {
-          backgroundColor: Colors[colorScheme ?? 'light'].background,
+          backgroundColor: colors.neutral1,
+          borderBottomColor: colors.neutral5,
+          borderBottomWidth: 1,
         },
-        headerRight: HeaderRight
+        headerRight: HeaderRight,
+        drawerStyle: {
+          backgroundColor: colors.neutral1,
+        },
+        drawerActiveTintColor: colors.primary11,
+        drawerInactiveTintColor: colors.neutral11,
       }}
     >
       <Drawer.Screen
