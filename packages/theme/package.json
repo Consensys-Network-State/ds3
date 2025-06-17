@@ -2,6 +2,11 @@
   "name": "@consensys/ds3-theme",
   "version": "0.0.3",
   "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Consensys-Network-State/ds3.git",
+    "directory": "packages/theme"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
