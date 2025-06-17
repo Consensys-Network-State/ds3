@@ -26,17 +26,46 @@ const STORAGE_KEY = '@ds3-theme';
 
 const useThemeStore = create<ThemeState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       theme: DEFAULT_THEME,
       mode: COLOR_MODES.System,
       currentMode: 'light',
       isLoaded: false,
       config: undefined,
-      setTheme: (theme) => set({ theme }),
-      setMode: (mode) => set({ mode }),
-      setCurrentMode: (currentMode) => set({ currentMode }),
-      setLoaded: (isLoaded) => set({ isLoaded }),
-      setConfig: (config) => set({ config }),
+      setTheme: (theme) => {
+        const current = get().theme;
+        if (current !== theme) {
+          // console.log('🔄 Theme changing to:', theme);
+          set({ theme });
+        }
+      },
+      setMode: (mode) => {
+        const current = get().mode;
+        if (current !== mode) {
+          // console.log('🔄 Mode changing to:', mode);
+          set({ mode });
+        }
+      },
+      setCurrentMode: (currentMode) => {
+        const current = get().currentMode;
+        if (current !== currentMode) {
+          // console.log('🔄 CurrentMode changing to:', currentMode);
+          set({ currentMode });
+        }
+      },
+      setLoaded: (isLoaded) => {
+        const current = get().isLoaded;
+        if (current !== isLoaded) {
+          set({ isLoaded });
+        }
+      },
+      setConfig: (config) => {
+        const current = get().config;
+        if (current !== config) {
+          // console.log('🔄 Config changing to:', config?.themes ? Object.keys(config.themes) : 'undefined');
+          set({ config });
+        }
+      },
     }),
     {
       name: STORAGE_KEY,
