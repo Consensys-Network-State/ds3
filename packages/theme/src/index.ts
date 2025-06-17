@@ -6,5 +6,4 @@ export * from './shadows.js';
 export * from './css-vars.js';
 export * from './utils.js';
 export * from './tailwind.preset.js';
-export * from './radix-colors/generateRadixColors.js';
-export * from './radix-colors/index.js';
+export * from './radix';

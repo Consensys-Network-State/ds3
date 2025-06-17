@@ -1,10 +1,5 @@
-import * as radixColors from './radix-colors';
 import { COLOR_MODES } from "./constants.js";
-
-type ExcludeColorVariants<T extends string> = T extends `${infer Base}${'A' | 'DarkA' | 'Dark'}` ? never : T;
-
-export type RadixColorKeys = keyof typeof radixColors;
-export type SupportedRadixColorKeys = ExcludeColorVariants<keyof typeof radixColors>;
+import type { RadixColorName } from "./radix";
 
 export type CssVariable = `--${string}`;
 export type alphaColor = `a${string}`;
@@ -63,7 +58,7 @@ export type GeneratedColorConfig = {
 };
 
 export type ColorConfig = 
-  | SupportedRadixColorKeys  // Radix color name
+  | RadixColorName  // Radix color name
   | GeneratedColorConfig     // Generated color
   | {                        // Custom palette
       light: ConfigColorShades;
