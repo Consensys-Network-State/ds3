@@ -3,7 +3,7 @@ import { useColorScheme } from 'nativewind';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DEFAULT_THEME, ColorMode, COLOR_MODES, Config } from "@consensys/ds3-theme";
 import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+import { persist, PersistStorage } from 'zustand/middleware';
 
 export type ColorScheme = typeof COLOR_MODES.Light | typeof COLOR_MODES.Dark;
 
@@ -20,6 +20,10 @@ interface ThemeState {
   setConfig: (config: Config) => void;
 }
 
+type PersistedState = Pick<ThemeState, 'theme' | 'mode' | 'currentMode'>;
+
+const STORAGE_KEY = '@ds3-theme';
+
 const useThemeStore = create<ThemeState>()(
   persist(
     (set) => ({
@@ -35,12 +39,40 @@ const useThemeStore = create<ThemeState>()(
       setConfig: (config) => set({ config }),
     }),
     {
-      name: '@ds3-theme',
-      storage: createJSONStorage(() => AsyncStorage),
-      partialize: (state) => ({ 
-        theme: state.theme, 
+      name: STORAGE_KEY,
+      storage: {
+        getItem: async (name) => {
+          try {
+            const value = await AsyncStorage.getItem(name);
+            if (!value) return null;
+
+            try {
+              const parsed = JSON.parse(value);
+              if (!parsed.state) return null;
+
+              return {
+                state: parsed.state,
+                version: parsed.version || 0
+              };
+            } catch (parseError) {
+              return null;
+            }
+          } catch (error) {
+            return null;
+          }
+        },
+        setItem: async (name, value) => {
+          const stringified = JSON.stringify(value);
+          await AsyncStorage.setItem(name, stringified);
+        },
+        removeItem: async (name) => {
+          await AsyncStorage.removeItem(name);
+        },
+      } as PersistStorage<PersistedState>,
+      partialize: (state) => ({
+        theme: state.theme,
         mode: state.mode,
-        currentMode: state.currentMode 
+        currentMode: state.currentMode,
       }),
     }
   )
@@ -71,7 +103,7 @@ export const useTheme = (config?: Config) => {
   // Validate theme before using it
   const validTheme = React.useMemo(() => {
     const currentConfig = config || storedConfig;
-    if (!currentConfig) return DEFAULT_THEME;
+    if (!currentConfig) return theme;
     return currentConfig.themes[theme] ? theme : DEFAULT_THEME;
   }, [theme, config, storedConfig]);
 
@@ -115,4 +147,4 @@ export const useTheme = (config?: Config) => {
     setTheme,
     setMode: handleModeChange
   };
-}; 
+};
