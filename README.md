@@ -61,14 +61,6 @@ The packages follow a layered architecture:
 3. **ui** → UI components (depends on theme)
 4. **web3** → Blockchain components (depends on ui)
 
-### Template Repositories
-
-- **[ds3-vite-template](https://github.com/Consensys-Network-State/ds3-vite-template)** - Official Vite.js template with DS3 setup
-- **[ds3-expo-template](https://github.com/Consensys-Network-State/ds3-expo-template)** - Official React Native/Expo template with DS3 setup
-- **[docs](apps/docs)** - Documentation site
-
-> Next.js template with DS3 setup is coming soon!
-
 ## Usage
 
 ### Installation
@@ -95,11 +87,37 @@ pnpm theme:build
 pnpm config:build
 ```
 
-### Running Docs
+### Documentation
 
-Start documentation site:
+The interactive documentation and component examples are available in the [docs](apps/docs) app.
+
+Start the documentation site:
 ```bash
 pnpm docs:start
+```
+
+### Template Projects
+
+We provide official templates to help you get started:
+
+- **[Vite Template](https://github.com/Consensys-Network-State/ds3-vite-template)** - Production-ready Vite.js setup
+- **[Expo Template](https://github.com/Consensys-Network-State/ds3-expo-template)** - React Native/Expo setup
+- **Next.js Template** - _Coming soon!_ 🚧
+
+To use these template projects within the monorepo, first clone with the `--recursive` flag to include the template submodules:
+
+```bash
+git clone --recursive https://github.com/Consensys-Network-State/ds3.git ds3             
+```
+
+Then you can run the templates:
+
+```bash
+# Start Vite template
+pnpm --filter vite-template dev
+
+# Start Expo template
+pnpm --filter expo-template start
 ```
 
 ### Maintenance
