@@ -30,6 +30,7 @@ This monorepo contains shared packages and applications built with those package
 **[@consensys/ds3-config](packages/config)** - Build configuration layer
   - Unified configuration layer for the DS3 ecosystem
   - Vite plugin and configuration presets
+  - Next.js configuration with React Native Web support
   - Expo and React Native setup (Babel, Metro)
   - TailwindCSS and NativeWind integration
   - Runtime theme injection system
