@@ -1,5 +1,11 @@
 # @consensys/ds3
 
+## 0.0.4
+
+### Patch Changes
+
+- Fixing build
+
 ## 0.0.3
 
 ### Patch Changes

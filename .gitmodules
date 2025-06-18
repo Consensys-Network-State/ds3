@@ -1,4 +1,4 @@
-[submodule "apps/ds3-vite-template"]Add commentMore actions
+[submodule "apps/ds3-vite-template"]
 	path = apps/ds3-vite-template
 	url = git@github.com:Consensys-Network-State/ds3-vite-template.git
 	branch = monorepo
