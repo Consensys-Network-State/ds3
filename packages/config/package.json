@@ -35,6 +35,11 @@
       "types": "./dist/metro.config.d.ts",
       "require": "./dist/metro.config.cjs",
       "import": "./dist/metro.config.js"
+    },
+    "./nextjs": {
+      "types": "./dist/nextjs.config.d.ts",
+      "require": "./dist/nextjs.config.cjs",
+      "import": "./dist/nextjs.config.js"
     }
   },
   "files": [

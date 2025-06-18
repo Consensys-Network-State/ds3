@@ -1,8 +1,7 @@
 import ds3 from "@consensys/ds3-config/nativewind";
-import themeConfig from "./theme.config";
+import themeConfig from "./theme.config.mjs";
 
 const config = {
-  darkMode: 'class',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -11,4 +10,5 @@ const config = {
   ],
   presets: [ds3(themeConfig)],
 };
+
 export default config;

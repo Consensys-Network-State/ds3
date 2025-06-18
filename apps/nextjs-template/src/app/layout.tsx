@@ -1,7 +1,5 @@
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider } from '@consensys/ds3';
-import { generateConfig } from '@consensys/ds3-theme';
-import themeConfig from '../../theme.config';
 import './globals.css';
 
 export default function RootLayout({
@@ -13,7 +11,7 @@ export default function RootLayout({
     <html lang='en'>
       <body>
         <SafeAreaProvider>
-          <ThemeProvider config={generateConfig(themeConfig)}>
+          <ThemeProvider config={global.DS3}>
             {children}
           </ThemeProvider>
         </SafeAreaProvider>
