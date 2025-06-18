@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { DEFAULT_MODE, DEFAULT_THEME } from "@consensys/ds3-theme";
 import { cn } from "../../utils";

@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { View } from 'react-native';
 import { DEFAULT_THEME, COLOR_MODES } from "@consensys/ds3-theme";

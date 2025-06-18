@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { useColorScheme } from 'nativewind';
 import AsyncStorage from '@react-native-async-storage/async-storage';
