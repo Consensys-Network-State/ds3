@@ -1,6 +1,11 @@
 import type { NextConfig } from 'next';
 import type { Configuration } from 'webpack';
+import type { Config } from '@consensys/ds3-theme';
 import { generateConfig } from '@consensys/ds3-theme';
+
+declare global {
+  var DS3: Config;
+}
 
 type WebpackConfigContext = {
   webpack: typeof import('webpack');
