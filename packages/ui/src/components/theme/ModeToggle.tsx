@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from 'react';
 import { View } from 'react-native';
 import { COLOR_MODES } from "@consensys/ds3-theme";
