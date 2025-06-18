@@ -101,8 +101,8 @@ pnpm docs:start
 We provide official templates to help you get started:
 
 - **[Vite Template](https://github.com/Consensys-Network-State/ds3-vite-template)** - Production-ready Vite.js setup
+- **[Next.js Template](https://github.com/Consensys-Network-State/ds3-nextjs-template)** - Production-ready Next.js setup
 - **[Expo Template](https://github.com/Consensys-Network-State/ds3-expo-template)** - React Native/Expo setup
-- **Next.js Template** - _Coming soon!_ 🚧
 
 To use these template projects within the monorepo, first clone with the `--recursive` flag to include the template submodules:
 
@@ -117,10 +117,13 @@ Then you can run the templates:
 pnpm i
 
 # Start Vite template
-pnpm --filter vite-example dev
+pnpm --filter vite-template dev
+
+# Start Next.js template
+pnpm --filter nextjs-template dev
 
 # Start Expo template
-pnpm --filter expo-example start
+pnpm --filter expo-template start
 ```
 
 ### Maintenance
