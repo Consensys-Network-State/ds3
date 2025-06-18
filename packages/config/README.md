@@ -99,7 +99,7 @@ const theme = import.meta.env.DS3;
 ```
 
 See [vite.plugin.ts](src/vite.plugin.ts) for implementation details.
-See [vite.config.ts](../../apps/vite-example/vite.config.ts) for usage example.
+See [vite.config.ts](https://github.com/Consensys-Network-State/ds3-vite-template/blob/main/vite.config.ts) for usage example.
 
 ### NativeWind Preset
 
@@ -121,7 +121,7 @@ export default {
 ```
 
 See [nativewind.preset.ts](src/nativewind.preset.ts) for implementation details.
-See [tailwind.config.js](../../apps/vite-example/tailwind.config.js) for usage example.
+See [tailwind.config.js](https://github.com/Consensys-Network-State/ds3-vite-template/blob/main/tailwind.config.js) for usage example.
 
 ### Expo Configuration
 
@@ -148,7 +148,7 @@ const theme = global.DS3;
 ```
 
 See [expo.preset.ts](src/expo.preset.ts) for implementation details.
-See [app.config.js](../../apps/expo-example/app.config.js) for usage example.
+See [app.config.js](https://github.com/Consensys-Network-State/ds3-expo-template/blob/main/app.config.js) for usage example.
 
 ### Babel Configuration
 
@@ -168,7 +168,7 @@ The babel preset automatically configures:
 - Proper JSX handling for React Native
 
 See [babel.preset.ts](src/babel.preset.ts) for implementation details.
-See [babel.config.js](../../apps/expo-example/babel.config.js) for usage example.
+See [babel.config.js](https://github.com/Consensys-Network-State/ds3-expo-template/blob/main/babel.config.js) for usage example.
 
 ### Metro Configuration
 
@@ -190,11 +190,42 @@ The Metro configuration:
 - Optimizes build performance
 
 See [metro.config.ts](src/metro.config.ts) for implementation details.
-See [metro.config.js](../../apps/expo-example/metro.config.js) for usage example.
+See [metro.config.js](https://github.com/Consensys-Network-State/ds3-expo-template/blob/main/metro.config.js) for usage example.
+
+### Next.js Configuration
+
+Next.js-specific configuration for web development with React Native Web support:
+
+```javascript
+// next.config.mjs
+import themeConfig from './theme.config.mjs';
+import { withDs3 } from '@consensys/ds3-config/nextjs';
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {};
+
+export default withDs3(nextConfig, themeConfig);
+```
+
+The Next.js configuration:
+- Enables React Native Web support with proper module resolution
+- Configures transpilation for React Native and related packages
+- Injects the theme into `global.DS3` for runtime access
+- Sets up webpack with optimized defaults for DS3 components
+- Maintains strict mode and SWC minification
+
+You can access the theme configuration in your application using:
+```typescript
+const theme = global.DS3;
+```
+
+See [nextjs.config.ts](src/nextjs.config.ts) for implementation details.
+See [next.config.mjs](https://github.com/Consensys-Network-State/ds3-nextjs-template/blob/main/next.config.mjs) for usage example.
 
 For complete examples, see:
-- [Vite Example](../../apps/vite-example) - Web implementation
-- [Expo Example](../../apps/expo-example) - React Native implementation
+- [Vite Template](https://github.com/Consensys-Network-State/ds3-vite-template) - Web implementation
+- [Next.js Template](https://github.com/Consensys-Network-State/ds3-nextjs-template) - Next.js implementation with React Native Web
+- [Expo Template](https://github.com/Consensys-Network-State/ds3-expo-template) - React Native implementation
 
 ## 🏛️ Architecture
 
