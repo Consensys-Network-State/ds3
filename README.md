@@ -113,11 +113,14 @@ git clone --recursive https://github.com/Consensys-Network-State/ds3.git ds3
 Then you can run the templates:
 
 ```bash
+# Install dependencies
+pnpm i
+
 # Start Vite template
-pnpm --filter vite-template dev
+pnpm --filter vite-example dev
 
 # Start Expo template
-pnpm --filter expo-template start
+pnpm --filter expo-example start
 ```
 
 ### Maintenance
