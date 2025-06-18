@@ -2,5 +2,3 @@ node_modules
 dist
 .idea
 pnpm-debug.log*
-apps/ds3-vite-template
-apps/ds3-expo-template

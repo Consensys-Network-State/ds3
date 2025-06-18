@@ -6,3 +6,7 @@
 	path = apps/expo-template
 	url = https://github.com/Consensys-Network-State/ds3-expo-template
 	branch = monorepo
+[submodule "apps/nextjs-template"]
+	path = apps/nextjs-template
+	url = https://github.com/Consensys-Network-State/ds3-nextjs-template
+	branch = monorepo
