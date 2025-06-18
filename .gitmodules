@@ -1,9 +1,8 @@
-[submodule "apps/ds3-vite-template"]
-	path = apps/ds3-vite-template
-	url = git@github.com:Consensys-Network-State/ds3-vite-template.git
+[submodule "apps/vite-template"]
+	path = apps/vite-template
+	url = https://github.com/Consensys-Network-State/ds3-vite-template
 	branch = monorepo
-
-[submodule "apps/ds3-expo-template"]
-	path = apps/ds3-expo-template
-	url = git@github.com:Consensys-Network-State/ds3-expo-template.git
+[submodule "apps/expo-template"]
+	path = apps/expo-template
+	url = https://github.com/Consensys-Network-State/ds3-expo-template
 	branch = monorepo
