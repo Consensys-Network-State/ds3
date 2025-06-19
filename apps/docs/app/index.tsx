@@ -1,6 +1,7 @@
 import { View, ScrollView } from 'react-native';
 import { Text, Icon, ThemeIcon, Button } from '@consensys/ds3';
 import { openLink } from '@consensys/ds3';
+import { useNavigation } from 'expo-router';
 import {
   Zap,
   Globe,
@@ -11,65 +12,59 @@ import {
   Settings,
   Github,
   Earth,
+  Sparkles,
+  Code,
+  Smartphone,
+  Monitor,
+  Layers,
+  Puzzle,
+  Shield,
+  Rocket,
+  Star,
+  Heart,
+  Target,
+  Menu,
 } from 'lucide-react-native';
 
 export default function HomeScreen() {  
+  const navigation = useNavigation();
+  
   return (
     <ScrollView className="flex-1 bg-primary-1" contentContainerStyle={{ flexGrow: 1 }}>
       <View className="flex-1 items-center justify-center p-6">
         <View className="max-w-4xl w-full">
           <View className="flex flex-col items-center justify-center">
+            {/* Hero Section */}
             <View className="flex flex-row items-center justify-center gap-6 mb-6">
               <Icon icon={ThemeIcon} className="w-[150px] h-[150px]" />
             </View>
             
-            <Text size="4xl" weight="bold" className="mb-4 text-center">
-              DS3 Documentation
+            <Text size="4xl" weight="bold" className="mb-6 text-center">
+              Design System 3
             </Text>
             
-            <Text size="xl" color="neutral" className="max-w-2xl mx-auto mb-3 text-center text-neutral-11">
-              Explore the DS3 design system components and documentation.
+            <Text size="xl" color="neutral" className="max-w-3xl mx-auto mb-7 text-center text-neutral-11">
+              Build breathtaking interfaces for both web and React Native with a single component library that feels native everywhere. One import. Any platform. Native everywhere.
             </Text>
-            
-            <View className="border-t border-neutral-6 w-full max-w-lg mx-auto mb-8" />
-            
-            <View className="flex flex-row flex-wrap justify-center gap-4 mb-8 max-w-2xl mx-auto px-4">
-              <View className="flex flex-row items-center gap-2 min-w-[120px]">
-                <Icon icon={Globe} size="md" color="primary" />
-                <Text size="base" weight="medium" color="neutral">Cross-platform</Text>
-              </View>
-              <View className="flex flex-row items-center gap-2 min-w-[120px]">
-                <Icon icon={Waves} size="md" color="secondary" />
-                <Text size="base" weight="medium" color="neutral">NativeWind styling</Text>
-              </View>
-              <View className="flex flex-row items-center gap-2 min-w-[120px]">
-                <Icon icon={Earth} size="md" color="success" />
-                <Text size="base" weight="medium" color="neutral">Accessible</Text>
-              </View>
-              <View className="flex flex-row items-center gap-2 min-w-[120px]">
-                <Icon icon={Palette} size="md" color="warning" />
-                <Text size="base" weight="medium" color="neutral">Advanced theming</Text>
-              </View>
-              <View className="flex flex-row items-center gap-2 min-w-[120px]">
-                <Icon icon={Zap} size="md" color="error" />
-                <Text size="base" weight="medium" color="neutral">Web3 ready</Text>
-              </View>
-              <View className="flex flex-row items-center gap-2 min-w-[120px]">
-                <Icon icon={Settings} size="md" color="neutral" />
-                <Text size="base" weight="medium" color="neutral">Fully Customizable</Text>
-              </View>
+
+            {/* Code Example */}
+            <View className="bg-neutral-3 rounded-lg p-4 mb-8 max-w-2xl mx-auto">
+              <Text size="sm" color="neutral" className="text-neutral-11 font-mono">
+                <Text size="sm" color="primary" className="font-mono">import</Text> {'{'} Button, Input, Icon {'}'} <Text size="sm" color="primary" className="font-mono">from</Text> <Text size="sm" color="warning" className="font-mono">'@consensys/ds3'</Text>;
+              </Text>
             </View>
 
-            <View className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            {/* CTA Buttons */}
+            <View className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
               <Button 
                 variant="solid" 
                 color="primary" 
                 size="lg"
                 className="self-center"
-                onPress={() => openLink('https://github.com/Consensys-Network-State/ds3/tree/main/packages/ui#-component-library')}
+                onPress={() => (navigation as any).openDrawer?.()}
               >
                 <Button.Icon icon={BookOpen} />
-                <Button.Text>Component Library</Button.Text>
+                <Button.Text>Explore Components</Button.Text>
               </Button>
               
               <Button 
@@ -83,41 +78,155 @@ export default function HomeScreen() {
                 <Button.Text>View on Github</Button.Text>
               </Button>
             </View>
+            
+            <View className="border-t border-neutral-6 w-full max-w-lg mx-auto mb-8" />
+            
+            {/* Key Features Grid */}
+            <View className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
+              {/* Cross-Platform */}
+              <View className="bg-neutral-2 rounded-lg p-6 border border-neutral-5">
+                <View className="flex flex-row items-center gap-3 mb-3">
+                  <Icon icon={Globe} size="lg" color="primary" />
+                  <Text size="lg" weight="bold" color="primary">True Cross-Platform</Text>
+                </View>
+                <Text size="sm" color="neutral" className="text-neutral-11">
+                  Components work natively on web and React Native with platform-specific optimizations
+                </Text>
+              </View>
+
+              {/* Dual API */}
+              <View className="bg-neutral-2 rounded-lg p-6 border border-neutral-5">
+                <View className="flex flex-row items-center gap-3 mb-3">
+                  <Icon icon={Code} size="lg" color="secondary" />
+                  <Text size="lg" weight="bold" color="secondary">Dual API System</Text>
+                </View>
+                <Text size="sm" color="neutral" className="text-neutral-11">
+                  Use familiar web APIs or React Native patterns - your choice, no compromise
+                </Text>
+              </View>
+
+              {/* Compound Components */}
+              <View className="bg-neutral-2 rounded-lg p-6 border border-neutral-5">
+                <View className="flex flex-row items-center gap-3 mb-3">
+                  <Icon icon={Puzzle} size="lg" color="success" />
+                  <Text size="lg" weight="bold" color="success">Compound Components</Text>
+                </View>
+                <Text size="sm" color="neutral" className="text-neutral-11">
+                  Simple by default, infinitely customizable when needed
+                </Text>
+              </View>
+
+              {/* Accessibility */}
+              <View className="bg-neutral-2 rounded-lg p-6 border border-neutral-5">
+                <View className="flex flex-row items-center gap-3 mb-3">
+                  <Icon icon={Shield} size="lg" color="warning" />
+                  <Text size="lg" weight="bold" color="warning">Accessibility Built-in</Text>
+                </View>
+                <Text size="sm" color="neutral" className="text-neutral-11">
+                  Ship inclusive experiences without extra effort
+                </Text>
+              </View>
+
+              {/* Universal SVG */}
+              <View className="bg-neutral-2 rounded-lg p-6 border border-neutral-5">
+                <View className="flex flex-row items-center gap-3 mb-3">
+                  <Icon icon={Star} size="lg" color="error" />
+                  <Text size="lg" weight="bold" color="error">Universal SVG</Text>
+                </View>
+                <Text size="sm" color="neutral" className="text-neutral-11">
+                  Use your favorite icon libraries seamlessly on any platform
+                </Text>
+              </View>
+
+              {/* Advanced Theming */}
+              <View className="bg-neutral-2 rounded-lg p-6 border border-neutral-5">
+                <View className="flex flex-row items-center gap-3 mb-3">
+                  <Icon icon={Palette} size="lg" color="neutral" />
+                  <Text size="lg" weight="bold" color="neutral">Advanced Theming</Text>
+                </View>
+                <Text size="sm" color="neutral" className="text-neutral-11">
+                  Powerful, customizable theming with dark/light mode and color schemes
+                </Text>
+              </View>
+            </View>
+
+            {/* Architectural Excellence Section */}
+            <View className="mb-12 max-w-4xl mx-auto">
+              <Text size="2xl" weight="bold" className="mb-6 text-center">
+                🏛️ Architectural Excellence
+              </Text>
+              <Text size="lg" color="neutral" className="mb-8 text-center text-neutral-11">
+                DS3 is built on six powerful architectural patterns that work together to deliver exceptional developer and user experiences
+              </Text>
+              
+              <View className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <View className="flex flex-row items-start gap-3 p-4">
+                  <Icon icon={Target} size="md" color="primary" className="mt-1 flex-shrink-0" />
+                  <View className="flex-1">
+                    <Text size="base" weight="bold" color="primary" className="mb-2">Platform Adaptation</Text>
+                    <Text size="sm" color="neutral" className="text-neutral-11 leading-relaxed">
+                      Components intelligently adapt to their environment while maintaining consistent APIs
+                    </Text>
+                  </View>
+                </View>
+                
+                <View className="flex flex-row items-start gap-3 p-4">
+                  <Icon icon={Layers} size="md" color="secondary" className="mt-1 flex-shrink-0" />
+                  <View className="flex-1">
+                    <Text size="base" weight="bold" color="secondary" className="mb-2">Framework Integration</Text>
+                    <Text size="sm" color="neutral" className="text-neutral-11 leading-relaxed">
+                      Consistent experience across Vite, Expo, Next.js and more
+                    </Text>
+                  </View>
+                </View>
+                
+                <View className="flex flex-row items-start gap-3 p-4">
+                  <Icon icon={Heart} size="md" color="success" className="mt-1 flex-shrink-0" />
+                  <View className="flex-1">
+                    <Text size="base" weight="bold" color="success" className="mb-2">Accessibility By Default</Text>
+                    <Text size="sm" color="neutral" className="text-neutral-11 leading-relaxed">
+                      ARIA mapping, keyboard navigation, and screen reader optimization
+                    </Text>
+                  </View>
+                </View>
+                
+                <View className="flex flex-row items-start gap-3 p-4">
+                  <Icon icon={Sparkles} size="md" color="warning" className="mt-1 flex-shrink-0" />
+                  <View className="flex-1">
+                    <Text size="base" weight="bold" color="warning" className="mb-2">Unified Styling</Text>
+                    <Text size="sm" color="neutral" className="text-neutral-11 leading-relaxed">
+                      Tailwind CSS + NativeWind for styling that feels native everywhere
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+
+            {/* Platform Icons */}
+            <View className="flex flex-row items-center justify-center gap-8 mb-8">
+              <View className="flex flex-col items-center gap-2">
+                <Icon icon={Monitor} size="lg" color="primary" />
+                <Text size="sm" weight="medium" color="neutral">Web</Text>
+              </View>
+              <View className="flex flex-col items-center gap-2">
+                <Icon icon={Smartphone} size="lg" color="secondary" />
+                <Text size="sm" weight="medium" color="neutral">Mobile</Text>
+              </View>
+              <View className="flex flex-col items-center gap-2">
+                <Icon icon={Rocket} size="lg" color="success" />
+                <Text size="sm" weight="medium" color="neutral">Universal</Text>
+              </View>
+            </View>
           </View>
         </View>
       </View>
 
+      {/* Footer Links */}
       <View className="native:pb-20 pb-4">
         <View className="max-w-4xl mx-auto flex justify-center">
-          <View className="flex flex-row sm:gap-8 gap-2">
-            <Button
-              variant="ghost"
-              color="neutral"
-              className="flex items-center gap-2 text-base"
-              onPress={() => openLink('https://www.nativewind.dev/docs/getting-started/installation')}
-            >
-              <Button.Icon icon={Waves} />
-              <Button.Text>NativeWind</Button.Text>
-            </Button>
-            <Button
-              variant="ghost"
-              color="neutral"
-              className="flex items-center gap-2 text-base"
-              onPress={() => openLink('https://docs.expo.dev/')}
-            >
-              <Button.Icon icon={Triangle} />
-              <Button.Text>Expo</Button.Text>
-            </Button>
-            <Button
-              variant="ghost"
-              color="neutral"
-              className="flex items-center gap-2 text-base"
-              onPress={() => openLink('https://reactnative.dev/docs/getting-started')}
-            >
-              <Button.Icon icon={Globe} />
-              <Button.Text>React Native</Button.Text>
-            </Button>
-          </View>
+          <Text size="sm" color="neutral" className="text-neutral-11 text-center">
+            Made with ❤️ by Consensys
+          </Text>
         </View>
       </View>
     </ScrollView>
