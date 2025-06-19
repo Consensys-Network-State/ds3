@@ -12,6 +12,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Platform } from 'react-native';
 import type { ThemeSwitcherProps } from './types';
+import _ from 'lodash';
 
 export const ThemeSwitcher = ({ className }: ThemeSwitcherProps) => {
   const triggerRef = React.useRef<React.ElementRef<typeof SelectTrigger>>(null);
@@ -42,8 +43,8 @@ export const ThemeSwitcher = ({ className }: ThemeSwitcherProps) => {
         <SelectGroup>
           <SelectLabel>Themes</SelectLabel>
           {themeKeys.map((key) => (
-            <SelectItem label={key} value={key} key={key}>
-              {key}
+            <SelectItem label={_.lowerCase(key)} value={key} key={key}>
+              {_.lowerCase(key)}
             </SelectItem>
           ))}
         </SelectGroup>

@@ -143,6 +143,7 @@ export {
   Theme,
   ThemeSwitcher,
   ModeToggle,
+  ThemeIcon,
   useThemeColors,
   useTheme,
   useColorScheme,

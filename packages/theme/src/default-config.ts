@@ -10,6 +10,7 @@ const defaultConfig: UserConfig = {
         error: 'red',
         warning: 'amber',
         success: 'green',
+        info: 'cyan'
       },
       boxShadow: {
         elevated: {
