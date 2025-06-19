@@ -3,14 +3,14 @@ import type {
   ConfigColor,
   UserConfigColors,
   GeneratedColorConfig,
-} from './types.js';
+} from './types';
 import {
   RADIX_GENERATOR_DEFAULTS,
   RADIX_COLORS,
   generateRadixColors,
   getColorScaleObject
 } from './radix';
-import { COLOR_MODES } from './constants.js';
+import { COLOR_MODES } from './constants';
 
 export const generateColorValues = (colors: UserConfigColors, isDark: boolean = false): ConfigColor => {
   const vars: ConfigColor = {};

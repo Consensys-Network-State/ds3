@@ -1,4 +1,4 @@
-import { COLOR_MODES } from "./constants.js";
+import { COLOR_MODES } from "./constants";
 import type { RadixColorName } from "./radix";
 
 export type CssVariable = `--${string}`;

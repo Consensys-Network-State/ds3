@@ -3,9 +3,9 @@ import tailwindcssAnimate from 'tailwindcss-animate';
 import type { ConfigThemes, ConfigColorShades, UserConfig } from "./types";
 import { COLOR_MODES, DEFAULT_THEME } from "./constants";
 import rnrPreset from './rnr.config';
-import { generateConfig, getThemeColorKeys } from './theme.js';
-import { generateThemeVars, generateColorCssVars } from './css-vars.js';
-import { pxToRem } from './utils.js';
+import { generateConfig, getThemeColorKeys } from './theme';
+import { generateThemeVars, generateColorCssVars } from './css-vars';
+import { pxToRem } from './utils';
 import plugin from 'tailwindcss/plugin.js';
 import type { CSSRuleObject } from 'tailwindcss/types/config';
 

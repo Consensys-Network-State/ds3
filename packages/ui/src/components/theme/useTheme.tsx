@@ -130,7 +130,7 @@ const useThemeStore = create<ThemeState>()(
   )
 );
 
-export const useTheme = (config?: Config) => {
+export const useTheme = () => {
   const { colorScheme, setColorScheme } = useColorScheme();
   const {
     theme,
@@ -144,13 +144,6 @@ export const useTheme = (config?: Config) => {
     setLoaded,
     setConfig
   } = useThemeStore();
-
-  // Update config when it changes
-  React.useEffect(() => {
-    if (config) {
-      setConfig(config);
-    }
-  }, [config, setConfig]);
 
   // Sync currentMode with system preference when in system mode
   // This ensures the UI stays in sync with system theme changes
@@ -189,6 +182,7 @@ export const useTheme = (config?: Config) => {
     isLoaded,
     config: storedConfig,
     setTheme,
-    setMode: handleModeChange
+    setMode: handleModeChange,
+    setConfig
   };
 };

@@ -18,6 +18,7 @@
   "dependencies": {
     "@consensys/ds3-config": "workspace:*",
     "@consensys/ds3": "workspace:*",
+    "@consensys/ds3-theme": "workspace:*",
     "@expo/vector-icons": "^14.0.2",
     "@hookform/resolvers": "^3.10.0",
     "@react-navigation/bottom-tabs": "^7.2.0",
