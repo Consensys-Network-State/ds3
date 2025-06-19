@@ -142,7 +142,7 @@ export {
   ThemeProvider,
   Theme,
   ThemeSwitcher,
-  ModeToggle,
+  ThemeToggle,
   ThemeIcon,
   useThemeColors,
   useTheme,
@@ -154,7 +154,7 @@ export type {
   ThemeBaseProps,
   ThemeProviderProps,
   ThemeSwitcherProps,
-  ModeToggleProps,
+  ThemeToggleProps,
 } from './components/theme';
 
 // other components

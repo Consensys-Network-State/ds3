@@ -1,6 +1,6 @@
 import { Drawer } from 'expo-router/drawer';
 import { View } from 'react-native';
-import { ModeToggle, ThemeSwitcher, useThemeColors, Button, openLink } from "@consensys/ds3";
+import { ThemeToggle, ThemeSwitcher, useThemeColors, Button, openLink } from "@consensys/ds3";
 import { Github } from 'lucide-react-native';
 
 export default function DrawerLayout() {
@@ -8,7 +8,7 @@ export default function DrawerLayout() {
 
   const HeaderRight = () => (
     <View className="flex-row items-center gap-2 mr-4">
-      <ModeToggle />
+      <ThemeToggle />
       <ThemeSwitcher />
     </View>
   );

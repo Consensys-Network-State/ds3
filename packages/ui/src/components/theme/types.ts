@@ -19,6 +19,6 @@ export type ThemeSwitcherProps = {
   className?: string;
 };
 
-export type ModeToggleProps = {
+export type ThemeToggleProps = {
   className?: string;
 }; 
