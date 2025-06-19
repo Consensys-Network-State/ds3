@@ -3,12 +3,10 @@ import { useThemeColors } from './useThemeColors';
 import Svg, { Path, Circle } from 'react-native-svg';
 
 interface ThemeIconProps {
-  size?: number;
   className?: string;
 }
 
 export const ThemeIcon: React.FC<ThemeIconProps> = ({ 
-  size = 150,
   className,
   ...otherProps
 }) => {
@@ -16,8 +14,6 @@ export const ThemeIcon: React.FC<ThemeIconProps> = ({
 
   return (
     <Svg 
-      width={size} 
-      height={size} 
       viewBox="0 0 24 24"
       fill="none" 
       stroke={colors.primary9}
