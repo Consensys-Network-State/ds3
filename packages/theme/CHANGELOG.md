@@ -1,5 +1,11 @@
 # @consensys/ds3-theme
 
+## 0.0.4
+
+### Patch Changes
+
+- Better platform theme support
+
 ## 0.0.3
 
 ### Patch Changes
