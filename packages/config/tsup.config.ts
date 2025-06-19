@@ -6,7 +6,8 @@ export default defineConfig({
     'src/nativewind.preset.ts',
     'src/babel.preset.ts',
     'src/expo.preset.ts',
-    'src/metro.config.ts'
+    'src/metro.config.ts',
+    'src/nextjs.config.ts',
   ],
   format: ['esm', 'cjs'],
   dts: true,
