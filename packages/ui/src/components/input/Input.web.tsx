@@ -11,7 +11,6 @@ import {
 import type {
   InputRootProps,
   InputFieldProps,
-  WebInputProps,
   WebInputBaseProps,
   WebTextareaProps,
 } from './types';

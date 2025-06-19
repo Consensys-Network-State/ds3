@@ -74,12 +74,12 @@ pnpm install
 
 Build all packages:
 ```bash
-pnpm build:deps
+pnpm build-deps
 ```
 
 Watch all packages for development:
 ```bash
-pnpm watch:deps
+pnpm watch-deps
 ```
 
 Build individual packages:
@@ -150,7 +150,7 @@ pnpm changeset version
 
 To build and publish packages:
 ```bash
-pnpm build:deps
+pnpm build-deps
 pnpm changeset publish
 ```
 
@@ -159,7 +159,7 @@ The typical workflow is:
 2. Create a changeset (`pnpm changeset`)
 3. Update versions (`pnpm changeset version`)
 4. Commit the changes (version bumps and changelog updates)
-5. Build dependencies (`pnpm build:deps`)
+5. Build dependencies (`pnpm build-deps`)
 6. Publish (`pnpm changeset publish`)
 
 ## License
