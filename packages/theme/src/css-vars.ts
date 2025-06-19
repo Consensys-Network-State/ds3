@@ -4,8 +4,8 @@ import type {
   CssVariableRecord,
   CssVariable,
   ConfigColorShades
-} from './types.js';
-import { COLOR_MODES, DEFAULT_THEME } from './constants.js';
+} from './types';
+import { COLOR_MODES, DEFAULT_THEME } from './constants';
 
 export const generateColorCssVar = (color: string, index: string | number): CssVariable => (`--color-${color}-${index}`);
 

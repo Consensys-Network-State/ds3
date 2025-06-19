@@ -12,6 +12,23 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Platform } from 'react-native';
 import type { ThemeSwitcherProps } from './types';
 import _ from 'lodash';
+import { Text } from '../text';
+
+const ThemeIndicator = ({ themeKey }: { themeKey: string }) => {
+  const { config, currentMode } = useTheme();
+  const currentTheme = config?.themes[themeKey];
+  const colors = currentTheme?.colors[currentMode];
+
+  return (
+    <div className="flex flex-row items-center gap-2">
+      <div 
+        className="w-4 h-4 rounded-full"
+        style={{ backgroundColor: colors?.primary['9'] }}
+      />
+      <Text>{_.lowerCase(themeKey)}</Text>
+    </div>
+  );
+};
 
 export const ThemeSwitcher = ({ className }: ThemeSwitcherProps) => {
   const triggerRef = React.useRef<React.ElementRef<typeof SelectTrigger>>(null);
@@ -41,7 +58,8 @@ export const ThemeSwitcher = ({ className }: ThemeSwitcherProps) => {
       <SelectContent insets={contentInsets}>
         <SelectGroup>
           {themeKeys.map((key) => (
-            <SelectItem label={_.lowerCase(key)} value={key} key={key} />
+            // @ts-ignore
+            <SelectItem label={<ThemeIndicator themeKey={key} />} value={key} key={key} />
           ))}
         </SelectGroup>
       </SelectContent>

@@ -1,49 +1,24 @@
 /**
- * Theme configuration for DS3
+ * To learn more about theme configuration, see:
  * @see https://github.com/Consensys-Network-State/ds3/tree/main/packages/theme
+ * @see https://github.com/Consensys-Network-State/ds3/tree/main/packages/theme/src/default-config.ts
  * @type {import('@consensys/ds3-theme').UserConfig}
  */
 module.exports = {
-  themes: {
-    default: {
-      colors: {
-        neutral: 'gray',
-        primary: 'blue',
-        secondary: 'violet',
-        error: 'red',
-        warning: 'amber',
-        success: 'green',
-      },
-    },
-    oceanBreeze: {
-      colors: {
-        neutral: 'slate',
-        primary: 'cyan',
-        secondary: 'blue',
-        error: 'red',
-        warning: 'amber',
-        success: 'grass',
-      },
-    },
-    sunsetGlow: {
-      colors: {
-        neutral: 'mauve',
-        primary: 'pink',
-        secondary: 'orange',
-        error: 'crimson',
-        warning: 'yellow',
-        success: 'lime',
-      },
-    },
-    forestHues: {
-      colors: {
-        neutral: 'sage',
-        primary: 'green',
-        secondary: 'brown',
-        error: 'red',
-        warning: 'orange',
-        success: 'teal',
-      },
-    }
-  },
+  // Add your custom theme configuration here
+
+  // themes: {
+  //   default: {
+  //     colors: {
+  //       neutral: 'gray',
+  //       primary: 'blue',
+  //       secondary: 'violet',
+  //       error: 'red',
+  //       warning: 'amber',
+  //       success: 'green',
+  //       info: 'cyan'
+  //     },
+  //   },
+  //   ...
+  // },
 };

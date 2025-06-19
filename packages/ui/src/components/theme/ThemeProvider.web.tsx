@@ -6,7 +6,14 @@ import { useTheme } from './useTheme';
 
 export const ThemeProvider = React.forwardRef<View, ThemeProviderProps>(
   ({ children, config }, ref) => {
-    const { mode, currentMode, isLoaded, theme } = useTheme(config);
+    const { mode, currentMode, isLoaded, theme, setConfig } = useTheme();
+
+    React.useEffect(() => {
+      if (config) {
+        setConfig(config);
+      }
+    }, [config]);
+
 
     React.useImperativeHandle(
       ref,

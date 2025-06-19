@@ -5,11 +5,11 @@ import type {
   ConfigThemes,
   UserConfig,
   UserConfigColors
-} from './types.js';
-import defaultConfig from "./default-config.js";
-import { generateColorValues } from './colors.js';
-import { generateBoxShadowValues } from './shadows.js';
-import { COLOR_MODES } from './constants.js';
+} from './types';
+import defaultConfig from "./default-config";
+import { generateColorValues } from './colors';
+import { generateBoxShadowValues } from './shadows';
+import { COLOR_MODES } from './constants';
 
 export const generateConfig = (userConfig: UserConfig): Config => {
   const blueprint = _.merge(defaultConfig, userConfig || {});

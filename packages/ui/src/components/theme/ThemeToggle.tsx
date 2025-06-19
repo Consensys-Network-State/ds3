@@ -4,9 +4,9 @@ import { COLOR_MODES } from "@consensys/ds3-theme";
 import { MoonStar, Sun, SunMoon } from "lucide-react-native";
 import { IconButton } from "../button";
 import { useTheme } from './useTheme';
-import type { ModeToggleProps } from './types';
+import type { ThemeToggleProps } from './types';
 
-export const ModeToggle = React.forwardRef<View, ModeToggleProps>(
+export const ThemeToggle = React.forwardRef<View, ThemeToggleProps>(
   ({ className }, ref) => {
     const { mode, setMode } = useTheme();
 
@@ -46,4 +46,4 @@ export const ModeToggle = React.forwardRef<View, ModeToggleProps>(
   }
 );
 
-ModeToggle.displayName = 'ModeToggle';
+ThemeToggle.displayName = 'ThemeToggle';

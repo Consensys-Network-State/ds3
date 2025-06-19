@@ -1,6 +1,6 @@
 import type {
   BoxShadowConfig,
-} from './types.js';
+} from './types';
 
 export const normalizeBoxShadowValue = (value: string | string[]): string => {
   return Array.isArray(value) ? value.join(', ') : value;
