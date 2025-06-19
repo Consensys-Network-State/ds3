@@ -55,9 +55,9 @@ export default function Typography() {
   ];
 
   return (
-    <ScrollView className="h-screen bg-neutral-1">
+    <ScrollView className="h-screen bg-primary-1">
         <View className="flex-1 items-center pb-4">
-          <View className="w-full max-w-[1200px] px-4 bg-neutral-1 h-full gap-4">
+          <View className="w-full max-w-[1200px] px-4 h-full gap-4">
             <Text className="text-h1">Typography</Text>
 
             <Text className="text-h2">Font Family</Text>

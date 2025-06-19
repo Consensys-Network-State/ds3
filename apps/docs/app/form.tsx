@@ -124,9 +124,9 @@ export default function EnhancedForm() {
   const isFieldValid = useFieldValidation(errors);
 
   return (
-    <ScrollView className="h-screen bg-neutral-1">
+    <ScrollView className="h-screen bg-primary-1">
       <View className="flex-1 items-center pb-4">
-        <View className="w-full max-w-[1200px] px-4 bg-neutral-1 h-full space-y-6">
+        <View className="w-full max-w-[1200px] px-4 h-full space-y-6">
           <View className="space-y-2">
             <Text className="text-h1">Form</Text>
             <Text className="text-muted-foreground">A form using react-hook-form</Text>

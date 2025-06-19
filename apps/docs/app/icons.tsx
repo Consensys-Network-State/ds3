@@ -26,7 +26,7 @@ const iconSizes: IconSizeOption[] = [
 
 export default function Icons() {
   return (
-    <ScrollView className="h-screen bg-neutral-1">
+    <ScrollView className="h-screen bg-primary-1">
       <View className="flex-1 items-center pb-4">
         <View className="w-full max-w-[1200px] px-4 h-full gap-4">
           <Text className="text-h1">Icons</Text>
