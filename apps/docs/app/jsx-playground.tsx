@@ -42,6 +42,16 @@ const convertJSXToCreateElement = (jsxString: string): string => {
   }
 };
 
+// Helper function to convert JSX with automatic wrapping
+const convertJSXWithWrapping = (jsxString: string): string => {
+  let codeToConvert = jsxString;
+  if (codeToConvert.includes('<') && codeToConvert.includes('>')) {
+    const trimmedCode = codeToConvert.trim();
+    codeToConvert = `<View>${trimmedCode}</View>`;
+  }
+  return convertJSXToCreateElement(codeToConvert);
+};
+
 // Custom LivePreview component that works with React Native
 interface LivePreviewProps {
   code: string;
@@ -60,7 +70,7 @@ const LivePreview: React.FC<LivePreviewProps> = ({ code, scope, className }) => 
       // Convert JSX to React.createElement if needed
       let processedCode = code;
       if (code.includes('<') && code.includes('>')) {
-        processedCode = convertJSXToCreateElement(code);
+        processedCode = convertJSXWithWrapping(code);
       }
       
       // Create a safe execution environment
@@ -328,7 +338,10 @@ const SyntaxHighlightedInput: React.FC<SyntaxHighlightedInputProps> = ({
           setSelection({ start, end });
         }}
         onScroll={(event) => {
-          setScrollOffset(event.nativeEvent.contentOffset.y);
+          const contentOffset = event.nativeEvent?.contentOffset;
+          if (contentOffset && typeof contentOffset.y === 'number') {
+            setScrollOffset(contentOffset.y);
+          }
         }}
         scrollEnabled={true}
       />
@@ -444,7 +457,7 @@ export default function JSXPlayground() {
             </Text>
             <View className="bg-neutral-2 rounded-lg border border-neutral-6 overflow-hidden">
               <Highlight 
-                code={convertJSXToCreateElement(currentJSX)}
+                code={convertJSXWithWrapping(currentJSX)}
                 language="tsx"
               />
             </View>
