@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Platform } from 'react-native';
+import { View } from 'react-native';
 import { Text } from '../text';
 import { Highlight } from 'prism-react-renderer';
 import type { SyntaxHighlighterProps } from './types';
