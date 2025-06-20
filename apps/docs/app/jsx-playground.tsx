@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { View, ScrollView, Pressable, TextInput, Platform } from "react-native";
+import { View, ScrollView, TextInput, Platform } from "react-native";
 import { Text, Button, Icon, Highlight, Input } from "@consensys/ds3/src";
 import { BookOpen, Heart, Star, Zap, Settings, Play, RotateCcw, Edit3 } from "lucide-react-native";
 // @ts-ignore
@@ -338,13 +338,11 @@ const SyntaxHighlightedInput: React.FC<SyntaxHighlightedInputProps> = ({
 
 export default function JSXPlayground() {
   const [selectedCode, setSelectedCode] = useState(defaultCode);
-  const [showPreview, setShowPreview] = useState(false);
   const [customJSX, setCustomJSX] = useState("");
   const [isDirectEditing, setIsDirectEditing] = useState(false);
 
   const resetCode = useCallback(() => {
     setSelectedCode(defaultCode);
-    setShowPreview(false);
     setCustomJSX("");
     setIsDirectEditing(false);
   }, []);
@@ -376,22 +374,15 @@ export default function JSXPlayground() {
                 Code Examples:
               </Text>
               <View className="flex flex-row gap-2">
-                <Pressable
-                  onPress={() => setShowPreview(!showPreview)}
-                  className="flex flex-row items-center gap-2 px-3 py-2 bg-primary-9 rounded-lg"
-                >
-                  <Icon icon={Play} size="sm" color="primary" />
-                  <Text size="sm" color="primary" weight="medium">
-                    {showPreview ? 'Hide' : 'Show'} Preview
-                  </Text>
-                </Pressable>
-                <Pressable
+                <Button
+                  variant="outline"
+                  color="neutral"
+                  size="sm"
                   onPress={resetCode}
-                  className="flex flex-row items-center gap-2 px-3 py-2 bg-neutral-9 rounded-lg"
                 >
-                  <Icon icon={RotateCcw} size="sm" color="neutral" />
-                  <Text size="sm" color="neutral" weight="medium">Reset</Text>
-                </Pressable>
+                  <Button.Icon icon={RotateCcw} />
+                  <Button.Text>Reset</Button.Text>
+                </Button>
               </View>
             </View>
             
@@ -400,26 +391,18 @@ export default function JSXPlayground() {
               <ScrollView horizontal showsHorizontalScrollIndicator={false} className="p-2">
                 <View className="flex flex-row gap-2">
                   {Object.entries(codeExamples).map(([key, example]) => (
-                    <Pressable
+                    <Button
                       key={key}
+                      variant={selectedCode === key && !isDirectEditing ? "soft" : "ghost"}
+                      color="neutral"
+                      size="sm"
                       onPress={() => {
                         setSelectedCode(key);
                         setIsDirectEditing(false);
                       }}
-                      className={`px-3 py-2 rounded-lg border ${
-                        selectedCode === key && !isDirectEditing
-                          ? 'bg-primary-9 border-primary-7' 
-                          : 'bg-neutral-3 border-neutral-5'
-                      }`}
                     >
-                      <Text 
-                        size="sm" 
-                        color={selectedCode === key && !isDirectEditing ? "primary" : "neutral"}
-                        weight={selectedCode === key && !isDirectEditing ? "medium" : "normal"}
-                      >
-                        {example.name}
-                      </Text>
-                    </Pressable>
+                      <Button.Text>{example.name}</Button.Text>
+                    </Button>
                   ))}
                 </View>
               </ScrollView>
@@ -427,17 +410,15 @@ export default function JSXPlayground() {
           </View>
 
           {/* Live Preview */}
-          {showPreview && (
-            <View className="mb-6">
-              <Text size="lg" weight="semibold" className="mb-3">
-                Live Preview:
-              </Text>
-              <LivePreview 
-                code={currentJSX} 
-                scope={scope}
-              />
-            </View>
-          )}
+          <View className="mb-6">
+            <Text size="lg" weight="semibold" className="mb-3">
+              Live Preview:
+            </Text>
+            <LivePreview 
+              code={currentJSX} 
+              scope={scope}
+            />
+          </View>
 
           {/* JSX Code */}
           <View className="mb-6">
