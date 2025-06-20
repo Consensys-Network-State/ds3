@@ -2,17 +2,12 @@ import { View, ScrollView } from 'react-native';
 import { Text, Icon, ThemeIcon, Button } from '@consensys/ds3';
 import { openLink } from '@consensys/ds3';
 import { useNavigation } from 'expo-router';
-import { CodeBlock } from '../components/CodeBlock';
+import { CodeBlock } from '@/components/CodeBlock';
 import {
-  Zap,
   Globe,
   BookOpen,
   Palette,
-  Triangle,
-  Waves,
-  Settings,
   Github,
-  Earth,
   Sparkles,
   Code,
   Smartphone,
@@ -24,7 +19,6 @@ import {
   Star,
   Heart,
   Target,
-  Menu,
 } from 'lucide-react-native';
 
 export default function HomeScreen() {  
@@ -67,6 +61,17 @@ export default function HomeScreen() {
               >
                 <Button.Icon icon={BookOpen} />
                 <Button.Text>Explore Components</Button.Text>
+              </Button>
+              
+              <Button 
+                variant="solid" 
+                color="secondary" 
+                size="lg"
+                className="self-center"
+                onPress={() => (navigation as any).navigate?.('jsx-playground')}
+              >
+                <Button.Icon icon={Code} />
+                <Button.Text>JSX Playground</Button.Text>
               </Button>
               
               <Button 
