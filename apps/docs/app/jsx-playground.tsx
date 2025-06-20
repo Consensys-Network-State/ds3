@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
-import { View, ScrollView, TextInput, Platform } from "react-native";
-import { Text, Button, Icon, Highlight, Input } from "@consensys/ds3/src";
+import { ScrollView, TextInput, Platform } from "react-native";
+import { Text, Button, Icon, Highlight, Input, View } from "@consensys/ds3/src";
 import { BookOpen, Heart, Star, Zap, Settings, Play, RotateCcw, Edit3 } from "lucide-react-native";
 // @ts-ignore
 import * as Babel from '@babel/standalone';
@@ -47,7 +47,13 @@ const convertJSXWithWrapping = (jsxString: string): string => {
   let codeToConvert = jsxString;
   if (codeToConvert.includes('<') && codeToConvert.includes('>')) {
     const trimmedCode = codeToConvert.trim();
-    codeToConvert = `<View>${trimmedCode}</View>`;
+    // Only wrap if it's not already a single element
+    if (!trimmedCode.match(/^<[A-Z][A-Za-z]*[^>]*>.*<\/[A-Z][A-Za-z]*>$/s) && 
+        !trimmedCode.match(/^<[A-Z][A-Za-z]*[^>]*\/>$/)) {
+      codeToConvert = `<View>${trimmedCode}</View>`;
+    } else {
+      codeToConvert = trimmedCode;
+    }
   }
   return convertJSXToCreateElement(codeToConvert);
 };
@@ -67,10 +73,14 @@ const LivePreview: React.FC<LivePreviewProps> = ({ code, scope, className }) => 
     try {
       setError(null);
       
-      // Convert JSX to React.createElement if needed
+      console.log('Processing JSX code:', code);
+      
+      // Process JSX with CSS injection for dynamic classes
       let processedCode = code;
       if (code.includes('<') && code.includes('>')) {
+        // Then convert JSX to React.createElement
         processedCode = convertJSXWithWrapping(code);
+        console.log('Processed code:', processedCode);
       }
       
       // Create a safe execution environment
@@ -90,6 +100,8 @@ const LivePreview: React.FC<LivePreviewProps> = ({ code, scope, className }) => 
 
       const jsxFunction = createComponent();
       const result = jsxFunction(...Object.values(scope));
+      
+      console.log('JSX result:', result);
       
       if (React.isValidElement(result)) {
         setPreview(result);
@@ -176,8 +188,8 @@ const codeExamples = {
     <Text size="sm" color="neutral">Form validation</Text>
   </View>
 </View>`
-  }
-};
+  },
+}
 
 const defaultCode = "primary-button";
 
@@ -324,13 +336,12 @@ const SyntaxHighlightedInput: React.FC<SyntaxHighlightedInputProps> = ({
           fontFamily,
           fontSize,
           lineHeight,
-          color: 'transparent', // Make text completely transparent
           padding: verticalPadding,
           backgroundColor: 'transparent',
           position: 'relative',
           zIndex: 1,
         }}
-        className="flex-1 outline-none"
+        className="flex-1 outline-none text-transparent"
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         onSelectionChange={(event) => {
