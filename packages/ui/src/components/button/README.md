@@ -15,12 +15,11 @@ The Button component supports both web and native APIs through our [Dual API](#6
 ### Web-Specific Usage
 
 ```tsx
-<Button 
-  color="secondary"
+<Button
   type="submit"
   onClick={(e) => console.log('Clicked!', e)}
 >
-  Jerry Tan
+  Press Me
 </Button>
 ```
 
