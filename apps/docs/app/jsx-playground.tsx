@@ -1,88 +1,225 @@
 import React, { useState, useCallback } from "react";
 import { ScrollView } from "react-native";
-import { Text, Button, Icon, Highlight, Input, View } from "@consensys/ds3/src";
-import { BookOpen, Heart, Star, Zap, Settings, Play, RotateCcw, Edit3 } from "lucide-react-native";
+import { 
+  Text, 
+  Button, 
+  Icon, 
+  Highlight, 
+  Input, 
+  View, 
+  IconButton, 
+  Textarea, 
+  Checkbox,
+  Switch,
+  Spinner,
+  Field,
+  InputField,
+  CheckboxField,
+  SwitchField,
+  Alert,
+  AlertDescription
+} from "@consensys/ds3/src";
+import {
+  BookOpen,
+  Heart,
+  Star,
+  Zap,
+  Settings,
+  RotateCcw,
+  Edit3,
+  Figma,
+  LoaderPinwheel,
+  Loader,
+  Search,
+  Eye,
+  Mail,
+  Lock,
+  Minus,
+  Check,
+  X,
+  LoaderCircle,
+  RefreshCw,
+  AlertCircle,
+  CheckCircle,
+  AlertTriangle,
+  User,
+  ChevronRight,
+  Shield
+} from "lucide-react-native";
+import { useForm, Controller } from 'react-hook-form';
 import LivePreview, { convertJSXWithWrapping } from "../components/LivePreview";
 import HighlightInput from "../components/HighlightInput";
+import ReactHookForm from "../components/ReactHookForm";
+import { InputClipboard } from "../components/InputClipboard";
+import { codeExamples } from "../data/code-examples";
 
-// Simple JSX strings that can be used with any LivePreview component
-const codeExamples = {
-  "primary-button": {
-    name: "Primary Button",
-    jsx: `<Button variant="solid" color="primary" size="md">
-  <Button.Icon icon={BookOpen} />
-  <Button.Text>Primary Button</Button.Text>
-</Button>`
-  },
-  "secondary-button": {
-    name: "Secondary Button",
-    jsx: `<Button variant="outline" color="secondary" size="md">
-  <Button.Text>Secondary Button</Button.Text>
-</Button>`
-  },
-  "icon-only": {
-    name: "Icon Only",
-    jsx: `<Icon icon={Heart} size="lg" color="error" />`
-  },
-  "multiple-components": {
-    name: "Multiple Components",
-    jsx: `<View className="flex flex-row gap-4">
-  <Button variant="outline" color="secondary">
-    <Button.Text>Secondary</Button.Text>
-  </Button>
-  <Icon icon={Heart} size="lg" color="error" />
-  <Text size="lg" color="success">Hello World</Text>
-</View>`
-  },
-  "button-variants": {
-    name: "Button Variants",
-    jsx: `<View className="flex flex-col gap-2">
-  <Button variant="solid" color="primary">
-    <Button.Text>Solid Primary</Button.Text>
-  </Button>
-  <Button variant="soft" color="secondary">
-    <Button.Text>Soft Secondary</Button.Text>
-  </Button>
-  <Button variant="outline" color="success">
-    <Button.Text>Outline Success</Button.Text>
-  </Button>
-</View>`
-  },
-  "form-elements": {
-    name: "Form Elements",
-    jsx: `<View className="flex flex-col gap-4">
-  <Text size="lg" weight="bold">Form Example</Text>
-  <Button variant="solid" color="primary">
-    <Button.Icon icon={Settings} />
-    <Button.Text>Submit Form</Button.Text>
-  </Button>
-  <View className="flex flex-row gap-2">
-    <Icon icon={Star} size="md" color="warning" />
-    <Text size="sm" color="neutral">Form validation</Text>
-  </View>
-</View>`
-  },
-}
+const defaultCode = { category: "design", subcategory: "typography", example: "font-family" };
 
-const defaultCode = "primary-button";
+// Generic checkbox state manager
+const useCheckboxState = () => {
+  const [checkboxStates, setCheckboxStates] = useState<Record<string, boolean>>({});
+
+  const getCheckboxState = (key: string, defaultValue = false) => {
+    return checkboxStates[key] ?? defaultValue;
+  };
+
+  const setCheckboxState = (key: string, checked: boolean) => {
+    setCheckboxStates(prev => ({ ...prev, [key]: checked }));
+  };
+
+  const createCheckboxHandler = (key: string) => (checked: boolean) => {
+    setCheckboxState(key, checked);
+  };
+
+  const createParentChildHandler = (parentKey: string, childKeys: string[]) => (checked: boolean) => {
+    const newStates = childKeys.reduce((acc, childKey) => ({
+      ...acc,
+      [childKey]: checked
+    }), {});
+    setCheckboxStates(prev => ({ ...prev, ...newStates }));
+  };
+
+  const getParentChildState = (childKeys: string[]) => {
+    const allChecked = childKeys.every(key => checkboxStates[key]);
+    const someChecked = childKeys.some(key => checkboxStates[key]);
+    return {
+      checked: allChecked,
+      indeterminate: someChecked && !allChecked
+    };
+  };
+
+  return {
+    getCheckboxState,
+    setCheckboxState,
+    createCheckboxHandler,
+    createParentChildHandler,
+    getParentChildState
+  };
+};
+
+// Generic switch state manager
+const useSwitchState = () => {
+  const [switchStates, setSwitchStates] = useState<Record<string, boolean>>({});
+
+  const getSwitchState = (key: string, defaultValue = false) => {
+    return switchStates[key] ?? defaultValue;
+  };
+
+  const setSwitchState = (key: string, checked: boolean) => {
+    setSwitchStates(prev => ({ ...prev, [key]: checked }));
+  };
+
+  const createSwitchHandler = (key: string) => (checked: boolean) => {
+    setSwitchState(key, checked);
+  };
+
+  return {
+    getSwitchState,
+    setSwitchState,
+    createSwitchHandler
+  };
+};
 
 export default function JSXPlayground() {
-  const [selectedCode, setSelectedCode] = useState(defaultCode);
+  const [selectedCategory, setSelectedCategory] = useState(defaultCode.category);
+  const [selectedSubcategory, setSelectedSubcategory] = useState(defaultCode.subcategory);
+  const [selectedExample, setSelectedExample] = useState(defaultCode.example);
   const [customJSX, setCustomJSX] = useState("");
   const [isDirectEditing, setIsDirectEditing] = useState(false);
 
+  // Create checkbox state manager
+  const checkboxState = useCheckboxState();
+
+  // Create switch state manager
+  const switchState = useSwitchState();
+
   const resetCode = useCallback(() => {
-    setSelectedCode(defaultCode);
+    setSelectedCategory(defaultCode.category);
+    setSelectedSubcategory(defaultCode.subcategory);
+    setSelectedExample(defaultCode.example);
     setCustomJSX("");
     setIsDirectEditing(false);
   }, []);
 
-  const currentJSX = isDirectEditing ? customJSX : (codeExamples[selectedCode as keyof typeof codeExamples]?.jsx || "");
+  const currentJSX = isDirectEditing 
+    ? customJSX 
+    : (() => {
+        const category = codeExamples[selectedCategory as keyof typeof codeExamples];
+        if (!category) return "";
+        
+        // Handle hierarchical structure for fields, design, and utils
+        if ((selectedCategory === "fields" || selectedCategory === "design" || selectedCategory === "utils") && 'examples' in category) {
+          const hierarchicalCategory = category as { examples: Record<string, { examples: Record<string, { jsx: string }> }> };
+          const subcategory = hierarchicalCategory.examples[selectedSubcategory];
+          if (!subcategory) return "";
+          const example = subcategory.examples[selectedExample];
+          return example?.jsx || "";
+        }
+        
+        // Handle flat structure for other categories
+        const example = category[selectedExample as keyof typeof category] as { jsx: string } | undefined;
+        return example?.jsx || "";
+      })();
 
   // Scope for the LivePreview
   const scope = {
-    Button, Text, Icon, View, React, Input,
-    BookOpen, Heart, Star, Zap, Settings, Edit3
+    Button, Text, Icon, View, React, Input, IconButton, Textarea, Checkbox, Switch, Spinner, Field, InputField, CheckboxField, SwitchField, Alert, AlertDescription, Highlight,
+    BookOpen, Heart, Star, Zap, Settings, RotateCcw, Edit3, Figma, LoaderPinwheel, Loader, Search, Eye, Mail, Lock,
+    Minus, Check, X, LoaderCircle, RefreshCw, AlertCircle, CheckCircle, AlertTriangle, User, ChevronRight, Shield,
+    // React Hook Form
+    useForm, Controller,
+    // Form Components
+    ReactHookForm,
+    // Checkbox state management
+    checkboxState,
+    // Helper functions for checkbox examples
+    getCheckboxState: checkboxState.getCheckboxState,
+    setCheckboxState: checkboxState.setCheckboxState,
+    createCheckboxHandler: checkboxState.createCheckboxHandler,
+    createParentChildHandler: checkboxState.createParentChildHandler,
+    getParentChildState: checkboxState.getParentChildState,
+    // Switch state management
+    switchState,
+    // Helper functions for switch examples
+    getSwitchState: switchState.getSwitchState,
+    setSwitchState: switchState.setSwitchState,
+    createSwitchHandler: switchState.createSwitchHandler,
+    // Input Clipboard
+    InputClipboard
+  };
+
+  // Get available subcategories for the selected category
+  const getSubcategories = () => {
+    const category = codeExamples[selectedCategory as keyof typeof codeExamples];
+    if ((selectedCategory === "fields" || selectedCategory === "design" || selectedCategory === "utils") && 'examples' in category) {
+      const hierarchicalCategory = category as { examples: Record<string, { name: string }> };
+      return Object.entries(hierarchicalCategory.examples).map(([key, subcategory]) => ({
+        key,
+        name: subcategory.name
+      }));
+    }
+    return [];
+  };
+
+  // Get available examples for the selected category/subcategory
+  const getExamples = () => {
+    const category = codeExamples[selectedCategory as keyof typeof codeExamples];
+    if ((selectedCategory === "fields" || selectedCategory === "design" || selectedCategory === "utils") && 'examples' in category) {
+      const hierarchicalCategory = category as { examples: Record<string, { examples: Record<string, { name: string }> }> };
+      const subcategory = hierarchicalCategory.examples[selectedSubcategory];
+      if (subcategory?.examples) {
+        return Object.entries(subcategory.examples).map(([key, example]) => ({
+          key,
+          name: example.name
+        }));
+      }
+    } else {
+      return Object.entries(category).map(([key, example]) => ({
+        key,
+        name: (example as { name: string }).name
+      }));
+    }
+    return [];
   };
 
   return (
@@ -94,14 +231,14 @@ export default function JSXPlayground() {
           </Text>
           
           <Text size="lg" color="neutral" className="mb-8 text-center text-neutral-11">
-            Try the predefined examples or write your own JSX code to see live previews.
+            Explore component variations or write your own JSX code to see live previews.
           </Text>
 
-          {/* Code Selection */}
+          {/* Component Categories */}
           <View className="mb-6">
             <View className="flex flex-row items-center justify-between mb-3">
               <Text size="lg" weight="semibold">
-                Code Examples:
+                Component Categories:
               </Text>
               <View className="flex flex-row gap-2">
                 <Button
@@ -116,22 +253,98 @@ export default function JSXPlayground() {
               </View>
             </View>
             
-            {/* Code Selection Dropdown */}
+            {/* Category Selection */}
             <View className="bg-neutral-2 rounded-lg border border-neutral-6 overflow-hidden">
               <ScrollView horizontal showsHorizontalScrollIndicator={false} className="p-2">
                 <View className="flex flex-row gap-2">
-                  {Object.entries(codeExamples).map(([key, example]) => (
+                  {Object.entries(codeExamples).map(([key, category]) => (
                     <Button
                       key={key}
-                      variant={selectedCode === key && !isDirectEditing ? "soft" : "ghost"}
+                      variant={selectedCategory === key ? "soft" : "ghost"}
                       color="neutral"
                       size="sm"
                       onPress={() => {
-                        setSelectedCode(key);
+                        setSelectedCategory(key);
+                        if (key === "fields") {
+                          setSelectedSubcategory("field");
+                          setSelectedExample("basic");
+                        } else if (key === "design") {
+                          setSelectedSubcategory("typography");
+                          setSelectedExample("font-family");
+                        } else if (key === "utils") {
+                          setSelectedSubcategory("copy");
+                          setSelectedExample("input");
+                        } else {
+                          setSelectedExample(Object.keys(category)[0]);
+                        }
                         setIsDirectEditing(false);
                       }}
                     >
-                      <Button.Text>{example.name}</Button.Text>
+                      <Button.Text>{key.charAt(0).toUpperCase() + key.slice(1)}</Button.Text>
+                    </Button>
+                  ))}
+                </View>
+              </ScrollView>
+            </View>
+          </View>
+
+          {/* Subcategory Selection (for fields, design, and utils) */}
+          {(selectedCategory === "fields" || selectedCategory === "design" || selectedCategory === "utils") && (
+            <View className="mb-6">
+              <Text size="lg" weight="semibold" className="mb-3">
+                {selectedCategory === "fields" ? "Field Types:" : selectedCategory === "design" ? "Design Categories:" : "Utility Categories:"}
+              </Text>
+              <View className="bg-neutral-2 rounded-lg border border-neutral-6 overflow-hidden">
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} className="p-2">
+                  <View className="flex flex-row gap-2">
+                    {getSubcategories().map(({ key, name }) => (
+                      <Button
+                        key={key}
+                        variant={selectedSubcategory === key ? "soft" : "ghost"}
+                        color="neutral"
+                        size="sm"
+                        onPress={() => {
+                          setSelectedSubcategory(key);
+                          const hierarchicalCategory = codeExamples[selectedCategory as keyof typeof codeExamples] as { examples: Record<string, { examples: Record<string, { name: string }> }> };
+                          const subcategory = hierarchicalCategory.examples[key];
+                          setSelectedExample(Object.keys(subcategory.examples)[0]);
+                          setIsDirectEditing(false);
+                        }}
+                      >
+                        <Button.Text>{name}</Button.Text>
+                      </Button>
+                    ))}
+                  </View>
+                </ScrollView>
+              </View>
+            </View>
+          )}
+
+          {/* Example Selection */}
+          <View className="mb-6">
+            <Text size="lg" weight="semibold" className="mb-3">
+              {(selectedCategory === "fields" || selectedCategory === "design" || selectedCategory === "utils")
+                ? `${getSubcategories().find(s => s.key === selectedSubcategory)?.name} Examples:`
+                : `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Examples:`
+              }
+            </Text>
+            
+            {/* Example Selection */}
+            <View className="bg-neutral-2 rounded-lg border border-neutral-6 overflow-hidden">
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} className="p-2">
+                <View className="flex flex-row gap-2">
+                  {getExamples().map(({ key, name }) => (
+                    <Button
+                      key={key}
+                      variant={selectedExample === key && !isDirectEditing ? "soft" : "ghost"}
+                      color="neutral"
+                      size="sm"
+                      onPress={() => {
+                        setSelectedExample(key);
+                        setIsDirectEditing(false);
+                      }}
+                    >
+                      <Button.Text>{name}</Button.Text>
                     </Button>
                   ))}
                 </View>
