@@ -115,6 +115,17 @@ export type {
   SpinnerProps,
 } from './components/spinner';
 
+// syntax-highlighter
+export {
+  SyntaxHighlighter,
+  useSyntaxTheme,
+  createDs3Theme,
+} from './components/syntax-highlighter';
+
+export type {
+  SyntaxHighlighterProps,
+} from './components/syntax-highlighter';
+
 // switch
 export {
   Switch,

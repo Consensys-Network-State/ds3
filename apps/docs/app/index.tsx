@@ -2,6 +2,7 @@ import { View, ScrollView } from 'react-native';
 import { Text, Icon, ThemeIcon, Button } from '@consensys/ds3';
 import { openLink } from '@consensys/ds3';
 import { useNavigation } from 'expo-router';
+import { CodeBlock } from '../components/CodeBlock';
 import {
   Zap,
   Globe,
@@ -29,6 +30,8 @@ import {
 export default function HomeScreen() {  
   const navigation = useNavigation();
   
+  const codeExample = `import { Button, Input, Icon } from '@consensys/ds3';`;
+
   return (
     <ScrollView className="flex-1 bg-primary-1" contentContainerStyle={{ flexGrow: 1 }}>
       <View className="flex-1 items-center justify-center p-6">
@@ -47,12 +50,11 @@ export default function HomeScreen() {
               Build breathtaking interfaces for both web and React Native with a single component library that feels native everywhere. One import. Any platform. Native everywhere.
             </Text>
 
-            {/* Code Example */}
-            <View className="bg-neutral-3 rounded-lg p-4 mb-8 max-w-2xl mx-auto">
-              <Text size="sm" color="neutral" className="text-neutral-11 font-mono">
-                <Text size="sm" color="primary" className="font-mono">import</Text> {'{'} Button, Input, Icon {'}'} <Text size="sm" color="primary" className="font-mono">from</Text> <Text size="sm" color="warning" className="font-mono">'@consensys/ds3'</Text>;
-              </Text>
-            </View>
+            <CodeBlock 
+              code={codeExample}
+              language="javascript"
+              className="mb-8"
+            />
 
             {/* CTA Buttons */}
             <View className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
