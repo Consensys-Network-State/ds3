@@ -1,16 +1,18 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Platform} from 'react-native';
 import { Text } from '../text';
 import { Highlight } from 'prism-react-renderer';
 import type { SyntaxHighlighterProps } from './types';
-import { useSyntaxTheme } from './useSyntaxTheme';
+import { useThemeColors } from '../theme';
+import { createDs3Theme } from './theme';
 
 export function SyntaxHighlighter({ 
   code, 
   language = 'javascript', 
   className = '' 
 }: SyntaxHighlighterProps) {
-  const ds3Theme = useSyntaxTheme();
+  const colors = useThemeColors();
+  const ds3Theme = createDs3Theme(colors);
 
   return (
     <View className={className}>
@@ -29,6 +31,11 @@ export function SyntaxHighlighter({
                   return (
                     <Text 
                       key={key}
+                      className={`text-base leading-6 ${
+                        Platform.OS === 'ios' 
+                          ? 'font-[SFMono-Regular]'
+                          : 'font-mono'
+                      }`}
                       style={{ color: tokenProps.style?.color || ds3Theme.plain.color }}
                     >
                       {token.content}

@@ -118,7 +118,6 @@ export type {
 // syntax-highlighter
 export {
   SyntaxHighlighter,
-  useSyntaxTheme,
   createDs3Theme,
 } from './components/syntax-highlighter';
 
