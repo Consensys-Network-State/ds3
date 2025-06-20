@@ -31,7 +31,7 @@ export function SyntaxHighlighter({
                   return (
                     <Text 
                       key={key}
-                      className={`text-base leading-6 ${
+                      className={`text-sm ${
                         Platform.OS === 'ios' 
                           ? 'font-[SFMono-Regular]'
                           : 'font-mono'
