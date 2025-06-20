@@ -228,6 +228,106 @@ const SyntaxHighlightedInput: React.FC<SyntaxHighlightedInputProps> = ({
     return () => clearInterval(interval);
   }, [focused]);
 
+  // Handle tab indentation
+  const handleKeyPress = (event: any) => {
+    if (event.nativeEvent.key === 'Tab') {
+      event.preventDefault();
+      
+      const lines = value.split('\n');
+      const { start, end } = selection;
+      
+      // Find start line and position within that line
+      let startLine = 0;
+      let startPos = 0;
+      
+      for (let i = 0; i < lines.length; i++) {
+        const lineLength = lines[i].length;
+        if (start <= startPos + lineLength) {
+          startLine = i;
+          break;
+        }
+        startPos += lineLength + 1; // +1 for newline
+      }
+      
+      // Find end line
+      let endLine = startLine;
+      let endPos = startPos;
+      
+      for (let i = startLine; i < lines.length; i++) {
+        const lineLength = lines[i].length;
+        if (end <= endPos + lineLength) {
+          endLine = i;
+          break;
+        }
+        endPos += lineLength + 1; // +1 for newline
+      }
+      
+      const startLineStartPos = startPos;
+      const positionInStartLine = start - startLineStartPos;
+      
+      if (event.nativeEvent.shiftKey) {
+        // Shift+Tab: Outdent
+        let totalOutdented = 0;
+        
+        if (start === end) {
+          // Single cursor: outdent current line
+          const currentLineText = lines[startLine];
+          if (currentLineText.startsWith('  ')) {
+            lines[startLine] = currentLineText.substring(2);
+            totalOutdented = 2;
+          }
+        } else {
+          // Multiple lines selected: outdent all selected lines
+          for (let i = startLine; i <= endLine; i++) {
+            const lineText = lines[i];
+            if (lineText.startsWith('  ')) {
+              lines[i] = lineText.substring(2);
+              totalOutdented += 2;
+            }
+          }
+        }
+        
+        if (totalOutdented > 0) {
+          const newValue = lines.join('\n');
+          const newStart = Math.max(0, start - (start === end ? totalOutdented : 2));
+          const newEnd = Math.max(0, end - totalOutdented);
+          
+          onChangeText(newValue);
+          setSelection({ start: newStart, end: newEnd });
+        }
+      } else {
+        // Tab: Indent
+        const spaces = '  '; // 2 spaces for indentation
+        
+        if (start === end) {
+          // Single cursor: insert spaces at cursor position
+          const currentLineText = lines[startLine];
+          const newLineText = currentLineText.slice(0, positionInStartLine) + spaces + currentLineText.slice(positionInStartLine);
+          lines[startLine] = newLineText;
+          
+          const newValue = lines.join('\n');
+          const newStart = start + spaces.length;
+          const newEnd = newStart;
+          
+          onChangeText(newValue);
+          setSelection({ start: newStart, end: newEnd });
+        } else {
+          // Multiple lines selected: indent all selected lines
+          for (let i = startLine; i <= endLine; i++) {
+            lines[i] = spaces + lines[i];
+          }
+          
+          const newValue = lines.join('\n');
+          const newStart = start + spaces.length;
+          const newEnd = end + (endLine - startLine + 1) * spaces.length;
+          
+          onChangeText(newValue);
+          setSelection({ start: newStart, end: newEnd });
+        }
+      }
+    }
+  };
+
   // Font metrics - match exactly with the TextInput
   const fontSize = 14;
   const lineHeight = 20;
@@ -330,6 +430,7 @@ const SyntaxHighlightedInput: React.FC<SyntaxHighlightedInputProps> = ({
         placeholder={placeholder}
         multiline={multiline}
         numberOfLines={numberOfLines}
+        selection={selection}
         style={{ 
           height: contentHeight,
           textAlignVertical: multiline ? 'top' : 'center',
@@ -354,6 +455,7 @@ const SyntaxHighlightedInput: React.FC<SyntaxHighlightedInputProps> = ({
             setScrollOffset(contentOffset.y);
           }
         }}
+        onKeyPress={handleKeyPress}
         scrollEnabled={true}
       />
     </View>
