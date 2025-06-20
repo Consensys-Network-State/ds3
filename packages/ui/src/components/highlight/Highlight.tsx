@@ -9,7 +9,8 @@ import type { HighlightProps } from './types';
 export function Highlight({ 
   code, 
   language = 'javascript', 
-  className = ''
+  className = '',
+  style,
 }: HighlightProps) {
   const colors = useThemeColors();
   const ds3Theme = createDs3Theme(colors);
@@ -31,12 +32,10 @@ export function Highlight({
                   return (
                     <Text 
                       key={key}
-                      className={`text-sm ${
-                        Platform.OS === 'ios' 
-                          ? 'font-[SFMono-Regular]'
-                          : 'font-mono'
-                      }`}
-                      style={{ color: tokenProps.style?.color || ds3Theme.plain.color }}
+                      style={[
+                        { color: tokenProps.style?.color || ds3Theme.plain.color },
+                        style,
+                      ]}
                     >
                       {token.content}
                     </Text>

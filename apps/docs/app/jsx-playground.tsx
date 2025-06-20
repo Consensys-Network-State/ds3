@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
-import { View, ScrollView, Pressable } from "react-native";
-import { Text, Button, Icon, Highlight } from "@consensys/ds3/src";
-import { BookOpen, Heart, Star, Zap, Settings, Play, RotateCcw } from "lucide-react-native";
+import { View, ScrollView, Pressable, TextInput } from "react-native";
+import { Text, Button, Icon, Highlight, Input } from "@consensys/ds3/src";
+import { BookOpen, Heart, Star, Zap, Settings, Play, RotateCcw, Edit3 } from "lucide-react-native";
 // @ts-ignore
 import * as Babel from '@babel/standalone';
 
@@ -171,21 +171,180 @@ const codeExamples = {
 
 const defaultCode = "primary-button";
 
+// Custom Syntax Highlighted Input Component
+interface SyntaxHighlightedInputProps {
+  value: string;
+  onChangeText: (text: string) => void;
+  placeholder?: string;
+  multiline?: boolean;
+  numberOfLines?: number;
+  className?: string;
+}
+
+const SyntaxHighlightedInput: React.FC<SyntaxHighlightedInputProps> = ({
+  value,
+  onChangeText,
+  placeholder,
+  multiline = true,
+  numberOfLines = 6,
+  className = ""
+}) => {
+  const [focused, setFocused] = useState(false);
+  const [selection, setSelection] = useState({ start: 0, end: 0 });
+  const [scrollOffset, setScrollOffset] = useState(0);
+  const inputRef = React.useRef<TextInput>(null);
+
+  // Font metrics - match exactly with the TextInput
+  const fontSize = 14;
+  const lineHeight = 20;
+  const fontFamily = 'monospace';
+  const verticalPadding = 16; // matches padding: 16
+  const minHeight = multiline ? Math.max(80, numberOfLines * lineHeight) : undefined;
+  
+  // Calculate actual height based on content
+  const lines = value.split('\n');
+  const contentHeight = Math.max(minHeight || 0, lines.length * lineHeight + verticalPadding * 2);
+
+  // Memoize the highlight code to prevent unnecessary re-renders
+  const highlightCode = React.useMemo(() => {
+    return value || placeholder || "";
+  }, [value, placeholder]);
+
+  // Memoize the Highlight component to prevent re-rendering
+  const highlightedCode = React.useMemo(() => (
+    <Highlight 
+      code={highlightCode}
+      language="tsx"
+      style={{ fontFamily, fontSize, lineHeight }}
+    />
+  ), [highlightCode, fontFamily, fontSize, lineHeight]);
+
+  // Calculate cursor position more accurately with proper line calculations
+  const getCursorPosition = () => {
+    if (!focused) return null;
+    
+    let currentPos = 0;
+    let cursorLine = 0;
+    let cursorOffset = 0;
+    
+    // Find which line the cursor is on
+    for (let i = 0; i < lines.length; i++) {
+      const lineLength = lines[i].length;
+      if (selection.start <= currentPos + lineLength) {
+        cursorLine = i;
+        cursorOffset = selection.start - currentPos;
+        break;
+      }
+      currentPos += lineLength + 1; // +1 for newline
+    }
+    
+    // Handle cursor at the very end
+    if (cursorLine === 0 && cursorOffset === 0 && selection.start > 0) {
+      cursorLine = lines.length - 1;
+      cursorOffset = lines[lines.length - 1]?.length || 0;
+    }
+    
+    // Calculate exact position
+    const charWidth = 8.4; // Approximate character width - fine-tuned
+    const x = verticalPadding + (cursorOffset * charWidth);
+    const y = verticalPadding + (cursorLine * lineHeight) - scrollOffset;
+    
+    return {
+      line: cursorLine,
+      offset: cursorOffset,
+      x,
+      y,
+    };
+  };
+
+  const cursorPos = getCursorPosition();
+
+  return (
+    <View className={`relative overflow-hidden ${className}`} style={{ height: contentHeight }}>
+      {/* Syntax Highlighted Background (static) */}
+      <View 
+        className="absolute inset-0"
+        style={{ 
+          height: contentHeight,
+          padding: verticalPadding,
+        }}
+      >
+        <View style={{ height: contentHeight }}>
+          {highlightedCode}
+        </View>
+      </View>
+      
+      {/* Custom Cursor Indicator */}
+      {focused && cursorPos && (
+        <View 
+          className="absolute bg-blue-500"
+          style={{
+            width: 2,
+            height: lineHeight, // Match the exact line height
+            left: cursorPos.x,
+            top: cursorPos.y,
+            zIndex: 2,
+          }}
+        />
+      )}
+      
+      {/* Editable Input (on top, with proper positioning) */}
+      <TextInput
+        ref={inputRef}
+        value={value}
+        onChangeText={onChangeText}
+        placeholder={placeholder}
+        multiline={multiline}
+        numberOfLines={numberOfLines}
+        style={{ 
+          height: contentHeight,
+          textAlignVertical: multiline ? 'top' : 'center',
+          fontFamily,
+          fontSize,
+          lineHeight,
+          color: 'transparent', // Make text completely transparent
+          padding: verticalPadding,
+          backgroundColor: 'transparent',
+          position: 'relative',
+          zIndex: 1,
+        }}
+        className="flex-1 outline-none"
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        onSelectionChange={(event) => {
+          const { start, end } = event.nativeEvent.selection;
+          setSelection({ start, end });
+        }}
+        onScroll={(event) => {
+          setScrollOffset(event.nativeEvent.contentOffset.y);
+        }}
+        scrollEnabled={true}
+      />
+    </View>
+  );
+};
+
 export default function JSXPlayground() {
   const [selectedCode, setSelectedCode] = useState(defaultCode);
   const [showPreview, setShowPreview] = useState(false);
+  const [customJSX, setCustomJSX] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [isDirectEditing, setIsDirectEditing] = useState(false);
 
   const resetCode = useCallback(() => {
     setSelectedCode(defaultCode);
     setShowPreview(false);
+    setCustomJSX("");
+    setIsEditing(false);
+    setIsDirectEditing(false);
   }, []);
 
-  const currentJSX = codeExamples[selectedCode as keyof typeof codeExamples]?.jsx || "";
+  const currentJSX = isEditing || isDirectEditing ? customJSX : (codeExamples[selectedCode as keyof typeof codeExamples]?.jsx || "");
 
   // Scope for the LivePreview
   const scope = {
-    Button, Text, Icon, View, React,
-    BookOpen, Heart, Star, Zap, Settings
+    Button, Text, Icon, View, React, Input,
+    BookOpen, Heart, Star, Zap, Settings, Edit3
   };
 
   return (
@@ -197,7 +356,7 @@ export default function JSXPlayground() {
           </Text>
           
           <Text size="lg" color="neutral" className="mb-8 text-center text-neutral-11">
-            Copy these JSX strings to use with your LivePreview component.
+            Try the predefined examples or write your own JSX code to see live previews.
           </Text>
 
           {/* Code Selection */}
@@ -233,26 +392,87 @@ export default function JSXPlayground() {
                   {Object.entries(codeExamples).map(([key, example]) => (
                     <Pressable
                       key={key}
-                      onPress={() => setSelectedCode(key)}
+                      onPress={() => {
+                        setSelectedCode(key);
+                        setIsEditing(false);
+                        setIsDirectEditing(false);
+                      }}
                       className={`px-3 py-2 rounded-lg border ${
-                        selectedCode === key 
+                        selectedCode === key && !isEditing && !isDirectEditing
                           ? 'bg-primary-9 border-primary-7' 
                           : 'bg-neutral-3 border-neutral-5'
                       }`}
                     >
                       <Text 
                         size="sm" 
-                        color={selectedCode === key ? "primary" : "neutral"}
-                        weight={selectedCode === key ? "medium" : "normal"}
+                        color={selectedCode === key && !isEditing && !isDirectEditing ? "primary" : "neutral"}
+                        weight={selectedCode === key && !isEditing && !isDirectEditing ? "medium" : "normal"}
                       >
                         {example.name}
                       </Text>
                     </Pressable>
                   ))}
+                  <Pressable
+                    onPress={() => {
+                      setIsEditing(true);
+                      setIsDirectEditing(false);
+                      setCustomJSX(currentJSX);
+                    }}
+                    className={`px-3 py-2 rounded-lg border ${
+                      isEditing
+                        ? 'bg-primary-9 border-primary-7' 
+                        : 'bg-neutral-3 border-neutral-5'
+                    }`}
+                  >
+                    <Text 
+                      size="sm" 
+                      color={isEditing ? "primary" : "neutral"}
+                      weight={isEditing ? "medium" : "normal"}
+                    >
+                      Custom JSX
+                    </Text>
+                  </Pressable>
                 </View>
               </ScrollView>
             </View>
           </View>
+
+          {/* Editable JSX Input */}
+          {isEditing && (
+            <View className="mb-6">
+              <View className="flex flex-row items-center justify-between mb-3">
+                <Text size="lg" weight="semibold">
+                  Edit JSX Code:
+                </Text>
+                <Pressable
+                  onPress={() => {
+                    setIsEditing(false);
+                    setIsDirectEditing(false);
+                  }}
+                  className="flex flex-row items-center gap-2 px-3 py-2 bg-neutral-9 rounded-lg"
+                >
+                  <Icon icon={Edit3} size="sm" color="neutral" />
+                  <Text size="sm" color="neutral" weight="medium">Done</Text>
+                </Pressable>
+              </View>
+              
+              {/* Available Components Tip */}
+              <View className="mb-3 p-3 bg-neutral-2 rounded-lg border border-neutral-6">
+                <Text size="sm" weight="medium" className="mb-2">Available Components:</Text>
+                <Text size="xs" color="neutral" className="text-neutral-11">
+                  Components: Button, Text, Icon, View, Input | Icons: BookOpen, Heart, Star, Zap, Settings, Edit3
+                </Text>
+              </View>
+              
+              <SyntaxHighlightedInput 
+                value={customJSX}
+                onChangeText={setCustomJSX}
+                placeholder="Enter your JSX code here...&#10;&#10;Example:&#10;&lt;Button variant=&quot;solid&quot; color=&quot;primary&quot;&gt;&#10;  &lt;Button.Text&gt;Hello World&lt;/Button.Text&gt;&#10;&lt;/Button&gt;"
+                numberOfLines={8}
+                className="min-h-[200px] bg-neutral-2 rounded-lg border border-neutral-6"
+              />
+            </View>
+          )}
 
           {/* Live Preview */}
           {showPreview && (
@@ -272,12 +492,21 @@ export default function JSXPlayground() {
             <Text size="lg" weight="semibold" className="mb-3">
               JSX String:
             </Text>
-            <View className="bg-neutral-2 rounded-lg border border-neutral-6 overflow-hidden">
-              <Highlight 
-                code={currentJSX}
-                language="tsx"
-              />
-            </View>
+            <SyntaxHighlightedInput 
+              value={currentJSX}
+              onChangeText={(text) => {
+                if (isEditing) {
+                  setCustomJSX(text);
+                } else {
+                  // If not in editing mode, update the selected example
+                  setCustomJSX(text);
+                  setIsDirectEditing(true);
+                }
+              }}
+              placeholder="Enter JSX code here..."
+              numberOfLines={6}
+              className="min-h-[150px] bg-neutral-2 rounded-lg border border-neutral-6"
+            />
           </View>
 
           {/* Converted Code */}
