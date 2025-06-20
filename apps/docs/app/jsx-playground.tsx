@@ -340,18 +340,16 @@ export default function JSXPlayground() {
   const [selectedCode, setSelectedCode] = useState(defaultCode);
   const [showPreview, setShowPreview] = useState(false);
   const [customJSX, setCustomJSX] = useState("");
-  const [isEditing, setIsEditing] = useState(false);
   const [isDirectEditing, setIsDirectEditing] = useState(false);
 
   const resetCode = useCallback(() => {
     setSelectedCode(defaultCode);
     setShowPreview(false);
     setCustomJSX("");
-    setIsEditing(false);
     setIsDirectEditing(false);
   }, []);
 
-  const currentJSX = isEditing || isDirectEditing ? customJSX : (codeExamples[selectedCode as keyof typeof codeExamples]?.jsx || "");
+  const currentJSX = isDirectEditing ? customJSX : (codeExamples[selectedCode as keyof typeof codeExamples]?.jsx || "");
 
   // Scope for the LivePreview
   const scope = {
@@ -406,85 +404,27 @@ export default function JSXPlayground() {
                       key={key}
                       onPress={() => {
                         setSelectedCode(key);
-                        setIsEditing(false);
                         setIsDirectEditing(false);
                       }}
                       className={`px-3 py-2 rounded-lg border ${
-                        selectedCode === key && !isEditing && !isDirectEditing
+                        selectedCode === key && !isDirectEditing
                           ? 'bg-primary-9 border-primary-7' 
                           : 'bg-neutral-3 border-neutral-5'
                       }`}
                     >
                       <Text 
                         size="sm" 
-                        color={selectedCode === key && !isEditing && !isDirectEditing ? "primary" : "neutral"}
-                        weight={selectedCode === key && !isEditing && !isDirectEditing ? "medium" : "normal"}
+                        color={selectedCode === key && !isDirectEditing ? "primary" : "neutral"}
+                        weight={selectedCode === key && !isDirectEditing ? "medium" : "normal"}
                       >
                         {example.name}
                       </Text>
                     </Pressable>
                   ))}
-                  <Pressable
-                    onPress={() => {
-                      setIsEditing(true);
-                      setIsDirectEditing(false);
-                      setCustomJSX(currentJSX);
-                    }}
-                    className={`px-3 py-2 rounded-lg border ${
-                      isEditing
-                        ? 'bg-primary-9 border-primary-7' 
-                        : 'bg-neutral-3 border-neutral-5'
-                    }`}
-                  >
-                    <Text 
-                      size="sm" 
-                      color={isEditing ? "primary" : "neutral"}
-                      weight={isEditing ? "medium" : "normal"}
-                    >
-                      Custom JSX
-                    </Text>
-                  </Pressable>
                 </View>
               </ScrollView>
             </View>
           </View>
-
-          {/* Editable JSX Input */}
-          {isEditing && (
-            <View className="mb-6">
-              <View className="flex flex-row items-center justify-between mb-3">
-                <Text size="lg" weight="semibold">
-                  Edit JSX Code:
-                </Text>
-                <Pressable
-                  onPress={() => {
-                    setIsEditing(false);
-                    setIsDirectEditing(false);
-                  }}
-                  className="flex flex-row items-center gap-2 px-3 py-2 bg-neutral-9 rounded-lg"
-                >
-                  <Icon icon={Edit3} size="sm" color="neutral" />
-                  <Text size="sm" color="neutral" weight="medium">Done</Text>
-                </Pressable>
-              </View>
-              
-              {/* Available Components Tip */}
-              <View className="mb-3 p-3 bg-neutral-2 rounded-lg border border-neutral-6">
-                <Text size="sm" weight="medium" className="mb-2">Available Components:</Text>
-                <Text size="xs" color="neutral" className="text-neutral-11">
-                  Components: Button, Text, Icon, View, Input | Icons: BookOpen, Heart, Star, Zap, Settings, Edit3
-                </Text>
-              </View>
-              
-              <SyntaxHighlightedInput 
-                value={customJSX}
-                onChangeText={setCustomJSX}
-                placeholder="Enter your JSX code here...&#10;&#10;Example:&#10;&lt;Button variant=&quot;solid&quot; color=&quot;primary&quot;&gt;&#10;  &lt;Button.Text&gt;Hello World&lt;/Button.Text&gt;&#10;&lt;/Button&gt;"
-                numberOfLines={8}
-                className="min-h-[200px] bg-neutral-2 rounded-lg border border-neutral-6"
-              />
-            </View>
-          )}
 
           {/* Live Preview */}
           {showPreview && (
@@ -507,13 +447,8 @@ export default function JSXPlayground() {
             <SyntaxHighlightedInput 
               value={currentJSX}
               onChangeText={(text) => {
-                if (isEditing) {
-                  setCustomJSX(text);
-                } else {
-                  // If not in editing mode, update the selected example
-                  setCustomJSX(text);
-                  setIsDirectEditing(true);
-                }
+                setCustomJSX(text);
+                setIsDirectEditing(true);
               }}
               placeholder="Enter JSX code here..."
               numberOfLines={6}
