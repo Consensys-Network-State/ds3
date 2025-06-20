@@ -1,11 +1,27 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
-import { Text } from '@consensys/ds3';
+import { ScrollView } from 'react-native';
+import { Text, Button, Icon, Input, Checkbox, Switch, Spinner, Card, Badge, Alert, Highlight, View } from '@consensys/ds3';
 import { MarkdownRenderer } from '@/components/MarkdownRenderer';
 import { useMarkdownContent } from '@/components/MarkdownProvider';
 
 export default function HighlightPage() {
   const { content: markdown, isLoading, error } = useMarkdownContent('highlight');
+
+  const scope = {
+    React,
+    Button,
+    Icon,
+    Input,
+    Checkbox,
+    Switch,
+    Spinner,
+    Card,
+    Badge,
+    Alert,
+    Text,
+    View,
+    Highlight,
+  };
 
   return (
     <ScrollView className="h-screen bg-primary-1">
@@ -16,7 +32,7 @@ export default function HighlightPage() {
             ) : error ? (
               <Text className="text-error-11">Error: {error}</Text>
             ) : markdown ? (
-              <MarkdownRenderer content={markdown} />
+              <MarkdownRenderer content={markdown} scope={scope} />
             ) : (
               <Text className="text-neutral-11">No markdown content available</Text>
             )}

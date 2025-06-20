@@ -1,3 +1,4 @@
+import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Text, Icon, ThemeIcon, Button } from '@consensys/ds3';
 import { openLink } from '@consensys/ds3';
@@ -47,6 +48,16 @@ export default function HomeScreen() {
             <CodeBlock 
               code={codeExample}
               language="javascript"
+              className="mb-8"
+            />
+
+            <CodeBlock
+              code={`<Button variant="solid" color="primary">
+  <Button.Text>Hello World</Button.Text>
+</Button>`}
+              language="tsx"
+              preview
+              scope={{ Button, React }}
               className="mb-8"
             />
 

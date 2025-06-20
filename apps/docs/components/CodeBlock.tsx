@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { Text, useCopyToClipboard, Icon, Highlight } from '@consensys/ds3';
 import { Check, Copy } from 'lucide-react-native';
+import LivePreview from './LivePreview';
 
 interface CodeBlockProps {
   code: string;
@@ -9,7 +10,38 @@ interface CodeBlockProps {
   className?: string;
   showCopyButton?: boolean;
   showLanguage?: boolean;
+  preview?: boolean;
+  scope?: Record<string, any>;
 }
+
+// Memoized Highlight component to prevent unnecessary re-renders and state updates
+const MemoizedHighlight = React.memo(({ code, language }: { code: string; language: string }) => {
+  const [hasError, setHasError] = React.useState(false);
+
+  React.useEffect(() => {
+    setHasError(false);
+  }, [code, language]);
+
+  if (hasError) {
+    return (
+      <Text className="font-mono text-sm text-neutral-11">
+        {code}
+      </Text>
+    );
+  }
+
+  try {
+    return <Highlight code={code} language={language} />;
+  } catch (error) {
+    console.warn('Highlight component error:', error);
+    setHasError(true);
+    return (
+      <Text className="font-mono text-sm text-neutral-11">
+        {code}
+      </Text>
+    );
+  }
+});
 
 export function CodeBlock({
   code,
@@ -17,6 +49,8 @@ export function CodeBlock({
   className = '',
   showCopyButton = true,
   showLanguage = true,
+  preview = false,
+  scope = {},
 }: CodeBlockProps) {
   const { copied, copy } = useCopyToClipboard();
 
@@ -28,6 +62,17 @@ export function CodeBlock({
 
   return (
     <View className={`bg-neutral-3 rounded-lg overflow-hidden ${className}`}>
+      {/* Live Preview */}
+      {preview && (
+        <View className="border-b border-neutral-5">
+          <LivePreview 
+            code={code} 
+            scope={scope}
+            className="m-4"
+          />
+        </View>
+      )}
+
       {/* Header with language label and copy button */}
       {showHeader && (
         <View className="flex-row justify-between items-center px-4 py-2 bg-neutral-4 border-b border-neutral-5">
@@ -54,7 +99,7 @@ export function CodeBlock({
 
       {/* Code content */}
       <View className="p-4">
-        <Highlight code={code} language={language} />
+        <MemoizedHighlight code={code} language={language} />
       </View>
     </View>
   );

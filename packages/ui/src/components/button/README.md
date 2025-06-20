@@ -15,37 +15,25 @@ The Button component supports both web and native APIs through our [Dual API](#6
 ### Web-Specific Usage
 
 ```tsx
-import { Button } from '@consensys/ds3';
-
-function WebButton() {
-  // Using web-specific APIs
-  return (
-    <Button 
-      type="submit"
-      onClick={(e) => console.log('Clicked!', e)}
-    >
-      Submit Form
-    </Button>
-  );
-}
+<Button 
+  color="secondary"
+  type="submit"
+  onClick={(e) => console.log('Clicked!', e)}
+>
+  Jerry Tan
+</Button>
 ```
 
 ### Native/Hybrid Usage
 
 ```tsx
-import { Button } from '@consensys/ds3';
-
-function NativeButton() {
-  // Using React Native APIs
-  return (
-    <Button 
-      onPress={(e) => console.log('Pressed!', e)}
-    >
-      <Button.Text>Press Me</Button.Text>
-    </Button>
-  );
-}
+<Button 
+  onPress={(e) => console.log('Pressed!', e)}
+>
+  <Button.Text>Press Me</Button.Text>
+</Button>
 ```
+
 
 > **Note**: Choose one API style and stick with it throughout your codebase. See the [Dual API](#6--dual-api) for more details.
 
@@ -115,8 +103,6 @@ For props and styling options, see the [Text Component API](/packages/ui/src/com
 An icon for the button. Can be placed before or after the text.
 
 ```tsx
-import { Figma } from 'lucide-react-native';
-
 // Simple usage
 <Button variant="solid" color="primary" icon={Figma}>
   Click Me
@@ -140,8 +126,6 @@ A loading spinner that automatically appears when the button's `loading` prop is
 > **Note:** When the `loading` prop is set to true, a default spinner will be shown automatically. Using Button.Spinner gives you more control over customization and placement.
 
 ```tsx
-import { Figma, Loader } from 'lucide-react-native';
-
 // Simple usage
 <Button variant="solid" color="primary" loading>
   Loading...
@@ -173,9 +157,6 @@ For props and styling options, see the [Spinner Component API](/packages/ui/src/
 For buttons with only an icon, use the IconButton component:
 
 ```tsx
-import { IconButton } from '@consensys/ds3';
-import { Figma } from 'lucide-react-native';
-
 // Web example
 <IconButton 
   variant="solid" 
@@ -206,31 +187,37 @@ IconButton is a wrapper around Button with additional styling for icon-only use 
 ### Variants
 
 ```tsx
-<Button variant="elevated">Elevated</Button>
-<Button variant="solid">Solid</Button>
-<Button variant="soft">Soft</Button>
-<Button variant="outline">Outline</Button>
-<Button variant="dashed">Dashed</Button>
-<Button variant="ghost">Ghost</Button>
+<View className="flex flex-row gap-3">
+  <Button variant="elevated">Elevated</Button>
+  <Button variant="solid">Solid</Button>
+  <Button variant="soft">Soft</Button>
+  <Button variant="outline">Outline</Button>
+  <Button variant="dashed">Dashed</Button>
+  <Button variant="ghost">Ghost</Button>
+</View>
 ```
 
 ### Colors
 
 ```tsx
-<Button color="neutral">Neutral</Button>
-<Button color="primary">Primary</Button>
-<Button color="secondary">Secondary</Button>
-<Button color="error">Error</Button>
-<Button color="warning">Warning</Button>
-<Button color="success">Success</Button>
+<View className="flex flex-row gap-3">
+  <Button color="neutral">Neutral</Button>
+  <Button color="primary">Primary</Button>
+  <Button color="secondary">Secondary</Button>
+  <Button color="error">Error</Button>
+  <Button color="warning">Warning</Button>
+  <Button color="success">Success</Button>
+</View>
 ```
 
 ### Sizes
 
 ```tsx
-<Button size="sm">Small</Button>
-<Button size="md">Medium</Button>
-<Button size="lg">Large</Button>
+<View className="flex flex-row gap-3">
+  <Button size="sm">Small</Button>
+  <Button size="md">Medium</Button>
+  <Button size="lg">Large</Button>
+</View>
 ```
 
 ### Accent Colors
@@ -277,21 +264,15 @@ Change the color on hover/press:
 Each platform has its own event handling system:
 
 ```tsx
-import type { WebClickEvent, NativePressEvent } from '@consensys/ds3';
+<View className="flex flex-row gap-3">
+  <Button onClick={(e) => console.log('Clicked', e)}>
+    Web Events
+  </Button>
 
-// Web events
-<Button
-  onClick={(e: WebClickEvent) => console.log('Clicked', e)}
->
-  Web Events
-</Button>
-
-// Native events
-<Button
-  onPress={(e: NativePressEvent) => console.log('Pressed', e)}
->
-  <Button.Text>Native Events</Button.Text>
-</Button>
+  <Button onPress={(e) => console.log('Pressed', e)}>
+    <Button.Text>Native Events</Button.Text>
+  </Button>
+</View>
 ```
 
 The component exports typed event interfaces that match their platform equivalents:
@@ -304,25 +285,22 @@ For details on typed events and the dual-API approach, see the [Dual API](#6--du
 ### Using `asChild` for Custom Elements
 
 The Button component supports the [Slot Pattern](../../../README.md#the-slot-pattern-aschild) via the `asChild` prop, allowing you to replace the button with a custom component:
-
+<!-- 
 ```tsx
-// Web example with anchor
-<Button variant="solid" color="primary" asChild>
-  <a href="https://example.com">Visit Website</a>
-</Button>
+<View className="flex flex-row gap-3">
+  // Web example with anchor
+  <Button variant="solid" color="primary" asChild>
+    <a href="https://example.com">Visit Website</a>
+  </Button>
 
-// React Router example
-<Button variant="solid" color="primary" asChild>
-  <Link to="/dashboard">Go to Dashboard</Link>
-</Button>
-
-// React Navigation example (React Native)
-<Button variant="solid" color="primary" asChild>
-  <TouchableOpacity onPress={() => navigation.navigate('Details')}>
-    <Text>Go to Details</Text>
-  </TouchableOpacity>
-</Button>
-```
+  // React Navigation example (React Native)
+  <Button variant="solid" color="primary" asChild>
+    <TouchableOpacity onPress={() => navigation.navigate('Details')}>
+      <Text>Go to Details</Text>
+    </TouchableOpacity>
+  </Button>
+</View>
+``` -->
 
 ## Prop Mapping
 
