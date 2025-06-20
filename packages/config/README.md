@@ -272,3 +272,170 @@ We welcome contributions!
 ## 📜 License
 
 MIT 
+
+## Framework Injection
+
+All config plugins automatically inject the framework type into the DS3 configuration:
+
+```typescript
+// The config will include framework information
+{
+  blueprint: { /* user config */ },
+  themes: { /* generated themes */ },
+  framework: 'vite' | 'nextjs' | 'expo'
+}
+```
+
+This framework information can be accessed in your components using the `usePlatform` hook:
+
+```typescript
+import { usePlatform } from '@consensys/ds3';
+
+function MyComponent() {
+  const platform = usePlatform(); // 'vite' | 'nextjs' | 'expo' | 'unknown'
+  
+  return (
+    <div>
+      Current framework: {platform}
+    </div>
+  );
+}
+```
+
+## Usage
+
+### Vite Plugin
+
+```typescript
+// vite.config.ts
+import { defineConfig } from 'vite';
+import vitePlugin from '@consensys/ds3-config/vite.plugin';
+
+export default defineConfig({
+  plugins: [
+    vitePlugin({
+      themes: {
+        // your theme configuration
+      }
+    })
+  ]
+});
+```
+
+### Next.js Config
+
+```typescript
+// next.config.js
+const { withDs3 } = require('@consensys/ds3-config/nextjs.config');
+
+module.exports = withDs3({
+  // your Next.js config
+}, {
+  themes: {
+    // your theme configuration
+  }
+});
+```
+
+### Expo Preset
+
+```typescript
+// app.config.js
+import expoPreset from '@consensys/ds3-config/expo.preset';
+
+export default expoPreset({
+  // your Expo config
+}, {
+  themes: {
+    // your theme configuration
+  }
+});
+```
+
+### Metro Config
+
+```typescript
+// metro.config.js
+const { withDs3 } = require('@consensys/ds3-config/metro.config');
+
+module.exports = withDs3({
+  // your Metro config
+}, {
+  input: './global.css'
+});
+```
+
+## API Reference
+
+### Vite Plugin
+
+#### `vitePlugin(userConfig: UserConfig): PluginOption[]`
+
+Creates Vite plugins with DS3 configuration.
+
+**Parameters:**
+- `userConfig`: DS3 theme configuration
+
+**Returns:** Array of Vite plugins
+
+### Next.js Config
+
+#### `withDs3(nextConfig?: NextConfig, themeConfig?: Record<string, unknown>): NextConfig`
+
+Enhances Next.js configuration with DS3 settings.
+
+**Parameters:**
+- `nextConfig`: Base Next.js configuration (optional)
+- `themeConfig`: DS3 theme configuration (optional)
+
+**Returns:** Enhanced Next.js configuration
+
+### Expo Preset
+
+#### `expoPreset(config: ExpoConfig, userConfig: UserConfig): ExpoConfig`
+
+Applies DS3 configuration to Expo config.
+
+**Parameters:**
+- `config`: Expo configuration
+- `userConfig`: DS3 theme configuration
+
+**Returns:** Enhanced Expo configuration
+
+### Metro Config
+
+#### `withDs3(config: MetroConfig, options?: { input?: string }): MetroConfig`
+
+Applies DS3 configuration to Metro config.
+
+**Parameters:**
+- `config`: Metro configuration
+- `options.input`: CSS input file path (default: './global.css')
+
+**Returns:** Enhanced Metro configuration
+
+#### `withDs3Workspace(config: MetroConfig, options?: { input?: string, projectRoot?: string }): MetroConfig`
+
+Applies DS3 configuration to Metro config with workspace support.
+
+**Parameters:**
+- `config`: Metro configuration
+- `options.input`: CSS input file path (default: './global.css')
+- `options.projectRoot`: Project root path (default: current directory)
+
+**Returns:** Enhanced Metro configuration
+
+## Types
+
+```typescript
+interface UserConfig {
+  themes?: UserConfigThemes;
+  framework?: 'vite' | 'nextjs' | 'expo';
+}
+
+interface Config {
+  blueprint: UserConfig;
+  themes: ConfigThemes;
+  framework?: 'vite' | 'nextjs' | 'expo';
+}
+``` 

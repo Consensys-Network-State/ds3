@@ -30,7 +30,7 @@ export function withDs3(
   nextConfig: NextConfig = {},
   themeConfig: Record<string, unknown> = {}
 ): NextConfig {
-  const generatedConfig = generateConfig(themeConfig);
+  const generatedConfig = generateConfig({ ...themeConfig, framework: 'nextjs' });
 
   return {
     ...nextConfig,

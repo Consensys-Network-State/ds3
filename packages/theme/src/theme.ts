@@ -17,6 +17,7 @@ export const generateConfig = (userConfig: UserConfig): Config => {
   return {
     blueprint,
     themes: generateThemes(blueprint),
+    framework: blueprint.framework,
   }
 };
 

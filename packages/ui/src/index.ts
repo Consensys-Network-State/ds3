@@ -156,6 +156,7 @@ export {
   useThemeColors,
   useTheme,
   useColorScheme,
+  usePlatform,
 } from './components/theme';
 
 export type {

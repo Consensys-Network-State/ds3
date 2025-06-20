@@ -15,7 +15,7 @@ const LOADER_MAP: Record<FileExtension, LoaderType> = {
 };
 
 function vitePlugin(userConfig: UserConfig): PluginOption[] {
-  const config = generateConfig(userConfig);
+  const config = generateConfig({ ...userConfig, framework: 'vite' });
   
   return [
     react({

@@ -42,6 +42,7 @@ export type ConfigThemes = Record<string, ConfigTheme>;
 export interface Config {
   blueprint: UserConfig;
   themes: ConfigThemes;
+  framework?: 'vite' | 'nextjs' | 'expo';
 }
 
 export type HexColor = `#${string}`;
@@ -79,4 +80,5 @@ export type UserConfigThemes = Record<string, UserConfigTheme>;
 
 export interface UserConfig {
   themes?: UserConfigThemes;
+  framework?: 'vite' | 'nextjs' | 'expo';
 }
