@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { View, ScrollView, Pressable, TextInput } from "react-native";
+import { View, ScrollView, Pressable, TextInput, Platform } from "react-native";
 import { Text, Button, Icon, Highlight, Input } from "@consensys/ds3/src";
 import { BookOpen, Heart, Star, Zap, Settings, Play, RotateCcw, Edit3 } from "lucide-react-native";
 // @ts-ignore
@@ -192,7 +192,19 @@ const SyntaxHighlightedInput: React.FC<SyntaxHighlightedInputProps> = ({
   const [focused, setFocused] = useState(false);
   const [selection, setSelection] = useState({ start: 0, end: 0 });
   const [scrollOffset, setScrollOffset] = useState(0);
+  const [cursorVisible, setCursorVisible] = useState(true);
   const inputRef = React.useRef<TextInput>(null);
+
+  // Blinking cursor effect
+  React.useEffect(() => {
+    if (!focused) return;
+    
+    const interval = setInterval(() => {
+      setCursorVisible(prev => !prev);
+    }, 500); // Blink every 500ms (faster than default pulse)
+    
+    return () => clearInterval(interval);
+  }, [focused]);
 
   // Font metrics - match exactly with the TextInput
   const fontSize = 14;
@@ -275,11 +287,11 @@ const SyntaxHighlightedInput: React.FC<SyntaxHighlightedInputProps> = ({
       </View>
       
       {/* Custom Cursor Indicator */}
-      {focused && cursorPos && (
+      {focused && cursorPos && Platform.OS !== 'ios' && cursorVisible && (
         <View 
-          className="absolute bg-blue-500"
+          className="absolute bg-neutral-12"
           style={{
-            width: 2,
+            width: 1,
             height: lineHeight, // Match the exact line height
             left: cursorPos.x,
             top: cursorPos.y,
