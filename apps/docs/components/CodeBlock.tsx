@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Text, useCopyToClipboard, Icon, SyntaxHighlighter } from '@consensys/ds3';
+import { Text, useCopyToClipboard, Icon, Highlight } from '@consensys/ds3';
 import { Check, Copy } from 'lucide-react-native';
 
 interface CodeBlockProps {
@@ -54,7 +54,7 @@ export function CodeBlock({
 
       {/* Code content */}
       <View className="p-4">
-        <SyntaxHighlighter code={code} language={language} />
+        <Highlight code={code} language={language} />
       </View>
     </View>
   );

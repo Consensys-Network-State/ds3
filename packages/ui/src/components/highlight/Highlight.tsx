@@ -1,22 +1,22 @@
 import React from 'react';
 import { View, Platform} from 'react-native';
 import { Text } from '../text';
-import { Highlight } from 'prism-react-renderer';
-import type { SyntaxHighlighterProps } from './types';
+import { Highlight as PrismHighlight } from 'prism-react-renderer';
 import { useThemeColors } from '../theme';
 import { createDs3Theme } from './theme';
+import type { HighlightProps } from './types';
 
-export function SyntaxHighlighter({ 
+export function Highlight({ 
   code, 
   language = 'javascript', 
-  className = '' 
-}: SyntaxHighlighterProps) {
+  className = ''
+}: HighlightProps) {
   const colors = useThemeColors();
   const ds3Theme = createDs3Theme(colors);
 
   return (
     <View className={className}>
-      <Highlight
+      <PrismHighlight
         code={code}
         language={language}
         theme={ds3Theme}
@@ -46,7 +46,7 @@ export function SyntaxHighlighter({
             ))}
           </View>
         )}
-      </Highlight>
+      </PrismHighlight>
     </View>
   );
-} 
+}

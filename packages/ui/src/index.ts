@@ -115,15 +115,14 @@ export type {
   SpinnerProps,
 } from './components/spinner';
 
-// syntax-highlighter
+// highlight
 export {
-  SyntaxHighlighter,
-  createDs3Theme,
-} from './components/syntax-highlighter';
+  Highlight,
+} from './components/highlight';
 
 export type {
-  SyntaxHighlighterProps,
-} from './components/syntax-highlighter';
+  HighlightProps,
+} from './components/highlight';
 
 // switch
 export {

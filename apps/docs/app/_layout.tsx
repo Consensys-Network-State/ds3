@@ -46,7 +46,7 @@ export default function RootLayout() {
         <ThemedDrawer.Screen name="form" options={{ title: 'Form' }} />
         <ThemedDrawer.Screen name="icons" options={{ title: 'Icons' }} />
         <ThemedDrawer.Screen name="spinner" options={{ title: 'Spinner' }} />
-        <ThemedDrawer.Screen name="syntax-highlighter" options={{ title: 'Syntax Highlighter' }} />
+        <ThemedDrawer.Screen name="highlight" options={{ title: 'Highlight' }} />
         <ThemedDrawer.Screen name="+not-found" options={{ title: '404' }} />
       </ThemedDrawer>
       <StatusBar style="auto" />

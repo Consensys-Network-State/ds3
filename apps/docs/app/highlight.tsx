@@ -1,8 +1,7 @@
-import { ScrollView, View, Pressable } from 'react-native';
-import { Text, SyntaxHighlighter } from '@consensys/ds3';
-import { openLink } from '@consensys/ds3';
+import { ScrollView, View, Pressable } from 'react-native';;
+import { openLink, Highlight, Text } from '@consensys/ds3';
 
-export default function SyntaxHighlighterPage() {
+export default function HighlightPage() {
   const basicExample = `import { Button } from '@consensys/ds3';
 
 export const MyComponent = () => (
@@ -19,11 +18,11 @@ export const MyComponent = () => (
           
           <Text className="text-h2">Basic Usage</Text>
           <Text className="text-base text-neutral-11">
-            The SyntaxHighlighter component provides syntax highlighting for code snippets using prism-react-renderer.
+            The Highlight component provides syntax highlighting for code snippets using prism-react-renderer.
           </Text>
           
           <View className="bg-neutral-3 p-4 rounded-lg">
-            <SyntaxHighlighter code={basicExample} language="tsx" />
+            <Highlight code={basicExample} language="tsx" />
           </View>
 
           <Text className="text-h2">Language Support</Text>
@@ -38,12 +37,12 @@ export const MyComponent = () => (
 
           <Text className="text-h2">Props</Text>
           <Text className="text-base text-neutral-11">
-            The SyntaxHighlighter component supports all props from prism-react-renderer's Highlight component, including:
+            The Highlight component supports all props from prism-react-renderer's Highlight component, including:
           </Text>
           
           <View className="bg-neutral-3 p-4 rounded-lg">
-            <SyntaxHighlighter 
-              code={`interface SyntaxHighlighterProps {
+            <Highlight 
+              code={`interface HighlightProps {
   code: string;
   language?: string;
   className?: string;
