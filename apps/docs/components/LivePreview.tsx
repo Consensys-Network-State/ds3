@@ -74,14 +74,11 @@ const LivePreview: React.FC<LivePreviewProps> = ({ code, scope, className }) => 
     try {
       setError(null);
       
-      console.log('Processing JSX code:', code);
-      
       // Process JSX with CSS injection for dynamic classes
       let processedCode = code;
       if (code.includes('<') && code.includes('>')) {
         // Then convert JSX to React.createElement
         processedCode = convertJSXWithWrapping(code);
-        console.log('Processed code:', processedCode);
       }
       
       // Create a safe execution environment
@@ -102,8 +99,6 @@ const LivePreview: React.FC<LivePreviewProps> = ({ code, scope, className }) => 
       const jsxFunction = createComponent();
       const result = jsxFunction(...Object.values(scope));
       
-      console.log('JSX result:', result);
-      
       if (React.isValidElement(result)) {
         setPreview(result);
       } else {
@@ -117,7 +112,7 @@ const LivePreview: React.FC<LivePreviewProps> = ({ code, scope, className }) => 
   }, [code, scope]);
 
   return (
-    <View className={`p-4 bg-neutral-2 rounded-lg border border-neutral-6 min-h-[100px] items-center justify-center ${className || ''}`}>
+    <View className={`p-4 min-h-[100px] ${className || ''}`}>
       {error ? (
         <Text size="sm" color="error" className="text-error-11 text-center">
           {error}

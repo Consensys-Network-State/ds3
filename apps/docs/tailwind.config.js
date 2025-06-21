@@ -22,6 +22,11 @@ module.exports = {
     { pattern: /^text-(neutral|primary|secondary|error|warning|success|info)-(1|2|3|4|5|6|7|8|9|10|11|12)$/ },
     { pattern: /^border-(neutral|primary|secondary|error|warning|success|info)-(1|2|3|4|5|6|7|8|9|10|11|12)$/ },
     
+    // Contrast, surface, indicator, and track variants for semantic colors
+    { pattern: /^bg-(neutral|primary|secondary|error|warning|success|info)-(contrast|surface|indicator|track)$/ },
+    { pattern: /^text-(neutral|primary|secondary|error|warning|success|info)-(contrast|surface|indicator|track)$/ },
+    { pattern: /^border-(neutral|primary|secondary|error|warning|success|info)-(contrast|surface|indicator|track)$/ },
+    
     // Alpha variants for semantic colors
     { pattern: /^bg-(neutral|primary|secondary|error|warning|success|info)-(a1|a2|a3|a4|a5|a6|a7|a8|a9|a10|a11|a12)$/ },
     { pattern: /^text-(neutral|primary|secondary|error|warning|success|info)-(a1|a2|a3|a4|a5|a6|a7|a8|a9|a10|a11|a12)$/ },

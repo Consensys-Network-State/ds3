@@ -44,16 +44,18 @@ import {
   AlertTriangle,
   User,
   ChevronRight,
-  Shield
+  Shield,
+  Code,
+  Pencil
 } from "lucide-react-native";
 import { useForm, Controller } from 'react-hook-form';
-import LivePreview, { convertJSXWithWrapping } from "../components/LivePreview";
+import LivePreview from "../components/LivePreview";
 import HighlightInput from "../components/HighlightInput";
 import ReactHookForm from "../components/ReactHookForm";
 import { InputClipboard } from "../components/InputClipboard";
 import { codeExamples } from "../data/code-examples";
 
-const defaultCode = { category: "design", subcategory: "typography", example: "font-family" };
+const defaultCode = { category: "design", subcategory: "colors", example: "semantic-colors" };
 
 // Generic checkbox state manager
 const useCheckboxState = () => {
@@ -126,6 +128,7 @@ export default function JSXPlayground() {
   const [selectedExample, setSelectedExample] = useState(defaultCode.example);
   const [customJSX, setCustomJSX] = useState("");
   const [isDirectEditing, setIsDirectEditing] = useState(false);
+  const [showCodeEditor, setShowCodeEditor] = useState(false);
 
   // Create checkbox state manager
   const checkboxState = useCheckboxState();
@@ -163,7 +166,7 @@ export default function JSXPlayground() {
 
   // Scope for the LivePreview
   const scope = {
-    Button, Text, Icon, View, React, Input, IconButton, Textarea, Checkbox, Switch, Spinner, Field, InputField, CheckboxField, SwitchField, Alert, AlertDescription, Highlight,
+    Button, Text, Icon, View, React, Input, IconButton, Textarea, Checkbox, Switch, Spinner, Field, InputField, CheckboxField, SwitchField, Alert, AlertDescription, Highlight, ScrollView,
     BookOpen, Heart, Star, Zap, Settings, RotateCcw, Edit3, Figma, LoaderPinwheel, Loader, Search, Eye, Mail, Lock,
     Minus, Check, X, LoaderCircle, RefreshCw, AlertCircle, CheckCircle, AlertTriangle, User, ChevronRight, Shield,
     // React Hook Form
@@ -225,9 +228,9 @@ export default function JSXPlayground() {
   return (
     <ScrollView className="flex-1 bg-primary-1" contentContainerStyle={{ flexGrow: 1 }}>
       <View className="flex-1 p-6">
-        <View className="max-w-4xl w-full mx-auto">
+        <View className="max-w-5xl w-full mx-auto">
           <Text size="3xl" weight="bold" className="mb-6 text-center">
-            JSX Playground
+            Playground
           </Text>
           
           <Text size="lg" color="neutral" className="mb-8 text-center text-neutral-11">
@@ -242,7 +245,7 @@ export default function JSXPlayground() {
               </Text>
               <View className="flex flex-row gap-2">
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   color="neutral"
                   size="sm"
                   onPress={resetCode}
@@ -269,8 +272,8 @@ export default function JSXPlayground() {
                           setSelectedSubcategory("field");
                           setSelectedExample("basic");
                         } else if (key === "design") {
-                          setSelectedSubcategory("typography");
-                          setSelectedExample("font-family");
+                          setSelectedSubcategory("colors");
+                          setSelectedExample("semantic-colors");
                         } else if (key === "utils") {
                           setSelectedSubcategory("copy");
                           setSelectedExample("input");
@@ -365,32 +368,29 @@ export default function JSXPlayground() {
 
           {/* JSX Code */}
           <View className="mb-6">
-            <Text size="lg" weight="semibold" className="mb-3">
-              JSX String:
-            </Text>
-            <HighlightInput 
-              value={currentJSX}
-              onChangeText={(text) => {
-                setCustomJSX(text);
-                setIsDirectEditing(true);
-              }}
-              placeholder="Enter JSX code here..."
-              numberOfLines={6}
-              className="min-h-[150px] bg-neutral-2 rounded-lg border border-neutral-6"
-            />
-          </View>
-
-          {/* Converted Code */}
-          <View className="mb-6">
-            <Text size="lg" weight="semibold" className="mb-3">
-              Converted to React.createElement:
-            </Text>
-            <View className="bg-neutral-2 rounded-lg border border-neutral-6 overflow-hidden">
-              <Highlight 
-                code={convertJSXWithWrapping(currentJSX)}
-                language="tsx"
-              />
+            <View className="flex flex-row items-center justify-end mb-3">
+              <Button
+                variant="ghost"
+                color="neutral"
+                size="sm"
+                onPress={() => setShowCodeEditor(!showCodeEditor)}
+              >
+                <Button.Icon icon={Pencil} />
+                <Button.Text>{showCodeEditor ? "Hide Code" : "Edit Code"}</Button.Text>
+              </Button>
             </View>
+            {showCodeEditor && (
+              <HighlightInput 
+                value={currentJSX}
+                onChangeText={(text) => {
+                  setCustomJSX(text);
+                  setIsDirectEditing(true);
+                }}
+                placeholder="Enter JSX code here..."
+                numberOfLines={6}
+                className="min-h-[150px] bg-neutral-2 rounded-lg border border-neutral-6"
+              />
+            )}
           </View>
         </View>
       </View>

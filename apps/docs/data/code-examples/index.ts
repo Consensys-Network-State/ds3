@@ -7,6 +7,7 @@ import { switchExamples } from './switches';
 import { spinnerExamples } from './spinners';
 import { fieldsExamples } from './fields';
 import { designExamples } from './design';
+import { colorsExamples } from './colors';
 import { highlightExamples } from './highlight';
 import { utilsExamples } from './utils';
 
@@ -25,4 +26,4 @@ export const codeExamples = {
   utils: utilsExamples,
 };
 
-export { buttonExamples, inputExamples, textExamples, iconExamples, checkboxExamples, switchExamples, spinnerExamples, fieldsExamples, designExamples, highlightExamples, utilsExamples }; 
+export { buttonExamples, inputExamples, textExamples, iconExamples, checkboxExamples, switchExamples, spinnerExamples, fieldsExamples, designExamples, colorsExamples, highlightExamples, utilsExamples }; 

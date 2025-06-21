@@ -51,16 +51,6 @@ export default function HomeScreen() {
               className="mb-8"
             />
 
-            <CodeBlock
-              code={`<Button variant="solid" color="primary">
-  <Button.Text>Hello World</Button.Text>
-</Button>`}
-              language="tsx"
-              preview
-              scope={{ Button, React }}
-              className="mb-8"
-            />
-
             {/* CTA Buttons */}
             <View className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
               <Button 
