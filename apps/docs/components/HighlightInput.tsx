@@ -22,7 +22,6 @@ const HighlightInput: React.FC<HighlightInputProps> = ({
 }) => {
   const [focused, setFocused] = useState(false);
   const [selection, setSelection] = useState({ start: 0, end: 0 });
-  const [scrollOffset, setScrollOffset] = useState(0);
   const [cursorVisible, setCursorVisible] = useState(true);
   const inputRef = React.useRef<TextInput>(null);
 
@@ -142,11 +141,13 @@ const HighlightInput: React.FC<HighlightInputProps> = ({
   const lineHeight = 20;
   const fontFamily = 'monospace';
   const verticalPadding = 16; // matches padding: 16
-  const minHeight = multiline ? Math.max(80, numberOfLines * lineHeight) : undefined;
   
   // Calculate actual height based on content
   const lines = value.split('\n');
-  const contentHeight = Math.max(minHeight || 0, lines.length * lineHeight + verticalPadding * 2);
+  const contentHeight = Math.max(
+    lines.length * lineHeight + (verticalPadding * 2), // Height based on actual content
+    numberOfLines * lineHeight + (verticalPadding * 2)  // Minimum height based on numberOfLines
+  );
 
   // Memoize the highlight code to prevent unnecessary re-renders
   const highlightCode = React.useMemo(() => {
@@ -190,7 +191,7 @@ const HighlightInput: React.FC<HighlightInputProps> = ({
     // Calculate exact position
     const charWidth = 8.4; // Approximate character width - fine-tuned
     const x = verticalPadding + (cursorOffset * charWidth);
-    const y = verticalPadding + (cursorLine * lineHeight) - scrollOffset;
+    const y = verticalPadding + (cursorLine * lineHeight);
     
     return {
       line: cursorLine,
@@ -203,18 +204,16 @@ const HighlightInput: React.FC<HighlightInputProps> = ({
   const cursorPos = getCursorPosition();
 
   return (
-    <View className={`relative overflow-hidden ${className}`} style={{ height: contentHeight }}>
+    <View className={`relative overflow-hidden ${className}`} style={{ height: contentHeight, overflow: 'hidden' }}>
       {/* Syntax Highlighted Background (static) */}
       <View 
         className="absolute inset-0"
         style={{ 
-          height: contentHeight,
           padding: verticalPadding,
+          overflow: 'hidden',
         }}
       >
-        <View style={{ height: contentHeight }}>
-          {highlightedCode}
-        </View>
+        {highlightedCode}
       </View>
       
       {/* Custom Cursor Indicator */}
@@ -238,10 +237,7 @@ const HighlightInput: React.FC<HighlightInputProps> = ({
         onChangeText={onChangeText}
         placeholder={placeholder}
         multiline={multiline}
-        numberOfLines={numberOfLines}
-        selection={selection}
         style={{ 
-          height: contentHeight,
           textAlignVertical: multiline ? 'top' : 'center',
           fontFamily,
           fontSize,
@@ -250,6 +246,8 @@ const HighlightInput: React.FC<HighlightInputProps> = ({
           backgroundColor: 'transparent',
           position: 'relative',
           zIndex: 1,
+          height: contentHeight, // Height matches the actual content
+          overflow: 'hidden',
         }}
         className="flex-1 outline-none text-transparent"
         onFocus={() => setFocused(true)}
@@ -258,14 +256,8 @@ const HighlightInput: React.FC<HighlightInputProps> = ({
           const { start, end } = event.nativeEvent.selection;
           setSelection({ start, end });
         }}
-        onScroll={(event) => {
-          const contentOffset = event.nativeEvent?.contentOffset;
-          if (contentOffset && typeof contentOffset.y === 'number') {
-            setScrollOffset(contentOffset.y);
-          }
-        }}
         onKeyPress={handleKeyPress}
-        scrollEnabled={true}
+        scrollEnabled={false}
       />
     </View>
   );

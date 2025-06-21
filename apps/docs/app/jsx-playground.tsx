@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { ScrollView } from "react-native";
+import { router } from "expo-router";
 import { 
   Text, 
   Button, 
@@ -46,7 +47,8 @@ import {
   ChevronRight,
   Shield,
   Code,
-  Pencil
+  Pencil,
+  BookOpenText
 } from "lucide-react-native";
 import { useForm, Controller } from 'react-hook-form';
 import LivePreview from "../components/LivePreview";
@@ -135,6 +137,21 @@ export default function JSXPlayground() {
 
   // Create switch state manager
   const switchState = useSwitchState();
+
+  // Function to map categories to their documentation routes
+  const getDocRoute = (category: string) => {
+    const routeMap: Record<string, string> = {
+      buttons: "/buttons",
+      inputs: "/inputs", 
+      checkboxes: "/checkbox",
+      switches: "/switch",
+      fields: "/field",
+      icons: "/icons",
+      spinners: "/spinner",
+      highlight: "/highlight"
+    };
+    return routeMap[category] || null;
+  };
 
   const resetCode = useCallback(() => {
     setSelectedCategory(defaultCode.category);
@@ -368,14 +385,26 @@ export default function JSXPlayground() {
 
           {/* JSX Code */}
           <View className="mb-6">
-            <View className="flex flex-row items-center justify-end mb-3">
+            <View className="flex flex-row items-center justify-end mb-3 gap-3">
+            {getDocRoute(selectedCategory) && (
+              <Button
+                variant="ghost"
+                color="neutral"
+                size="sm"
+                onPress={() => router.push(getDocRoute(selectedCategory) as any)}
+              >
+                <Button.Icon icon={BookOpenText} />
+                <Button.Text>View Docs</Button.Text>
+              </Button>
+            )}
+
               <Button
                 variant="ghost"
                 color="neutral"
                 size="sm"
                 onPress={() => setShowCodeEditor(!showCodeEditor)}
               >
-                <Button.Icon icon={Pencil} />
+                <Button.Icon icon={showCodeEditor ? X : Pencil} />
                 <Button.Text>{showCodeEditor ? "Hide Code" : "Edit Code"}</Button.Text>
               </Button>
             </View>
