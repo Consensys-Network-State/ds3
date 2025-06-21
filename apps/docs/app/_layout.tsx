@@ -38,8 +38,6 @@ export default function RootLayout() {
               headerShown: true,
             }}
           />
-          <ThemedDrawer.Screen name="tokens" options={{ title: 'Tokens' }} />
-          <ThemedDrawer.Screen name="typography" options={{ title: 'Typography' }} />
           <ThemedDrawer.Screen name="buttons" options={{ title: 'Buttons' }} />
           <ThemedDrawer.Screen name="inputs" options={{ title: 'Inputs' }} />
           <ThemedDrawer.Screen name="checkbox" options={{ title: 'Checkbox' }} />
