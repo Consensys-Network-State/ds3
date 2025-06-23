@@ -4,8 +4,9 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { ThemeProvider } from "@consensys/ds3";
 import ExpoConstants from 'expo-constants';
-import { ThemedDrawer } from '@/components/ThemedDrawer';
+import { ThemedTabs } from '@/components/ThemedTabs';
 import { MarkdownProvider } from '@/components/MarkdownProvider';
+import { Home, Palette, Layers, Wallet } from 'lucide-react-native';
 import 'react-native-reanimated';
 import "../global.css";
 
@@ -30,25 +31,42 @@ export default function RootLayout() {
   return (
     <ThemeProvider className="flex-1" config={ExpoConstants?.expoConfig?.extra?.DS3}>
       <MarkdownProvider>
-        <ThemedDrawer>
-          <ThemedDrawer.Screen
+        <ThemedTabs>
+          <ThemedTabs.Screen
             name="index"
             options={{
               title: 'Home',
-              headerShown: true,
+              tabBarIcon: ({ color }) => <Home size={20} color={color} />,
             }}
           />
-          <ThemedDrawer.Screen name="buttons" options={{ title: 'Buttons' }} />
-          <ThemedDrawer.Screen name="inputs" options={{ title: 'Inputs' }} />
-          <ThemedDrawer.Screen name="checkbox" options={{ title: 'Checkbox' }} />
-          <ThemedDrawer.Screen name="switch" options={{ title: 'Switch' }} />
-          <ThemedDrawer.Screen name="field" options={{ title: 'Fields' }} />
-          <ThemedDrawer.Screen name="form" options={{ title: 'Form' }} />
-          <ThemedDrawer.Screen name="icons" options={{ title: 'Icons' }} />
-          <ThemedDrawer.Screen name="spinner" options={{ title: 'Spinner' }} />
-          <ThemedDrawer.Screen name="highlight" options={{ title: 'Highlight' }} />
-          <ThemedDrawer.Screen name="+not-found" options={{ title: '404' }} />
-        </ThemedDrawer>
+          
+          <ThemedTabs.Screen 
+            name="theme" 
+            options={{ 
+              title: 'Theme',
+              tabBarIcon: ({ color }) => <Palette size={20} color={color} />,
+            }} 
+          />
+          
+          <ThemedTabs.Screen 
+            name="components" 
+            options={{ 
+              title: 'Components',
+              tabBarIcon: ({ color }) => <Layers size={20} color={color} />,
+            }} 
+          />
+          
+          <ThemedTabs.Screen 
+            name="web3" 
+            options={{ 
+              title: 'Web3',
+              tabBarIcon: ({ color }) => <Wallet size={20} color={color} />,
+            }} 
+          />
+          
+          <ThemedTabs.Screen name="+not-found" options={{ href: null }} />
+          
+        </ThemedTabs>
         <StatusBar style="auto" />
       </MarkdownProvider>
     </ThemeProvider>

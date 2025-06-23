@@ -10,20 +10,8 @@ const DEV_SERVER_HOST = 'localhost'; // For web
 const DEV_SERVER_HOST_NATIVE = '10.0.2.2'; // For Android emulator
 const DEV_SERVER_HOST_IOS = 'localhost'; // For iOS simulator
 
-// GitHub raw content URLs for README files
-const README_URLS = {
-  button: 'https://raw.githubusercontent.com/Consensys-Network-State/ds3/docs-cleanup/packages/ui/src/components/button/README.md',
-  checkbox: 'https://raw.githubusercontent.com/Consensys-Network-State/ds3/docs-cleanup/packages/ui/src/components/checkbox/README.md',
-  field: 'https://raw.githubusercontent.com/Consensys-Network-State/ds3/docs-cleanup/packages/ui/src/components/field/README.md',
-  fields: 'https://raw.githubusercontent.com/Consensys-Network-State/ds3/docs-cleanup/packages/ui/src/components/fields/README.md',
-  heading: 'https://raw.githubusercontent.com/Consensys-Network-State/ds3/docs-cleanup/packages/ui/src/components/heading/README.md',
-  highlight: 'https://raw.githubusercontent.com/Consensys-Network-State/ds3/docs-cleanup/packages/ui/src/components/highlight/README.md',
-  icon: 'https://raw.githubusercontent.com/Consensys-Network-State/ds3/docs-cleanup/packages/ui/src/components/icon/README.md',
-  input: 'https://raw.githubusercontent.com/Consensys-Network-State/ds3/docs-cleanup/packages/ui/src/components/input/README.md',
-  spinner: 'https://raw.githubusercontent.com/Consensys-Network-State/ds3/docs-cleanup/packages/ui/src/components/spinner/README.md',
-  switch: 'https://raw.githubusercontent.com/Consensys-Network-State/ds3/docs-cleanup/packages/ui/src/components/switch/README.md',
-  text: 'https://raw.githubusercontent.com/Consensys-Network-State/ds3/docs-cleanup/packages/ui/src/components/text/README.md',
-} as const;
+// GitHub repository base URL for production fallback
+const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/Consensys-Network-State/ds3/docs-cleanup';
 
 // Cache for downloaded content
 const markdownCache: Record<string, string> = {};
@@ -32,26 +20,10 @@ const markdownCache: Record<string, string> = {};
 let sseConnection: EventSource | null = null;
 let sseReconnectTimeout: NodeJS.Timeout | null = null;
 
-export type MarkdownKey = keyof typeof README_URLS;
-
-export interface MarkdownContent {
-  button: string;
-  checkbox: string;
-  field: string;
-  fields: string;
-  heading: string;
-  highlight: string;
-  icon: string;
-  input: string;
-  spinner: string;
-  switch: string;
-  text: string;
-}
-
 /**
- * Gets the development server URL for a markdown key
+ * Gets the development server URL for a markdown path
  */
-function getDevServerUrl(key: MarkdownKey): string {
+function getDevServerUrl(markdownPath: string): string {
   // Detect platform for correct host
   const isWeb = typeof window !== 'undefined';
   const isAndroid = !isWeb && typeof navigator !== 'undefined' && navigator.product === 'ReactNative';
@@ -63,7 +35,16 @@ function getDevServerUrl(key: MarkdownKey): string {
     host = DEV_SERVER_HOST_IOS; // iOS simulator
   }
   
-  return `http://${host}:${DEV_SERVER_PORT}/markdown/${key}.md`;
+  return `http://${host}:${DEV_SERVER_PORT}/markdown/${markdownPath}`;
+}
+
+/**
+ * Gets the GitHub URL for a markdown path
+ */
+function getGitHubUrl(markdownPath: string): string {
+  // Ensure the path ends with .md
+  const pathWithExtension = markdownPath.endsWith('.md') ? markdownPath : `${markdownPath}.md`;
+  return `${GITHUB_BASE_URL}/${pathWithExtension}`;
 }
 
 /**
@@ -86,26 +67,28 @@ function getSSEUrl(): string {
 /**
  * Loads a markdown file from the development server
  */
-async function loadFromDevServer(key: MarkdownKey): Promise<string | null> {
-  if (!isDevelopment) {
-    return null;
-  }
-
+async function loadFromDevServer(markdownPath: string): Promise<string | null> {
   try {
-    const url = getDevServerUrl(key);
+    const url = getDevServerUrl(markdownPath);
     console.log(`🔍 Attempting to load from dev server: ${url}`);
+    
+    // Detect platform for debugging
+    const isWeb = typeof window !== 'undefined';
+    const isAndroid = !isWeb && typeof navigator !== 'undefined' && navigator.product === 'ReactNative';
+    console.log(`🔍 Platform detection: isWeb=${isWeb}, isAndroid=${isAndroid}`);
     
     const response = await fetch(url);
     if (!response.ok) {
-      console.warn(`Dev server returned ${response.status} for ${key}`);
+      console.warn(`Dev server returned ${response.status} for ${markdownPath}`);
       return null;
     }
     
     const content = await response.text();
-    console.log(`✅ Loaded from dev server: ${key}`);
+    console.log(`✅ Loaded from dev server: ${markdownPath}`);
     return content;
   } catch (error) {
-    console.warn(`Failed to load from dev server for ${key}:`, error);
+    console.warn(`Failed to load from dev server for ${markdownPath}:`, error);
+    console.warn(`Error details:`, error);
     return null;
   }
 }
@@ -113,16 +96,18 @@ async function loadFromDevServer(key: MarkdownKey): Promise<string | null> {
 /**
  * Downloads a markdown file from GitHub and caches it
  */
-async function downloadMarkdown(url: string, key: MarkdownKey): Promise<string> {
+async function downloadMarkdown(markdownPath: string): Promise<string> {
   try {
     // Check cache first
-    if (markdownCache[key]) {
-      return markdownCache[key];
+    if (markdownCache[markdownPath]) {
+      return markdownCache[markdownPath];
     }
 
-    console.log(`📥 Downloading markdown for ${key} from GitHub...`);
+    console.log(`📥 Downloading markdown for ${markdownPath} from GitHub...`);
     
     // Download from GitHub
+    const url = getGitHubUrl(markdownPath);
+    console.log(`🔗 GitHub URL: ${url}`);
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Failed to fetch ${url}: ${response.status}`);
@@ -131,95 +116,48 @@ async function downloadMarkdown(url: string, key: MarkdownKey): Promise<string> 
     const content = await response.text();
     
     // Cache the content
-    markdownCache[key] = content;
+    markdownCache[markdownPath] = content;
     
-    console.log(`✅ Downloaded markdown for ${key}`);
+    console.log(`✅ Downloaded markdown for ${markdownPath}`);
     return content;
   } catch (error) {
-    console.error(`Error downloading markdown for ${key}:`, error);
-    return `# Error loading ${key} README\n\nCould not load the markdown file from ${url}\n\nError: ${error instanceof Error ? error.message : 'Unknown error'}`;
+    console.error(`Error downloading markdown for ${markdownPath}:`, error);
+    return `# Error loading ${markdownPath}\n\nCould not load the markdown file from GitHub\n\nError: ${error instanceof Error ? error.message : 'Unknown error'}`;
   }
 }
 
 /**
  * Loads markdown content with fallback strategy
  */
-async function loadMarkdownWithFallback(key: MarkdownKey): Promise<string> {
-  // Try development server first in development mode
-  if (isDevelopment) {
-    console.log(`🔍 Attempting to load local markdown for ${key}...`);
-    const devServerContent = await loadFromDevServer(key);
-    if (devServerContent) {
-      markdownCache[key] = devServerContent;
-      return devServerContent;
-    }
-    console.log(`⚠️ Local markdown not available for ${key}, falling back to GitHub...`);
+export async function loadMarkdown(markdownPath: string): Promise<string> {
+  console.log(`🚀 Loading markdown: ${markdownPath} (dev mode: ${isDevelopment})`);
+  
+  // Always try development server first
+  console.log(`🔍 Attempting to load local markdown for ${markdownPath}...`);
+  const devServerContent = await loadFromDevServer(markdownPath);
+  if (devServerContent) {
+    markdownCache[markdownPath] = devServerContent;
+    return devServerContent;
   }
+  console.log(`⚠️ Local markdown not available for ${markdownPath}, falling back to GitHub...`);
 
   // Fallback to GitHub URL
-  const url = README_URLS[key];
-  return downloadMarkdown(url, key);
+  console.log(`📥 Falling back to GitHub for: ${markdownPath}`);
+  return downloadMarkdown(markdownPath);
 }
 
 /**
- * Loads all README files and returns them as an object
+ * Preloads specific markdown files for faster access
  */
-export async function loadAllMarkdown(): Promise<MarkdownContent> {
-  console.log(`🚀 Loading all markdown files (mode: ${isDevelopment ? 'dev-server' : 'remote'})...`);
-  
-  const promises = Object.keys(README_URLS).map(async (key) => {
-    const typedKey = key as MarkdownKey;
-    const content = await loadMarkdownWithFallback(typedKey);
-    return { key: typedKey, content };
-  });
-
-  const results = await Promise.all(promises);
-  
-  const markdownContent = results.reduce((acc, { key, content }) => {
-    acc[key] = content;
-    return acc;
-  }, {} as MarkdownContent);
-
-  console.log(`✅ Loaded ${results.length} markdown files`);
-  return markdownContent;
-}
-
-/**
- * Loads a specific README file by key
- */
-export async function loadMarkdown(key: MarkdownKey): Promise<string> {
-  return loadMarkdownWithFallback(key);
-}
-
-/**
- * Preloads all markdown files for faster access
- */
-export async function preloadMarkdown(): Promise<void> {
-  await loadAllMarkdown();
+export async function preloadMarkdown(paths: string[]): Promise<void> {
+  await Promise.all(paths.map(path => loadMarkdown(path)));
 }
 
 /**
  * Gets cached markdown content (must be preloaded first)
  */
-export function getCachedMarkdown(key: MarkdownKey): string | null {
-  return markdownCache[key] || null;
-}
-
-/**
- * Gets all cached markdown content
- */
-export function getAllCachedMarkdown(): MarkdownContent {
-  const result: MarkdownContent = {} as MarkdownContent;
-  
-  // Only return keys that exist in the cache and match the interface
-  Object.keys(README_URLS).forEach((key) => {
-    const typedKey = key as MarkdownKey;
-    if (markdownCache[typedKey]) {
-      result[typedKey] = markdownCache[typedKey];
-    }
-  });
-  
-  return result;
+export function getCachedMarkdown(markdownPath: string): string | null {
+  return markdownCache[markdownPath] || null;
 }
 
 /**
@@ -247,16 +185,16 @@ export function isDevMode(): boolean {
 }
 
 /**
- * Gets the development server URL for a specific markdown key
+ * Gets the development server URL for a specific markdown path
  */
-export function getDevServerUrlFor(key: MarkdownKey): string {
-  return getDevServerUrl(key);
+export function getDevServerUrlFor(markdownPath: string): string {
+  return getDevServerUrl(markdownPath);
 }
 
 /**
  * Starts SSE connection for live reloading
  */
-export function startSSEConnection(onFileChanged?: (component: string) => void): void {
+export function startSSEConnection(onFileChanged?: (path: string) => void): void {
   if (!isDevelopment || sseConnection) {
     return;
   }
@@ -278,17 +216,17 @@ export function startSSEConnection(onFileChanged?: (component: string) => void):
         if (data.type === 'connected') {
           console.log('✅ SSE connected successfully');
         } else if (data.type === 'file-changed') {
-          console.log(`📝 File changed: ${data.component}`);
+          console.log(`📝 File changed: ${data.path}`);
           
-          // Clear cache for the changed component
-          if (data.component && markdownCache[data.component]) {
-            delete markdownCache[data.component];
-            console.log(`🗑️ Cleared cache for: ${data.component}`);
+          // Clear cache for the changed file
+          if (data.path && markdownCache[data.path]) {
+            delete markdownCache[data.path];
+            console.log(`🗑️ Cleared cache for: ${data.path}`);
           }
           
           // Notify callback
           if (onFileChanged) {
-            onFileChanged(data.component);
+            onFileChanged(data.path);
           }
         }
       } catch (error) {
@@ -330,6 +268,3 @@ export function stopSSEConnection(): void {
     sseReconnectTimeout = null;
   }
 }
-
-// Export the URLs for reference
-export { README_URLS };

@@ -36,18 +36,32 @@ app.get('/events', (req, res) => {
   });
 });
 
-// Serve markdown files
-app.get('/markdown/:component.md', (req, res) => {
-  const component = req.params.component;
-  const filePath = path.join(__dirname, '../packages/ui/src/components', component, 'README.md');
+// Serve markdown files by path
+app.use('/markdown', (req, res, next) => {
+  // Skip if this is the SSE endpoint
+  if (req.path === '/events') {
+    return next();
+  }
   
-  if (fs.existsSync(filePath)) {
+  // Extract the path after /markdown/
+  const requestedPath = req.path.substring(1); // Remove leading slash
+  const filePath = path.join(__dirname, '..', requestedPath);
+  
+  // Security check: ensure the path is within the workspace
+  const workspaceRoot = path.resolve(__dirname, '..');
+  const resolvedPath = path.resolve(filePath);
+  
+  if (!resolvedPath.startsWith(workspaceRoot)) {
+    return res.status(403).send('# Forbidden\n\nAccess denied to files outside workspace.');
+  }
+  
+  if (fs.existsSync(filePath) && filePath.endsWith('.md')) {
     const content = fs.readFileSync(filePath, 'utf8');
     res.setHeader('Content-Type', 'text/markdown');
     res.setHeader('Cache-Control', 'no-cache');
     res.send(content);
   } else {
-    res.status(404).send(`# Not Found\n\nREADME not found for component: ${component}`);
+    res.status(404).send(`# Not Found\n\nMarkdown file not found: ${requestedPath}`);
   }
 });
 
@@ -59,26 +73,42 @@ app.get('/health', (req, res) => {
 // Start server
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Markdown server running at http://localhost:${PORT}`);
-  console.log(`📁 Serving README files from: packages/ui/src/components/*/README.md`);
+  console.log(`📁 Serving all .md files from workspace`);
   console.log(`🔄 Live reload enabled via SSE at: http://localhost:${PORT}/events`);
 });
 
-// Watch for file changes
-const watchPath = path.join(__dirname, '../packages/ui/src/components');
-const watcher = chokidar.watch(watchPath, {
-  ignored: /(^|[\/\\])\../, // ignore dotfiles
+// Watch for file changes in the entire workspace
+const workspaceRoot = path.join(__dirname, '..');
+const watcher = chokidar.watch(workspaceRoot, {
+  ignored: [
+    /node_modules/, // ignore node_modules
+    /\.git/, // ignore git files
+    /dist/, // ignore dist folders
+    /build/, // ignore build folders
+    /coverage/, // ignore coverage folders
+    /\.DS_Store/, // ignore macOS files
+    /\.next/, // ignore Next.js build
+    /\.expo/, // ignore Expo build
+    /\.turbo/, // ignore Turbo build
+    /\.cache/, // ignore cache folders
+    /\.vscode/, // ignore VS Code files
+    /\.idea/, // ignore IntelliJ files
+  ],
   persistent: true
 });
 
-// Send SSE event to all connected clients when files change
+// Send SSE event to all connected clients when markdown files change
 function notifyClients(event, filePath) {
-  const relativePath = path.relative(watchPath, filePath);
-  const component = relativePath.split(path.sep)[0];
+  // Only notify for .md files
+  if (!filePath.endsWith('.md')) {
+    return;
+  }
+
+  const relativePath = path.relative(workspaceRoot, filePath);
   
   const message = JSON.stringify({
     type: 'file-changed',
-    component,
-    file: relativePath,
+    path: relativePath,
     timestamp: new Date().toISOString()
   });
 
@@ -86,7 +116,7 @@ function notifyClients(event, filePath) {
     client.write(`data: ${message}\n\n`);
   });
 
-  console.log(`📝 File changed: ${relativePath} (notifying ${clients.size} clients)`);
+  console.log(`📝 Markdown changed: ${relativePath} (notifying ${clients.size} clients)`);
 }
 
 watcher
@@ -95,7 +125,7 @@ watcher
   .on('unlink', path => notifyClients('unlink', path))
   .on('error', error => console.error('Watcher error:', error))
   .on('ready', () => {
-    console.log(`👀 Watching for changes in: ${watchPath}`);
+    console.log(`👀 Watching for changes in: ${workspaceRoot}`);
   });
 
 // Graceful shutdown

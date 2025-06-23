@@ -51,11 +51,11 @@ import {
   BookOpenText
 } from "lucide-react-native";
 import { useForm, Controller } from 'react-hook-form';
-import LivePreview from "../components/LivePreview";
-import HighlightInput from "../components/HighlightInput";
-import ReactHookForm from "../components/ReactHookForm";
-import { InputClipboard } from "../components/InputClipboard";
-import { codeExamples } from "../data/code-examples";
+import LivePreview from "@/components/LivePreview";
+import HighlightInput from "@/components/HighlightInput";
+import ReactHookForm from "@/components/ReactHookForm";
+import { InputClipboard } from "@/components/InputClipboard";
+import { codeExamples } from "@/data/code-examples";
 
 const defaultCode = { category: "design", subcategory: "colors", example: "semantic-colors" };
 

@@ -1,63 +1,83 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode, useRef } from 'react';
-import { loadAllMarkdown, startSSEConnection, stopSSEConnection, type MarkdownContent, type MarkdownKey } from '@/utils/markdownLoader';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useRef, useCallback } from 'react';
+import { loadMarkdown, startSSEConnection, stopSSEConnection } from '@/utils/markdownLoader';
 
 interface MarkdownContextType {
-  markdown: Partial<MarkdownContent>;
   isLoading: boolean;
   error: string | null;
-  refresh: () => Promise<void>;
-  getMarkdown: (key: MarkdownKey) => string;
+  loadMarkdown: (path: string) => Promise<string>;
+  getCachedMarkdown: (path: string) => string | null;
+  subscribeToFileChanges: (path: string, callback: () => void) => () => void;
 }
 
 const MarkdownContext = createContext<MarkdownContextType | undefined>(undefined);
 
 interface MarkdownProviderProps {
   children: ReactNode;
-  autoLoad?: boolean;
   enableLiveReload?: boolean; // Enable SSE-based live reload
 }
 
-const EMPTY_MARKDOWN: Partial<MarkdownContent> = {};
-
-export function MarkdownProvider({ children, autoLoad = true, enableLiveReload = true }: MarkdownProviderProps) {
-  const [markdown, setMarkdown] = useState<Partial<MarkdownContent>>(EMPTY_MARKDOWN);
+export function MarkdownProvider({ children, enableLiveReload = true }: MarkdownProviderProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const isInitialized = useRef(false);
+  const fileChangeSubscribers = useRef<Map<string, Set<() => void>>>(new Map());
 
-  const loadMarkdown = async () => {
+  const loadMarkdownContent = useCallback(async (path: string): Promise<string> => {
     setIsLoading(true);
     setError(null);
     try {
-      const content = await loadAllMarkdown();
-      setMarkdown(content);
+      const content = await loadMarkdown(path);
+      return content;
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load markdown');
+      const errorMessage = err instanceof Error ? err.message : 'Failed to load markdown';
+      setError(errorMessage);
       console.error('Error loading markdown:', err);
+      throw err;
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
-  const refresh = async () => {
-    await loadMarkdown();
-  };
+  const getCachedMarkdown = useCallback((path: string): string | null => {
+    // For now, we'll always load fresh content
+    // In the future, we could implement a more sophisticated caching system
+    return null;
+  }, []);
 
-  const getMarkdown = (key: MarkdownKey): string => {
-    return markdown[key] || `# Not found\n\nNo markdown found for: ${key}`;
-  };
+  const subscribeToFileChanges = useCallback((path: string, callback: () => void) => {
+    if (!fileChangeSubscribers.current.has(path)) {
+      fileChangeSubscribers.current.set(path, new Set());
+    }
+    fileChangeSubscribers.current.get(path)!.add(callback);
+
+    // Return unsubscribe function
+    return () => {
+      const subscribers = fileChangeSubscribers.current.get(path);
+      if (subscribers) {
+        subscribers.delete(callback);
+        if (subscribers.size === 0) {
+          fileChangeSubscribers.current.delete(path);
+        }
+      }
+    };
+  }, []);
 
   // Handle file changes from SSE
-  const handleFileChanged = async (component: string) => {
-    console.log(`🔄 Reloading markdown for: ${component}`);
-    await loadMarkdown();
-  };
+  const handleFileChanged = useCallback(async (filePath: string) => {
+    console.log(`🔄 File changed: ${filePath}`);
+    
+    // Notify all subscribers for this file
+    const subscribers = fileChangeSubscribers.current.get(filePath);
+    if (subscribers) {
+      console.log(`📢 Notifying ${subscribers.size} subscribers for ${filePath}`);
+      subscribers.forEach(callback => callback());
+    }
+  }, []);
 
-  // Initial load and SSE setup
+  // Initial setup
   useEffect(() => {
-    if (autoLoad && !isInitialized.current) {
+    if (!isInitialized.current) {
       isInitialized.current = true;
-      loadMarkdown();
       
       // Start SSE connection for live reload
       if (enableLiveReload) {
@@ -70,14 +90,14 @@ export function MarkdownProvider({ children, autoLoad = true, enableLiveReload =
         stopSSEConnection();
       }
     };
-  }, [autoLoad, enableLiveReload]);
+  }, [enableLiveReload, handleFileChanged]);
 
   const value: MarkdownContextType = {
-    markdown,
     isLoading,
     error,
-    refresh,
-    getMarkdown,
+    loadMarkdown: loadMarkdownContent,
+    getCachedMarkdown,
+    subscribeToFileChanges,
   };
 
   return (
@@ -95,11 +115,41 @@ export function useMarkdown() {
   return context;
 }
 
-export function useMarkdownContent(key: MarkdownKey) {
-  const { getMarkdown, isLoading, error } = useMarkdown();
+export function useMarkdownContent(path: string) {
+  const { loadMarkdown, isLoading, error, subscribeToFileChanges } = useMarkdown();
+  const [content, setContent] = useState<string>('');
+  const [localLoading, setLocalLoading] = useState(true);
+  const [reloadTrigger, setReloadTrigger] = useState(0);
+
+  // Subscribe to file changes
+  useEffect(() => {
+    const unsubscribe = subscribeToFileChanges(path, () => {
+      console.log(`🔄 Reloading content for: ${path}`);
+      setReloadTrigger(prev => prev + 1);
+    });
+
+    return unsubscribe;
+  }, [path, subscribeToFileChanges]);
+
+  useEffect(() => {
+    async function loadContent() {
+      setLocalLoading(true);
+      try {
+        const markdownContent = await loadMarkdown(path);
+        setContent(markdownContent);
+      } catch (err) {
+        setContent(`# Error\n\nFailed to load markdown from: ${path}`);
+      } finally {
+        setLocalLoading(false);
+      }
+    }
+
+    loadContent();
+  }, [path, loadMarkdown, reloadTrigger]);
+
   return {
-    content: getMarkdown(key),
-    isLoading,
+    content,
+    isLoading: isLoading || localLoading,
     error,
   };
 } 
