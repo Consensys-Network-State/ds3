@@ -13,7 +13,6 @@ export default function ComponentsLayout() {
       <LocalDrawer.Screen name="icons" options={{ title: 'Icons' }} />
       <LocalDrawer.Screen name="spinner" options={{ title: 'Spinner' }} />
       <LocalDrawer.Screen name="highlight" options={{ title: 'Highlight' }} />
-      <LocalDrawer.Screen name="jsx-playground" options={{ title: 'JSX Playground' }} />
     </LocalDrawer>
   );
 } 
