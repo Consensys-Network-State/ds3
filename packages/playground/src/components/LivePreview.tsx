@@ -3,6 +3,46 @@ import { Text, View } from "@consensys/ds3";
 // @ts-ignore
 import * as Babel from '@babel/standalone';
 
+/**
+ * LivePreview Component
+ * 
+ * Renders live previews of React components and JSX code.
+ * 
+ * Supports three patterns:
+ * 
+ * 1. Simple JSX snippets:
+ *    <Button>Hello World</Button>
+ * 
+ * 2. Component body with hooks and return:
+ *    const [count, setCount] = useState(0);
+ *    
+ *    return (
+ *      <View className="p-4 gap-4">
+ *        <Text>Count: {count}</Text>
+ *        <Button onPress={() => setCount(count + 1)}>
+ *          Click me! ({count})
+ *        </Button>
+ *      </View>
+ *    );
+ * 
+ * 3. Full component declaration:
+ *    const Component = () => {
+ *      const [isVisible, setIsVisible] = useState(true);
+ *      
+ *      return (
+ *        <View className="p-4 gap-4">
+ *          {isVisible && <Text>This text can be hidden!</Text>}
+ *          <Button onPress={() => setIsVisible(!isVisible)}>
+ *            {isVisible ? 'Hide Text' : 'Show Text'}
+ *          </Button>
+ *        </View>
+ *      );
+ *    };
+ * 
+ * The scope prop should contain all imported components and dependencies.
+ * Errors are displayed within the preview area but don't affect visibility.
+ */
+
 // JSX to React.createElement converter using Babel
 const convertJSXToCreateElement = (jsxString: string): string => {
   try {
@@ -56,18 +96,100 @@ const convertJSXWithWrapping = (jsxString: string): string => {
   return convertJSXToCreateElement(codeToConvert);
 };
 
+// New function to handle full component definitions
+const extractAndExecuteComponent = (code: string, scope: Record<string, any>): React.ReactNode => {
+  try {
+    // Remove all import statements and rely on scope
+    let cleanCode = code;
+    cleanCode = cleanCode.replace(/import\s+.*from\s+['"][^'"]*['"];?/g, '');
+    
+    // Remove export statements
+    cleanCode = cleanCode.replace(/export\s+default\s+.*;?/g, '');
+    
+    // Check for different patterns
+    const hasReturn = cleanCode.includes('return');
+    const hasConstComponent = cleanCode.includes('const Component') || cleanCode.includes('let Component') || cleanCode.includes('var Component');
+    
+    let codeToTransform;
+    if (hasConstComponent) {
+      // Full component declaration - just transform as-is
+      codeToTransform = cleanCode;
+    } else if (hasReturn) {
+      // Component body with return statement - wrap in function before transformation
+      codeToTransform = `
+        const Component = () => {
+          ${cleanCode}
+        };
+      `;
+    } else {
+      // Simple JSX - wrap in function with return
+      codeToTransform = `
+        const Component = () => {
+          return ${cleanCode};
+        };
+      `;
+    }
+    
+    // Transform JSX to React.createElement using Babel
+    const babelResult = Babel.transform(codeToTransform, {
+      presets: [['react', { runtime: 'classic' }]],
+      retainLines: true,
+      filename: 'component.jsx',
+    });
+
+    if (!babelResult.code) {
+      throw new Error('No code generated from Babel transform');
+    }
+
+    let transformedCode = babelResult.code;
+    
+    // Add useState destructuring if it's used in the code
+    if (transformedCode.includes('useState')) {
+      transformedCode = 'const { useState } = React;\n' + transformedCode;
+    }
+    
+    console.log('Transformed code:', transformedCode);
+    console.log('Scope keys:', Object.keys(scope));
+    
+    // Use react-live's approach: dynamic scope keys
+    const scopeKeys = Object.keys(scope);
+    const scopeValues = scopeKeys.map((key) => scope[key]);
+    
+    // Add return statement to get the component
+    const finalCode = `
+      ${transformedCode}
+      
+      return Component;
+    `;
+    
+    // Use react-live's evalCode approach
+    let Component;
+    try {
+      Component = new Function(...scopeKeys, finalCode)(...scopeValues);
+    } catch (error) {
+      console.error('Component execution error:', error);
+      throw new Error(`Component execution failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+    
+    // Create a React element from the component
+    return React.createElement(Component);
+  } catch (error) {
+    console.error('Component execution error:', error);
+    throw error;
+  }
+};
+
 // Export the utility function for use in other components
-export { convertJSXWithWrapping };
+export { convertJSXWithWrapping, extractAndExecuteComponent };
 
 // Custom LivePreview component that works with React Native
 interface LivePreviewProps {
   code: string;
   scope: Record<string, any>;
   className?: string;
-  onError?: (error: string) => void;
 }
 
-export const LivePreview: React.FC<LivePreviewProps> = ({ code, scope, className, onError }) => {
+export const LivePreview: React.FC<LivePreviewProps> = ({ code, scope, className }) => {
   const [error, setError] = useState<string | null>(null);
   const [preview, setPreview] = useState<React.ReactNode | null>(null);
 
@@ -75,30 +197,41 @@ export const LivePreview: React.FC<LivePreviewProps> = ({ code, scope, className
     try {
       setError(null);
       
-      // Process JSX with CSS injection for dynamic classes
-      let processedCode = code;
-      if (code.includes('<') && code.includes('>')) {
-        // Then convert JSX to React.createElement
-        processedCode = convertJSXWithWrapping(code);
-      }
+      let result: React.ReactNode;
       
-      // Create a safe execution environment
-      const createComponent = () => {
-        // Create a function that returns the JSX
-        const functionBody = `
-          "use strict";
-          try {
-            return ${processedCode.trim()};
-          } catch (e) {
-            throw new Error('JSX execution failed: ' + e.message);
-          }
-        `;
+      // Check if this looks like a full component definition
+      const hasImports = code.includes('import ');
+      const hasExports = code.includes('export ');
+      const hasComponentDef = code.includes('const ') && code.includes('=') && code.includes('()');
+      const hasFunctionDef = code.includes('function ') && code.includes('()');
+      
+      if (hasImports || hasExports || hasComponentDef || hasFunctionDef) {
+        // Handle full component definition
+        result = extractAndExecuteComponent(code, scope);
+      } else {
+        // Handle simple JSX snippet (backward compatibility)
+        let processedCode = code;
+        if (code.includes('<') && code.includes('>')) {
+          processedCode = convertJSXWithWrapping(code);
+        }
         
-        return new Function(...Object.keys(scope), functionBody);
-      };
+        // Create a safe execution environment
+        const createComponent = () => {
+          const functionBody = `
+            "use strict";
+            try {
+              return ${processedCode.trim()};
+            } catch (e) {
+              throw new Error('JSX execution failed: ' + e.message);
+            }
+          `;
+          
+          return new Function(...Object.keys(scope), functionBody);
+        };
 
-      const jsxFunction = createComponent();
-      const result = jsxFunction(...Object.values(scope));
+        const jsxFunction = createComponent();
+        result = jsxFunction(...Object.values(scope));
+      }
       
       if (React.isValidElement(result)) {
         setPreview(result);
@@ -106,15 +239,13 @@ export const LivePreview: React.FC<LivePreviewProps> = ({ code, scope, className
         const errorMessage = "Code must return a valid React element";
         setError(errorMessage);
         setPreview(null);
-        onError?.(errorMessage);
       }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Unknown error occurred";
       setError(errorMessage);
       setPreview(null);
-      onError?.(errorMessage);
     }
-  }, [code, scope, onError]);
+  }, [code, scope]);
 
   return (
     <View className={`p-4 ${className || ''}`}>

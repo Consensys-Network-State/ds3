@@ -21,17 +21,14 @@ export function MarkdownRenderer({
     class CustomRenderer extends Renderer {
       code(code: string, lang: string | undefined) {
         const language = lang || 'text';
-        const isPreviewable =
-          language === 'tsx' ||
-          language === 'jsx' ||
-          language === 'ts' ||
-          language === 'js';
+        const isPreviewable = language.includes('live');
+        const baseLanguage = language.replace(/\s+live$/, '');
 
         return (
           <View key={this.getKey()} className="mb-4">
             <CodeBlock
               code={code}
-              language={language}
+              language={baseLanguage}
               showCopyButton={true}
               showLanguage={true}
               preview={isPreviewable}

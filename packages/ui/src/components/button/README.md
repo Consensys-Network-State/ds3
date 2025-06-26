@@ -12,7 +12,7 @@ import { Button } from '@consensys/ds3';
 
 ### Basic
 
-```tsx
+```tsx live
 <Button>
   Click Me
 </Button>
@@ -20,7 +20,7 @@ import { Button } from '@consensys/ds3';
 
 ### Variants
 
-```tsx
+```tsx live
 <View className="flex flex-row gap-3">
   <Button variant="elevated">Elevated</Button>
   <Button variant="solid">Solid</Button>
@@ -33,7 +33,7 @@ import { Button } from '@consensys/ds3';
 
 ### Colors
 
-```tsx
+```tsx live
 <View className="flex flex-row gap-3">
   <Button color="neutral">Neutral</Button>
   <Button color="primary">Primary</Button>
@@ -46,7 +46,7 @@ import { Button } from '@consensys/ds3';
 
 ### Sizes
 
-```tsx
+```tsx live
 <View className="flex flex-row gap-3">
   <Button size="sm">Small</Button>
   <Button size="md">Medium</Button>
@@ -56,7 +56,7 @@ import { Button } from '@consensys/ds3';
 
 ### Icons
 
-```tsx
+```tsx live
 <View className="flex flex-row gap-3">
   <Button variant="solid" color="primary">
     <Button.Icon icon={Figma} />
@@ -78,7 +78,7 @@ import { Button } from '@consensys/ds3';
 
 ### Icon Buttons
 
-```tsx
+```tsx live
 <IconButton 
   variant="solid" 
   color="primary" 
@@ -89,8 +89,10 @@ import { Button } from '@consensys/ds3';
 
 ### Loading State
 
-```tsx
-<View className="flex flex-row gap-3">
+Basic:
+
+```tsx live
+<View className="flex flex-row gap-3 flex-wrap">
   <Button variant="solid" color="primary" loading>
     <Button.Spinner />
     <Button.Text>Spinner Left</Button.Text>
@@ -105,17 +107,28 @@ import { Button } from '@consensys/ds3';
     <Button.Spinner loadingIcon={Loader} />
     <Button.Text>Custom Icon</Button.Text>
   </Button>
+</View>
+```
 
-  <Button variant="solid" color="primary">
+Icon Fallback
+
+```tsx live
+const [loading, setLoading] = useState(false);
+
+return (
+  <Button
+    onPress={() => setLoading(true)}
+    loading={loading}
+  >
     <Button.Spinner icon={Figma} />
-    <Button.Text>Icon Fallback</Button.Text>
+    <Button.Text>Click to load</Button.Text>
   </Button>
-</View>  
+);
 ```
 
 ### Disabled State
 
-```tsx
+```tsx live
 <Button disabled>
   <Button.Text>Disabled Button</Button.Text>
 </Button>
@@ -123,7 +136,7 @@ import { Button } from '@consensys/ds3';
 
 ### Accent Colors
 
-```tsx
+```tsx live
 <Button variant="soft" color="primary" accentColor="secondary">
   <Button.Text>Press Me</Button.Text>
 </Button>
@@ -134,7 +147,7 @@ import { Button } from '@consensys/ds3';
 The Button component supports the [Slot Pattern](../../../README.md#the-slot-pattern-aschild) via the `asChild` prop.
 Here is an example of using the `expo-router` `<Link>` component:
 
-```tsx
+```tsx live
 <Button variant="solid" color="primary" asChild>
   <Link href="/">
     <Button.Text>Go to Home</Button.Text>
@@ -146,7 +159,7 @@ Here is an example of using the `expo-router` `<Link>` component:
 
 The component uses React Native event handling:
 
-```tsx
+```tsx live
 <Button onPress={(e) => console.log('Pressed', e)}>
   <Button.Text>Native Events</Button.Text>
 </Button>

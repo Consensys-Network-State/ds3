@@ -53,8 +53,7 @@ export function CodeBlock({
   scope = {},
 }: CodeBlockProps) {
   const { copied, copy } = useCopyToClipboard();
-  const [showCode, setShowCode] = React.useState(!preview); // Show code by default when no preview
-  const [hasError, setHasError] = React.useState(false);
+  const [showCode, setShowCode] = React.useState(!preview);
 
   const handleCopy = React.useCallback(() => {
     copy(code);
@@ -64,23 +63,22 @@ export function CodeBlock({
     setShowCode(!showCode);
   }, [showCode]);
 
-  // Determine what to show based on preview state and error state
-  const shouldShowCode = showCode || hasError || !preview;
-  const shouldShowPreview = preview && !hasError;
-  const shouldShowToggleButton = preview && !hasError;
+  // Determine what to show based on preview state
+  const shouldShowCode = showCode || !preview;
+  const shouldShowPreview = preview;
+  const shouldShowToggleButton = preview;
   const shouldShowLanguage = showLanguage && shouldShowCode;
 
   const showHeader = showLanguage || showCopyButton;
 
   return (
     <View className={`bg-neutral-3 rounded-lg overflow-hidden ${className}`}>
-      {/* Live Preview - only show when preview is true and no error */}
+      {/* Live Preview - only show when preview is true */}
       {shouldShowPreview && (
         <View className="border-b border-neutral-5">
           <LivePreview 
             code={code}
             scope={scope}
-            onError={() => setHasError(true)}
           />
         </View>
       )}
