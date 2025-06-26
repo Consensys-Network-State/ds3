@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View } from "@consensys/ds3/src";
+import { Text, View } from "@consensys/ds3";
 // @ts-ignore
 import * as Babel from '@babel/standalone';
 
@@ -66,7 +66,7 @@ interface LivePreviewProps {
   className?: string;
 }
 
-const LivePreview: React.FC<LivePreviewProps> = ({ code, scope, className }) => {
+export const LivePreview: React.FC<LivePreviewProps> = ({ code, scope, className }) => {
   const [error, setError] = useState<string | null>(null);
   const [preview, setPreview] = useState<React.ReactNode | null>(null);
 
@@ -127,5 +127,3 @@ const LivePreview: React.FC<LivePreviewProps> = ({ code, scope, className }) => 
     </View>
   );
 };
-
-export default LivePreview; 

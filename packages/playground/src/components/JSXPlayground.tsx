@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from "react";
 import { ScrollView } from "react-native";
-import { router } from "expo-router";
 import { 
   Text, 
   Button, 
@@ -19,7 +18,7 @@ import {
   SwitchField,
   Alert,
   AlertDescription
-} from "@consensys/ds3/src";
+} from "@consensys/ds3";
 import {
   BookOpen,
   Heart,
@@ -46,17 +45,13 @@ import {
   User,
   ChevronRight,
   Shield,
-  Code,
-  Pencil,
-  BookOpenText,
   SearchCode
 } from "lucide-react-native";
 import { useForm, Controller } from 'react-hook-form';
-import LivePreview from "./LivePreview";
-import HighlightInput from "./HighlightInput";
-import ReactHookForm from "./ReactHookForm";
-import { InputClipboard } from "./InputClipboard";
-import { codeExamples } from "../data/code-examples";
+import { LivePreview } from "./LivePreview";
+import { HighlightInput } from "./HighlightInput";
+import { ReactHookForm } from "./ReactHookForm";
+import { codeExamples } from "../data";
 
 const defaultCode = { category: "design", subcategory: "colors", example: "semantic-colors" };
 
@@ -125,7 +120,7 @@ const useSwitchState = () => {
   };
 };
 
-export default function JSXPlayground() {
+export const Playground = () => {
   const [selectedCategory, setSelectedCategory] = useState(defaultCode.category);
   const [selectedSubcategory, setSelectedSubcategory] = useState(defaultCode.subcategory);
   const [selectedExample, setSelectedExample] = useState(defaultCode.example);
@@ -138,21 +133,6 @@ export default function JSXPlayground() {
 
   // Create switch state manager
   const switchState = useSwitchState();
-
-  // Function to map categories to their documentation routes
-  const getDocRoute = (category: string) => {
-    const routeMap: Record<string, string> = {
-      buttons: "/buttons",
-      inputs: "/inputs", 
-      checkboxes: "/checkbox",
-      switches: "/switch",
-      fields: "/field",
-      icons: "/icons",
-      spinners: "/spinner",
-      highlight: "/highlight"
-    };
-    return routeMap[category] || null;
-  };
 
   const resetCode = useCallback(() => {
     setSelectedCategory(defaultCode.category);
@@ -205,8 +185,6 @@ export default function JSXPlayground() {
     getSwitchState: switchState.getSwitchState,
     setSwitchState: switchState.setSwitchState,
     createSwitchHandler: switchState.createSwitchHandler,
-    // Input Clipboard
-    InputClipboard
   };
 
   // Get available subcategories for the selected category
@@ -265,18 +243,6 @@ export default function JSXPlayground() {
                   <Button.Text>Reset</Button.Text>
                 </Button>
 
-                {getDocRoute(selectedCategory) && (
-                  <Button
-                    variant="soft"
-                    color="success"
-                    size="sm"
-                    onPress={() => router.push(getDocRoute(selectedCategory) as any)}
-                  >
-                    <Button.Icon icon={BookOpenText} />
-                    <Button.Text>API Docs</Button.Text>
-                  </Button>
-                )}
-
                 <Button
                   variant="ghost"
                   color="neutral"
@@ -291,8 +257,8 @@ export default function JSXPlayground() {
             
             {/* Category Selection */}
             <View className="bg-neutral-2 rounded-lg border border-neutral-6 overflow-hidden">
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} className="p-2">
-                <View className="flex flex-row gap-2">
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                <View className="flex flex-row gap-2 p-2">
                   {Object.entries(codeExamples).map(([key, category]) => (
                     <Button
                       key={key}
@@ -331,8 +297,8 @@ export default function JSXPlayground() {
                 {selectedCategory === "fields" ? "Field Types:" : selectedCategory === "design" ? "Design Categories:" : "Utility Categories:"}
               </Text>
               <View className="bg-neutral-2 rounded-lg border border-neutral-6 overflow-hidden">
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} className="p-2">
-                  <View className="flex flex-row gap-2">
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  <View className="flex flex-row gap-2 p-2">
                     {getSubcategories().map(({ key, name }) => (
                       <Button
                         key={key}
@@ -367,8 +333,8 @@ export default function JSXPlayground() {
             
             {/* Example Selection */}
             <View className="bg-neutral-2 rounded-lg border border-neutral-6 overflow-hidden">
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} className="p-2">
-                <View className="flex flex-row gap-2">
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                <View className="flex flex-row gap-2 p-2">
                   {getExamples().map(({ key, name }) => (
                     <Button
                       key={key}
@@ -415,7 +381,7 @@ export default function JSXPlayground() {
             </Text>
             <HighlightInput 
               value={currentJSX}
-              onChangeText={(text) => {
+              onChangeText={(text: string) => {
                 setCustomJSX(text);
                 setIsDirectEditing(true);
               }}

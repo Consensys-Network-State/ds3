@@ -7,6 +7,7 @@ module.exports = {
   content: [
     "./app/**/*.{js,jsx,ts,tsx}",
     './node_modules/@consensys/ds3/**/*.{js,jsx,ts,tsx}',
+    './node_modules/@consensys/ds3-playground/**/*.{js,jsx,ts,tsx}',
     '!node_modules/**/*.{js,ts,jsx,tsx}',
   ],
   presets: [ds3(themeConfig)],

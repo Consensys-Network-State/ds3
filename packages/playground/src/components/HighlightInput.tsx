@@ -12,7 +12,7 @@ interface HighlightInputProps {
   className?: string;
 }
 
-const HighlightInput: React.FC<HighlightInputProps> = ({
+export const HighlightInput: React.FC<HighlightInputProps> = ({
   value,
   onChangeText,
   placeholder,
@@ -262,5 +262,3 @@ const HighlightInput: React.FC<HighlightInputProps> = ({
     </View>
   );
 };
-
-export default HighlightInput; 

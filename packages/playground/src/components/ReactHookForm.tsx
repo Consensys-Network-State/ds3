@@ -16,7 +16,7 @@ import {
   Alert,
   AlertDescription,
   Option
-} from '@consensys/ds3/src';
+} from '@consensys/ds3';
 import { View } from "react-native";
 import { useForm, Controller } from 'react-hook-form';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -70,7 +70,7 @@ const useFieldValidation = (errors: any) => {
   };
 };
 
-const ReactHookForm: React.FC = () => {
+export const ReactHookForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -477,5 +477,3 @@ const ReactHookForm: React.FC = () => {
     </View>
   );
 };
-
-export default ReactHookForm; 

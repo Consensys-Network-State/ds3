@@ -1,39 +1,15 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Text, Icon, ThemeIcon, Button } from '@consensys/ds3';
-import { openLink } from '@consensys/ds3';
-import { useNavigation } from 'expo-router';
-import { useRouter } from 'expo-router';
-import { CodeBlock } from '@/components/CodeBlock';
-import JSXPlayground from '@/components/JSXPlayground';
+import { Playground } from '@consensys/ds3-playground';
 import { ExpoIcon } from './components/ExpoIcon';
 import { ViteIcon } from './components/ViteIcon';
 import { NextJsIcon } from './components/NextJsIcon';
 import {
-  Globe,
-  BookOpen,
-  Palette,
-  Github,
-  Sparkles,
-  Code,
-  Smartphone,
-  Monitor,
-  Layers,
-  Puzzle,
-  Shield,
-  Rocket,
-  Star,
-  Heart,
-  Target,
   ChevronDown,
 } from 'lucide-react-native';
 
 export default function HomeScreen() {  
-  const navigation = useNavigation();
-  const router = useRouter();
-  
-  const codeExample = `import { Button, Input, Icon } from '@consensys/ds3';`;
-
   const scrollToPlayground = () => {
     // Scroll to playground section
     const playgroundElement = document.getElementById('playground-section');
@@ -113,7 +89,7 @@ export default function HomeScreen() {
         </Text>
 
         <View className="max-w-5xl w-full mx-auto min-h-screen">
-          <JSXPlayground />
+          <Playground />
         </View>
       </View>
 
