@@ -64,9 +64,10 @@ interface LivePreviewProps {
   code: string;
   scope: Record<string, any>;
   className?: string;
+  onError?: (error: string) => void;
 }
 
-export const LivePreview: React.FC<LivePreviewProps> = ({ code, scope, className }) => {
+export const LivePreview: React.FC<LivePreviewProps> = ({ code, scope, className, onError }) => {
   const [error, setError] = useState<string | null>(null);
   const [preview, setPreview] = useState<React.ReactNode | null>(null);
 
@@ -102,16 +103,20 @@ export const LivePreview: React.FC<LivePreviewProps> = ({ code, scope, className
       if (React.isValidElement(result)) {
         setPreview(result);
       } else {
-        setError("Code must return a valid React element");
+        const errorMessage = "Code must return a valid React element";
+        setError(errorMessage);
         setPreview(null);
+        onError?.(errorMessage);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unknown error occurred");
+      const errorMessage = err instanceof Error ? err.message : "Unknown error occurred";
+      setError(errorMessage);
       setPreview(null);
+      onError?.(errorMessage);
     }
-  }, [code, scope]);
+  }, [code, scope, onError]);
 
-  return (error ? null : // hide the preview if there is an error for now
+  return (
     <View className={`p-4 ${className || ''}`}>
       {error ? (
         <Text size="sm" color="error" className="text-error-11 text-center">

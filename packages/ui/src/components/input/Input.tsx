@@ -77,10 +77,10 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRoot
             className,
           )}
           onPress={handlePress}
-          onHoverIn={(e) => {
+          onHoverIn={() => {
             setIsHovered(true);
           }}
-          onHoverOut={(e) => {
+          onHoverOut={() => {
             setIsHovered(false);
           }}
           tabIndex={-1}
