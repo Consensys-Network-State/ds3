@@ -66,9 +66,8 @@ export function CodeBlock({
       {preview && (
         <View className="border-b border-neutral-5">
           <LivePreview 
-            code={code} 
+            code={code}
             scope={scope}
-            className="m-4"
           />
         </View>
       )}

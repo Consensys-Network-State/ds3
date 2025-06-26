@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { Text, Input, Textarea } from "@consensys/ds3/src";
+import { Text, Input } from "@consensys/ds3";
 import { View, ScrollView } from "react-native";
 import { Search, Eye, Mail, Lock, Loader, LoaderPinwheel, Figma } from 'lucide-react-native';
 import { useState } from "react";
-import { Switch } from "@consensys/ds3/src";
-import type { WebFocusEvent, NativeFocusEvent } from "@consensys/ds3/src";
-import type { SharedInputProps, InputRootProps } from "@consensys/ds3/src/components/input";
+import type { InputRootProps } from "@consensys/ds3/src/components/input";
 
 const InputClickToLoad = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -45,7 +43,6 @@ const inputSizes: InputSizeOption[] = [
 const InputEvents = () => {
   const [inputValue, setInputValue] = useState('');
   const [isFocused, setIsFocused] = useState(false);
-  const [useWebEvents, setUseWebEvents] = useState(false);
   const [eventInfo, setEventInfo] = useState('No events yet');
 
   const baseProps: Partial<InputRootProps> = {
@@ -56,43 +53,24 @@ const InputEvents = () => {
     value: inputValue,
     onFocus: () => {
       setIsFocused(true);
-      setEventInfo(useWebEvents ? 'Web Focus' : 'Native Focus');
+      setEventInfo('Native Focus');
     },
     onBlur: () => {
       setIsFocused(false);
-      setEventInfo(useWebEvents ? 'Web Blur' : 'Native Blur');
+      setEventInfo('Native Blur');
     }
   };
 
   const props: InputRootProps = {
     ...baseProps,
-    ...(useWebEvents
-      ? {
-          onChange: (e: any) => {
-            setInputValue(e.target.value);
-            setEventInfo(`Web Change: ${e.target.value}`);
-          }
-        }
-      : {
-          onChangeText: (text: string) => {
-            setInputValue(text);
-            setEventInfo(`Native Change: ${text}`);
-          }
-        })
+    onChangeText: (text: string) => {
+      setInputValue(text);
+      setEventInfo(`Native Change: ${text}`);
+    }
   } as InputRootProps;
 
   return (
     <View className="flex flex-col gap-2">
-      <View className="flex flex-row items-center gap-2">
-        <Text className="text-sm text-neutral-11">Use Web Events:</Text>
-        <Switch
-          checked={useWebEvents}
-          onCheckedChange={setUseWebEvents}
-          disabled={false}
-          variant="soft"
-          color="secondary"
-        />
-      </View>
       <Input {...props}>
         <Input.Icon icon={isFocused ? Eye : Search} />
         <Input.Field />
@@ -109,42 +87,29 @@ const InputEvents = () => {
 
 const InputFocus = () => {
   const [isFocused, setIsFocused] = useState(false);
-  const [useWebEvents, setUseWebEvents] = useState(false);
   const [eventInfo, setEventInfo] = useState('No focus events yet');
 
-  // Create shared props that work for both platforms
-  const sharedProps: SharedInputProps = {
-    placeholder: 'Focus me...',
+  const sharedProps: Partial<InputRootProps> = {
     variant: 'outline',
     color: isFocused ? 'secondary' : 'primary',
-    onFocus: (event: WebFocusEvent | NativeFocusEvent) => {
-      console.log(useWebEvents ? 'Web Focus Event:' : 'Native Focus Event:', event);
+    onFocus: (event) => {
+      console.log('Native Focus Event:', event);
       setIsFocused(true);
-      setEventInfo(useWebEvents ? 'Web Focus Event' : 'Native Focus Event');
+      setEventInfo('Native Focus Event');
     },
-    onBlur: (event: WebFocusEvent | NativeFocusEvent) => {
-      console.log(useWebEvents ? 'Web Blur Event:' : 'Native Blur Event:', event);
+    onBlur: (event) => {
+      console.log('Native Blur Event:', event);
       setIsFocused(false);
-      setEventInfo(useWebEvents ? 'Web Blur Event' : 'Native Blur Event');
+      setEventInfo('Native Blur Event');
     }
   };
 
   return (
     <View className="flex flex-col gap-2">
-      <View className="flex flex-row items-center gap-2">
-        <Text className="text-sm text-neutral-11">Use Web Events:</Text>
-        <Switch
-          checked={useWebEvents}
-          onCheckedChange={setUseWebEvents}
-          disabled={false}
-          variant="soft"
-          color="secondary"
-        />
-      </View>
       <Input 
         {...sharedProps} 
-        // {...platformProps}
         className={isFocused ? "scale-105" : "scale-100"}
+        placeholder="Focus me..."
       >
         <Input.Icon icon={Search} />
         <Input.Field />
@@ -528,10 +493,12 @@ export default function Inputs() {
               <View className="flex flex-row flex-wrap gap-4">
                 {inputVariants.map((variant) => (
                   <View key={`${variant}-${color}`} className="flex-1 min-w-[250px]">
-                    <Textarea
-                      placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)}
+                    <Input
                       variant={variant}
                       color={color === 'neutral' ? undefined : color}
+                      multiline
+                      numberOfLines={5}
+                      placeholder={variant.charAt(0).toUpperCase() + variant.slice(1)}
                     />
                   </View>
                 ))}
@@ -541,25 +508,25 @@ export default function Inputs() {
 
           <View className="flex flex-row flex-wrap gap-4">
             <View className="flex-1 min-w-[250px]">
-              <Textarea loading placeholder="Loading">
+              <Input multiline placeholder="Loading">
                 <Input.Spinner />
                 <Input.Field />
-              </Textarea>
+              </Input>
             </View>
 
             <View className="flex-1 min-w-[250px]">
-              <Textarea disabled placeholder="Disabled" />
+              <Input disabled placeholder="Disabled" />
             </View>
 
             <View className="flex-1 min-w-[250px]">
-              <Textarea placeholder="With icon...">
+              <Input placeholder="With icon...">
                 <Input.Icon icon={Search} />
                 <Input.Field />
-              </Textarea>
+              </Input>
             </View>
 
             <View className="flex-1 min-w-[250px]">
-              <Textarea numberOfLines={5} placeholder="Custom height" />
+              <Input numberOfLines={5} placeholder="Custom height" />
             </View>
           </View>
 
@@ -571,7 +538,7 @@ export default function Inputs() {
                 {inputVariants.map((variant, index) => (
                   <View key={`${variant}-${index}`} className="flex-1 min-w-[250px]">
                     {name === 'Text Area' ? (
-                      <Textarea
+                      <Input
                         variant={variant}
                         color={inputColors[index] as InputColor}
                         readOnly

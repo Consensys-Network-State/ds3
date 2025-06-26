@@ -6,7 +6,6 @@ import { inputRootVariants, inputTextVariants } from './styles';
 import { InputContextProvider, useInputContext } from './context';
 import { InputIcon, InputSpinner, InputText } from './Input.shared';
 import { 
-  toNativeProps, 
   getNativeInputAccessibilityProps,
 } from './utils';
 import type {
@@ -30,9 +29,10 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRoot
   }, ref) => {
     const internalInputRef = React.useRef<React.ElementRef<typeof TextInput>>(null);
     const [focused, setFocused] = React.useState(false);
+    const [isHovered, setIsHovered] = React.useState(false);
 
     const inputRef = (ref as React.RefObject<React.ElementRef<typeof TextInput>>) || internalInputRef;
-    const effectiveColor = focused && accentColor ? accentColor : color;
+    const effectiveColor = (focused || isHovered) && accentColor ? accentColor : color;
 
     // Memoize fieldProps separately
     const memoizedFieldProps = React.useMemo(() => fieldProps, [fieldProps]);
@@ -77,6 +77,12 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRoot
             className,
           )}
           onPress={handlePress}
+          onHoverIn={(e) => {
+            setIsHovered(true);
+          }}
+          onHoverOut={(e) => {
+            setIsHovered(false);
+          }}
           tabIndex={-1}
         >
           {children || <InputField />}
@@ -90,13 +96,12 @@ InputRoot.displayName = 'Input';
 const InputField = ({ className }: InputFieldProps) => {
   const context = useInputContext();
   const { fieldProps = {}, setFocused, disabled, readOnly, size, loading, inputRef } = context;
-  const { multiline, ...otherProps } = fieldProps;
-  const nativeProps = toNativeProps(otherProps);
+  const { multiline, onFocus, onBlur, ...otherProps } = fieldProps;
   const accessibilityProps = getNativeInputAccessibilityProps({ disabled, loading, multiline, readOnly });
 
   // Calculate height based on numberOfLines
   const lineHeight = 20; // Approximate line height in pixels
-  const minHeight = multiline ? Math.max(80, (nativeProps.numberOfLines ?? 1) * lineHeight) : undefined;
+  const minHeight = multiline ? Math.max(80, (otherProps.numberOfLines ?? 1) * lineHeight) : undefined;
 
   return (
     <TextInput
@@ -115,18 +120,14 @@ const InputField = ({ className }: InputFieldProps) => {
       selectTextOnFocus={readOnly}
       onFocus={(e) => {
         setFocused?.(true);
-        if (nativeProps.onFocus) {
-          nativeProps.onFocus(e);
-        }
+        if (onFocus) onFocus(e);
       }}
       onBlur={(e) => {
         setFocused?.(false);
-        if (nativeProps.onBlur) {
-          nativeProps.onBlur(e);
-        }
+        if (onBlur) onBlur(e)
       }}
       {...accessibilityProps}
-      {...nativeProps}
+      {...otherProps}
     />
   );
 };

@@ -10,7 +10,7 @@ pnpm add @consensys/ds3
 
 ## Usage Examples
 
-The Button component supports both web and native APIs through our [Dual API](#6--dual-api) and offers flexibility through our [Compound Components](#2--compound-components).
+The Button component supports platform-specific APIs and offers flexibility through our [Compound Components](#2--compound-components).
 
 ### Web-Specific Usage
 
@@ -33,8 +33,7 @@ The Button component supports both web and native APIs through our [Dual API](#6
 </Button>
 ```
 
-
-> **Note**: Choose one API style and stick with it throughout your codebase. See the [Dual API](#6--dual-api) for more details.
+> **Note**: Each platform uses its own specific props. Web components use HTML button props (onClick, type, etc.), while native components use React Native Pressable props (onPress, onPressIn, etc.).
 
 ## Component API
 
@@ -279,8 +278,6 @@ The component exports typed event interfaces that match their platform equivalen
 - Web: [`HTMLButtonElement` events](https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement) like `onClick`, `onFocus`
 - Native: [`Pressable` events](https://reactnative.dev/docs/pressable) like `onPress`, `onPressIn`
 
-For details on typed events and the dual-API approach, see the [Dual API](#6--dual-api).
-
 ### Using `asChild` for Custom Elements
 
 The Button component supports the [Slot Pattern](../../../README.md#the-slot-pattern-aschild) via the `asChild` prop, allowing you to replace the button with a custom component:
@@ -301,19 +298,24 @@ The Button component supports the [Slot Pattern](../../../README.md#the-slot-pat
 </View>
 ``` -->
 
-## Prop Mapping
+## Platform-Specific Props
 
-Button implements automatic prop mapping to support cross-platform development while maintaining platform-specific behavior:
+Each platform uses its own specific props without any automatic mapping:
 
-| Native Prop | Web Prop | Description |
-|-------------|----------|-------------|
-| `onPress` | `onClick` | Triggered when button is pressed/clicked |
-| `onPressIn` | `onMouseDown` | Triggered when press/mouse down begins |
-| `onPressOut` | `onMouseUp` | Triggered when press/mouse up ends |
+### Web Props
+- `onClick` - Triggered when button is clicked
+- `onMouseDown` - Triggered when mouse down begins
+- `onMouseUp` - Triggered when mouse up ends
+- `type` - Button type ('button', 'submit', 'reset')
+- All other HTML button element props
 
-> While native props can be used in web environments, web props should never be used in native environments.
+### Native Props
+- `onPress` - Triggered when button is pressed
+- `onPressIn` - Triggered when press begins
+- `onPressOut` - Triggered when press ends
+- All other Pressable props
 
-For more details on our cross-platform approach, see the [Dual API](#6--dual-api).
+> **Important**: Use only the props appropriate for your platform. Web props should not be used in native environments and vice versa.
 
 ## Accessibility
 

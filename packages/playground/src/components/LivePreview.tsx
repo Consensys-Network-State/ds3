@@ -112,7 +112,7 @@ export const LivePreview: React.FC<LivePreviewProps> = ({ code, scope, className
   }, [code, scope]);
 
   return (error ? null : // hide the preview if there is an error for now
-    <View className={`p-4 min-h-[100px] ${className || ''}`}>
+    <View className={`p-4 ${className || ''}`}>
       {error ? (
         <Text size="sm" color="error" className="text-error-11 text-center">
           {error}

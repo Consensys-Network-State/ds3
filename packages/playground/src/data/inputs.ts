@@ -12,30 +12,38 @@ const colors: InputColor[] = ['neutral', 'primary', 'secondary', 'error', 'warni
 const sizes: InputSize[] = ['sm', 'md', 'lg'];
 
 // Helper function to generate JSX for a single input
-const generateInputJSX = (variant: InputVariant, color?: InputColor, props: any = {}) => {
+const generateInputJSX = (variant: InputVariant, color?: InputColor, size?: InputSize, props: any = {}) => {
+  const colorProp = color && color !== 'neutral' ? ` color="${color}"` : '';
+  const sizeProp = size && size !== 'md' ? ` size="${size}"` : '';
+  const propsStr = Object.entries(props).map(([key, value]) => ` ${key}="${value}"`).join('');
+  
+  return `<Input variant="${variant}"${colorProp}${sizeProp}${propsStr} />`;
+};
+
+// Helper function to generate JSX for multiline input
+const generateMultilineInputJSX = (variant: InputVariant, color?: InputColor, props: any = {}) => {
   const colorProp = color && color !== 'neutral' ? ` color="${color}"` : '';
   const propsStr = Object.entries(props).map(([key, value]) => ` ${key}="${value}"`).join('');
   
-  return `<Input variant="${variant}"${colorProp}${propsStr}>
-  <Input.Field />
-</Input>`;
+  return `<Input variant="${variant}"${colorProp} multiline numberOfLines={5}${propsStr} />`;
 };
 
 // Helper function to generate JSX for input with icon
-const generateInputWithIconJSX = (variant: InputVariant, iconPosition: 'start' | 'end' | 'both', color?: InputColor, icon = 'Figma') => {
+const generateInputWithIconJSX = (variant: InputVariant, iconPosition: 'start' | 'end' | 'both', color?: InputColor, size?: InputSize, props: any = {}) => {
   const colorProp = color && color !== 'neutral' ? ` color="${color}"` : '';
-  const placeholder = `placeholder="${variant}"`;
+  const sizeProp = size && size !== 'md' ? ` size="${size}"` : '';
+  const propsStr = Object.entries(props).map(([key, value]) => ` ${key}="${value}"`).join('');
   
   let iconJSX = '';
   if (iconPosition === 'start' || iconPosition === 'both') {
-    iconJSX += `  <Input.Icon icon={${icon}} />\n`;
+    iconJSX += `  <Input.Icon icon={Figma} />\n`;
   }
   iconJSX += `  <Input.Field />\n`;
   if (iconPosition === 'end' || iconPosition === 'both') {
-    iconJSX += `  <Input.Icon icon={${icon}} />\n`;
+    iconJSX += `  <Input.Icon icon={Figma} />\n`;
   }
   
-  return `<Input variant="${variant}"${colorProp} ${placeholder}>
+  return `<Input variant="${variant}"${colorProp}${sizeProp}${propsStr}>
 ${iconJSX}</Input>`;
 };
 
@@ -67,14 +75,6 @@ const generateInputWithSizeJSX = (variant: InputVariant, size: InputSize, color?
   <Input.Field />
   <Input.Text>*</Input.Text>
 </Input>`;
-};
-
-// Helper function to generate JSX for textarea
-const generateTextareaJSX = (variant: InputVariant, color?: InputColor, props: any = {}) => {
-  const colorProp = color && color !== 'neutral' ? ` color="${color}"` : '';
-  const propsStr = Object.entries(props).map(([key, value]) => ` ${key}="${value}"`).join('');
-  
-  return `<Textarea variant="${variant}"${colorProp}${propsStr} />`;
 };
 
 // Helper function to generate common input examples
@@ -123,7 +123,7 @@ export const inputExamples = {
   "variants": {
     name: "Variants",
     jsx: `<View className="flex flex-row flex-wrap gap-4">
-${variants.map(variant => `  ${generateInputJSX(variant, undefined, { placeholder: variant.charAt(0).toUpperCase() + variant.slice(1) })}`).join('\n')}
+${variants.map(variant => `  ${generateInputJSX(variant, undefined, undefined, { placeholder: variant.charAt(0).toUpperCase() + variant.slice(1) })}`).join('\n')}
 </View>`
   },
   "colors": {
@@ -131,17 +131,8 @@ ${variants.map(variant => `  ${generateInputJSX(variant, undefined, { placeholde
     jsx: `<View className="flex flex-col gap-4">
 ${colors.map(color => `  <View className="flex flex-row flex-wrap gap-4">
     <Text className="flex items-center">${color.charAt(0).toUpperCase() + color.slice(1)}</Text>
-${variants.map(variant => `    ${generateInputJSX(variant, color, { placeholder: variant.charAt(0).toUpperCase() + variant.slice(1) })}`).join('\n')}
+${variants.map(variant => `    ${generateInputJSX(variant, color, undefined, { placeholder: variant.charAt(0).toUpperCase() + variant.slice(1) })}`).join('\n')}
   </View>`).join('\n')}
-</View>`
-  },
-  "accent-colors": {
-    name: "Accent Colors",
-    jsx: `<View className="flex flex-row flex-wrap gap-4">
-  <Input variant="soft" color="neutral" accentColor="primary" placeholder="Neutral to Primary" />
-  <Input variant="outline" color="primary" accentColor="secondary" placeholder="Primary to Secondary" />
-  <Input variant="ghost" color="secondary" accentColor="success" placeholder="Secondary to Success" />
-  <Input variant="underline" color="success" accentColor="error" placeholder="Success to Error" />
 </View>`
   },
   "sizes": {
@@ -149,7 +140,7 @@ ${variants.map(variant => `    ${generateInputJSX(variant, color, { placeholder:
     jsx: `<View className="flex flex-col gap-4">
 ${sizes.map(size => `  <View className="flex flex-row flex-wrap gap-4">
     <Text className="flex items-center">${size.charAt(0).toUpperCase() + size.slice(1)}</Text>
-${variants.map((variant, index) => `    ${generateInputJSX(variant, colors[index], { size: size, placeholder: variant.charAt(0).toUpperCase() + variant.slice(1) })}`).join('\n')}
+${variants.map((variant, index) => `    ${generateInputJSX(variant, colors[index], size, { placeholder: variant.charAt(0).toUpperCase() + variant.slice(1) })}`).join('\n')}
   </View>`).join('\n')}
 </View>`
   },
@@ -157,85 +148,68 @@ ${variants.map((variant, index) => `    ${generateInputJSX(variant, colors[index
     name: "Icons",
     jsx: `<View className="flex flex-col gap-4">
   <View className="flex flex-row flex-wrap gap-4">
-    <Text className="flex items-center">Start & End Icon</Text>
-${variants.map((variant, index) => `    ${generateInputWithIconJSX(variant, 'both', colors[index])}`).join('\n')}
+    <Text className="flex items-center">Prefix</Text>
+${variants.map((variant, index) => `    ${generateInputWithIconJSX(variant, 'start', colors[index], undefined, { placeholder: variant.charAt(0).toUpperCase() + variant.slice(1) })}`).join('\n')}
   </View>
   <View className="flex flex-row flex-wrap gap-4">
-    <Text className="flex items-center">Start Only Icon</Text>
-${variants.map((variant, index) => `    ${generateInputWithIconJSX(variant, 'start', colors[(index + 1) % colors.length])}`).join('\n')}
+    <Text className="flex items-center">Suffix</Text>
+${variants.map((variant, index) => `    ${generateInputWithIconJSX(variant, 'end', colors[index], undefined, { placeholder: variant.charAt(0).toUpperCase() + variant.slice(1) })}`).join('\n')}
   </View>
   <View className="flex flex-row flex-wrap gap-4">
-    <Text className="flex items-center">End Only Icon</Text>
-${variants.map((variant, index) => `    ${generateInputWithIconJSX(variant, 'end', colors[(index + 2) % colors.length])}`).join('\n')}
+    <Text className="flex items-center">Both</Text>
+${variants.map((variant, index) => `    ${generateInputWithIconJSX(variant, 'both', colors[index], undefined, { placeholder: variant.charAt(0).toUpperCase() + variant.slice(1) })}`).join('\n')}
   </View>
 </View>`
   },
-  "text": {
-    name: "Text",
+  "multiline": {
+    name: "Multiline Input",
     jsx: `<View className="flex flex-col gap-4">
-  <View className="flex flex-row flex-wrap gap-4">
-    <Text className="flex items-center">Start & End Text</Text>
-${variants.map((variant, index) => `    ${generateInputWithTextJSX(variant, 'both', colors[index], '*')}`).join('\n')}
-  </View>
-  <View className="flex flex-row flex-wrap gap-4">
-    <Text className="flex items-center">Start Only Text</Text>
-${variants.map((variant, index) => `    ${generateInputWithTextJSX(variant, 'start', colors[(index + 1) % colors.length], '*')}`).join('\n')}
-  </View>
-  <View className="flex flex-row flex-wrap gap-4">
-    <Text className="flex items-center">End Only Text</Text>
-${variants.map((variant, index) => `    ${generateInputWithTextJSX(variant, 'end', colors[(index + 2) % colors.length], '*')}`).join('\n')}
-  </View>
+${variants.map((variant, index) => `  <View className="flex flex-row flex-wrap gap-4">
+    <Text className="flex items-center">${variant.charAt(0).toUpperCase() + variant.slice(1)}</Text>
+${colors.map(color => `    ${generateMultilineInputJSX(variant, color, { placeholder: variant.charAt(0).toUpperCase() + variant.slice(1) })}`).join('\n')}
+  </View>`).join('\n')}
 </View>`
   },
   "loading": {
     name: "Loading",
     jsx: `<View className="flex flex-row flex-wrap gap-4">
-  <Input variant="outline" loading placeholder="Outline">
+  <Input variant="elevated" loading>
     <Input.Spinner />
-    <Input.Field />
+    <Input.Field placeholder="Loading..." />
   </Input>
-  <Input variant="soft" color="primary" loading placeholder="Soft">
-    <Input.Field />
+  <Input variant="solid" color="primary" loading>
+    <Input.Field placeholder="Loading..." />
     <Input.Spinner loadingIcon={Loader} />
   </Input>
-  <Input variant="underline" color="secondary" loading placeholder="Underline">
+  <Input variant="soft" color="secondary" loading>
     <Input.Spinner loadingIcon={LoaderPinwheel} />
-    <Input.Field />
+    <Input.Field placeholder="Loading..." />
   </Input>
-  <Input variant="ghost" color="error" loading placeholder="Ghost">
-    <Input.Field />
+  <Input variant="outline" color="error" loading>
+    <Input.Field placeholder="Loading..." />
     <Input.Spinner />
   </Input>
-  <Input variant="outline" color="warning" loading placeholder="With custom loader">
+  <Input variant="dashed" color="warning" loading>
     <Input.Spinner loadingIcon={Loader} />
-    <Input.Field />
+    <Input.Field placeholder="Loading..." />
   </Input>
-  <Input variant="soft" color="success" loading placeholder="With pinwheel">
-    <Input.Field />
+  <Input variant="ghost" color="success" loading>
+    <Input.Field placeholder="Loading..." />
     <Input.Spinner loadingIcon={LoaderPinwheel} />
-  </Input>
-  <Input variant="soft" color="primary" loading disabled placeholder="Disabled and loading">
-    <Input.Spinner />
-    <Input.Field />
   </Input>
 </View>`
   },
   "disabled": {
     name: "Disabled",
     jsx: `<View className="flex flex-col gap-4">
-${colors.map(color => `  <View className="flex flex-row flex-wrap gap-4">
-    <Text className="flex items-center">${color.charAt(0).toUpperCase() + color.slice(1)}</Text>
-${variants.map(variant => `    ${generateInputJSX(variant, color, { disabled: true, placeholder: variant.charAt(0).toUpperCase() + variant.slice(1) })}`).join('\n')}
-  </View>`).join('\n')}
-</View>`
-  },
-  "textarea": {
-    name: "Textarea",
-    jsx: `<View className="flex flex-col gap-4">
-${colors.map(color => `  <View className="flex flex-row flex-wrap gap-4">
-    <Text className="flex items-center">${color.charAt(0).toUpperCase() + color.slice(1)}</Text>
-${variants.map(variant => `    ${generateTextareaJSX(variant, color, { placeholder: variant.charAt(0).toUpperCase() + variant.slice(1) })}`).join('\n')}
-  </View>`).join('\n')}
+  <View className="flex flex-row flex-wrap gap-4">
+    <Text className="flex items-center">Regular Inputs</Text>
+${variants.map((variant, index) => `    <Input variant="${variant}" color="${colors[index]}" disabled placeholder="${variant.charAt(0).toUpperCase() + variant.slice(1)}" />`).join('\n')}
+  </View>
+  <View className="flex flex-row flex-wrap gap-4">
+    <Text className="flex items-center">Multiline Inputs</Text>
+${variants.map((variant, index) => `    <Input variant="${variant}" color="${colors[index]}" disabled multiline numberOfLines={3} placeholder="${variant.charAt(0).toUpperCase() + variant.slice(1)}" />`).join('\n')}
+  </View>
 </View>`
   }
 }; 

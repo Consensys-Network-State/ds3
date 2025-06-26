@@ -16,7 +16,6 @@ export type {
   ButtonSpinnerProps,
   ButtonTextProps,
   IconButtonProps,
-  WebButtonProps,
   NativeButtonProps,
   SharedButtonProps,
   ButtonColors,
@@ -93,7 +92,6 @@ export type {
 // input
 export {
   Input,
-  Textarea,
   useInputContext,
 } from './components/input';
 
@@ -192,12 +190,3 @@ export {
 export {
   useCopyToClipboard
 } from './hooks';
-
-export type {
-  WebClickEvent,
-  WebFocusEvent,
-  WebChangeEvent,
-  NativePressEvent,
-  NativeFocusEvent,
-  NativeChangeEvent,
-} from './types';

@@ -8,7 +8,6 @@ import {
   Input, 
   View, 
   IconButton, 
-  Textarea, 
   Checkbox,
   Switch,
   Spinner,
@@ -164,7 +163,7 @@ export const Playground = () => {
 
   // Scope for the LivePreview
   const scope = {
-    Button, Text, Icon, View, React, Input, IconButton, Textarea, Checkbox, Switch, Spinner, Field, InputField, CheckboxField, SwitchField, Alert, AlertDescription, Highlight, ScrollView,
+    Button, Text, Icon, View, React, Input, IconButton, Checkbox, Switch, Spinner, Field, InputField, CheckboxField, SwitchField, Alert, AlertDescription, Highlight, ScrollView,
     BookOpen, Heart, Star, Zap, Settings, RotateCcw, Edit3, Figma, LoaderPinwheel, Loader, Search, Eye, Mail, Lock,
     Minus, Check, X, LoaderCircle, RefreshCw, AlertCircle, CheckCircle, AlertTriangle, User, ChevronRight, Shield,
     // React Hook Form

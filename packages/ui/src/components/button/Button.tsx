@@ -5,7 +5,7 @@ import { cn } from '../../utils';
 import { buttonVariants, buttonTextVariants } from './styles';
 import { ButtonContextProvider } from './context';
 import { ButtonIcon, ButtonSpinner, ButtonText } from './Button.shared';
-import { getNativeButtonAccessibilityProps, createPressHandlers, toNativeProps } from './utils';
+import { getNativeButtonAccessibilityProps } from './utils';
 import type { ButtonRootProps } from './types';
 import { TextClassContext } from '../text';
 
@@ -19,23 +19,14 @@ const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRo
     disabled = false,
     loading = false,
     asChild = false,
+    children,
     ...props
   }, ref) => {
     const [isPressed, setIsPressed] = React.useState(false);
-    const effectiveColor = isPressed && accentColor ? accentColor : color;
+    const [isHovered, setIsHovered] = React.useState(false);
+    const effectiveColor = (isPressed || isHovered) && accentColor ? accentColor : color;
 
-    const nativeProps = toNativeProps(props);
     const accessibilityProps = getNativeButtonAccessibilityProps({ disabled, loading });
-
-    // Handle press events
-    const { handlePressIn, handlePressOut } = React.useMemo(
-      () => createPressHandlers(
-        setIsPressed,
-        nativeProps.onPressIn,
-        nativeProps.onPressOut
-      ),
-      [setIsPressed, nativeProps.onPressIn, nativeProps.onPressOut]
-    );
 
     const contextValue = React.useMemo(() => ({
       variant,
@@ -45,8 +36,8 @@ const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRo
       loading,
       isPressed,
       setPressed: setIsPressed,
-      buttonProps: nativeProps,
-    }), [variant, effectiveColor, size, disabled, loading, isPressed, nativeProps]);
+      buttonProps: props,
+    }), [variant, effectiveColor, size, disabled, loading, isPressed, props]);
 
     const Component = asChild ? Slot.Pressable : Pressable;
 
@@ -60,11 +51,27 @@ const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRo
               className,
             )}
             disabled={disabled || loading}
-            onPressIn={handlePressIn}
-            onPressOut={handlePressOut}
+            onPressIn={(e) => {
+              setIsPressed(true);
+              props.onPressIn?.(e);
+            }}
+            onPressOut={(e) => {
+              setIsPressed(false);
+              props.onPressOut?.(e);
+            }}
+            onHoverIn={(e) => {
+              setIsHovered(true);
+              props.onHoverIn?.(e);
+            }}
+            onHoverOut={(e) => {
+              setIsHovered(false);
+              props.onHoverOut?.(e);
+            }}
             {...accessibilityProps}
-            {...nativeProps}
-          />
+            {...props}
+          >
+            {typeof children === 'string' ? <ButtonText>{children}</ButtonText> : children}
+          </Component>
         </TextClassContext.Provider>
       </ButtonContextProvider.Provider>
     );
