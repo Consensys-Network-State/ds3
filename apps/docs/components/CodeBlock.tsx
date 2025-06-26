@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { Text, useCopyToClipboard, Icon, Highlight } from '@consensys/ds3';
 import { Check, Copy } from 'lucide-react-native';
-import LivePreview from './LivePreview';
+import { LivePreview } from '@consensys/ds3-playground';
 
 interface CodeBlockProps {
   code: string;

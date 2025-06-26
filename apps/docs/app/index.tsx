@@ -2,9 +2,9 @@ import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Text, Icon, ThemeIcon, Button } from '@consensys/ds3';
 import { Playground } from '@consensys/ds3-playground';
-import { ExpoIcon } from './components/ExpoIcon';
-import { ViteIcon } from './components/ViteIcon';
-import { NextJsIcon } from './components/NextJsIcon';
+import { ExpoIcon } from '../components/ExpoIcon';
+import { ViteIcon } from '../components/ViteIcon';
+import { NextJsIcon } from '../components/NextJsIcon';
 import {
   ChevronDown,
 } from 'lucide-react-native';
