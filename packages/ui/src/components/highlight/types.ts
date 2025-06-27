@@ -5,4 +5,5 @@ export interface HighlightProps extends Omit<PrismHighlightProps, 'children'> {
   className?: string;
   children?: PrismHighlightProps['children'];
   style?: StyleProp<TextStyle>;
+  theme?: PrismHighlightProps['theme'];
 }

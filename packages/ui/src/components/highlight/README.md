@@ -4,22 +4,45 @@ The `<Highlight />` component provides syntax highlighting for code blocks with 
 
 ## Installation
 
-```bash
-pnpm add @consensys/ds3
-```
-
-## Usage Examples
-
 ```tsx
 import { Highlight } from '@consensys/ds3';
+```
 
-// Basic usage
+## Examples
+
+### Basic
+
+```tsx live
 <Highlight 
   code="const hello = 'world';" 
   language="javascript" 
 />
+```
 
-// With custom styling
+### Different Languages
+
+```tsx live
+<View className="space-y-4">
+  <Highlight 
+    code="function greet(name) { return `Hello, ${name}!`; }" 
+    language="javascript" 
+  />
+  
+  <Highlight 
+    code="def greet(name):\n    return f'Hello, {name}!'" 
+    language="python" 
+  />
+  
+  <Highlight 
+    code="interface User {\n  name: string;\n  age: number;\n}" 
+    language="typescript" 
+  />
+</View>
+```
+
+### Custom Styling
+
+```tsx live
 <Highlight 
   code={`
 function greet(name) {
@@ -27,45 +50,35 @@ function greet(name) {
 }
   `}
   language="javascript"
-  className="p-4 rounded-lg bg-neutral-1"
-/>
-
-// Using a Prism.js preset theme
-import { themes } from 'prism-react-renderer';
-
-<Highlight 
-  code="const example = 'code';" 
-  language="javascript"
-  theme={themes.vsDark} // or themes.vsLight, themes.github, etc.
-/>
-
-// Using a custom theme
-const colors = useThemeColors();
-
-const customTheme = {
-  plain: {
-    color: colors.neutral11,
-    backgroundColor: colors.neutral12,
-  },
-  styles: [
-    {
-      types: ['keyword'],
-      style: {
-        color: colors.primary4,
-      },
-    },
-    // ... more token styles
-  ],
-};
-
-<Highlight 
-  code="const example = 'code';" 
-  language="javascript"
-  theme={customTheme}
+  className="p-4 rounded-lg bg-neutral-1 border border-neutral-6"
 />
 ```
 
-## Component API
+### Using Prism.js Themes
+
+```tsx live
+import { themes } from 'prism-react-renderer';
+
+const Component = () => {
+  return (
+    <View className="space-y-4">
+      <Highlight 
+        code="const theme = 'vsDark';" 
+        language="javascript"
+        theme={themes.vsDark}
+      />
+      
+      <Highlight 
+        code="const theme = 'vsLight';" 
+        language="javascript"
+        theme={themes.vsLight}
+      />
+    </View>
+  )
+}
+```
+
+## API Reference
 
 ### `<Highlight />`
 
@@ -79,6 +92,18 @@ The main component that renders syntax-highlighted code.
 | `language` | `string` | `'javascript'` | The programming language for syntax highlighting |
 | `theme` | `object` | DS3 theme | The Prism.js theme object to use |
 | `className` | `string` | `''` | Additional class names for styling |
+
+## Theme Integration
+
+The Highlight component automatically uses your DS3 theme colors:
+
+- **Keywords**: Primary colors
+- **Strings**: Success colors  
+- **Comments**: Neutral colors
+- **Numbers/Booleans**: Secondary colors
+- **Variables**: Warning colors
+- **Functions/Classes**: Warning colors
+- **Punctuation**: Neutral colors
 
 ## Custom Themes
 
@@ -103,18 +128,6 @@ The component supports all languages supported by Prism.js. See the [full list o
 - SQL
 - And many more
 
-## Theme Integration
-
-The Highlight automatically uses your DS3 theme colors:
-
-- **Keywords**: Primary colors
-- **Strings**: Success colors
-- **Comments**: Neutral colors
-- **Numbers/Booleans**: Secondary colors
-- **Variables**: Warning colors
-- **Functions/Classes**: Warning colors
-- **Punctuation**: Neutral colors
-
 ## Platform Support
 
 The component works seamlessly across platforms:
@@ -127,6 +140,10 @@ The component works seamlessly across platforms:
 The component uses `prism-react-renderer` for syntax highlighting and creates a custom theme based on your DS3 color palette. It renders each token individually to ensure proper color application and supports both light and dark themes automatically.
 
 ## Accessibility
+
+The Highlight component automatically implements proper accessibility attributes:
+
+### Accessibility Features
 
 - The component preserves the semantic structure of code
 - Colors are chosen to maintain sufficient contrast ratios

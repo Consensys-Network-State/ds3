@@ -11,6 +11,7 @@ export function Highlight({
   language = 'javascript', 
   className = '',
   style,
+  theme,
 }: HighlightProps) {
   const colors = useThemeColors();
   const ds3Theme = createDs3Theme(colors);
@@ -20,7 +21,7 @@ export function Highlight({
       <PrismHighlight
         code={code}
         language={language}
-        theme={ds3Theme}
+        theme={theme || ds3Theme}
       >
         {({ tokens, getTokenProps }) => (
           <View className="bg-transparent">
