@@ -5,7 +5,6 @@
 // button
 export {
   Button,
-  IconButton,
   useButtonContext,
 } from './components/button';
 
@@ -15,7 +14,6 @@ export type {
   ButtonIconProps,
   ButtonSpinnerProps,
   ButtonTextProps,
-  IconButtonProps,
   NativeButtonProps,
   SharedButtonProps,
   ButtonColors,

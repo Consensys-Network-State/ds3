@@ -6,9 +6,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
-  DropdownMenuLabel
+  DropdownMenuLabel,
+  Button
 } from '@consensys/ds3';
-import { IconButton } from '@consensys/ds3';
 import { Settings } from 'lucide-react-native';
 import { ThemeToggle, ThemeSwitcher } from '@consensys/ds3';
 
@@ -35,12 +35,14 @@ export function ThemeControls() {
         // Mobile/Tablet: Show dropdown menu
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <IconButton
-              icon={Settings}
+            <Button
               variant="ghost"
               size="md"
               className="h-9 w-9"
-            />
+              square
+            >
+              <Button.Icon icon={Settings} />
+            </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel>Theme Settings</DropdownMenuLabel>

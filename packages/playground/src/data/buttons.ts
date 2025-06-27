@@ -44,7 +44,7 @@ const generateIconButtonJSX = (variant: ButtonVariant, color?: ButtonColor, size
   const colorProp = color && color !== 'neutral' ? ` color="${color}"` : '';
   const sizeProp = size && size !== 'md' ? ` size="${size}"` : '';
   
-  return `<IconButton variant="${variant}"${colorProp}${sizeProp} icon={Figma} />`;
+  return `<Button variant="${variant}"${colorProp}${sizeProp} square><Button.Icon icon={Figma} /></Button>`;
 };
 
 export const buttonExamples = {
@@ -157,8 +157,8 @@ ${variants.map((variant, index) => `    <Button variant="${variant}" color="${co
     </Button>`).join('\n')}
   </View>
   <View className="flex flex-row flex-wrap gap-4">
-    <Text className="flex items-center">Icon Buttons</Text>
-${variants.map((variant, index) => `    <IconButton variant="${variant}" color="${colors[index]}" disabled icon={Figma} />`).join('\n')}
+    <Text className="flex items-center">Square</Text>
+${variants.map((variant, index) => `    <Button variant="${variant}" color="${colors[index]}" disabled square><Button.Icon icon={Figma} /></Button>`).join('\n')}
   </View>
 </View>`
   }

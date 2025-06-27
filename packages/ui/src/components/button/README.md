@@ -76,15 +76,22 @@ import { Button } from '@consensys/ds3';
 </View>
 ```
 
-### Icon Buttons
+### Square
 
 ```tsx live
-<IconButton 
-  variant="solid" 
-  color="primary" 
-  icon={Figma} 
-  accessibilityLabel="Open Figma"
-/>
+<View className="flex flex-row flex-wrap gap-3">
+  <Button variant="solid" color="secondary" size="sm" square>
+    <Button.Icon icon={Figma} />
+  </Button>
+
+  <Button variant="solid" color="primary" square>
+    <Button.Icon icon={Figma} />
+  </Button>
+  
+  <Button variant="outline" color="error" size="lg" square>
+    <Button.Icon icon={Figma} />
+  </Button>
+</View>
 ```
 
 ### Loading State
@@ -181,6 +188,7 @@ The main Button component with various styling options.
 | `size` | `sm` \| `md` \| `lg` | `md` | Size of the button |
 | `disabled` | `boolean` | `false` | Whether the button is disabled |
 | `loading` | `boolean` | `false` | Whether the button is in loading state |
+| `square` | `boolean` | `false` | Whether the button should have equal padding (for icon-only buttons) |
 | `asChild` | `boolean` | `false` | Whether to replace the button with a different component |
 | `className` | `string` | - | Additional class names |
 
@@ -214,13 +222,21 @@ A loading spinner that automatically appears when the button's `loading` prop is
 
 For props and styling options, see the [Spinner Component API](/packages/ui/src/components/spinner).
 
-### `<IconButton />`
+## Options
 
-For buttons with only an icon, use the IconButton component:
+### `square`
 
-#### Props
+The `square` option creates buttons with equal padding on all sides, making them perfect for icon-only buttons. The padding scales with the button size:
 
-IconButton is a wrapper around Button with additional styling for icon-only use cases. See the [Button](#button) section above for all available props and compound parts.
+- `sm`: `9px` padding
+- `md`: `12px` padding  
+- `lg`: `15px` padding
+
+```tsx
+<Button variant="solid" color="primary" square>
+  <Button.Icon icon={SomeIcon} />
+</Button>
+```
 
 ## Accessibility
 
@@ -234,5 +250,5 @@ The Button component automatically implements proper accessibility attributes:
 | Disabled | `accessibilityState={{ disabled }}` |
 | Loading | `accessibilityState={{ busy: loading }}` |
 
-When using `IconButton`, remember to provide descriptive labels:
+When using icon-only buttons with the `square` option, remember to provide descriptive labels:
 - Use `accessibilityLabel="Description"`

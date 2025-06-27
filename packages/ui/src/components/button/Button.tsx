@@ -18,6 +18,7 @@ const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRo
     size,
     disabled = false,
     loading = false,
+    square = false,
     asChild = false,
     children,
     ...props
@@ -34,10 +35,11 @@ const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRo
       size,
       disabled: disabled || loading,
       loading,
+      square,
       isPressed,
       setPressed: setIsPressed,
       buttonProps: props,
-    }), [variant, effectiveColor, size, disabled, loading, isPressed, props]);
+    }), [variant, effectiveColor, size, disabled, loading, square, isPressed, props]);
 
     const Component = asChild ? Slot.Pressable : Pressable;
 
@@ -47,7 +49,7 @@ const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRo
           <Component
             ref={ref}
             className={cn(
-              buttonVariants({ variant, color: effectiveColor, size, disabled: disabled || loading }),
+              buttonVariants({ variant, color: effectiveColor, size, disabled: disabled || loading, square }),
               className,
             )}
             disabled={disabled || loading}

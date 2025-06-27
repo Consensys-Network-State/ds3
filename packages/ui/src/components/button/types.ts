@@ -3,7 +3,7 @@ import { PressableProps } from 'react-native';
 import type { VariantProps } from 'class-variance-authority';
 import type { IconProps } from '../icon/types';
 import type { SpinnerProps } from '../spinner/types';
-import { buttonVariants, iconButtonVariants } from './styles';
+import { buttonVariants } from './styles';
 
 // Shared button props
 export type SharedButtonProps = {
@@ -13,6 +13,7 @@ export type SharedButtonProps = {
   size?: VariantProps<typeof buttonVariants>['size'];
   disabled?: boolean;
   loading?: boolean;
+  square?: boolean;
   asChild?: boolean;
   className?: string;
   children?: React.ReactNode;
@@ -30,6 +31,7 @@ export type ButtonContext = {
   size?: VariantProps<typeof buttonVariants>['size'];
   disabled?: boolean;
   loading?: boolean;
+  square?: boolean;
   isPressed?: boolean;
   isHovered?: boolean;
   setPressed?: (pressed: boolean) => void;
@@ -51,15 +53,6 @@ export type ButtonTextProps = {
   className?: string;
   children?: React.ReactNode;
 };
-
-export type IconButtonProps = {
-  icon: ButtonIconProps['icon'];
-  className?: string;
-} & VariantProps<typeof iconButtonVariants> & 
-  Pick<VariantProps<typeof buttonVariants>, 'variant' | 'color'> & {
-    disabled?: boolean;
-    loading?: boolean;
-  } & ButtonRootProps; 
 
 export type ButtonColors = NonNullable<ButtonRootProps['color']>;
 export type ButtonSizes = NonNullable<ButtonRootProps['size']>;

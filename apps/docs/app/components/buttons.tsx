@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { Button, Icon, Input, Checkbox, Switch, Spinner, Card, Badge, Alert, IconButton, View } from '@consensys/ds3';
+import { Button, Icon, Input, Checkbox, Switch, Spinner, Card, Badge, Alert, View } from '@consensys/ds3';
 import { MarkdownPage } from '@/components/MarkdownPage';
 import { Figma, Loader } from 'lucide-react-native';
 import { Link } from 'expo-router';
@@ -20,7 +20,6 @@ export default function ButtonsPage() {
     View,
     Figma,
     Loader,
-    IconButton,
     TouchableOpacity,
     Link,
   };

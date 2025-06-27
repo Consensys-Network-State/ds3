@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View } from 'react-native';
 import { COLOR_MODES } from "@consensys/ds3-theme";
 import { MoonStar, Sun, SunMoon } from "lucide-react-native";
-import { IconButton } from "../button";
+import { Button } from "../button";
 import { useTheme } from './useTheme';
 import type { ThemeToggleProps } from './types';
 
@@ -35,13 +35,15 @@ export const ThemeToggle = React.forwardRef<View, ThemeToggleProps>(
     };
 
     return (
-      <IconButton
+      <Button
         ref={ref}
-        icon={getIcon()}
         variant="ghost"
         onPress={cycleMode}
         className={className}
-      />
+        square
+      >
+        <Button.Icon icon={getIcon()} />
+      </Button>
     );
   }
 );

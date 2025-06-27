@@ -29,6 +29,10 @@ export const buttonVariants = cva(
         false: null,
         true: ['opacity-40 web:cursor-not-allowed'],
       },
+      square: {
+        false: null,
+        true: 'flex items-center justify-center',
+      },
     },
     compoundVariants: [
       { variant: ['solid', 'elevated'], color: 'neutral', class: 'bg-neutral-9 web:enabled:hover:bg-neutral-10 web:enabled:active:bg-neutral-10' },
@@ -58,12 +62,18 @@ export const buttonVariants = cva(
       { variant: ['outline', 'dashed', 'ghost'], color: 'error', class: 'web:enabled:hover:bg-error-a3 web:enabled:active:bg-error-a3' },
       { variant: ['outline', 'dashed', 'ghost'], color: 'warning', class: 'web:enabled:hover:bg-warning-a3 web:enabled:active:bg-warning-a3' },
       { variant: ['outline', 'dashed', 'ghost'], color: 'success', class: 'web:enabled:hover:bg-success-a3 web:enabled:active:bg-success-a3' },
+
+      // Square option - equal padding for all sizes
+      { square: true, size: 'sm', class: 'p-[9px]' },
+      { square: true, size: 'md', class: 'p-[12px]' },
+      { square: true, size: 'lg', class: 'p-[15px]' },
     ],
     defaultVariants: {
       variant: 'elevated',
       color: 'neutral',
       size: 'md',
       disabled: false,
+      square: false,
     },
   }
 );
@@ -115,9 +125,9 @@ export const buttonIconVariants = cva(
   {
     variants: {
       size: {
-        sm: '',
+        sm: 'h-3.5 w-3.5',
         md: 'h-4 w-4',
-        lg: '',
+        lg: 'h-[18px] w-[18px]',
       },
     },
     defaultVariants: {
@@ -125,29 +135,3 @@ export const buttonIconVariants = cva(
     },
   }
 );
-
-export const iconButtonVariants = cva('flex items-center justify-center', {
-  variants: {
-    size: {
-      sm: 'p-[9px]',
-      md: 'p-[12px]',
-      lg: 'p-[15px]',
-    },
-  },
-  defaultVariants: {
-    size: 'md',
-  },
-});
-
-export const iconSizeVariants = cva('', {
-  variants: {
-    size: {
-      sm: 'h-3.5 w-3.5',
-      md: 'h-4 w-4',
-      lg: 'h-[18px] w-[18px]',
-    },
-  },
-  defaultVariants: {
-    size: 'md',
-  },
-}); 
