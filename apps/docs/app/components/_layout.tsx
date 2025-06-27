@@ -4,17 +4,19 @@ export default function ComponentsLayout() {
   return (
     <LocalDrawer>
       <LocalDrawer.Screen name="index" options={{ title: 'Overview' }} />
-      <LocalDrawer.Screen name="buttons" options={{ title: 'Buttons' }} />
-      <LocalDrawer.Screen name="inputs" options={{ title: 'Inputs' }} />
-      <LocalDrawer.Screen name="checkbox" options={{ title: 'Checkbox' }} />
-      <LocalDrawer.Screen name="switch" options={{ title: 'Switch' }} />
-      <LocalDrawer.Screen name="field" options={{ title: 'Fields' }} />
-      <LocalDrawer.Screen name="form" options={{ title: 'Form' }} />
       <LocalDrawer.Screen name="icons" options={{ title: 'Icons' }} />
       <LocalDrawer.Screen name="spinner" options={{ title: 'Spinner' }} />
-      <LocalDrawer.Screen name="highlight" options={{ title: 'Highlight' }} />
+      <LocalDrawer.Screen name="buttons" options={{ title: 'Button' }} />
+      <LocalDrawer.Screen name="inputs" options={{ title: 'Input' }} />
+      <LocalDrawer.Screen name="checkbox" options={{ title: 'Checkbox' }} />
+      <LocalDrawer.Screen name="switch" options={{ title: 'Switch' }} />
       <LocalDrawer.Screen name="tag" options={{ title: 'Tag' }} />
       <LocalDrawer.Screen name="table" options={{ title: 'Table' }} />
+      <LocalDrawer.Screen name="highlight" options={{ title: 'Highlight' }} />
+      <LocalDrawer.Screen name="field" options={{ title: 'Field' }} />
+      <LocalDrawer.Screen name="fields" options={{ title: 'Fields' }} />
+      <LocalDrawer.Screen name="form" options={{ title: 'Form' }} />
+      <LocalDrawer.Screen name="live-preview" options={{ title: 'Live Preview' }} />
     </LocalDrawer>
   );
-} 
+}

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Icon, Input } from '@consensys/ds3';
 import { MarkdownPage } from '@/components/MarkdownPage';
 
-export default function SpinnerPage() {
+export default function FieldsPage() {
   const scope = {
     React,
     Button,
@@ -13,7 +13,7 @@ export default function SpinnerPage() {
 
   return (
     <MarkdownPage 
-      path="packages/ui/src/components/spinner/README.md"
+      path="packages/ui/src/components/fields/README.md"
       scope={scope}
     />
   );
