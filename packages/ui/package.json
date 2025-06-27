@@ -54,6 +54,7 @@
     "lucide-react-native": "^0.454.0",
     "nativewind": "^4.1.23",
     "postcss": "^8.4.47",
+    "prism-react-renderer": "^2.3.1",
     "react-native-reanimated": "^3.16.1",
     "react-native-svg": "14.2.0",
     "tailwind-merge": "^2.5.4",

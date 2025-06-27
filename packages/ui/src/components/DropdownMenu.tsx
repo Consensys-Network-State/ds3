@@ -51,7 +51,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
         )}
         {...props}
       >
-        <>{children}</>
+        {children as any}
         <Icon icon={iconName} className='ml-auto' />
       </DropdownMenuPrimitive.SubTrigger>
     </TextClassContext.Provider>
@@ -161,7 +161,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
         <Icon icon={Check} />
       </DropdownMenuPrimitive.ItemIndicator>
     </View>
-    <>{children}</>
+    {children as any}
   </DropdownMenuPrimitive.CheckboxItem>
 ));
 DropdownMenuCheckboxItem.displayName = DropdownMenuPrimitive.CheckboxItem.displayName;
@@ -184,7 +184,7 @@ const DropdownMenuRadioItem = React.forwardRef<
         <View className='bg-foreground h-2 w-2 rounded-full' />
       </DropdownMenuPrimitive.ItemIndicator>
     </View>
-    <>{children}</>
+    {children as any}
   </DropdownMenuPrimitive.RadioItem>
 ));
 DropdownMenuRadioItem.displayName = DropdownMenuPrimitive.RadioItem.displayName;

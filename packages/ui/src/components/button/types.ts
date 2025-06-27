@@ -18,16 +18,11 @@ export type SharedButtonProps = {
   children?: React.ReactNode;
 };
 
-// Platform-specific button props
-export type WebButtonBaseProps = SharedButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>;
-export type WebAnchorProps = SharedButtonProps & React.AnchorHTMLAttributes<HTMLAnchorElement>;
-
-export type WebButtonProps = WebButtonBaseProps | WebAnchorProps;
-
+// Native button props
 export type NativeButtonProps = SharedButtonProps & PressableProps;
 
-// The main props type - order matters for type inference
-export type ButtonRootProps = NativeButtonProps | WebButtonProps;
+// The main props type - now unified around native
+export type ButtonRootProps = NativeButtonProps;
 
 export type ButtonContext = {
   variant?: VariantProps<typeof buttonVariants>['variant'];

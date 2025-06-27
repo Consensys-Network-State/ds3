@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Button } from './Button';
 import { cn } from '../../utils';
 import { iconButtonVariants, iconSizeVariants } from './styles';
-import type { IconButtonProps } from './types';
+import type { IconButtonProps, ButtonRootProps } from './types';
 
 export const IconButton = React.forwardRef<React.ElementRef<typeof Button>, IconButtonProps>(
   (props, ref) => {
@@ -20,7 +20,7 @@ export const IconButton = React.forwardRef<React.ElementRef<typeof Button>, Icon
           iconButtonVariants({ size }),
           className
         )}
-        {...buttonProps}
+        {...(buttonProps as ButtonRootProps)}
       >
         <Button.Icon
           icon={icon}

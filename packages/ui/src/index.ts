@@ -16,7 +16,6 @@ export type {
   ButtonSpinnerProps,
   ButtonTextProps,
   IconButtonProps,
-  WebButtonProps,
   NativeButtonProps,
   SharedButtonProps,
   ButtonColors,
@@ -93,7 +92,6 @@ export type {
 // input
 export {
   Input,
-  Textarea,
   useInputContext,
 } from './components/input';
 
@@ -114,6 +112,15 @@ export {
 export type {
   SpinnerProps,
 } from './components/spinner';
+
+// highlight
+export {
+  Highlight,
+} from './components/highlight';
+
+export type {
+  HighlightProps,
+} from './components/highlight';
 
 // switch
 export {
@@ -170,6 +177,7 @@ export * from './components/Dialog';
 export * from './components/Label';
 export * from './components/RadioGroup';
 export * from './components/RadioGroupField';
+export * from './components/View';
 
 // utils
 export {
@@ -182,12 +190,3 @@ export {
 export {
   useCopyToClipboard
 } from './hooks';
-
-export type {
-  WebClickEvent,
-  WebFocusEvent,
-  WebChangeEvent,
-  NativePressEvent,
-  NativeFocusEvent,
-  NativeChangeEvent,
-} from './types';

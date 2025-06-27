@@ -1,0 +1,66 @@
+{
+  "name": "@consensys/ds3-playground",
+  "version": "0.0.1",
+  "description": "DS3 Playground for interactive component examples",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Consensys-Network-State/ds3.git",
+    "directory": "packages/playground"
+  },
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "files": [
+    "src"
+  ],
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "require": "./src/index.ts"
+    },
+    "./src/*": "./src/*"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "type-check": "tsc -b --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@tsconfig/react-native": "^3.0.5",
+    "@tsconfig/recommended": "^1.0.8",
+    "@types/react": "^18.3.11",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@consensys/ds3": "workspace:*",
+    "@babel/standalone": "7.27.6",
+    "react-hook-form": "^7.54.1",
+    "react-native-marked": "7.0.1",
+    "react-native-webview": "13.12.5",
+    "zod": "^3.24.1"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-safe-area-context": "*",
+    "react-native-web": "*"
+  },
+  "peerDependenciesMeta": {
+    "react-native": {
+      "optional": true
+    },
+    "react-native-web": {
+      "optional": true
+    },
+    "react-native-safe-area-context": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

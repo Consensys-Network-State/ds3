@@ -14,7 +14,8 @@
     "postinstall": "pnpm build-deps",
     "changeset": "changeset",
     "prepare": "husky",
-    "type-check": "pnpm --filter @consensys/ds3 --filter @consensys/ds3-web3 run type-check"
+    "type-check": "pnpm --filter @consensys/ds3 --filter @consensys/ds3-web3 run type-check",
+    "markdown-server": "node scripts/markdown-server.js"
   },
   "keywords": [
     "consensys",
@@ -35,6 +36,14 @@
   "packageManager": "pnpm@9.14.3+sha512.c0f53ee99477ed969b82b289ad011a5d16bf1623c957e7f29eabe8d0c00b574c29b8c7f54f6c67ee710c73f285c8154d07ce44b46fe2c0eeb476a90441bac371",
   "devDependencies": {
     "@changesets/cli": "2.29.4",
+    "chokidar": "4.0.3",
+    "cors": "2.8.5",
+    "express": "5.1.0",
     "husky": "^9.1.7"
+  },
+  "pnpm": {
+    "overrides": {
+      "react-native-svg": "15.12.0"
+    }
   }
 }

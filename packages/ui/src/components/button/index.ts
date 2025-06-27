@@ -14,7 +14,6 @@ export type {
   ButtonSpinnerProps,
   ButtonTextProps,
   IconButtonProps,
-  WebButtonProps,
   NativeButtonProps,
   SharedButtonProps,
   ButtonColors,

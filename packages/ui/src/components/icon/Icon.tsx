@@ -9,6 +9,7 @@ const Icon = React.forwardRef<SVGSVGElement, IconProps>(({
   color,
   size,
   className,
+  style,
   ...otherProps
 }, ref) => {
   const StyledIcon = cssInterop(icon, {
@@ -22,12 +23,18 @@ const Icon = React.forwardRef<SVGSVGElement, IconProps>(({
     },
   });
 
+  // Handle arbitrary numeric sizes with style property
+  const iconStyle = typeof size === 'number' 
+    ? { width: size, height: size, ...style }
+    : style;
+
   return (
     <StyledIcon
       role="img"
       accessibilityRole="image"
       ref={ref}
-      className={cn(iconVariants({ color, size }), className)}
+      className={cn(iconVariants({ color, size: typeof size === 'string' ? size : undefined }), className)}
+      style={iconStyle}
       {...otherProps}
     />
   );

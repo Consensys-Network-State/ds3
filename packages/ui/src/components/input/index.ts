@@ -1,27 +1,25 @@
 // components
 export { Input } from './Input';
-export { Textarea } from './Textarea';
 export { InputIcon, InputSpinner, InputText } from './Input.shared';
 
 // context
 export { InputContextProvider, useInputContext } from './context';
 
 // types
-export type {
+export type { 
+  InputRootProps,
   InputContext,
   InputIconProps,
   InputSpinnerProps,
   InputTextProps,
   InputFieldProps,
-  WebInputProps,
   NativeInputProps,
   SharedInputProps,
-  InputRootProps
 } from './types';
 
 // styles
 export { 
   inputRootVariants,
+  inputTextVariants,
   inputIconVariants,
-  inputTextVariants 
 } from './styles'; 

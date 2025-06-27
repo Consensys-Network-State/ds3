@@ -1,0 +1,247 @@
+---
+description: DS3 theme configuration
+globs: 
+alwaysApply: false
+---
+# DS3 Theme Configuration Rules
+
+## Workflow for Theme Customization
+
+When a user asks about theme customization, follow this workflow:
+
+1. **Ask about their goal** - What are they trying to achieve? (brand colors, multiple themes, accessibility, etc.)
+
+2. **Present the three configuration methods** - Explain the options without code:
+   - **Radix Preset Colors**: Quick setup with pre-designed, accessible colors ([view available colors](https://www.radix-ui.com/colors))
+   - **Radix Color Generator**: Custom brand colors with automatic scale generation ([generate colors](https://www.radix-ui.com/colors/custom))
+   - **Custom Palettes**: Full control over every color value
+
+3. **Guide to the right method** - Based on their needs:
+   - Simple/basic → Radix Preset Colors
+   - Brand colors/custom → Radix Color Generator  
+   - Complex requirements → Custom Palettes
+
+4. **Reference the specific sections** - Point them to the relevant configuration method and examples in these rules
+
+5. **Continue with implementation** - Once they choose, help them implement their specific configuration
+
+**Keep responses conversational and focused on understanding their needs before diving into code.**
+
+**Scope**: Only help with `theme.config.ts` configuration. Never show HTML, CSS classes, or usage examples.
+
+## Overview
+When helping users configure themes in DS3, focus on modifying the existing `theme.config.ts` file to customize colors and themes. The system is already set up and integrated with Tailwind.
+
+**Type References**: For complete type definitions and available options, refer to:
+- `@consensys/ds3-theme/src/types.ts` - Core theme types including `UserConfig`, `ThemeConfig`, `ColorConfig`
+- `@consensys/ds3-theme/src/default-config.ts` - Default theme configurations and examples
+- `@consensys/ds3-theme/src/radix/types.ts` - Radix color generation types
+- `@consensys/ds3-theme/src/radix/constants.ts` - Available Radix color palettes
+
+## Color Configuration Methods
+
+### Method 1: Radix Preset Colors (Simplest)
+Use pre-defined Radix UI color palettes for consistent, accessible colors:
+```typescript
+colors: {
+  neutral: 'gray',      // or 'slate', 'mauve', 'sage', etc.
+  primary: 'blue',      // or 'cyan', 'violet', 'iris', etc.
+  secondary: 'violet',  // or 'purple', 'plum', 'pink', etc.
+  error: 'red',         // or 'crimson', 'tomato', etc.
+  warning: 'amber',     // or 'yellow', 'orange', etc.
+  success: 'green',     // or 'grass', 'lime', 'teal', etc.
+  info: 'cyan'          // or 'sky', 'blue', etc.
+}
+```
+
+### Method 2: Radix Color Generator (Recommended)
+Generate custom color scales with semantic mapping:
+```typescript
+colors: {
+  primary: {
+    accent: '#3b82f6',  // Required: Base accent color
+  },
+  secondary: {
+    accent: {
+      light: '#8b5cf6', // Light mode accent
+      dark: '#7c3aed'   // Dark mode accent
+    }
+  },
+  tertiary: {
+    accent: '#3b82f6',  // Required: Base accent
+    gray: '#8B8D98',    // Optional: Gray scale color
+    background: {       // Optional: Background colors
+      light: '#FFFFFF',
+      dark: '#111111'
+    }
+  }
+}
+```
+
+### Method 3: Custom Palettes (Advanced)
+Create fully customizable color scales:
+```typescript
+colors: {
+  primary: {
+    light: {
+      1: '#f0f9ff',
+      2: '#e0f2fe',
+      // ... all 12 steps
+      a1: 'rgba(59, 130, 246, 0.05)',
+      // ... alpha variants
+    },
+    dark: {
+      1: '#0c1a2b',
+      2: '#162436',
+      // ... dark mode variants
+    }
+  }
+}
+```
+
+## Semantic Color Mapping
+
+Always use semantic color names that describe purpose, not appearance:
+
+| Semantic Color | Purpose | Common Use Cases |
+|----------------|---------|------------------|
+| `neutral` | Base UI elements | Text, borders, backgrounds |
+| `primary` | Main actions | Buttons, links, brand elements |
+| `secondary` | Alternative actions | Secondary buttons, accents |
+| `error` | Error states | Error messages, destructive actions |
+| `warning` | Warning states | Warning messages, cautionary actions |
+| `success` | Success states | Success messages, positive actions |
+| `info` | Information states | Info messages, neutral actions |
+
+## Multiple Themes
+
+### Creating Additional Themes
+```typescript
+themes: {
+  default: {
+    colors: { /* default colors */ }
+  },
+  ocean: {
+    colors: {
+      neutral: 'slate',
+      primary: 'cyan',
+      secondary: 'blue',
+      // ... other colors
+    }
+  },
+  sunset: {
+    colors: {
+      primary: {
+        accent: '#d6409f', // Custom pink
+      },
+      secondary: {
+        accent: '#f76b15', // Custom orange
+      },
+      // ... other colors using presets
+    }
+  }
+}
+```
+
+## Best Practices
+
+### 1. Start Simple
+- Begin with Radix preset colors for quick setup
+- Use color generator for custom brand colors
+- Only use custom palettes for complex requirements
+
+### 2. Maintain Consistency
+- Use semantic color names consistently
+- Keep color relationships logical (e.g., error colors should be red variants)
+- Test both light and dark modes
+
+### 3. Accessibility
+- Radix colors are designed for accessibility
+- Test contrast ratios when using custom colors
+- Ensure sufficient contrast between text and backgrounds
+
+## Common Patterns
+
+### Brand Color Integration
+```typescript
+colors: {
+  primary: {
+    accent: '#your-brand-color', // Replace with actual brand color
+  },
+  // Use presets for other colors to maintain consistency
+  neutral: 'gray',
+  error: 'red',
+  warning: 'amber',
+  success: 'green',
+  info: 'blue'
+}
+```
+
+### Dark Mode Optimization
+```typescript
+colors: {
+  primary: {
+    accent: {
+      light: '#3b82f6', // Optimized for light mode
+      dark: '#60a5fa'   // Optimized for dark mode
+    }
+  }
+}
+```
+
+### Minimal Configuration
+```typescript
+colors: {
+  primary: {
+    accent: '#3b82f6', // Only specify what you need
+  }
+  // Other colors will use defaults
+}
+```
+
+## Troubleshooting
+
+### Common Issues
+1. **Colors not appearing**: Check that `theme.config.ts` is properly exported and imported in `tailwind.config.js`
+   ```typescript
+   // ✅ Correct: theme.config.ts
+   import type { UserConfig } from '@consensys/ds3-theme';
+   
+   export default {
+     themes: {
+       default: {
+         colors: {
+           primary: { accent: '#3b82f6' }
+         }
+       }
+     }
+   } satisfies UserConfig;
+   
+   // ✅ Correct: tailwind.config.js
+   import ds3 from "@consensys/ds3-config/nativewind";
+   import themeConfig from "./theme.config";
+   
+   export default {
+     content: ["./src/**/*.{js,ts,jsx,tsx}"],
+     presets: [ds3(themeConfig)]
+   }
+   
+   // ❌ Incorrect: Missing export or import
+   // - missing export default
+   s: { default: { colors: { pri };
+   
+   // ❌ Incorrect: Wrong import path
+   import themeConfig from "./theme.config.js"; // Wrong extension
+   ```
+2. **Type errors**: Ensure `UserConfig` type is imported and `satisfies` is used
+3. **Build errors**: Verify all color values are valid CSS colors
+
+### Validation
+- All color values must be valid CSS color strings
+- Semantic color names should match the standard set
+- Theme names should be valid CSS class names (no spaces, special chars)
+
+## Resources
+- [Radix UI Colors](https://www.radix-ui.com/colors) - Available preset colors
+- [Radix Color Generator](https://www.radix-ui.com/colors/custom) - Custom color generation
+- [DS3 Theme Package](https://github.com/Consensys-Network-State/ds3/tree/main/packages/theme) - Full documentation

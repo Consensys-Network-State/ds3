@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" xmlns:bx="https://boxy-svg.com">
+  <g transform="matrix(1, 0, 0, 1, -0.548752, -0.435993)">
+    <path d="M 256.721 491.086 C 76.22 491.086 -36.587 295.553 53.663 139.112 C 95.541 66.511 172.965 21.786 256.721 21.786 C 386.223 21.786 491.199 116.35 491.199 232.971 C 491.199 297.782 438.723 350.296 373.96 350.296 L 321.202 350.296 C 289.619 350.296 269.875 384.532 285.679 411.892 C 286.5 413.324 287.391 414.684 288.376 415.999 L 295.41 425.384 C 314.379 450.679 298.856 487.027 267.507 490.805 C 265.866 490.993 264.224 491.086 262.583 491.086 L 256.721 491.086 Z" style="fill: none; stroke-width: 42.67px; stroke: rgb(0, 144, 255);"></path>
+    <circle cx="455.447" cy="240.662" r="0.8" stroke="#ffca2f" stroke-width="1.6" style="stroke-width: 1.6;" transform="matrix(23.447786, 0, 0, 23.465017, -10387.331055, -5519.760254)"></circle>
+    <circle cx="459.447" cy="244.662" r="0.8" stroke="#30a46c" stroke-width="1.6" style="stroke-width: 1.6;" transform="matrix(23.447786, 0, 0, 23.465017, -10387.331055, -5519.760254)"></circle>
+    <circle cx="448.447" cy="246.662" r="0.8" stroke="#e5484d" stroke-width="1.6" style="stroke-width: 1.6;" transform="matrix(23.447786, 0, 0, 23.465017, -10387.331055, -5519.760254)"></circle>
+    <circle cx="450.447" cy="241.662" r="0.8" stroke="#6e56cf" stroke-width="1.6" style="stroke-width: 1.6;" transform="matrix(23.447786, 0, 0, 23.465017, -10387.331055, -5519.760254)"></circle>
+    <circle cx="453.947" cy="246.162" r="0.8" stroke="#8d8d8d" stroke-width="1.6" style="stroke-width: 1.6;" transform="matrix(23.447786, 0, 0, 23.465017, -10387.331055, -5519.760254)"></circle>
+    <circle cx="450.947" cy="251.162" r="0.8" stroke="#00a2c7" stroke-width="1.6" style="stroke-width: 1.6;" transform="matrix(23.447786, 0, 0, 23.465017, -10387.331055, -5519.760254)"></circle>
+  </g>
+</svg>

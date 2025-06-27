@@ -1,6 +1,6 @@
 # Input Component
 
-The `<Input />` and `<Textarea />` components provide cross-platform text input fields that adapt to both web and React Native environments while providing platform-native APIs for each.
+The `<Input />` component provides a cross-platform text input field that adapts to React Native environments while providing platform-native APIs.
 
 ## Installation
 
@@ -10,41 +10,14 @@ pnpm add @consensys/ds3
 
 ## Usage Examples
 
-Both components support web and native APIs through our [Dual API](#6--dual-api) and offer flexibility through our [Compound Components](#2--compound-components).
+The Input component supports React Native APIs and offers flexibility through our [Compound Components](#2--compound-components).
 
-### Web-Specific Usage
-
-```tsx
-import { Input, Textarea } from '@consensys/ds3';
-import type { WebChangeEvent } from '@consensys/ds3';
-
-function WebInputs() {
-  // Using web-specific APIs
-  return (
-    <>
-      <Input 
-        type="email"
-        onChange={(e: WebChangeEvent) => console.log('Changed!', e.target.value)}
-        placeholder="Email address"
-      />
-
-      <Textarea
-        onChange={(e: WebChangeEvent) => console.log('Changed!', e.target.value)}
-        placeholder="Enter description"
-        rows={5}
-      />
-    </>
-  );
-}
-```
-
-### Native/Hybrid Usage
+### Native Usage
 
 ```tsx
-import { Input, Textarea } from '@consensys/ds3';
+import { Input } from '@consensys/ds3';
 
 function NativeInputs() {
-  // Using React Native APIs
   return (
     <>
       <Input 
@@ -53,17 +26,16 @@ function NativeInputs() {
         placeholder="Email address"
       />
 
-      <Textarea
+      <Input
+        multiline
+        numberOfLines={5}
         onChangeText={(text) => console.log('Changed!', text)}
         placeholder="Enter description"
-        numberOfLines={5}
       />
     </>
   );
 }
 ```
-
-> **Note**: Choose one API style and stick with it throughout your codebase. See the [Guiding Philosophy](../../../README.md#guiding-philosophy) for more details.
 
 ## Component API
 
@@ -74,10 +46,11 @@ function NativeInputs() {
 <Input variant="outline" color="primary" placeholder="Enter text" />
 
 // Multi-line input
-<Textarea 
+<Input 
   variant="outline" 
   color="primary" 
   placeholder="Enter text" 
+  multiline
   numberOfLines={4}
 />
 ```
@@ -93,50 +66,34 @@ function NativeInputs() {
   <Input.Spinner />
 </Input>
 
-// Textarea with icon
-<Textarea variant="soft" color="primary" className="rounded-lg">
+// Multi-line input with icon
+<Input variant="soft" color="primary" className="rounded-lg" multiline>
   <Input.Icon icon={DocumentText} />
   <Input.Field />
   <Input.Spinner />
-</Textarea>
+</Input>
 ```
 
-### `<Input />` and `<Textarea />`
+### `<Input />`
 
-The main components with various styling options.
+The main component with various styling options.
 
 #### Props
-
-Both Input and Textarea share the following props:
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `variant` | `'soft' \| 'outline' \| 'underline' \| 'ghost'` | `'outline'` | The visual style of the input |
 | `color` | `'neutral' \| 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'success'` | `'neutral'` | The color scheme of the input |
-| `accentColor` | Same as `color` | - | Color to switch to on focus/hover |
+| `accentColor` | Same as `color` | - | Color to switch to on focus |
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Size of the input |
 | `disabled` | `boolean` | `false` | Whether the input is disabled |
 | `loading` | `boolean` | `false` | Whether the input is in loading state |
 | `readOnly` | `boolean` | `false` | Whether the input is read-only |
+| `multiline` | `boolean` | `false` | Whether the input should support multiple lines |
 | `asChild` | `boolean` | `false` | Whether to replace the input with a different component |
 | `className` | `string` | - | Additional class names |
 
-Textarea-specific props:
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `numberOfLines` | `number` | `4` | Number of lines to display (approximate height) |
-| `rows` | `number` | - | **(Web only)** Number of visible text lines |
-
-Input-specific props:
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `multiline` | `boolean` | `false` | Whether the input should support multiple lines (consider using Textarea instead) |
-
-Plus additional props based on platform:
-- Web: All [`HTMLInputElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement) props ([`onChange`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event), [`type`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types), etc.)
-- Native: All [`TextInput`](https://reactnative.dev/docs/textinput) props ([`onChangeText`](https://reactnative.dev/docs/textinput#onchangetext), [`keyboardType`](https://reactnative.dev/docs/textinput#keyboardtype), etc.)
+Plus all [`TextInput`](https://reactnative.dev/docs/textinput) props ([`onChangeText`](https://reactnative.dev/docs/textinput#onchangetext), [`keyboardType`](https://reactnative.dev/docs/textinput#keyboardtype), etc.)
 
 ### `<Input.Field />`
 
@@ -261,19 +218,9 @@ For props and styling options, see the [Spinner Component API](/packages/ui/src/
 
 ### Accent Colors
 
-Change the color on focus/hover:
+Change the color on focus:
 
 ```tsx
-// Web example with focus effect
-<Input 
-  variant="soft" 
-  color="primary" 
-  accentColor="secondary"
->
-  <Input.Field placeholder="Focus me" />
-</Input>
-
-// React Native example
 <Input 
   variant="soft" 
   color="primary" 
@@ -286,12 +233,6 @@ Change the color on focus/hover:
 ### Disabled State
 
 ```tsx
-// Web example
-<Input disabled>
-  <Input.Field placeholder="Disabled Input" />
-</Input>
-
-// React Native example
 <Input disabled>
   <Input.Field placeholder="Disabled Input" />
 </Input>
@@ -304,9 +245,9 @@ Change the color on focus/hover:
   <Input.Field />
 </Input>
 
-<Textarea readOnly value="Read-only multiline text">
+<Input readOnly value="Read-only multiline text" multiline>
   <Input.Field />
-</Textarea>
+</Input>
 ```
 
 ### Loading State
@@ -324,36 +265,21 @@ Change the color on focus/hover:
 
 ### Events
 
-The component supports platform-specific event handling:
+The component uses React Native event handling:
 
 ```tsx
-import type { WebChangeEvent, WebFocusEvent, NativeFocusEvent } from '@consensys/ds3';
-
-// Web events
-<Input
-  onChange={(e: WebChangeEvent) => console.log('Changed', e.target.value)}
-  onFocus={(e: WebFocusEvent) => console.log('Focused', e)}
-  onBlur={(e: WebFocusEvent) => console.log('Blurred', e)}
->
-  <Input.Field placeholder="Web Events" />
-</Input>
-
-// Native events
 <Input
   onChangeText={(text: string) => console.log('Changed', text)}
-  onFocus={(e: NativeFocusEvent) => console.log('Focused', e)}
-  onBlur={(e: NativeFocusEvent) => console.log('Blurred', e)}
+  onFocus={(e) => console.log('Focused', e)}
+  onBlur={(e) => console.log('Blurred', e)}
 >
   <Input.Field placeholder="Native Events" />
 </Input>
 ```
 
-The component exports typed event interfaces that match their platform equivalents:
+The component exports typed event interfaces that match React Native equivalents:
 
-- Web: [`HTMLInputElement` events](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement) like `onChange`, `onFocus`, `onBlur`
-- Native: [`TextInput` events](https://reactnative.dev/docs/textinput) like `onChangeText`, `onChange`, `onFocus`, `onBlur`
-
-For details on typed events and the dual-API approach, see the [Dual API](#6--dual-api).
+- [`TextInput` events](https://reactnative.dev/docs/textinput) like `onChangeText`, `onChange`, `onFocus`, `onBlur`
 
 ### Using `asChild` for Custom Elements
 
@@ -366,33 +292,28 @@ The Input component supports the [Slot Pattern](../../../README.md#the-slot-patt
 </Input>
 ```
 
-## Prop Mapping
+## Native Props
 
-Input implements automatic prop mapping to support cross-platform development while maintaining platform-specific behavior:
+The component uses React Native TextInput props:
 
-| Native Prop | Web Prop | Description |
-|-------------|----------|-------------|
-| `onChangeText` | `onChange` | Triggered when input value changes |
-| `secureTextEntry` | `type="password"` | For password fields |
-| `numberOfLines` | `rows` | For multiline inputs/textareas |
-| `autoCorrect` | `autoCorrect` | Spelling autocorrection |
-
-> While native props can be used in web environments (automatically converted), web props should never be used in native environments.
-
-For more details on our cross-platform approach, see the [Dual API](#6--dual-api).
+- `onChangeText` - Triggered when input value changes
+- `secureTextEntry` - For password fields
+- `numberOfLines` - For multiline inputs
+- `keyboardType` - Type of keyboard to display
+- All other TextInput props
 
 ## Accessibility
 
-The Input component automatically implements proper accessibility attributes for each platform:
+The Input component automatically implements proper accessibility attributes:
 
 ### Accessibility Prop Mappings
 
-| Property | Web Implementation | Native Implementation |
-|----------|-------------------|----------------------|
-| Role | `role="input"` or `role="textbox"` | `accessibilityRole="textbox"` or `"adjustable"` |
-| Disabled | `aria-disabled={disabled}` | `accessibilityState={{ disabled }}` |
-| Loading | `aria-busy={loading}` | `accessibilityState={{ busy: loading }}` |
-| ReadOnly | `aria-readonly={readOnly}` | `accessibilityState={{ readonly: readOnly }}` |
-| Multiline | `aria-multiline={multiline}` | Sets `accessibilityRole="adjustable"` |
+| Property | Implementation |
+|----------|----------------|
+| Role | `accessibilityRole="textbox"` or `"adjustable"` |
+| Disabled | `accessibilityState={{ disabled }}` |
+| Loading | `accessibilityState={{ busy: loading }}` |
+| ReadOnly | `accessibilityState={{ readonly: readOnly }}` |
+| Multiline | Sets `accessibilityRole="adjustable"` |
 
 
