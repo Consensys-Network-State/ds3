@@ -3,6 +3,7 @@ import { MarkdownPage } from '@/components/MarkdownPage';
 
 export default function ComponentsOverviewScreen() {
   return (
-    null
+    <MarkdownPage path="packages/ui/README.md" />
+    // null
   );
 }

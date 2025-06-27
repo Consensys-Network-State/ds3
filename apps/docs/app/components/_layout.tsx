@@ -13,6 +13,8 @@ export default function ComponentsLayout() {
       <LocalDrawer.Screen name="icons" options={{ title: 'Icons' }} />
       <LocalDrawer.Screen name="spinner" options={{ title: 'Spinner' }} />
       <LocalDrawer.Screen name="highlight" options={{ title: 'Highlight' }} />
+      <LocalDrawer.Screen name="tag" options={{ title: 'Tag' }} />
+      <LocalDrawer.Screen name="table" options={{ title: 'Table' }} />
     </LocalDrawer>
   );
 } 

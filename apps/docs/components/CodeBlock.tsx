@@ -72,7 +72,7 @@ export function CodeBlock({
   const showHeader = showLanguage || showCopyButton;
 
   return (
-    <View className={`bg-neutral-3 rounded-lg overflow-hidden ${className}`}>
+    <View className={`bg-neutral-2 rounded-lg overflow-hidden border border-neutral-5 ${className}`}>
       {/* Live Preview - only show when preview is true */}
       {shouldShowPreview && (
         <View className="border-b border-neutral-5">
@@ -85,7 +85,7 @@ export function CodeBlock({
 
       {/* Header with language label and copy button */}
       {showHeader && (
-        <View className="flex-row justify-between items-center px-4 py-2 bg-neutral-4 border-b border-neutral-5">
+        <View className="flex-row justify-between items-center px-4 py-2 bg-neutral-3">
           {shouldShowLanguage ? (
             <Text size="sm" color="neutral" className="text-neutral-11 font-mono uppercase">
               {language}
@@ -104,9 +104,6 @@ export function CodeBlock({
                 className="flex-row items-center gap-2"
               >
                 <Icon icon={copied ? Check : Copy} size="sm" color="neutral" />
-                <Text size="sm" color="neutral" className="text-neutral-11">
-                  {copied ? 'Copied!' : 'Copy'}
-                </Text>
               </Button>
             )}
             {shouldShowToggleButton && (
@@ -119,9 +116,6 @@ export function CodeBlock({
                 className="flex-row items-center gap-2"
               >
                 <Icon icon={showCode ? EyeOff : Eye} size="sm" color="neutral" />
-                <Text size="sm" color="neutral" className="text-neutral-11">
-                  {showCode ? 'Hide Code' : 'Show Code'}
-                </Text>
               </Button>
             )}
           </View>

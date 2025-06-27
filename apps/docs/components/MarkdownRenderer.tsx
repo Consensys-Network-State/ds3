@@ -1,6 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Text, useThemeColors } from '@consensys/ds3';
+import { TextStyle, View } from 'react-native';
+import { Text, useThemeColors, Table, Tag } from '@consensys/ds3';
 import Markdown, { Renderer } from 'react-native-marked';
 import { CodeBlock } from './CodeBlock';
 
@@ -37,7 +37,43 @@ export function MarkdownRenderer({
           </View>
         );
       }
+
+      codespan(text: string, styles?: TextStyle) {
+        return (
+          <Tag key={this.getKey()} size="sm">
+            <Tag.Text>{text}</Tag.Text>
+          </Tag>
+        );
+      }
+
+      table(header: React.ReactNode[][], rows: React.ReactNode[][][]) {
+        return (
+          <View key={this.getKey()} className="mb-4">
+            <Table striped>
+              {header.length > 0 && (
+                <Table.Row key="header" isHeader={true}>
+                  {header.map((cell, cellIndex) => (
+                    <Table.Cell key={`header-cell-${cellIndex}`} isHeader={true} className="w-[500px]">
+                      {cell}
+                    </Table.Cell>
+                  ))}
+                </Table.Row>
+              )}
+              {rows.map((row, rowIndex) => (
+                <Table.Row key={`row-${rowIndex}`} isEven={rowIndex % 2 === 1} isLast={rowIndex === rows.length - 1}>
+                  {row.map((cell, cellIndex) => (
+                    <Table.Cell key={`cell-${rowIndex}-${cellIndex}`} className="w-[500px]">
+                      {cell}
+                    </Table.Cell>
+                  ))}
+                </Table.Row>
+              ))}
+            </Table>
+          </View>
+        );
+      }
     }
+
     return new CustomRenderer();
   }, [scope]);
 

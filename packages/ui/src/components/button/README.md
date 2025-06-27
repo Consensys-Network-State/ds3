@@ -21,7 +21,7 @@ import { Button } from '@consensys/ds3';
 ### Variants
 
 ```tsx live
-<View className="flex flex-row gap-3">
+<View className="flex flex-row flex-wrap gap-3">
   <Button variant="elevated">Elevated</Button>
   <Button variant="solid">Solid</Button>
   <Button variant="soft">Soft</Button>
@@ -34,7 +34,7 @@ import { Button } from '@consensys/ds3';
 ### Colors
 
 ```tsx live
-<View className="flex flex-row gap-3">
+<View className="flex flex-row flex-wrap gap-3">
   <Button color="neutral">Neutral</Button>
   <Button color="primary">Primary</Button>
   <Button color="secondary">Secondary</Button>
@@ -57,7 +57,7 @@ import { Button } from '@consensys/ds3';
 ### Icons
 
 ```tsx live
-<View className="flex flex-row gap-3">
+<View className="flex flex-row flex-wrap gap-3">
   <Button variant="solid" color="primary">
     <Button.Icon icon={Figma} />
     <Button.Text>Icon Left</Button.Text>
@@ -92,7 +92,7 @@ import { Button } from '@consensys/ds3';
 Basic:
 
 ```tsx live
-<View className="flex flex-row gap-3 flex-wrap">
+<View className="flex flex-row flex-wrap gap-3">
   <Button variant="solid" color="primary" loading>
     <Button.Spinner />
     <Button.Text>Spinner Left</Button.Text>
@@ -175,10 +175,10 @@ The main Button component with various styling options.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `variant` | `'elevated' \| 'solid' \| 'soft' \| 'outline' \| 'dashed' \| 'ghost'` | `'elevated'` | The visual style of the button |
-| `color` | `'neutral' \| 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'success'` | `'neutral'` | The color scheme of the button |
+| `variant` | `elevated` \| `solid` \| `soft` \| `outline` \| `dashed` \| `ghost` | `elevated` | The visual style of the button |
+| `color` | `neutral` \| `primary` \| `secondary` \| `error` \| `warning` \| `success` | `neutral` | The color scheme of the button |
 | `accentColor` | Same as `color` | - | Color to switch to on press |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Size of the button |
+| `size` | `sm` \| `md` \| `lg` | `md` | Size of the button |
 | `disabled` | `boolean` | `false` | Whether the button is disabled |
 | `loading` | `boolean` | `false` | Whether the button is in loading state |
 | `asChild` | `boolean` | `false` | Whether to replace the button with a different component |

@@ -35,6 +35,31 @@ export type {
   CheckboxContextValue, // TODO: consistent naming
 } from './components/checkbox';
 
+// tag
+export {
+  Tag,
+} from './components/tag';
+
+export type {
+  TagProps,
+  TagTextProps, 
+  TagContext,
+} from './components/tag';
+
+// table
+export {
+  Table,
+} from './components/table';
+
+export type {
+  TableProps,
+  TableRowProps, 
+  TableCellProps, 
+  TableContext,
+  TableColors,
+  TableSizes
+} from './components/table';
+
 // field
 export {
   Field,
