@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextStyle, View } from 'react-native';
-import { Text, useThemeColors, Table, Tag } from '@consensys/ds3';
+import { Text, useThemeColors, Table, Tag, H1, H2, H3, H4, H5, H6 } from '@consensys/ds3';
 import Markdown, { Renderer } from 'react-native-marked';
 import { CodeBlock } from './CodeBlock';
 
@@ -19,6 +19,27 @@ export function MarkdownRenderer({
 
   const customRenderer = React.useMemo(() => {
     class CustomRenderer extends Renderer {
+      heading(text: string | React.ReactNode[], styles?: TextStyle, depth?: number) {
+        const marginClass = depth === 1 ? 'mb-4' : depth === 2 ? 'mb-3' : 'mb-2';
+        
+        switch (depth) {
+          case 1:
+            return <H1 key={this.getKey()} className={marginClass}>{text}</H1>;
+          case 2:
+            return <H2 key={this.getKey()} className={marginClass}>{text}</H2>;
+          case 3:
+            return <H3 key={this.getKey()} className={marginClass}>{text}</H3>;
+          case 4:
+            return <H4 key={this.getKey()} className={marginClass}>{text}</H4>;
+          case 5:
+            return <H5 key={this.getKey()} className={marginClass}>{text}</H5>;
+          case 6:
+            return <H6 key={this.getKey()} className={marginClass}>{text}</H6>;
+          default:
+            return <H1 key={this.getKey()} className={marginClass}>{text}</H1>;
+        }
+      }
+
       code(code: string, lang: string | undefined) {
         const language = lang || 'text';
         const isPreviewable = language.includes('live');

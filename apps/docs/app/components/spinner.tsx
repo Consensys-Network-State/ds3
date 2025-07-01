@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Icon, Input } from '@consensys/ds3';
+import { Button, Icon, Input, Spinner, View, Text } from '@consensys/ds3';
+import { LoaderCircle, Loader, LoaderPinwheel, RefreshCw } from 'lucide-react-native';
 import { MarkdownPage } from '@/components/MarkdownPage';
 
 export default function SpinnerPage() {
@@ -8,7 +9,13 @@ export default function SpinnerPage() {
     Button,
     Icon,
     Input,
-    // AI fill this
+    Spinner,
+    View,
+    Text,
+    LoaderCircle,
+    Loader,
+    LoaderPinwheel,
+    RefreshCw,
   };
 
   return (

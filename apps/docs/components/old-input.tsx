@@ -357,19 +357,19 @@ export default function Inputs() {
 
           <Text className="text-h2">Accent Colors</Text>
           <View className="flex flex-row flex-wrap gap-4">
-            <Input variant="soft" color="neutral" accentColor="primary" placeholder="Neutral to Primary">
+            <Input variant="soft" color="neutral" toColor="primary" placeholder="Neutral to Primary">
               <Input.Field />
             </Input>
 
-            <Input variant="outline" color="primary" accentColor="secondary" placeholder="Primary to Secondary">
+            <Input variant="outline" color="primary" toColor="secondary" placeholder="Primary to Secondary">
               <Input.Field />
             </Input>
 
-            <Input variant="ghost" color="secondary" accentColor="success" placeholder="Secondary to Success">
+            <Input variant="ghost" color="secondary" toColor="success" placeholder="Secondary to Success">
               <Input.Field />
             </Input>
 
-            <Input variant="underline" color="success" accentColor="error" placeholder="Success to Error">
+            <Input variant="underline" color="success" toColor="error" placeholder="Success to Error">
               <Input.Field />
             </Input>
           </View>

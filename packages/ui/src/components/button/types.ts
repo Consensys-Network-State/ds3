@@ -9,7 +9,7 @@ import { buttonVariants } from './styles';
 export type SharedButtonProps = {
   variant?: VariantProps<typeof buttonVariants>['variant'];
   color?: VariantProps<typeof buttonVariants>['color'];
-  accentColor?: VariantProps<typeof buttonVariants>['color'];
+  toColor?: VariantProps<typeof buttonVariants>['color'];
   size?: VariantProps<typeof buttonVariants>['size'];
   disabled?: boolean;
   loading?: boolean;

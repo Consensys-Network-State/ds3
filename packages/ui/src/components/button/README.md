@@ -1,8 +1,10 @@
 # Button Component
 
-The `<Button />` component provides a cross-platform button that adapts to React Native environments while providing platform-native APIs.
+The `<Button />` component provides a cross-platform button control that adapts to both web and React Native environments while maintaining a consistent API and design.
 
 ## Installation
+
+Import the Button component from the DS3 package.
 
 ```tsx
 import { Button } from '@consensys/ds3';
@@ -12,13 +14,17 @@ import { Button } from '@consensys/ds3';
 
 ### Basic
 
+Create a simple button with default styling.
+
 ```tsx live
 <Button>
-  Click Me
+  Press Me!
 </Button>
 ```
 
 ### Variants
+
+Choose from six different visual styles to match your design system.
 
 ```tsx live
 <View className="flex flex-row flex-wrap gap-3">
@@ -33,6 +39,10 @@ import { Button } from '@consensys/ds3';
 
 ### Colors
 
+Apply semantic color schemes for different contexts and states.
+
+Basic:
+
 ```tsx live
 <View className="flex flex-row flex-wrap gap-3">
   <Button color="neutral">Neutral</Button>
@@ -44,7 +54,19 @@ import { Button } from '@consensys/ds3';
 </View>
 ```
 
+Interaction Color:
+
+Dynamically change colors on press or hover for enhanced user feedback.
+
+```tsx live
+<Button color="neutral" toColor="primary">
+  Neutral to Primary
+</Button>
+```
+
 ### Sizes
+
+Scale buttons to fit different UI contexts and hierarchy levels.
 
 ```tsx live
 <View className="flex flex-row gap-3">
@@ -56,19 +78,21 @@ import { Button } from '@consensys/ds3';
 
 ### Icons
 
+Add visual context with icons positioned before, after, or on both sides of text.
+
 ```tsx live
 <View className="flex flex-row flex-wrap gap-3">
-  <Button variant="solid" color="primary">
+  <Button>
     <Button.Icon icon={Figma} />
     <Button.Text>Icon Left</Button.Text>
   </Button>
 
-  <Button variant="solid" color="primary">
+  <Button>
     <Button.Text>Icon Right</Button.Text>
     <Button.Icon icon={Figma} />
   </Button>
 
-  <Button variant="solid" color="primary">
+  <Button>
     <Button.Icon icon={Figma} />
     <Button.Text>Icon Both</Button.Text>
     <Button.Icon icon={Figma} />
@@ -76,19 +100,23 @@ import { Button } from '@consensys/ds3';
 </View>
 ```
 
+For props and styling options, see the [Icon Component API](/packages/ui/src/components/icon).
+
 ### Square
+
+Create icon-only buttons with equal padding for consistent visual balance.
 
 ```tsx live
 <View className="flex flex-row flex-wrap gap-3">
-  <Button variant="solid" color="secondary" size="sm" square>
+  <Button size="sm" square>
     <Button.Icon icon={Figma} />
   </Button>
 
-  <Button variant="solid" color="primary" square>
+  <Button square>
     <Button.Icon icon={Figma} />
   </Button>
   
-  <Button variant="outline" color="error" size="lg" square>
+  <Button size="lg" square>
     <Button.Icon icon={Figma} />
   </Button>
 </View>
@@ -96,95 +124,100 @@ import { Button } from '@consensys/ds3';
 
 ### Loading State
 
+Show loading indicators during async operations with customizable spinners.
+
 Basic:
 
 ```tsx live
 <View className="flex flex-row flex-wrap gap-3">
-  <Button variant="solid" color="primary" loading>
+  <Button loading>
     <Button.Spinner />
-    <Button.Text>Spinner Left</Button.Text>
+    <Button.Text>Loading Left</Button.Text>
   </Button>
 
-  <Button variant="solid" color="primary" loading>
-    <Button.Text>Spinner Right</Button.Text>
+  <Button loading>
+    <Button.Text>Loading Right</Button.Text>
     <Button.Spinner />
-  </Button>
-
-  <Button variant="solid" color="primary" loading>
-    <Button.Spinner loadingIcon={Loader} />
-    <Button.Text>Custom Icon</Button.Text>
   </Button>
 </View>
 ```
 
-Icon Fallback
+Loading Icon:
 
 ```tsx live
-const [loading, setLoading] = useState(false);
-
-return (
-  <Button
-    onPress={() => setLoading(true)}
-    loading={loading}
-  >
-    <Button.Spinner icon={Figma} />
-    <Button.Text>Click to load</Button.Text>
-  </Button>
-);
-```
-
-### Disabled State
-
-```tsx live
-<Button disabled>
-  <Button.Text>Disabled Button</Button.Text>
+<Button loading>
+  <Button.Spinner loadingIcon={Loader} />
+  <Button.Text>Custom Icon</Button.Text>
 </Button>
 ```
 
-### Accent Colors
+Icon Fallback:
 
 ```tsx live
-<Button variant="soft" color="primary" accentColor="secondary">
-  <Button.Text>Press Me</Button.Text>
+import { Button } from '@consensys/ds3';
+import { Figma } from 'lucide-react';
+
+const Component = () => {
+  const [loading, setLoading] = useState(false);
+
+  return (
+    <Button
+      onPress={() => setLoading(true)}
+      loading={loading}
+    >
+      <Button.Spinner icon={Figma} />
+      <Button.Text>{loading ? 'Loading...' : 'Press to load'}</Button.Text>
+    </Button>
+  );
+}
+
+export default Component;
+```
+
+For props and styling options, see the [Spinner Component API](/packages/ui/src/components/spinner).
+
+### Disabled State
+
+Prevent user interaction and provide visual feedback for unavailable actions.
+
+```tsx live
+<Button disabled>
+  <Button.Text>Disabled</Button.Text>
 </Button>
 ```
 
 ### Slot
 
+Transform buttons into other interactive elements while maintaining styling and behavior.
+
 The Button component supports the [Slot Pattern](../../../README.md#the-slot-pattern-aschild) via the `asChild` prop.
-Here is an example of using the `expo-router` `<Link>` component:
 
 ```tsx live
-<Button variant="solid" color="primary" asChild>
-  <Link href="/">
-    <Button.Text>Go to Home</Button.Text>
-  </Link>
-</Button>
-```
+import { Button } from '@consensys/ds3';
+import { Link } from 'expo-router';
 
-### Events
+const Component = () => {
+  return (
+    <Button asChild>
+      <Link href="/">
+        <Button.Text>Navigate Home</Button.Text>
+      </Link>
+    </Button>
+  );
+}
 
-The component uses React Native event handling:
-
-```tsx live
-<Button onPress={(e) => console.log('Pressed', e)}>
-  <Button.Text>Native Events</Button.Text>
-</Button>
+export default Component;
 ```
 
 ## API Reference
 
-### `<Button />`
-
-The main Button component with various styling options.
-
-#### Props
+Complete reference of all available props and their configurations.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `variant` | `elevated` \| `solid` \| `soft` \| `outline` \| `dashed` \| `ghost` | `elevated` | The visual style of the button |
 | `color` | `neutral` \| `primary` \| `secondary` \| `error` \| `warning` \| `success` | `neutral` | The color scheme of the button |
-| `accentColor` | Same as `color` | - | Color to switch to on press |
+| `toColor` | Same as `color` | - | Color to switch to on press |
 | `size` | `sm` \| `md` \| `lg` | `md` | Size of the button |
 | `disabled` | `boolean` | `false` | Whether the button is disabled |
 | `loading` | `boolean` | `false` | Whether the button is in loading state |
@@ -192,53 +225,12 @@ The main Button component with various styling options.
 | `asChild` | `boolean` | `false` | Whether to replace the button with a different component |
 | `className` | `string` | - | Additional class names |
 
-Plus all [`Pressable`](https://reactnative.dev/docs/pressable) props ([`onPress`](https://reactnative.dev/docs/pressable#onpress), [`onPressIn`](https://reactnative.dev/docs/pressable#onpressin), etc.)
+Inherits all [Pressable](https://reactnative.dev/docs/pressable) props including [onPress](https://reactnative.dev/docs/pressable#onpress), [onPressIn](https://reactnative.dev/docs/pressable#onpressin), [onPressOut](https://reactnative.dev/docs/pressable#onpressout), and more
 
----
-
-### `<Button.Text />`
-
-Child component for button text.
-
-#### Props
-
-For props and styling options, see the [Text Component API](/packages/ui/src/components/text).
-
----
-
-### `<Button.Icon />`
-
-An icon for the button. Can be placed before or after the text.
-
-#### Props
-
-For props and styling options, see the [Icon Component API](/packages/ui/src/components/icon).
-
-### `<Button.Spinner />`
-
-A loading spinner that automatically appears when the button's `loading` prop is true.
-
-#### Props
-
-For props and styling options, see the [Spinner Component API](/packages/ui/src/components/spinner).
-
-## Options
-
-### `square`
-
-The `square` option creates buttons with equal padding on all sides, making them perfect for icon-only buttons. The padding scales with the button size:
-
-- `sm`: `9px` padding
-- `md`: `12px` padding  
-- `lg`: `15px` padding
-
-```tsx
-<Button variant="solid" color="primary" square>
-  <Button.Icon icon={SomeIcon} />
-</Button>
-```
 
 ## Accessibility
+
+Built-in accessibility support with automatic ARIA attributes and screen reader compatibility.
 
 The Button component automatically implements proper accessibility attributes:
 

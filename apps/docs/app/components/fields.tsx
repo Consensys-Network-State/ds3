@@ -1,5 +1,7 @@
-import React from 'react';
-import { Button, Icon, Input } from '@consensys/ds3';
+import React, { useState } from 'react';
+import { Button, Icon, Input, InputField, SwitchField, CheckboxField, Checkbox, View, Text } from '@consensys/ds3';
+import { Check } from 'lucide-react-native';
+import { Controller, useForm } from 'react-hook-form';
 import { MarkdownPage } from '@/components/MarkdownPage';
 
 export default function FieldsPage() {
@@ -8,7 +10,15 @@ export default function FieldsPage() {
     Button,
     Icon,
     Input,
-    // AI fill this
+    InputField,
+    SwitchField,
+    CheckboxField,
+    Checkbox,
+    View,
+    Text,
+    Check,
+    Controller,
+    useForm,
   };
 
   return (

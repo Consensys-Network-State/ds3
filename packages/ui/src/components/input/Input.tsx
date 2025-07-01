@@ -18,7 +18,7 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRoot
     className,
     variant,
     color,
-    accentColor,
+    toColor,
     size,
     disabled = false,
     loading = false,
@@ -32,7 +32,7 @@ const InputRoot = React.forwardRef<React.ElementRef<typeof TextInput>, InputRoot
     const [isHovered, setIsHovered] = React.useState(false);
 
     const inputRef = (ref as React.RefObject<React.ElementRef<typeof TextInput>>) || internalInputRef;
-    const effectiveColor = (focused || isHovered) && accentColor ? accentColor : color;
+    const effectiveColor = (focused || isHovered) && toColor ? toColor : color;
 
     // Memoize fieldProps separately
     const memoizedFieldProps = React.useMemo(() => fieldProps, [fieldProps]);

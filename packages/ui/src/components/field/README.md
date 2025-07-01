@@ -4,88 +4,196 @@ The `<Field />` component provides a standardized way to create accessible form 
 
 ## Installation
 
-```bash
-pnpm add @consensys/ds3
-```
-
-## Usage Examples
-
-The Field component is a foundational element designed to be used with various form control components.
+Import the Field component from the DS3 package.
 
 ```tsx
-import { Field, Text } from '@consensys/ds3';
-import { Mail } from 'lucide-react-native';
+import { Field } from '@consensys/ds3';
+```
 
-function BasicField() {
-  return (
-    <Field color="primary">
+## Examples
+
+### Basic
+
+Create a simple field with label and description.
+
+```tsx live
+<Field>
+  <Field.Label>Email Address</Field.Label>
+  <Input placeholder="Enter your email" />
+  <Field.Description>We'll never share your email with anyone else.</Field.Description>
+</Field>
+```
+
+### Colors
+
+Apply semantic color schemes for different contexts and states.
+
+```tsx live
+<View className="flex flex-col gap-4">
+  <Field color="neutral">
+    <Field.Label>Neutral Field</Field.Label>
+    <Input placeholder="Default field styling" />
+    <Field.Description>Standard field for general use</Field.Description>
+  </Field>
+  <Field color="primary">
+    <Field.Label>Primary Field</Field.Label>
+    <Input placeholder="Main action field" />
+    <Field.Description>Use for primary form actions</Field.Description>
+  </Field>
+  <Field color="secondary">
+    <Field.Label>Secondary Field</Field.Label>
+    <Input placeholder="Supporting field" />
+    <Field.Description>Use for secondary or supporting information</Field.Description>
+  </Field>
+  <Field color="error">
+    <Field.Label>Error Field</Field.Label>
+    <Input placeholder="Field with validation error" />
+    <Field.Description>Indicates validation errors or issues</Field.Description>
+  </Field>
+  <Field color="warning">
+    <Field.Label>Warning Field</Field.Label>
+    <Input placeholder="Field with warning" />
+    <Field.Description>Indicates warnings or cautionary information</Field.Description>
+  </Field>
+  <Field color="success">
+    <Field.Label>Success Field</Field.Label>
+    <Input placeholder="Successfully completed field" />
+    <Field.Description>Indicates successful completion or validation</Field.Description>
+  </Field>
+</View>
+```
+
+### Layouts
+
+Different layout patterns for organizing field elements.
+
+#### Top Label (Default)
+
+The most common layout with the label above the input.
+
+```tsx live
+<Field>
+  <Field.Label>First Name</Field.Label>
+  <Input placeholder="Enter your first name" />
+  <Field.Description>Enter your first name as it appears on your ID</Field.Description>
+</Field>
+```
+
+#### Left-aligned Label
+
+Place the label to the left of the input field.
+
+```tsx live
+<Field>
+  <Field.Row>
+    <Field.Label>First Name</Field.Label>
+    <Input placeholder="Enter your first name" />
+  </Field.Row>
+  <Field.Description>Enter your first name as it appears on your ID</Field.Description>
+</Field>
+```
+
+#### Right-aligned Label
+
+Place the label to the right of the input field.
+
+```tsx live
+<Field>
+  <Field.Row>
+    <Input placeholder="Enter your first name" />
+    <Field.Label>First Name</Field.Label>
+  </Field.Row>
+  <Field.Description>Enter your first name as it appears on your ID</Field.Description>
+</Field>
+```
+
+### Row
+
+The `Field.Row` component allows you to arrange field elements horizontally in any combination.
+
+#### With Icons
+
+Add icons to enhance visual clarity and user experience.
+
+```tsx live
+import { Mail, User, Lock, Info, Shield } from 'lucide-react-native';
+
+return (
+  <View className="flex flex-col gap-4">
+    <Field>
       <Field.Row>
         <Field.Icon icon={Mail} />
         <Field.Label>Email Address</Field.Label>
       </Field.Row>
-      {/* Insert your input component here */}
-      <Field.Description>Please enter your email address</Field.Description>
+      <Input placeholder="Enter your email" />
+      <Field.Description>Icon before label for visual context</Field.Description>
     </Field>
-  );
-}
+    <Field>
+      <Field.Row>
+        <Field.Label>Username</Field.Label>
+        <Field.Icon icon={User} />
+      </Field.Row>
+      <Input placeholder="Enter your username" />
+      <Field.Description>Icon after label for additional information</Field.Description>
+    </Field>
+    <Field>
+      <Field.Row>
+        <Field.Icon icon={Lock} />
+        <Field.Label>Password</Field.Label>
+        <Field.Icon icon={Info} />
+      </Field.Row>
+      <Input placeholder="Enter your password" secureTextEntry />
+      <Field.Description>Icons on both sides for enhanced context</Field.Description>
+    </Field>
+    <Field>
+      <Field.Row>
+        <Field.Icon icon={Shield} />
+        <Field.Label>Security Code</Field.Label>
+      </Field.Row>
+      <Input placeholder="Enter security code" />
+      <Field.Description>Icon before label for security indication</Field.Description>
+    </Field>
+    <Field>
+      <Field.Label>API Key</Field.Label>
+      <Input placeholder="Enter your API key" />
+      <Field.Row>
+        <Field.Icon icon={Info} />
+        <Field.Description>Keep your API key secure and never share it publicly</Field.Description>
+      </Field.Row>
+    </Field>
+  </View>
+)
 ```
 
-## Component API
+## API Reference
+
+Complete reference of all available props and their configurations.
 
 ### `<Field />`
 
-The main container component for form fields, providing context for all its children.
-
-#### Props
+The main container component for form fields.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `color` | `'neutral' \| 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'success'` | `'neutral'` | The color scheme for field labels and descriptions |
+| `color` | `neutral` \| `primary` \| `secondary` \| `error` \| `warning` \| `success` | `neutral` | The color scheme for field labels and descriptions |
 | `onLabelPress` | `() => void` | - | Handler for when the label is pressed |
 | `className` | `string` | - | Additional class names for styling |
 
 ### `<Field.Label />`
 
-Component for form field labels, with appropriate styling and accessibility properties.
+Component for form field labels.
 
-```tsx
-<Field>
-  <Field.Label>First Name</Field.Label>
-  {/* Input Component */}
-</Field>
-```
-
-The Label component inherits all props from the Text component.
+Inherits all props from the Text component.
 
 ### `<Field.Description />`
 
-Component for descriptive text that provides additional information about the field.
+Component for descriptive text that provides additional information.
 
-```tsx
-<Field>
-  <Field.Label>Password</Field.Label>
-  {/* Input Component */}
-  <Field.Description>Must be at least 8 characters long</Field.Description>
-</Field>
-```
-
-The Description component inherits all props from the Text component.
+Inherits all props from the Text component.
 
 ### `<Field.Icon />`
 
 Icon component specifically styled for use within field contexts.
-
-```tsx
-<Field>
-  <Field.Row>
-    <Field.Icon icon={Lock} />
-    <Field.Label>Password</Field.Label>
-  </Field.Row>
-  {/* Input Component */}
-</Field>
-```
-
-#### Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -96,137 +204,31 @@ All other props from the Icon component are also supported.
 
 ### `<Field.Row />`
 
-A container for horizontal alignment of Field components like Label and Icon.
-
-```tsx
-<Field>
-  <Field.Row>
-    <Field.Icon icon={User} />
-    <Field.Label>Username</Field.Label>
-  </Field.Row>
-  {/* Input Component */}
-</Field>
-```
-
-#### Props
+A container for horizontal alignment of Field components.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `id` | `string` | - | Optional ID for the row container |
 | `className` | `string` | - | Additional class names for styling |
 
-## Layout Patterns
+## Accessibility
 
-### Top Label (Default)
+Built-in accessibility support with automatic ARIA attributes and screen reader compatibility.
 
-The most common layout with the label above the input.
+The Field component automatically implements proper accessibility attributes:
 
-```tsx
-<Field>
-  <Field.Label>First Name</Field.Label>
-  {/* Input Component */}
-  <Field.Description>Enter your first name as it appears on your ID</Field.Description>
-</Field>
-```
+### Accessibility Prop Mappings
 
-### Left-aligned Label
+| Property | Implementation |
+|----------|----------------|
+| Label Association | `aria-labelledby` (web) / `accessibilityLabelledBy` (native) |
+| Description Association | `aria-describedby` (web) / `accessibilityDescribedBy` (native) |
+| Error State | `aria-invalid` (web) / `accessibilityState.invalid` (native) |
+| Required State | `aria-required` (web) / `accessibilityState.required` (native) |
 
-Place the label to the left of the input field.
+### Helper Hook: `useField`
 
-```tsx
-<Field>
-  <Field.Row>
-    <Field.Label>First Name</Field.Label>
-    {/* Input Component */}
-  </Field.Row>
-  <Field.Description>Enter your first name as it appears on your ID</Field.Description>
-</Field>
-```
-
-### Right-aligned Label
-
-Place the label to the right of the input field.
-
-```tsx
-<Field>
-  <Field.Row>
-    {/* Input Component */}
-    <Field.Label>First Name</Field.Label>
-  </Field.Row>
-  <Field.Description>Enter your first name as it appears on your ID</Field.Description>
-</Field>
-```
-
-## Icon Layouts
-
-### Icon + Label
-
-Add an icon before or after the label for visual clarity.
-
-```tsx
-<Field>
-  <Field.Row>
-    <Field.Icon icon={User} />
-    <Field.Label>Username</Field.Label>
-  </Field.Row>
-  {/* Input Component */}
-</Field>
-```
-
-### Double Icons
-
-Add icons on both sides of the label.
-
-```tsx
-<Field>
-  <Field.Row>
-    <Field.Icon icon={Mail} />
-    <Field.Label>Email Address</Field.Label>
-    <Field.Icon icon={Info} />
-  </Field.Row>
-  {/* Input Component */}
-</Field>
-```
-
-## Color Variants
-
-The Field component supports six color variants that are applied to labels, descriptions, and icons:
-
-```tsx
-<Field color="neutral">
-  <Field.Label>Neutral Field</Field.Label>
-  {/* Input Component */}
-</Field>
-
-<Field color="primary">
-  <Field.Label>Primary Field</Field.Label>
-  {/* Input Component */}
-</Field>
-
-<Field color="secondary">
-  <Field.Label>Secondary Field</Field.Label>
-  {/* Input Component */}
-</Field>
-
-<Field color="error">
-  <Field.Label>Error Field</Field.Label>
-  {/* Input Component */}
-</Field>
-
-<Field color="warning">
-  <Field.Label>Warning Field</Field.Label>
-  {/* Input Component */}
-</Field>
-
-<Field color="success">
-  <Field.Label>Success Field</Field.Label>
-  {/* Input Component */}
-</Field>
-```
-
-## Helper Function: `useField`
-
-The `useField` hook helps manage accessibility props and IDs for your custom field implementations.
+The `useField` hook helps manage accessibility props and IDs for custom field implementations:
 
 ```tsx
 import { useField } from '@consensys/ds3';
@@ -240,7 +242,7 @@ function CustomField({ error, required, ...props }) {
   return (
     <Field color={error ? 'error' : 'neutral'}>
       <Field.Label id={fieldId}>Custom Field</Field.Label>
-      <input 
+      <Input 
         {...ariaProps}
         {...props} 
       />
@@ -260,31 +262,13 @@ function CustomField({ error, required, ...props }) {
 | `required` | `boolean` | `false` | Whether the field is required |
 | `ariaProps` | `Record<string, any>` | `{}` | Additional ARIA props to merge |
 
-### Return Values
+### Hook Return Values
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `fieldId` | `string` | Unique ID for the field label |
 | `descriptionId` | `string` | Unique ID for the description element |
 | `ariaProps` | `object` | Platform-specific accessibility props |
-
-## Accessibility
-
-The Field component automatically implements proper accessibility attributes for each platform:
-
-### Web Accessibility Features
-
-- Properly associated labels via `aria-labelledby`
-- Description text linked via `aria-describedby`
-- Error states indicated with `aria-invalid`
-- Required state indicated with `aria-required`
-
-### React Native Accessibility Features
-
-- Proper `accessibilityLabelledBy` associations
-- Description linked via `accessibilityDescribedBy`
-- Error states with `accessibilityState.invalid`
-- Required state with `accessibilityState.required`
 
 ## Internal Utilities
 

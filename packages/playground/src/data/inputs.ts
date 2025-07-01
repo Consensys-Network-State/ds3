@@ -135,6 +135,26 @@ ${variants.map(variant => `    ${generateInputJSX(variant, color, undefined, { p
   </View>`).join('\n')}
 </View>`
   },
+  "accent-colors": {
+    name: "Accent Colors",
+    jsx: `<View className="flex flex-row flex-wrap gap-4">
+  <Input variant="soft" color="neutral" toColor="primary" placeholder="Neutral to Primary">
+    <Input.Field />
+  </Input>
+
+  <Input variant="outline" color="primary" toColor="secondary" placeholder="Primary to Secondary">
+    <Input.Field />
+  </Input>
+
+  <Input variant="underline" color="secondary" toColor="success" placeholder="Secondary to Success">
+    <Input.Field />
+  </Input>
+
+  <Input variant="ghost" color="success" toColor="error" placeholder="Success to Error">
+    <Input.Field />
+  </Input>
+</View>`
+  },
   "sizes": {
     name: "Sizes",
     jsx: `<View className="flex flex-col gap-4">

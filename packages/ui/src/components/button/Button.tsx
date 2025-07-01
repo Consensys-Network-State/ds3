@@ -14,7 +14,7 @@ const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRo
     className,
     variant,
     color,
-    accentColor,
+    toColor,
     size,
     disabled = false,
     loading = false,
@@ -25,7 +25,7 @@ const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRo
   }, ref) => {
     const [isPressed, setIsPressed] = React.useState(false);
     const [isHovered, setIsHovered] = React.useState(false);
-    const effectiveColor = (isPressed || isHovered) && accentColor ? accentColor : color;
+    const effectiveColor = (isPressed || isHovered) && toColor ? toColor : color;
 
     const accessibilityProps = getNativeButtonAccessibilityProps({ disabled, loading });
 

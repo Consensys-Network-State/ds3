@@ -1,6 +1,19 @@
 import React from 'react';
-import { Button, Icon, Input } from '@consensys/ds3';
+import { Button, Icon, Input, View, Text } from '@consensys/ds3';
 import { MarkdownPage } from '@/components/MarkdownPage';
+import { 
+  Figma, 
+  Heart, 
+  Star, 
+  Zap, 
+  Settings, 
+  Edit3, 
+  Search,
+  Mail,
+  Lock,
+  Eye,
+  BookOpen
+} from 'lucide-react-native';
 
 export default function IconPage() {
   const scope = {
@@ -8,7 +21,20 @@ export default function IconPage() {
     Button,
     Icon,
     Input,
-    // AI fill this
+    View,
+    Text,
+    // Lucide React Native
+    Figma,
+    Heart,
+    Star,
+    Zap,
+    Settings,
+    Edit3,
+    Search,
+    Mail,
+    Lock,
+    Eye,
+    BookOpen,
   };
 
   return (

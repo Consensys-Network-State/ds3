@@ -4,101 +4,218 @@ The `<Checkbox />` component provides a cross-platform checkbox control that ada
 
 ## Installation
 
-```bash
-pnpm add @consensys/ds3
-```
-
-## Usage Examples
-
-The Checkbox component supports web and native APIs through our [Dual API](#6--dual-api) and offers flexibility through our [Compound Components](#2--compound-components).
-
-### Basic Usage
+Import the Checkbox component from the DS3 package.
 
 ```tsx
 import { Checkbox } from '@consensys/ds3';
+```
+
+## Examples
+
+### Basic
+
+Create a simple checkbox with default styling.
+
+Uncontrolled:
+
+```tsx live
+<View className="flex flex-row gap-3">
+  <Checkbox />
+  <Checkbox checked />
+</View>
+```
+
+Controlled:
+
+```tsx live
 import { useState } from 'react';
 
-function BasicCheckbox() {
+const Component = () => {
   const [checked, setChecked] = useState(false);
-  
+
   return (
-    <Checkbox 
-      checked={checked} 
-      onCheckedChange={setChecked}
-    />
+    <Checkbox checked={checked} onCheckedChange={setChecked} />
   );
 }
+
+export default Component;
 ```
 
-### Compound Usage with Custom Icon
+### Variants
 
-```tsx
-import { Checkbox } from '@consensys/ds3';
-import { X } from 'lucide-react-native';
+Choose from three different visual styles to match your design system.
+
+```tsx live
+<View className="flex flex-col gap-6">
+  <View className="flex flex-row items-center gap-4">
+    <Checkbox variant="solid" />
+    <Checkbox variant="solid" checked />
+    <Text>Solid</Text>
+  </View>
+  <View className="flex flex-row items-center gap-4">
+    <Checkbox variant="soft" />
+    <Checkbox variant="soft" checked />
+    <Text>Soft</Text>
+  </View>
+  <View className="flex flex-row items-center gap-4">
+    <Checkbox variant="outline" />
+    <Checkbox variant="outline" checked />
+    <Text>Outline</Text>
+  </View>
+</View>
+```
+
+### Colors
+
+Apply semantic color schemes for different contexts and states.
+
+```tsx live
+<View className="flex flex-col gap-6">
+  <View className="flex flex-row items-center gap-4">
+    <Checkbox checked />
+    <Text>Neutral</Text>
+  </View>
+  <View className="flex flex-row items-center gap-4">
+    <Checkbox color="primary" checked />
+    <Text>Primary</Text>
+  </View>
+  <View className="flex flex-row items-center gap-4">
+    <Checkbox color="secondary" checked />
+    <Text>Secondary</Text>
+  </View>
+  <View className="flex flex-row items-center gap-4">
+    <Checkbox color="error" checked />
+    <Text>Error</Text>
+  </View>
+  <View className="flex flex-row items-center gap-4">
+    <Checkbox color="warning" checked />
+    <Text>Warning</Text>
+  </View>
+  <View className="flex flex-row items-center gap-4">
+    <Checkbox color="success" checked />
+    <Text>Success</Text>
+  </View>
+</View>
+```
+
+### Sizes
+
+Scale checkboxes to fit different UI contexts and hierarchy levels.
+
+```tsx live
+<View className="flex flex-col gap-6">
+  <View className="flex flex-row items-center gap-4">
+    <Checkbox size="sm" />
+    <Checkbox size="sm" checked />
+    <Text>Small</Text>
+  </View>
+  <View className="flex flex-row items-center gap-4">
+    <Checkbox size="md" />
+    <Checkbox size="md" checked />
+    <Text>Medium</Text>
+  </View>
+  <View className="flex flex-row items-center gap-4">
+    <Checkbox size="lg" />
+    <Checkbox size="lg" checked />
+    <Text>Large</Text>
+  </View>
+</View>
+```
+
+### Icons
+
+Add visual context with custom icons to replace the default checkmark.
+
+```tsx live
+<View className="flex flex-row gap-3">
+  <Checkbox checked>
+    <Checkbox.Icon icon={Check} />
+  </Checkbox>
+  <Checkbox variant="soft" checked>
+    <Checkbox.Icon icon={Minus} />
+  </Checkbox>
+  <Checkbox variant="outline" checked>
+    <Checkbox.Icon icon={X} />
+  </Checkbox>
+</View>
+```
+
+For props and styling options, see the [Icon Component API](/packages/ui/src/components/icon).
+
+### Disabled State
+
+Prevent user interaction and provide visual feedback for unavailable options.
+
+```tsx live
+<View className="flex flex-col gap-4">
+  <View className="flex flex-col gap-4">
+    <Text>Neutral</Text>
+    <View className="flex flex-row flex-wrap gap-4">
+      <Checkbox disabled />
+      <Checkbox checked disabled />
+    </View>
+  </View>
+</View>
+```
+
+### Indeterminate Example
+
+Show partial selection state when some but not all child items are selected.
+
+```tsx live
 import { useState } from 'react';
+import { Minus } from 'lucide-react-native';
 
-function CustomIconCheckbox() {
-  const [checked, setChecked] = useState(false);
+const Component = () => {
+  const [child1, setChild1] = useState(false);
+  const [child2, setChild2] = useState(true);
+  
+  const allChecked = child1 && child2;
+  const someChecked = child1 || child2;
   
   return (
-    <Checkbox 
-      variant="outline"
-      color="primary"
-      checked={checked}
-      onCheckedChange={setChecked}
-    >
-      <Checkbox.Icon icon={X} />
-    </Checkbox>
+    <View className="flex flex-col gap-4">
+      <View className="flex flex-row items-center gap-4">
+        <Checkbox
+          checked={someChecked}
+          onCheckedChange={(checked) => {
+            const newValue = allChecked ? false : true;
+            setChild1(newValue);
+            setChild2(newValue);
+          }}
+        >
+          {!allChecked && someChecked && <Checkbox.Icon icon={Minus} />}
+        </Checkbox>
+        <Text className="text-sm text-neutral-11">Select All Colors</Text>
+      </View>
+      <View className="flex flex-col gap-2 pl-8">
+        <View className="flex flex-row items-center gap-4">
+          <Checkbox
+            color="primary"
+            checked={child1}
+            onCheckedChange={setChild1}
+          />
+          <Text className="text-sm text-neutral-11">Primary</Text>
+        </View>
+        <View className="flex flex-row items-center gap-4">
+          <Checkbox
+            color="success"
+            checked={child2}
+            onCheckedChange={setChild2}
+          />
+          <Text className="text-sm text-neutral-11">Success</Text>
+        </View>
+      </View>
+    </View>
   );
 }
+
+export default Component;
 ```
 
-### Indeterminate State
+## API Reference
 
-```tsx
-import { Checkbox } from '@consensys/ds3';
-import { useState } from 'react';
-
-function IndeterminateCheckbox() {
-  const [parentChecked, setParentChecked] = useState(false);
-  const [child1Checked, setChild1Checked] = useState(false);
-  const [child2Checked, setChild2Checked] = useState(true);
-  
-  // Determine parent checked state
-  const allChecked = child1Checked && child2Checked;
-  const someChecked = child1Checked || child2Checked;
-  
-  return (
-    <>
-      <Checkbox
-        checked={allChecked}
-        indeterminate={!allChecked && someChecked}
-        onCheckedChange={(checked) => {
-          setParentChecked(checked);
-          setChild1Checked(checked);
-          setChild2Checked(checked);
-        }}
-      />
-      <Checkbox
-        checked={child1Checked}
-        onCheckedChange={setChild1Checked}
-      />
-      <Checkbox
-        checked={child2Checked}
-        onCheckedChange={setChild2Checked}
-      />
-    </>
-  );
-}
-```
-
-## Component API
-
-### `<Checkbox />`
-
-The main checkbox component with various styling options.
-
-#### Props
+Complete reference of all available props and their configurations.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -107,110 +224,26 @@ The main checkbox component with various styling options.
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Size of the checkbox |
 | `checked` | `boolean` | `false` | Whether the checkbox is checked |
 | `disabled` | `boolean` | `false` | Whether the checkbox is disabled |
-| `indeterminate` | `boolean` | `false` | Whether the checkbox is in an indeterminate state |
 | `asChild` | `boolean` | `false` | Whether to replace the checkbox with a different component |
 | `className` | `string` | - | Additional class names |
 | `onCheckedChange` | `(checked: boolean) => void` | - | Callback fired when the checkbox state changes |
 
-### `<Checkbox.Icon />`
+## Accessibility
 
-Child component for customizing the checkbox icon. Allows you to replace the default checkmark with any icon.
+The Checkbox component provides built-in accessibility support that automatically handles:
 
-```tsx
-<Checkbox variant="solid" color="primary" checked>
-  <Checkbox.Icon icon={Minus} />
-</Checkbox>
-```
+- **Role**: Proper checkbox role for screen readers
+- **State**: Checked/unchecked state announcements
+- **Disabled**: Disabled state when the `disabled` prop is true
+- **Focus**: Keyboard navigation and focus management
 
-#### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `icon` | `React.ComponentType<any>` | - | The icon component to render |
-| `className` | `string` | - | Additional class names for the icon |
-
-## Styling Options
-
-### Variants
+For custom accessibility needs, you can pass additional accessibility props directly to the component:
 
 ```tsx
-<Checkbox variant="solid" />
-<Checkbox variant="soft" />
-<Checkbox variant="outline" />
-```
-
-### Colors
-
-```tsx
-<Checkbox color="neutral" />
-<Checkbox color="primary" />
-<Checkbox color="secondary" />
-<Checkbox color="error" />
-<Checkbox color="warning" />
-<Checkbox color="success" />
-```
-
-### Sizes
-
-```tsx
-<Checkbox size="sm" />
-<Checkbox size="md" />
-<Checkbox size="lg" />
-```
-
-### Indeterminate State
-
-The indeterminate state is used to indicate that a checkbox has both checked and unchecked child checkboxes:
-
-```tsx
-<Checkbox
-  indeterminate
-  checked={false}
+<Checkbox 
+  accessibilityLabel="Accept terms and conditions"
+  accessibilityHint="Double tap to toggle"
+  checked={checked}
   onCheckedChange={setChecked}
 />
 ```
-
-### Disabled State
-
-```tsx
-<Checkbox disabled />
-<Checkbox checked disabled />
-```
-
-### Custom Icons
-
-You can replace the default check icon with any custom icon:
-
-```tsx
-import { X, Minus, AlertCircle } from 'lucide-react-native';
-
-// Using X icon
-<Checkbox checked>
-  <Checkbox.Icon icon={X} />
-</Checkbox>
-
-// Using Minus icon (typically for indeterminate state)
-<Checkbox indeterminate>
-  <Checkbox.Icon icon={Minus} />
-</Checkbox>
-
-// Using custom warning icon
-<Checkbox checked color="warning">
-  <Checkbox.Icon icon={AlertCircle} />
-</Checkbox>
-```
-
-## Accessibility
-
-The Checkbox component automatically implements proper accessibility attributes for each platform:
-
-### Accessibility Prop Mappings
-
-| Property | Web Implementation | Native Implementation |
-|----------|-------------------|----------------------|
-| Role | `role="checkbox"` | `accessibilityRole="checkbox"` |
-| Checked | `aria-checked={checked \|\| indeterminate}` | `accessibilityState={{ checked }}` |
-| Disabled | `aria-disabled={disabled}` | `accessibilityState={{ disabled }}` |
-| Indeterminate | `aria-checked="mixed"` | `accessibilityState={{ mixed: true }}` |
-
-For more details on our cross-platform approach to accessibility, see the [Dual API](#6--dual-api). 

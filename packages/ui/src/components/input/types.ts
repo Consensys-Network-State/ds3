@@ -8,7 +8,7 @@ import { inputRootVariants } from './styles';
 export type SharedInputProps = {
   variant?: VariantProps<typeof inputRootVariants>['variant'];
   color?: VariantProps<typeof inputRootVariants>['color'];
-  accentColor?: VariantProps<typeof inputRootVariants>['color'];
+  toColor?: VariantProps<typeof inputRootVariants>['color'];
   size?: VariantProps<typeof inputRootVariants>['size'];
   loading?: boolean;
   disabled?: boolean;

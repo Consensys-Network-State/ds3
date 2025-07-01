@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Icon, Input } from '@consensys/ds3';
+import { Button, Icon, Input, Field, View, Text, Label } from '@consensys/ds3';
+import { Mail, User, Lock, Info, Shield } from 'lucide-react-native';
 import { MarkdownPage } from '@/components/MarkdownPage';
 
 export default function FieldPage() {
@@ -8,7 +9,15 @@ export default function FieldPage() {
     Button,
     Icon,
     Input,
-    // AI fill this
+    Field,
+    View,
+    Text,
+    Label,
+    Mail,
+    User,
+    Lock,
+    Info,
+    Shield,
   };
 
   return (

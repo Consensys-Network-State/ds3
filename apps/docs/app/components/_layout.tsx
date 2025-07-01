@@ -15,7 +15,6 @@ export default function ComponentsLayout() {
       <LocalDrawer.Screen name="highlight" options={{ title: 'Highlight' }} />
       <LocalDrawer.Screen name="field" options={{ title: 'Field' }} />
       <LocalDrawer.Screen name="fields" options={{ title: 'Fields' }} />
-      <LocalDrawer.Screen name="form" options={{ title: 'Form' }} />
       <LocalDrawer.Screen name="live-preview" options={{ title: 'Live Preview' }} />
     </LocalDrawer>
   );

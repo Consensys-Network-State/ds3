@@ -66,19 +66,19 @@ ${variants.map(variant => `    ${generateButtonJSX(variant, color, undefined, va
   "accent-colors": {
     name: "Accent Colors",
     jsx: `<View className="flex flex-row flex-wrap gap-4">
-  <Button variant="soft" color="neutral" accentColor="primary">
+  <Button variant="soft" color="neutral" toColor="primary">
     <Button.Text>Neutral to Primary</Button.Text>
   </Button>
 
-  <Button variant="outline" color="primary" accentColor="secondary">
+  <Button variant="outline" color="primary" toColor="secondary">
     <Button.Text>Primary to Secondary</Button.Text>
   </Button>
 
-  <Button variant="ghost" color="secondary" accentColor="success">
+  <Button variant="ghost" color="secondary" toColor="success">
     <Button.Text>Secondary to Success</Button.Text>
   </Button>
 
-  <Button variant="dashed" color="success" accentColor="error">
+  <Button variant="dashed" color="success" toColor="error">
     <Button.Text>Success to Error</Button.Text>
   </Button>
 </View>`
