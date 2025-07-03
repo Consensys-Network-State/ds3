@@ -1,20 +1,20 @@
 import React from 'react';
-import { TextStyle, View } from 'react-native';
-import { Text, useThemeColors, Table, Tag, H1, H2, H3, H4, H5, H6 } from '@consensys/ds3';
-import Markdown, { Renderer } from 'react-native-marked';
-import { CodeBlock } from '@consensys/ds3-playground';
+import { TextStyle } from 'react-native';
+import { View, Text, useThemeColors, Table, Tag, H1, H2, H3, H4, H5, H6 } from '@consensys/ds3';
+import MarkdownRenderer, { Renderer } from 'react-native-marked';
+import { CodeBlock } from '../code-block';
 
-interface MarkdownRendererProps {
+export interface MarkdownProps {
   content: string;
   className?: string;
   scope?: Record<string, any>;
 }
 
-export function MarkdownRenderer({
+export function Markdown({
   content,
   className = '',
   scope = {},
-}: MarkdownRendererProps) {
+}: MarkdownProps) {
   const themeColors = useThemeColors();
 
   const customRenderer = React.useMemo(() => {
@@ -101,7 +101,7 @@ export function MarkdownRenderer({
   const elements = React.useMemo(() => {
     try {
       return (
-        <Markdown
+        <MarkdownRenderer
           value={content}
           renderer={customRenderer}
           theme={{

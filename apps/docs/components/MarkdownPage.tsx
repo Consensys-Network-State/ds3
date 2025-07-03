@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Text, Spinner, cn } from '@consensys/ds3';
-import { MarkdownRenderer } from '@/components/MarkdownRenderer';
 import { useMarkdownContent } from '@/components/MarkdownProvider';
+import { Markdown } from '@consensys/ds3-playground';
 
 interface MarkdownPageProps {
   path: string;
@@ -43,7 +43,7 @@ export function MarkdownPage({
     <ScrollView className={className}>
       {/* w-full max-w-[1200px] px-4 py-6 sm:px-6 lg:px-8 */}
       <View className="w-full max-w-5xl mx-auto p-4 sm:p-6 lg:p-8">
-        <MarkdownRenderer content={content} scope={scope} />
+        <Markdown content={content} scope={scope} />
       </View>
     </ScrollView>
   );

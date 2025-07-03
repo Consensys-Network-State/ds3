@@ -24,3 +24,12 @@ export type {
   CodeBlockProps,
   LivePreviewProps,
 } from './components/code-block';
+
+// markdown
+export {
+  Markdown,
+} from './components/markdown';
+
+export type {
+  MarkdownProps,
+} from './components/markdown';
