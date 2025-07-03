@@ -213,7 +213,7 @@ export type {
 // TODO: move to components folder and refactor
 export * from './components/Select';
 export * from './components/SelectField';
-export * from './components/Avatar';
+export * from './components/avatar';
 export * from './components/DropdownMenu';
 export * from './components/Alert';
 export * from './components/Badge';

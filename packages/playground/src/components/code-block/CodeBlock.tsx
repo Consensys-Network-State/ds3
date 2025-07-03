@@ -76,7 +76,7 @@ export function CodeBlock({
     <Card color="neutral" border className={className}>
       {/* Live Preview - main content when preview is true */}
       {shouldShowPreview && (
-        <Card.Content>
+        <Card.Content className="bg-neutral-1">
           <LivePreview 
             code={code}
             scope={scope}
@@ -86,7 +86,7 @@ export function CodeBlock({
 
       {shouldShowCode && (
         !preview && (
-          <Card.Content>
+          <Card.Content className="bg-neutral-1">
             <MemoizedHighlight code={code} language={language} />
           </Card.Content>
         )
@@ -136,7 +136,7 @@ export function CodeBlock({
       {/* Code content - footer when there's a toggle, otherwise main content */}
       {shouldShowCode && (
         preview && (
-          <Card.Content className="border-t border-neutral-a7">
+          <Card.Content className="border-t border-neutral-a7 bg-neutral-1">
             <MemoizedHighlight code={code} language={language} />
           </Card.Content>
         )
