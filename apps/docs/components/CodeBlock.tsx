@@ -1,8 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Text, useCopyToClipboard, Icon, Highlight, Button } from '@consensys/ds3';
+import { Text, useCopyToClipboard, Icon, Button } from '@consensys/ds3';
 import { Check, Copy, Eye, EyeOff } from 'lucide-react-native';
 import { LivePreview } from '@consensys/ds3-playground';
+import { Highlight } from '@consensys/ds3-playground';
 
 interface CodeBlockProps {
   code: string;

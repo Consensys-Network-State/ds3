@@ -136,15 +136,6 @@ export type {
   SpinnerProps,
 } from './components/spinner';
 
-// highlight
-export {
-  Highlight,
-} from './components/highlight';
-
-export type {
-  HighlightProps,
-} from './components/highlight';
-
 // switch
 export {
   Switch,

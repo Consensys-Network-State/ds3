@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { TextInput, Platform } from "react-native";
-import { Highlight, View } from "@consensys/ds3";
+import { View } from "@consensys/ds3";
+import { Highlight } from "./Highlight";
 
 // Custom Syntax Highlighted Input Component
-interface HighlightInputProps {
+export interface HighlightInputProps {
   value: string;
   onChangeText: (text: string) => void;
   placeholder?: string;

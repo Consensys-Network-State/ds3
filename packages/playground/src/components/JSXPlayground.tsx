@@ -47,7 +47,7 @@ import {
 } from "lucide-react-native";
 import { useForm, Controller } from 'react-hook-form';
 import { LivePreview } from "./LivePreview";
-import { HighlightInput } from "./HighlightInput";
+import { HighlightInput } from "./highlight/HighlightInput";
 import { ReactHookForm } from "./ReactHookForm";
 import { codeExamples } from "../data";
 

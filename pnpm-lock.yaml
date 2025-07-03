@@ -427,6 +427,9 @@ importers:
       '@consensys/ds3':
         specifier: workspace:*
         version: link:../ui
+      prism-react-renderer:
+        specifier: ^2.3.1
+        version: 2.4.1(react@18.3.1)
       react:
         specifier: '*'
         version: 18.3.1
@@ -552,9 +555,6 @@ importers:
       postcss:
         specifier: ^8.4.47
         version: 8.5.3
-      prism-react-renderer:
-        specifier: ^2.3.1
-        version: 2.4.1(react@18.3.1)
       react:
         specifier: '*'
         version: 18.3.1

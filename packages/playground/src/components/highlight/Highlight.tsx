@@ -1,8 +1,5 @@
-import React from 'react';
-import { View} from 'react-native';
-import { Text } from '../text';
+import { View, Text, useThemeColors } from '@consensys/ds3';
 import { Highlight as PrismHighlight } from 'prism-react-renderer';
-import { useThemeColors } from '../theme';
 import { createDs3Theme } from './theme';
 import type { HighlightProps } from './types';
 
