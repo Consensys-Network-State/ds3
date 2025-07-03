@@ -29,8 +29,7 @@ export type {
 export { 
   cardVariants,
   cardHeaderVariants,
-  cardTitleVariants,
-  cardDescriptionVariants,
+  cardTextVariants,
   cardContentVariants,
   cardFooterVariants,
 } from './styles'; 
