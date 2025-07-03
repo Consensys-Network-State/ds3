@@ -43,7 +43,8 @@ export function Markdown({
       code(code: string, lang: string | undefined) {
         const language = lang || 'text';
         const isPreviewable = language.includes('live');
-        const baseLanguage = language.replace(/\s+live$/, '');
+        const isExpandable = language.includes('expand');
+        const baseLanguage = language.replace(/\s+(live|expand)(\s+(live|expand))?$/, '');
 
         return (
           <View key={this.getKey()} className="mb-4">
@@ -53,6 +54,7 @@ export function Markdown({
               showCopyButton={true}
               showLanguage={true}
               preview={isPreviewable}
+              expand={isExpandable}
               scope={scope}
             />
           </View>
@@ -74,7 +76,7 @@ export function Markdown({
               {header.length > 0 && (
                 <Table.Row key="header" isHeader={true}>
                   {header.map((cell, cellIndex) => (
-                    <Table.Cell key={`header-cell-${cellIndex}`} isHeader={true} className="w-[500px]">
+                    <Table.Cell key={`header-cell-${cellIndex}`} isHeader={true}>
                       {cell}
                     </Table.Cell>
                   ))}
@@ -83,7 +85,7 @@ export function Markdown({
               {rows.map((row, rowIndex) => (
                 <Table.Row key={`row-${rowIndex}`} isEven={rowIndex % 2 === 1} isLast={rowIndex === rows.length - 1}>
                   {row.map((cell, cellIndex) => (
-                    <Table.Cell key={`cell-${rowIndex}-${cellIndex}`} className="w-[500px]">
+                    <Table.Cell key={`cell-${rowIndex}-${cellIndex}`}>
                       {cell}
                     </Table.Cell>
                   ))}

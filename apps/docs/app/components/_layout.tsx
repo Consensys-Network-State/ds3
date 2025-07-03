@@ -12,10 +12,11 @@ export default function ComponentsLayout() {
       <LocalDrawer.Screen name="switch" options={{ title: 'Switch' }} />
       <LocalDrawer.Screen name="tag" options={{ title: 'Tag' }} />
       <LocalDrawer.Screen name="table" options={{ title: 'Table' }} />
-      <LocalDrawer.Screen name="highlight" options={{ title: 'Highlight' }} />
       <LocalDrawer.Screen name="field" options={{ title: 'Field' }} />
       <LocalDrawer.Screen name="fields" options={{ title: 'Fields' }} />
-      <LocalDrawer.Screen name="live-preview" options={{ title: 'Live Preview' }} />
+      <LocalDrawer.Screen name="highlight" options={{ title: 'Highlight' }} />
+      <LocalDrawer.Screen name="code-block" options={{ title: 'Code Block' }} />
+      <LocalDrawer.Screen name="markdown" options={{ title: 'Markdown' }} />
     </LocalDrawer>
   );
 }

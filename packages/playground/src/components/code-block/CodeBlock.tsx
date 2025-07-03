@@ -11,6 +11,7 @@ export interface CodeBlockProps {
   showCopyButton?: boolean;
   showLanguage?: boolean;
   preview?: boolean;
+  expand?: boolean;
   scope?: Record<string, any>;
 }
 
@@ -50,10 +51,11 @@ export function CodeBlock({
   showCopyButton = true,
   showLanguage = true,
   preview = false,
+  expand = false,
   scope = {},
 }: CodeBlockProps) {
   const { copied, copy } = useCopyToClipboard();
-  const [showCode, setShowCode] = React.useState(!preview);
+  const [showCode, setShowCode] = React.useState(preview ? expand : true);
 
   const handleCopy = React.useCallback(() => {
     copy(code);
