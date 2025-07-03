@@ -107,7 +107,7 @@ Group multiple avatars together for team displays or user lists.
 Here's how to customize using all the parts together:
 
 ```tsx live expand
-<Avatar size="lg" color="primary" border className="shadow-lg animate-pulse">
+<Avatar size="lg" color="primary" border className="rounded-md shadow-lg">
   <Avatar.Image 
     source={{ uri: 'https://github.com/shadcn.png' }}
     alt="User avatar"
