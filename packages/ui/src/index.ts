@@ -178,13 +178,43 @@ export type {
   ThemeToggleProps,
 } from './components/theme';
 
+// card
+export {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+  CardText,
+  useCardContext,
+} from './components/card';
+
+export type {
+  CardRootProps,
+  CardHeaderProps,
+  CardTitleProps,
+  CardDescriptionProps,
+  CardTextProps,
+  CardContentProps,
+  CardFooterProps,
+  CardContextValue,
+  CardRef,
+  CardHeaderRef,
+  CardTitleRef,
+  CardDescriptionRef,
+  CardTextRef,
+  CardContentRef,
+  CardFooterRef,
+  CardColors
+} from './components/card';
+
 // other components
 // TODO: move to components folder and refactor
 export * from './components/Select';
 export * from './components/SelectField';
 export * from './components/Avatar';
 export * from './components/DropdownMenu';
-export * from './components/Card';
 export * from './components/Alert';
 export * from './components/Badge';
 export * from './components/Dialog';
