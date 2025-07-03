@@ -4,7 +4,7 @@ import { Avatar, cn } from "@consensys/ds3";
 import type { ChainAvatarProps } from './types';
 
 const ChainAvatar = React.forwardRef<any, ChainAvatarProps>(
-  ({ chainId, className, ...props }, ref) => {
+  ({ chainId, className, alt, ...props }, ref) => {
     const uri = React.useMemo(() => {
       switch(chainId) {
         case polygon.id: return 'https://cryptologos.cc/logos/polygon-matic-logo.png?v=040';
@@ -19,6 +19,7 @@ const ChainAvatar = React.forwardRef<any, ChainAvatarProps>(
       <Avatar
         ref={ref}
         className={cn("w-5 h-5", className)}
+        alt={alt || `Chain ${chainId}`}
         {...props}
       >
         <Avatar.Image source={{ uri }}/>

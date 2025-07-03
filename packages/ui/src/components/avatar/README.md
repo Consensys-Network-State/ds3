@@ -128,7 +128,7 @@ Complete reference of all available props and their configurations.
 The main Avatar component that provides the container and context.
 
 ```tsx live
-<Avatar size="lg" color="primary" border>
+<Avatar size="lg" color="primary" border alt="User avatar">
   {/* Avatar content goes here */}
 </Avatar>
 ```
@@ -142,6 +142,7 @@ The main Avatar component that provides the container and context.
 | `border` | `boolean` | `false` | Whether the avatar has a visible border |
 | `icon` | `ComponentType<any>` | - | Icon component to display in the avatar |
 | `source` | `ImageSourcePropType` | - | The image source for the avatar |
+| `alt` | `string` | - | Alternative text for accessibility (applied to both image and fallback) |
 
 Inherits all [View](https://reactnative.dev/docs/view) props.
 
@@ -150,10 +151,9 @@ Inherits all [View](https://reactnative.dev/docs/view) props.
 Displays the user's profile picture.
 
 ```tsx live
-<Avatar>
+<Avatar alt="User avatar">
   <Avatar.Image 
     source={{ uri: 'https://github.com/shadcn.png' }}
-    alt="User avatar"
   />
 </Avatar>
 ```
@@ -164,6 +164,8 @@ Displays the user's profile picture.
 | `className` | `string` | - | Additional class names |
 
 Inherits all [Image](https://reactnative.dev/docs/image) props.
+
+**Note**: The `alt` prop is handled automatically by the primitive. Pass it to the main Avatar component and it will be applied to both the image and fallback for accessibility.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -224,17 +226,16 @@ The Avatar component automatically implements proper accessibility attributes:
 
 ### Accessibility Features
 
-- **Alt Text**: Avatar images should include descriptive `alt` text
+- **Alt Text**: Pass the `alt` prop to the main Avatar component - it's automatically applied to both image and fallback
 - **Fallback Content**: Fallback text provides context when images fail to load
 - **Screen Reader Support**: Proper labeling and descriptions for assistive technologies
 
 ### Best Practices
 
 ```tsx
-<Avatar>
+<Avatar alt="John Doe's profile picture">
   <Avatar.Image 
     source={{ uri: 'https://github.com/shadcn.png' }}
-    alt="John Doe's profile picture"
   />
   <Avatar.Fallback>
     <Avatar.Text>JD</Avatar.Text>

@@ -8,7 +8,7 @@ import type { AvatarRootProps } from './types';
 import { HelpCircle } from 'lucide-react-native';
 
 const AvatarRoot = React.forwardRef<AvatarPrimitive.RootRef, AvatarRootProps>(
-  ({ className, size = 'md', color = 'neutral', border = true, children, source, icon, ...props }, ref) => {
+  ({ className, size = 'md', color = 'neutral', border = true, children, source, icon, alt, ...props }, ref) => {
     const contextValue = React.useMemo(() => ({ size, color, border, source, icon }), [size, color, border, source, icon]);
 
     return (
@@ -16,6 +16,7 @@ const AvatarRoot = React.forwardRef<AvatarPrimitive.RootRef, AvatarRootProps>(
         <AvatarPrimitive.Root
           ref={ref}
           className={cn(avatarVariants({ size, color, border }), className)}
+          alt={alt}
           {...props}
         >
           {source ? (
