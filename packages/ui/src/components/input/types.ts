@@ -8,7 +8,7 @@ import { inputRootVariants } from './styles';
 export type SharedInputProps = {
   variant?: VariantProps<typeof inputRootVariants>['variant'];
   color?: VariantProps<typeof inputRootVariants>['color'];
-  accentColor?: VariantProps<typeof inputRootVariants>['color'];
+  toColor?: VariantProps<typeof inputRootVariants>['color'];
   size?: VariantProps<typeof inputRootVariants>['size'];
   loading?: boolean;
   disabled?: boolean;
@@ -21,13 +21,8 @@ export type SharedInputProps = {
 
 export type NativeInputProps = SharedInputProps & TextInputProps;
 
-export type WebInputBaseProps = SharedInputProps & React.InputHTMLAttributes<HTMLInputElement>;
-export type WebTextareaProps = SharedInputProps & React.TextareaHTMLAttributes<HTMLTextAreaElement>;
-
-export type WebInputProps = WebInputBaseProps | WebTextareaProps;
-
-// The main props type - order matters for type inference
-export type InputRootProps = NativeInputProps | WebInputProps;
+// The main props type - now unified around native
+export type InputRootProps = NativeInputProps;
 
 export type InputContext = {
   variant?: VariantProps<typeof inputRootVariants>['variant'];

@@ -11,7 +11,7 @@ import { SwitchThumb } from './Switch.shared';
 import type { SwitchRootProps } from './types';
 
 const Switch = React.forwardRef<React.ElementRef<typeof SwitchPrimitives.Root>, SwitchRootProps>(
-  ({ className, variant, color, size = 'md', checked, disabled, thumbIcon, ...props }, ref) => {
+  ({ className, variant, color, size = 'md', checked = false, disabled, thumbIcon, onCheckedChange = () => {}, ...props }, ref) => {
     const TRANSLATE_X_MAP = {
       sm: 21,
       md: 36,
@@ -38,6 +38,7 @@ const Switch = React.forwardRef<React.ElementRef<typeof SwitchPrimitives.Root>, 
       <SwitchPrimitives.Root
         ref={ref}
         checked={checked}
+        onCheckedChange={onCheckedChange}
         disabled={disabled}
         className={cn(switchRootVariants({ variant, color, size, checked, disabled }), className)}
         {...props}

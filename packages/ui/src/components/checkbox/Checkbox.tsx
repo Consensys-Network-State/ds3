@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as CheckboxPrimitive from '@rn-primitives/checkbox';
-import { Check, Minus } from 'lucide-react-native';
+import { Check } from 'lucide-react-native';
 import { cn } from '../../utils';
 import { Icon } from '../icon';
 import { checkboxRootVariants, checkboxIconVariants } from './styles';
@@ -41,10 +41,10 @@ const CheckboxRoot = React.forwardRef<
   variant,
   color,
   size = 'md',
-  checked,
+  checked = false,
   disabled,
   children,
-  indeterminate,
+  onCheckedChange = () => {},
   ...props
 }, ref) => {
   const contextValue = React.useMemo(() => ({
@@ -52,8 +52,7 @@ const CheckboxRoot = React.forwardRef<
     variant,
     color,
     checked,
-    indeterminate
-  }), [size, variant, color, checked, indeterminate]);
+  }), [size, variant, color, checked]);
 
   return (
     <CheckboxContext.Provider value={contextValue}>
@@ -61,6 +60,7 @@ const CheckboxRoot = React.forwardRef<
         ref={ref}
         checked={checked}
         disabled={disabled}
+        onCheckedChange={onCheckedChange}
         className={cn(
           checkboxRootVariants({ variant, color, size, checked, disabled }),
           className
@@ -68,9 +68,7 @@ const CheckboxRoot = React.forwardRef<
         {...props}
       >
         {children || (
-          <CheckboxIcon
-            icon={indeterminate ? Minus : Check}
-          />
+          <CheckboxIcon icon={Check} />
         )}
       </CheckboxPrimitive.Root>
     </CheckboxContext.Provider>

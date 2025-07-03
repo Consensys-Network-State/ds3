@@ -1,6 +1,5 @@
 // components
 export { Button } from './Button';
-export { IconButton } from './IconButton';
 export { ButtonIcon, ButtonSpinner, ButtonText } from './Button.shared';
 
 // context
@@ -13,8 +12,6 @@ export type {
   ButtonIconProps,
   ButtonSpinnerProps,
   ButtonTextProps,
-  IconButtonProps,
-  WebButtonProps,
   NativeButtonProps,
   SharedButtonProps,
   ButtonColors,
@@ -27,6 +24,4 @@ export {
   buttonVariants,
   buttonTextVariants,
   buttonIconVariants,
-  iconButtonVariants,
-  iconSizeVariants
 } from './styles'; 

@@ -1,4 +1,4 @@
-# @consensys/ds3-web3
+# Web3
 
 > 🚧 **Note**: This package is under active development. While we're working hard to make it production-ready, please be aware that APIs and features may change. We welcome your feedback and contributions as we continue to improve!
 >

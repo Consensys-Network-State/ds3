@@ -4,138 +4,114 @@ The `<Icon />` component provides a cross-platform way to render SVG icons that 
 
 ## Installation
 
-```bash
-pnpm add @consensys/ds3
-```
-
-## Usage Examples
-
-The Icon component allows you to use any SVG icon library across platforms.
+Import the Icon component from the DS3 package.
 
 ```tsx
 import { Icon } from '@consensys/ds3';
-import { Mail, Heart, ArrowRight } from 'lucide-react-native';
-
-function MyIcons() {
-  return (
-    <>
-      <Icon icon={Mail} color="primary" size="md" />
-      <Icon icon={Heart} color="error" size="lg" />
-      <Icon icon={ArrowRight} color="success" size="sm" />
-    </>
-  );
-}
 ```
 
-## Component API
+## Examples
 
-### `<Icon />`
+### Basic
 
-The main component for rendering SVG icons with various styling options.
+Create a simple icon with default styling.
 
-#### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `icon` | `React.ComponentType<any>` | **Required** | The SVG icon component to render |
-| `color` | `'neutral' \| 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'success'` | `'neutral'` | The color of the icon |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | The size of the icon |
-| `className` | `string` | - | Additional class names for custom styling |
-
-Plus additional SVG props that are passed to the underlying SVG component.
-
-## Styling Options
+```tsx live
+<Icon icon={Figma} />
+```
 
 ### Colors
 
-```tsx
-<Icon icon={Heart} color="neutral" />
-<Icon icon={Heart} color="primary" />
-<Icon icon={Heart} color="secondary" />
-<Icon icon={Heart} color="error" />
-<Icon icon={Heart} color="warning" />
-<Icon icon={Heart} color="success" />
+Apply semantic color schemes for different contexts and states.
+
+```tsx live
+<View className="flex flex-row flex-wrap gap-3">
+  <Icon icon={Figma} color="neutral" />
+  <Icon icon={Figma} color="primary" />
+  <Icon icon={Figma} color="secondary" />
+  <Icon icon={Figma} color="error" />
+  <Icon icon={Figma} color="warning" />
+  <Icon icon={Figma} color="success" />
+</View>
 ```
 
 ### Sizes
 
-```tsx
-<Icon icon={Heart} size="sm" /> // Small
-<Icon icon={Heart} size="md" /> // Medium
-<Icon icon={Heart} size="lg" /> // Large
+Scale icons to fit different UI contexts and hierarchy levels.
+
+```tsx live
+<View className="flex flex-row gap-3">
+  <Icon icon={Figma} size="sm" />
+  <Icon icon={Figma} size="md" />
+  <Icon icon={Figma} size="lg" />
+</View>
 ```
 
-### Custom Styling
+### Numeric Sizes
 
-You can apply additional styles using the `className` prop:
+Use custom numeric sizes for precise control:
 
-```tsx
-<Icon 
-  icon={Heart} 
-  color="error" 
-  className="opacity-50 hover:opacity-100 transition-opacity"
-/>
+```tsx live
+<View className="flex flex-row gap-3">
+  <Icon icon={Figma} size={16} />
+  <Icon icon={Figma} size={24} />
+  <Icon icon={Figma} size={32} />
+  <Icon icon={Figma} size={48} />
+</View>
 ```
 
-## Icon Libraries
+### Icon Libraries
 
-The Icon component works with any SVG icon library that exports React components. Popular choices include:
+The Icon component works seamlessly with any SVG icon library that exports React components. Here are examples from popular libraries:
 
-- [Lucide Icons](https://lucide.dev/) (recommended)
-- [React Icons](https://react-icons.github.io/react-icons/)
-- [Heroicons](https://heroicons.com/)
-- [Feather Icons](https://feathericons.com/)
+#### Lucide React Native
 
-Example with different icon libraries:
+```tsx live
+import { Heart, Star, Zap, Settings, Edit3, Search, Mail, Lock, Eye, BookOpen } from 'lucide-react-native';
 
-```tsx
-// Lucide
-import { Heart, Star } from 'lucide-react-native';
-
-// React Icons
-import { FiHeart, FiStar } from 'react-icons/fi';
-
-function IconExample() {
-  return (
-    <>
-      <Icon icon={Heart} color="primary" />
-      <Icon icon={FiHeart} color="primary" />
-    </>
-  );
-}
+return (
+  <View className="flex flex-row flex-wrap gap-3">
+    <Icon icon={Heart} color="primary" />
+    <Icon icon={Star} color="warning" />
+    <Icon icon={Zap} color="error" />
+    <Icon icon={Settings} color="secondary" />
+    <Icon icon={Edit3} color="success" />
+    <Icon icon={Search} color="neutral" />
+    <Icon icon={Mail} color="primary" />
+    <Icon icon={Lock} color="error" />
+    <Icon icon={Eye} color="secondary" />
+    <Icon icon={BookOpen} color="success" />
+  </View>
+)
 ```
 
-## Cross-Platform Implementation
+Simply import your preferred icon library and pass the icon components to the `icon` prop.
 
-The Icon component has platform-specific implementations to ensure proper rendering:
+## API Reference
 
-- **Web**: Uses the icon directly as a React component (`Icon.web.tsx`)
-- **Native**: Uses NativeWind's `cssInterop` to properly style SVG icons in React Native (`Icon.tsx`)
+Complete reference of all available props and their configurations.
 
-Both implementations maintain the same API and styling options while adapting to platform-specific requirements.
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `icon` | `React.ComponentType<any>` | **Required** | The SVG icon component to render |
+| `color` | `neutral` \| `primary` \| `secondary` \| `error` \| `warning` \| `success` | `neutral` | The color of the icon |
+| `size` | `sm` \| `md` \| `lg` \| `number` | `md` | Size of the icon (string for predefined sizes, number for custom pixel values) |
+| `className` | `string` | - | Additional class names |
+| `style` | `StyleProp<ViewStyle>` | - | Additional inline styles |
+
+Plus additional SVG props that are passed to the underlying SVG component.
 
 ## Accessibility
 
-The Icon component automatically implements proper accessibility attributes for each platform:
+Built-in accessibility support with automatic ARIA attributes and screen reader compatibility.
 
-| Property | Web Implementation | Native Implementation |
-|----------|-------------------|----------------------|
-| Role | `role="img"` | `accessibilityRole="image"` |
+The Icon component automatically implements proper accessibility attributes:
 
-For icons that represent interactive elements, consider wrapping them in appropriate components:
+### Accessibility Prop Mappings
 
-```tsx
-// Button with icon
-<Button>
-  <Icon icon={Send} />
-  <Button.Text>Send</Button.Text>
-</Button>
-
-// Icon as a button
-<Pressable accessibilityRole="button" accessibilityLabel="Send message">
-  <Icon icon={Send} />
-</Pressable>
-```
+| Property | Implementation |
+|----------|----------------|
+| Role | `role="img"` (web) / `accessibilityRole="image"` (native) |
 
 When using icons purely for decoration, add appropriate accessibility props:
 
@@ -145,4 +121,14 @@ When using icons purely for decoration, add appropriate accessibility props:
   aria-hidden="true" // Web
   accessibilityElementsHidden={true} // Native
 />
-``` 
+```
+
+For icons that convey meaning, provide descriptive labels:
+
+```tsx
+<Icon 
+  icon={Heart} 
+  accessibilityLabel="Favorite item" // Native
+  aria-label="Favorite item" // Web
+/>
+```

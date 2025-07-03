@@ -4,7 +4,6 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
-    "reset-project": "node ./scripts/reset-project.js",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
@@ -16,9 +15,10 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@consensys/ds3-config": "workspace:*",
     "@consensys/ds3": "workspace:*",
+    "@consensys/ds3-config": "workspace:*",
     "@consensys/ds3-theme": "workspace:*",
+    "@consensys/ds3-playground": "workspace:*",
     "@expo/vector-icons": "^14.0.2",
     "@hookform/resolvers": "^3.10.0",
     "@react-navigation/bottom-tabs": "^7.2.0",

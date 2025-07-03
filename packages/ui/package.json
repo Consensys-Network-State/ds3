@@ -55,7 +55,6 @@
     "nativewind": "^4.1.23",
     "postcss": "^8.4.47",
     "react-native-reanimated": "^3.16.1",
-    "react-native-svg": "14.2.0",
     "tailwind-merge": "^2.5.4",
     "tailwindcss": "^3.4.14",
     "tailwindcss-animate": "^1.0.7"
@@ -64,7 +63,8 @@
     "react": "*",
     "react-native": "*",
     "react-native-safe-area-context": "*",
-    "react-native-web": "*"
+    "react-native-web": "*",
+    "react-native-svg": "*"
   },
   "peerDependenciesMeta": {
     "react-native": {
@@ -74,6 +74,9 @@
       "optional": true
     },
     "react-native-safe-area-context": {
+      "optional": true
+    },
+    "react-native-svg": {
       "optional": true
     }
   },

@@ -1,109 +1,151 @@
 # Spinner Component
 
-The `<Spinner />` component provides a cross-platform loading animation that adapts to both web and React Native environments.
+The `<Spinner />` component provides a cross-platform loading animation that adapts to both web and React Native environments while maintaining consistent styling across platforms.
 
 ## Installation
 
-```bash
-pnpm add @consensys/ds3
-```
-
-## Usage Examples
+Import the Spinner component from the DS3 package.
 
 ```tsx
 import { Spinner } from '@consensys/ds3';
-import { Loader, RefreshCw } from 'lucide-react-native';
-
-// Basic usage
-<Spinner color="primary" />
-
-// Custom icon
-<Spinner icon={Loader} color="secondary" />
-
-// Custom animation speed
-<Spinner icon={RefreshCw} speed="fast" />
 ```
 
-## Component API
+## Examples
 
-### `<Spinner />`
+### Basic
 
-The main component with various styling and animation options.
+Create a simple spinner with default styling.
 
-#### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `icon` | `React.ComponentType<any>` | `LoaderCircle` | Icon component to display and animate |
-| `color` | `'neutral' \| 'primary' \| 'secondary' \| 'error' \| 'warning' \| 'success'` | `'neutral'` | The color scheme of the spinner |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Size of the spinner |
-| `speed` | `'slow' \| 'normal' \| 'fast' \| number` | `'normal'` | Animation speed (ms for number) |
-| `direction` | `'clockwise' \| 'counterclockwise'` | `'clockwise'` | Direction of rotation |
-| `className` | `string` | - | Additional class names |
-
-Plus all props from the [Icon component](/packages/ui/src/components/icon).
-
-## Styling Options
+```tsx live
+<View className="flex flex-row">
+  <Spinner />
+</View>
+```
 
 ### Colors
 
-```tsx
-<Spinner color="neutral" />
-<Spinner color="primary" />
-<Spinner color="secondary" />
-<Spinner color="error" />
-<Spinner color="warning" />
-<Spinner color="success" />
+Apply semantic color schemes for different contexts and states.
+
+```tsx live
+<View className="flex flex-row flex-wrap gap-3">
+  <Spinner color="neutral" />
+  <Spinner color="primary" />
+  <Spinner color="secondary" />
+  <Spinner color="error" />
+  <Spinner color="warning" />
+  <Spinner color="success" />
+</View>
 ```
 
 ### Sizes
 
-```tsx
-<Spinner size="sm" />
-<Spinner size="md" />
-<Spinner size="lg" />
+Scale spinners to fit different UI contexts and hierarchy levels.
+
+```tsx live
+<View className="flex flex-row gap-3">
+  <Spinner size="sm" />
+  <Spinner size="md" />
+  <Spinner size="lg" />
+</View>
 ```
 
-### Animation Speed
+### Animation Speeds
 
-```tsx
-<Spinner speed="slow" /> // 2000ms
-<Spinner speed="normal" /> // 1000ms (default)
-<Spinner speed="fast" /> // 500ms
-<Spinner speed={1500} /> // Custom duration in milliseconds
-```
+Control the animation speed for different loading contexts.
 
-### Animation Direction
-
-```tsx
-<Spinner direction="clockwise" /> // Default
-<Spinner direction="counterclockwise" />
+```tsx live
+<View className="flex flex-row gap-3">
+  <Spinner speed="slow" />
+  <Spinner speed="normal" />
+  <Spinner speed="fast" />
+</View>
 ```
 
 ### Custom Icons
 
-The component works with any icon from libraries like Lucide:
+The Spinner component works seamlessly with any SVG icon library that exports React components. Here are examples from popular libraries:
 
-```tsx
-import { Loader, LoaderCircle, LoaderPinwheel, RefreshCw } from 'lucide-react-native';
+#### Lucide React Native
 
-<Spinner icon={LoaderCircle} />
-<Spinner icon={Loader} />
-<Spinner icon={LoaderPinwheel} />
-<Spinner icon={RefreshCw} />
+```tsx live
+import { LoaderCircle, Loader, LoaderPinwheel, RefreshCw } from 'lucide-react-native';
+
+return (
+  <View className="flex flex-row flex-wrap gap-3">
+    <Spinner icon={LoaderCircle} color="primary" />
+    <Spinner icon={Loader} color="secondary" />
+    <Spinner icon={LoaderPinwheel} color="error" />
+    <Spinner icon={RefreshCw} color="warning" />
+  </View>
+)
 ```
 
-## Implementation Details
+Simply import your preferred icon library and pass the icon components to the `icon` prop.
 
-The Spinner component uses React Native Reanimated for smooth animations across platforms:
+### Animation Direction
 
-- Uses `withRepeat` and `withTiming` for continuous rotation
-- Adapts animation duration based on the `speed` prop
-- Supports both clockwise and counterclockwise rotation
-- Displays as an inline-block element on web for better layout integration
+Control the rotation direction of the spinner animation.
+
+```tsx live
+<View className="flex flex-row gap-3">
+  <Spinner direction="clockwise" />
+  <Spinner direction="counterclockwise" />
+</View>
+```
+
+## API Reference
+
+Complete reference of all available props and their configurations.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `icon` | `React.ComponentType<any>` | `LoaderCircle` | The SVG icon component to animate |
+| `color` | `neutral` \| `primary` \| `secondary` \| `error` \| `warning` \| `success` | `neutral` | The color of the spinner |
+| `size` | `sm` \| `md` \| `lg` | `md` | Size of the spinner |
+| `speed` | `slow` \| `normal` \| `fast` \| `number` | `normal` | Animation speed (ms for number) |
+| `direction` | `clockwise` \| `counterclockwise` | `clockwise` | Direction of rotation |
+| `className` | `string` | - | Additional class names |
+| `style` | `StyleProp<ViewStyle>` | - | Additional inline styles |
+
+Plus additional SVG props that are passed to the underlying Icon component.
 
 ## Accessibility
 
-- The component inherits accessibility features from the Icon component
-- The animation is purely visual and doesn't interfere with screen readers
-- Consider using with appropriate labels or ARIA attributes in your implementation 
+Built-in accessibility support with automatic ARIA attributes and screen reader compatibility.
+
+The Spinner component automatically implements proper accessibility attributes:
+
+### Accessibility Prop Mappings
+
+| Property | Implementation |
+|----------|----------------|
+| Role | `role="img"` (web) / `accessibilityRole="image"` (native) |
+
+When using spinners purely for decoration, add appropriate accessibility props:
+
+```tsx
+<Spinner 
+  aria-hidden="true" // Web
+  accessibilityElementsHidden={true} // Native
+/>
+```
+
+For spinners that convey loading state, provide descriptive labels:
+
+```tsx
+<Spinner 
+  accessibilityLabel="Loading content" // Native
+  aria-label="Loading content" // Web
+/>
+```
+
+### Loading States
+
+Use spinners to indicate loading states in your application:
+
+```tsx
+<View className="flex flex-col gap-4">
+  <Spinner accessibilityLabel="Loading data" />
+  <Text>Loading your content...</Text>
+</View>
+``` 

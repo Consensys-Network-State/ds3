@@ -3,31 +3,27 @@ import { PressableProps } from 'react-native';
 import type { VariantProps } from 'class-variance-authority';
 import type { IconProps } from '../icon/types';
 import type { SpinnerProps } from '../spinner/types';
-import { buttonVariants, iconButtonVariants } from './styles';
+import { buttonVariants } from './styles';
 
 // Shared button props
 export type SharedButtonProps = {
   variant?: VariantProps<typeof buttonVariants>['variant'];
   color?: VariantProps<typeof buttonVariants>['color'];
-  accentColor?: VariantProps<typeof buttonVariants>['color'];
+  toColor?: VariantProps<typeof buttonVariants>['color'];
   size?: VariantProps<typeof buttonVariants>['size'];
   disabled?: boolean;
   loading?: boolean;
+  square?: boolean;
   asChild?: boolean;
   className?: string;
   children?: React.ReactNode;
 };
 
-// Platform-specific button props
-export type WebButtonBaseProps = SharedButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>;
-export type WebAnchorProps = SharedButtonProps & React.AnchorHTMLAttributes<HTMLAnchorElement>;
-
-export type WebButtonProps = WebButtonBaseProps | WebAnchorProps;
-
+// Native button props
 export type NativeButtonProps = SharedButtonProps & PressableProps;
 
-// The main props type - order matters for type inference
-export type ButtonRootProps = NativeButtonProps | WebButtonProps;
+// The main props type - now unified around native
+export type ButtonRootProps = NativeButtonProps;
 
 export type ButtonContext = {
   variant?: VariantProps<typeof buttonVariants>['variant'];
@@ -35,6 +31,7 @@ export type ButtonContext = {
   size?: VariantProps<typeof buttonVariants>['size'];
   disabled?: boolean;
   loading?: boolean;
+  square?: boolean;
   isPressed?: boolean;
   isHovered?: boolean;
   setPressed?: (pressed: boolean) => void;
@@ -56,15 +53,6 @@ export type ButtonTextProps = {
   className?: string;
   children?: React.ReactNode;
 };
-
-export type IconButtonProps = {
-  icon: ButtonIconProps['icon'];
-  className?: string;
-} & VariantProps<typeof iconButtonVariants> & 
-  Pick<VariantProps<typeof buttonVariants>, 'variant' | 'color'> & {
-    disabled?: boolean;
-    loading?: boolean;
-  } & ButtonRootProps; 
 
 export type ButtonColors = NonNullable<ButtonRootProps['color']>;
 export type ButtonSizes = NonNullable<ButtonRootProps['size']>;

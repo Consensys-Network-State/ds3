@@ -7,7 +7,6 @@ export interface CheckboxRootProps extends Omit<CheckboxPrimitive.RootProps, 'ch
   variant?: VariantProps<typeof checkboxRootVariants>['variant'];
   color?: VariantProps<typeof checkboxRootVariants>['color'];
   size?: VariantProps<typeof checkboxRootVariants>['size'];
-  indeterminate?: boolean;
   className?: string;
   children?: React.ReactNode;
 }
@@ -19,5 +18,4 @@ export interface CheckboxContextValue {
   variant?: VariantProps<typeof checkboxRootVariants>['variant'];
   color?: VariantProps<typeof checkboxRootVariants>['color'];
   checked?: boolean;
-  indeterminate?: boolean;
 } 

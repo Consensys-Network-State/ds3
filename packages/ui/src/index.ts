@@ -5,7 +5,6 @@
 // button
 export {
   Button,
-  IconButton,
   useButtonContext,
 } from './components/button';
 
@@ -15,8 +14,6 @@ export type {
   ButtonIconProps,
   ButtonSpinnerProps,
   ButtonTextProps,
-  IconButtonProps,
-  WebButtonProps,
   NativeButtonProps,
   SharedButtonProps,
   ButtonColors,
@@ -35,6 +32,31 @@ export type {
   CheckboxIconProps,
   CheckboxContextValue, // TODO: consistent naming
 } from './components/checkbox';
+
+// tag
+export {
+  Tag,
+} from './components/tag';
+
+export type {
+  TagProps,
+  TagTextProps, 
+  TagContext,
+} from './components/tag';
+
+// table
+export {
+  Table,
+} from './components/table';
+
+export type {
+  TableProps,
+  TableRowProps, 
+  TableCellProps, 
+  TableContext,
+  TableColors,
+  TableSizes
+} from './components/table';
 
 // field
 export {
@@ -93,7 +115,6 @@ export type {
 // input
 export {
   Input,
-  Textarea,
   useInputContext,
 } from './components/input';
 
@@ -170,6 +191,7 @@ export * from './components/Dialog';
 export * from './components/Label';
 export * from './components/RadioGroup';
 export * from './components/RadioGroupField';
+export * from './components/View';
 
 // utils
 export {
@@ -182,12 +204,3 @@ export {
 export {
   useCopyToClipboard
 } from './hooks';
-
-export type {
-  WebClickEvent,
-  WebFocusEvent,
-  WebChangeEvent,
-  NativePressEvent,
-  NativeFocusEvent,
-  NativeChangeEvent,
-} from './types';

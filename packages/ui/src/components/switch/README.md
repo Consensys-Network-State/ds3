@@ -1,64 +1,160 @@
 # Switch Component
 
-The `<Switch />` component provides a cross-platform toggle switch that adapts to both web and React Native environments while providing platform-native APIs for each.
+The `<Switch />` component provides a cross-platform toggle switch that adapts to both web and React Native environments while maintaining a consistent API and design.
 
 ## Installation
 
-```bash
-pnpm add @consensys/ds3
-```
-
-## Usage Examples
-
-The component supports web and native APIs through our [Dual API](#6--dual-api) and offers flexibility through our [Compound Components](#2--compound-components).
-
-### Basic Usage
+Import the Switch component from the DS3 package.
 
 ```tsx
 import { Switch } from '@consensys/ds3';
-import { useState } from 'react';
-
-function BasicSwitch() {
-  const [checked, setChecked] = useState(false);
-  
-  return (
-    <Switch 
-      checked={checked} 
-      onCheckedChange={setChecked}
-      disabled={false}
-    />
-  );
-}
 ```
 
-### With Icon
+## Examples
 
-```tsx
-import { Switch } from '@consensys/ds3';
-import { useState } from 'react';
-import { Check } from 'lucide-react-native';
+### Basic
 
-function IconSwitch() {
-  const [checked, setChecked] = useState(false);
-  
-  return (
-    <Switch 
-      checked={checked} 
-      onCheckedChange={setChecked}
-      disabled={false}
-      thumbIcon={Check}
-    />
-  );
-}
+Create a simple switch with default styling.
+
+Uncontrolled:
+
+```tsx live
+<View className="flex flex-row gap-3">
+  <Switch />
+  <Switch checked />
+</View>
 ```
 
-## Component API
+Controlled:
 
-### `<Switch />`
+```tsx live
+import { useState } from 'react';
 
-The main component with various styling options.
+const Component = () => {
+  const [checked, setChecked] = useState(false);
 
-#### Props
+  return (
+    <Switch checked={checked} onCheckedChange={setChecked} />
+  );
+}
+
+export default Component;
+```
+
+### Variants
+
+Choose from three different visual styles to match your design system.
+
+```tsx live
+<View className="flex flex-col gap-6">
+  <View className="flex flex-row items-center gap-4">
+    <Switch variant="solid" />
+    <Switch variant="solid" checked />
+    <Text>Solid</Text>
+  </View>
+  <View className="flex flex-row items-center gap-4">
+    <Switch variant="soft" />
+    <Switch variant="soft" checked />
+    <Text>Soft</Text>
+  </View>
+  <View className="flex flex-row items-center gap-4">
+    <Switch variant="outline" />
+    <Switch variant="outline" checked />
+    <Text>Outline</Text>
+  </View>
+</View>
+```
+
+### Colors
+
+Apply semantic color schemes for different contexts and states.
+
+```tsx live
+<View className="flex flex-col gap-6">
+  <View className="flex flex-row items-center gap-4">
+    <Switch checked />
+    <Text>Neutral</Text>
+  </View>
+  <View className="flex flex-row items-center gap-4">
+    <Switch color="primary" checked />
+    <Text>Primary</Text>
+  </View>
+  <View className="flex flex-row items-center gap-4">
+    <Switch color="secondary" checked />
+    <Text>Secondary</Text>
+  </View>
+  <View className="flex flex-row items-center gap-4">
+    <Switch color="error" checked />
+    <Text>Error</Text>
+  </View>
+  <View className="flex flex-row items-center gap-4">
+    <Switch color="warning" checked />
+    <Text>Warning</Text>
+  </View>
+  <View className="flex flex-row items-center gap-4">
+    <Switch color="success" checked />
+    <Text>Success</Text>
+  </View>
+</View>
+```
+
+### Sizes
+
+Scale switches to fit different UI contexts and hierarchy levels.
+
+```tsx live
+<View className="flex flex-col gap-6">
+  <View className="flex flex-row items-center gap-4">
+    <Switch size="sm" />
+    <Switch size="sm" checked />
+    <Text>Small</Text>
+  </View>
+  <View className="flex flex-row items-center gap-4">
+    <Switch size="md" />
+    <Switch size="md" checked />
+    <Text>Medium</Text>
+  </View>
+  <View className="flex flex-row items-center gap-4">
+    <Switch size="lg" />
+    <Switch size="lg" checked />
+    <Text>Large</Text>
+  </View>
+</View>
+```
+
+### Icons
+
+Add visual context with custom icons in the switch thumb.
+
+```tsx live
+<View className="flex flex-row gap-3">
+  <Switch checked thumbIcon={Check} />
+  <Switch variant="soft" checked thumbIcon={Minus} />
+  <Switch variant="outline" checked thumbIcon={X} />
+</View>
+```
+
+For props and styling options, see the [Icon Component API](/packages/ui/src/components/icon).
+
+### Disabled State
+
+Prevent user interaction and provide visual feedback for unavailable options.
+
+```tsx live
+<View className="flex flex-col gap-4">
+  <View className="flex flex-col gap-4">
+    <Text>Neutral</Text>
+    <View className="flex flex-row flex-wrap gap-4">
+      <Switch disabled />
+      <Switch checked disabled />
+    </View>
+  </View>
+</View>
+```
+
+## API Reference
+
+Complete reference of all available props and their configurations.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -68,83 +164,25 @@ The main component with various styling options.
 | `checked` | `boolean` | `false` | Whether the switch is checked |
 | `disabled` | `boolean` | `false` | Whether the switch is disabled |
 | `thumbIcon` | `LucideIcon` | - | Icon to display in the switch thumb |
-| `onCheckedChange` | `(checked: boolean) => void` | - | Callback when the checked state changes |
 | `className` | `string` | - | Additional class names |
+| `onCheckedChange` | `(checked: boolean) => void` | - | Callback fired when the switch state changes |
 
-## Styling Options
+## Accessibility
 
-### Variants
+The Switch component provides built-in accessibility support that automatically handles:
 
-```tsx
-<Switch variant="solid" checked={true} disabled={false} onCheckedChange={() => {}} />
-<Switch variant="soft" checked={true} disabled={false} onCheckedChange={() => {}} />
-<Switch variant="outline" checked={true} disabled={false} onCheckedChange={() => {}} />
-```
+- **Role**: Proper switch role for screen readers
+- **State**: Checked/unchecked state announcements
+- **Disabled**: Disabled state when the `disabled` prop is true
+- **Focus**: Keyboard navigation and focus management
 
-### Colors
-
-```tsx
-<Switch color="neutral" checked={true} disabled={false} onCheckedChange={() => {}} />
-<Switch color="primary" checked={true} disabled={false} onCheckedChange={() => {}} />
-<Switch color="secondary" checked={true} disabled={false} onCheckedChange={() => {}} />
-<Switch color="error" checked={true} disabled={false} onCheckedChange={() => {}} />
-<Switch color="warning" checked={true} disabled={false} onCheckedChange={() => {}} />
-<Switch color="success" checked={true} disabled={false} onCheckedChange={() => {}} />
-```
-
-### Sizes
+For custom accessibility needs, you can pass additional accessibility props directly to the component:
 
 ```tsx
-<Switch size="sm" checked={true} disabled={false} onCheckedChange={() => {}} />
-<Switch size="md" checked={true} disabled={false} onCheckedChange={() => {}} />
-<Switch size="lg" checked={true} disabled={false} onCheckedChange={() => {}} />
-```
-
-### States
-
-```tsx
-// Checked state
-<Switch checked={true} disabled={false} onCheckedChange={() => {}} />
-
-// Unchecked state
-<Switch checked={false} disabled={false} onCheckedChange={() => {}} />
-
-// Disabled & Checked
-<Switch checked={true} disabled={true} onCheckedChange={() => {}} />
-
-// Disabled & Unchecked
-<Switch checked={false} disabled={true} onCheckedChange={() => {}} />
-```
-
-### With Icons
-
-```tsx
-import { Check, X } from 'lucide-react-native';
-
-// Using an icon in the thumb
 <Switch 
-  checked={true} 
-  disabled={false} 
-  onCheckedChange={() => {}}
-  thumbIcon={checked ? Check : X} 
+  accessibilityLabel="Toggle notifications"
+  accessibilityHint="Double tap to toggle"
+  checked={checked}
+  onCheckedChange={setChecked}
 />
-```
-
-## Implementation Notes
-
-The Switch component uses different implementations for web and React Native while maintaining the same API:
-
-- **Web**: Uses `@rn-primitives/switch` with CSS transitions for smooth animations
-- **Native**: Uses `@rn-primitives/switch` with React Native Reanimated for fluid, physics-based animations
-
-The component automatically applies appropriate accessibility attributes for each platform.
-
-### Accessibility
-
-| Property | Web Implementation | Native Implementation |
-|----------|-------------------|----------------------|
-| Role | `role="switch"` | `accessibilityRole="switch"` |
-| State | `aria-checked={checked}` | `accessibilityState={{ checked }}` |
-| Disabled | `aria-disabled={disabled}` | `accessibilityState={{ disabled }}` |
-
-For more details on our cross-platform approach, see the [Dual API](#6--dual-api). 
+``` 
