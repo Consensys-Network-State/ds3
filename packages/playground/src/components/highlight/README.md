@@ -7,7 +7,7 @@ The `<Highlight />` component provides syntax highlighting for code blocks built
 Import the Highlight component from the DS3 package.
 
 ```tsx
-import { Highlight } from '@consensys/ds3';
+import { Highlight } from '@consensys/ds3-playground';
 ```
 
 ## Examples

@@ -10,6 +10,9 @@ import { designExamples } from './design';
 import { colorsExamples } from './colors';
 import { highlightExamples } from './highlight';
 
+
+export { ReactHookForm } from './ReactHookForm';
+
 // Hierarchical JSX examples organized by component categories
 export const codeExamples = {
   design: designExamples,

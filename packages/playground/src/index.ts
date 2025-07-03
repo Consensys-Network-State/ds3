@@ -1,7 +1,6 @@
-export { Playground } from "./components/JSXPlayground";
-export { ReactHookForm } from "./components/ReactHookForm";
+export { Playground } from "./Playground";
 
-export { codeExamples } from "./data";
+export { codeExamples } from "./examples";
 
 // highlight
 export {
