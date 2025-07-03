@@ -1,5 +1,4 @@
 export { Playground } from "./components/JSXPlayground";
-export { LivePreview } from "./components/LivePreview";
 export { ReactHookForm } from "./components/ReactHookForm";
 
 export { codeExamples } from "./data";
@@ -14,3 +13,14 @@ export type {
   HighlightProps,
   HighlightInputProps,
 } from './components/highlight';
+
+// code-block
+export {
+  CodeBlock,
+  LivePreview,
+} from './components/code-block';
+
+export type {
+  CodeBlockProps,
+  LivePreviewProps,
+} from './components/code-block';

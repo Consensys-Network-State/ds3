@@ -183,7 +183,7 @@ const extractAndExecuteComponent = (code: string, scope: Record<string, any>): R
 export { convertJSXWithWrapping, extractAndExecuteComponent };
 
 // Custom LivePreview component that works with React Native
-interface LivePreviewProps {
+export interface LivePreviewProps {
   code: string;
   scope: Record<string, any>;
   className?: string;

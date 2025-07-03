@@ -2,7 +2,7 @@ import React from 'react';
 import { TextStyle, View } from 'react-native';
 import { Text, useThemeColors, Table, Tag, H1, H2, H3, H4, H5, H6 } from '@consensys/ds3';
 import Markdown, { Renderer } from 'react-native-marked';
-import { CodeBlock } from './CodeBlock';
+import { CodeBlock } from '@consensys/ds3-playground';
 
 interface MarkdownRendererProps {
   content: string;

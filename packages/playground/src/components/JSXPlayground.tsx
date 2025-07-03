@@ -3,8 +3,7 @@ import { ScrollView } from "react-native";
 import { 
   Text, 
   Button, 
-  Icon, 
-  Highlight, 
+  Icon,
   Input, 
   View,
   Checkbox,
@@ -46,10 +45,11 @@ import {
   SearchCode
 } from "lucide-react-native";
 import { useForm, Controller } from 'react-hook-form';
-import { LivePreview } from "./LivePreview";
+import { LivePreview } from "./code-block/LivePreview";
 import { HighlightInput } from "./highlight/HighlightInput";
 import { ReactHookForm } from "./ReactHookForm";
 import { codeExamples } from "../data";
+export { Highlight } from "./highlight";
 
 const defaultCode = { category: "design", subcategory: "colors", example: "semantic-colors" };
 

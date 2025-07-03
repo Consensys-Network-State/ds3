@@ -1,11 +1,10 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Text, useCopyToClipboard, Icon, Button } from '@consensys/ds3';
+import { View, Text, useCopyToClipboard, Icon, Button } from '@consensys/ds3';
 import { Check, Copy, Eye, EyeOff } from 'lucide-react-native';
-import { LivePreview } from '@consensys/ds3-playground';
-import { Highlight } from '@consensys/ds3-playground';
+import { LivePreview } from './LivePreview';
+import { Highlight } from '../highlight';
 
-interface CodeBlockProps {
+export interface CodeBlockProps {
   code: string;
   language?: string;
   className?: string;
