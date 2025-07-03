@@ -1,6 +1,6 @@
-import { AvatarProps } from "@consensys/ds3";
+import { AvatarRootProps } from "@consensys/ds3";
  
-export interface ChainAvatarProps extends AvatarProps {
+export interface ChainAvatarProps extends AvatarRootProps {
   chainId: number;
   className?: string;
 } 

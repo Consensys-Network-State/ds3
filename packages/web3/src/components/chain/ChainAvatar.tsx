@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { polygon, optimism, arbitrum, linea } from 'viem/chains';
-import { Avatar, AvatarImage, cn } from "@consensys/ds3";
+import { Avatar, cn } from "@consensys/ds3";
 import type { ChainAvatarProps } from './types';
 
 const ChainAvatar = React.forwardRef<any, ChainAvatarProps>(
@@ -21,7 +21,7 @@ const ChainAvatar = React.forwardRef<any, ChainAvatarProps>(
         className={cn("w-5 h-5", className)}
         {...props}
       >
-        <AvatarImage source={{ uri }}/>
+        <Avatar.Image source={{ uri }}/>
       </Avatar>
     );
   }
