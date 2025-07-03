@@ -97,7 +97,7 @@ export default function HomeScreen() {
       <View className="native:pb-20 pb-4">
         <View className="max-w-4xl mx-auto flex justify-center">
           <Text size="sm" color="neutral" className="text-neutral-11 text-center">
-            Made with ❤️ by Consensys
+            Made with ❤️
           </Text>
         </View>
       </View>

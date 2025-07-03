@@ -17,6 +17,7 @@ export default function ComponentsLayout() {
       <LocalDrawer.Screen name="highlight" options={{ title: 'Highlight' }} />
       <LocalDrawer.Screen name="code-block" options={{ title: 'Code Block' }} />
       <LocalDrawer.Screen name="markdown" options={{ title: 'Markdown' }} />
+      <LocalDrawer.Screen name="card" options={{ title: 'Card' }} />
     </LocalDrawer>
   );
 }

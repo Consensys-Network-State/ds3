@@ -1,8 +1,4 @@
-<p align="center">
-  <img src="../../assets/ds3.png" alt="DS3 Logo" width="100" />
-</p>
-
-<h1 align="center">@consensys/ds3-config</h1>
+# Config
 
 > 🚧 **Note**: This package is under active development. While we're working hard to make it production-ready, please be aware that APIs and features may change. We welcome your feedback and contributions as we continue to improve!
 
