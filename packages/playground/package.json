@@ -39,7 +39,7 @@
     "@consensys/ds3": "workspace:*",
     "@babel/standalone": "7.27.6",
     "react-hook-form": "^7.54.1",
-    "react-native-marked": "7.0.1",
+    "react-native-marked": "7.0.2",
     "react-native-webview": "13.12.5",
     "zod": "^3.24.1",
     "prism-react-renderer": "^2.3.1"

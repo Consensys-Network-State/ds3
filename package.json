@@ -11,7 +11,8 @@
     "config:build": "pnpm --filter ds3-config run build",
     "docs:start": "pnpm --filter docs run start --clear",
     "clean": "rm -rf $(find . -name 'node_modules' -type d) && rm -rf $(find . -name 'dist' -type d) && pnpm store prune",
-    "postinstall": "pnpm build-deps",
+    "fix-svg": "find . -path './node_modules/react-native-svg' -prune -o -name 'react-native-svg' -type d -exec rm -rf {} +",
+    "postinstall": "pnpm fix-svg && pnpm build-deps",
     "changeset": "changeset",
     "prepare": "husky",
     "type-check": "pnpm --filter @consensys/ds3 --filter @consensys/ds3-web3 run type-check",
@@ -40,10 +41,5 @@
     "cors": "2.8.5",
     "express": "5.1.0",
     "husky": "^9.1.7"
-  },
-  "pnpm": {
-    "overrides": {
-      "react-native-svg": "15.12.0"
-    }
   }
 }

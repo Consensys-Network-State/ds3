@@ -45,11 +45,10 @@ import {
   SearchCode
 } from "lucide-react-native";
 import { useForm, Controller } from 'react-hook-form';
-import { LivePreview } from "./components/code-block/LivePreview";
-import { HighlightInput } from "./components/highlight/HighlightInput";
+import { LivePreview } from "./components/code-block";
+import { Highlight, HighlightInput } from "./components/highlight";
 import { ReactHookForm } from "./examples/ReactHookForm";
 import { codeExamples } from "./examples";
-export { Highlight } from "./components/highlight";
 
 const defaultCode = { category: "design", subcategory: "colors", example: "semantic-colors" };
 
