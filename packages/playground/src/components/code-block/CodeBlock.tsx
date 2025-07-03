@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, useCopyToClipboard, Icon, Button } from '@consensys/ds3';
+import { View, Text, useCopyToClipboard, Icon, Button, Card } from '@consensys/ds3';
 import { Check, Copy, Eye, EyeOff } from 'lucide-react-native';
 import { LivePreview } from './LivePreview';
 import { Highlight } from '../highlight';
@@ -69,67 +69,78 @@ export function CodeBlock({
   const shouldShowCode = showCode || !preview;
   const shouldShowPreview = preview;
   const shouldShowToggleButton = preview;
-  const shouldShowLanguage = showLanguage && shouldShowCode;
 
   const showHeader = showLanguage || showCopyButton;
 
   return (
-    <View className={`bg-neutral-2 rounded-lg overflow-hidden border border-neutral-5 ${className}`}>
-      {/* Live Preview - only show when preview is true */}
+    <Card color="neutral" border className={className}>
+      {/* Live Preview - main content when preview is true */}
       {shouldShowPreview && (
-        <View className="border-b border-neutral-5">
+        <Card.Content>
           <LivePreview 
             code={code}
             scope={scope}
           />
-        </View>
+        </Card.Content>
+      )}
+
+      {shouldShowCode && (
+        !preview && (
+          <Card.Content>
+            <MemoizedHighlight code={code} language={language} />
+          </Card.Content>
+        )
       )}
 
       {/* Header with language label and copy button */}
       {showHeader && (
-        <View className="flex-row justify-between items-center px-4 py-2 bg-neutral-3">
-          {shouldShowLanguage ? (
-            <Text size="sm" color="neutral" className="text-neutral-11 font-mono uppercase">
-              {language}
-            </Text>
-          ) : (
-            <View /> // Empty view to keep justify-between working
-          )}
-          <View className="flex-row items-center gap-2">
-            {showCopyButton && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onPress={handleCopy}
-                accessibilityLabel={copied ? "Copied" : "Copy to clipboard"}
-                accessibilityHint="Click to copy code to clipboard"
-                className="flex-row items-center gap-2"
-              >
-                <Icon icon={copied ? Check : Copy} size="sm" color="neutral" />
-              </Button>
+        <Card.Footer>
+          <View className="flex-row justify-between items-center w-full">
+            {showLanguage ? (
+              <Card.Text className="text-neutral-11 font-mono uppercase">
+                {language}
+              </Card.Text>
+            ) : (
+              <View /> // Empty view to keep justify-between working
             )}
-            {shouldShowToggleButton && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onPress={toggleCodeVisibility}
-                accessibilityLabel={showCode ? "Hide code" : "Show code"}
-                accessibilityHint="Click to toggle code visibility"
-                className="flex-row items-center gap-2"
-              >
-                <Icon icon={showCode ? EyeOff : Eye} size="sm" color="neutral" />
-              </Button>
-            )}
+            <View className="flex-row items-center gap-2">
+              {showCopyButton && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onPress={handleCopy}
+                  accessibilityLabel={copied ? "Copied" : "Copy to clipboard"}
+                  accessibilityHint="Click to copy code to clipboard"
+                  className="flex-row items-center gap-2"
+                >
+                  <Icon icon={copied ? Check : Copy} size="sm" color="neutral" />
+                </Button>
+              )}
+              {shouldShowToggleButton && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onPress={toggleCodeVisibility}
+                  accessibilityLabel={showCode ? "Hide code" : "Show code"}
+                  accessibilityHint="Click to toggle code visibility"
+                  className="flex-row items-center gap-2"
+                >
+                  <Icon icon={showCode ? EyeOff : Eye} size="sm" color="neutral" />
+                </Button>
+              )}
+            </View>
           </View>
-        </View>
+        </Card.Footer>
       )}
 
-      {/* Code content */}
+      {/* Code content - footer when there's a toggle, otherwise main content */}
       {shouldShowCode && (
-        <View className="p-4">
-          <MemoizedHighlight code={code} language={language} />
-        </View>
+        preview && (
+          <Card.Content className="border-t border-neutral-a7">
+            <MemoizedHighlight code={code} language={language} />
+          </Card.Content>
+        )
       )}
-    </View>
+    </Card>
   );
 } 
