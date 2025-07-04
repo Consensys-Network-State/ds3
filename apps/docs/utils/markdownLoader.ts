@@ -11,7 +11,7 @@ const DEV_SERVER_HOST_NATIVE = '10.0.2.2'; // For Android emulator
 const DEV_SERVER_HOST_IOS = 'localhost'; // For iOS simulator
 
 // GitHub repository base URL for production fallback
-const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/Consensys-Network-State/ds3/docs-cleanup';
+const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/Consensys-Network-State/ds3/more-components';
 
 // Cache for downloaded content
 const markdownCache: Record<string, string> = {};
