@@ -175,6 +175,8 @@ export const tailwindPreset = (userConfig: UserConfig): TailwindConfig => {
           'h6': ['1.25rem', { lineHeight: '1.5625rem', fontWeight: '700' }],
         },
         animation: {
+          'accordion-down': 'accordion-down 0.3s ease-out',
+          'accordion-up': 'accordion-up 0.3s ease-out',
           'spin-normal': 'spin 2s linear infinite',
           'spin-slow': 'spin 4s linear infinite',
           'spin-fast': 'spin 1s linear infinite',
@@ -184,6 +186,14 @@ export const tailwindPreset = (userConfig: UserConfig): TailwindConfig => {
           spin: {
             '0%': { transform: 'rotate(0deg)' },
             '100%': { transform: 'rotate(360deg)' },
+          },
+          'accordion-down': {
+            from: { height: '0' },
+            to: { height: 'var(--radix-accordion-content-height)' },
+          },
+          'accordion-up': {
+            from: { height: 'var(--radix-accordion-content-height)' },
+            to: { height: '0' },
           },
         },
       },

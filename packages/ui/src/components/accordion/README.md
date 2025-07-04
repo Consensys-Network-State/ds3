@@ -17,8 +17,8 @@ import { Accordion } from '@consensys/ds3';
 Create a simple accordion with multiple items.
 
 ```tsx live
-<Accordion collapsible>
-  <Accordion.Item value="item-1">
+<Accordion type="single" collapsible>
+  <Accordion.Item value="card">
     <Accordion.Trigger>
       <Text>Item 1</Text>
     </Accordion.Trigger>
@@ -31,39 +31,28 @@ Create a simple accordion with multiple items.
 
 ### Variants
 
-Apply different visual styles to match your design system.
+Apply different visual styles to match your design system. The accordion supports three variants:
 
 ```tsx live
 <View className="space-y-4">
-  <Accordion variant="default" type="single" collapsible>
-    <Accordion.Item value="default">
-      <Accordion.Trigger>
-        <Text>Default Variant</Text>
-      </Accordion.Trigger>
-      <Accordion.Content>
-        <Text>The standard accordion style with subtle borders between items.</Text>
-      </Accordion.Content>
-    </Accordion.Item>
-  </Accordion>
-  
-  <Accordion variant="bordered" type="single" collapsible>
-    <Accordion.Item value="bordered">
-      <Accordion.Trigger>
-        <Text>Bordered Variant</Text>
-      </Accordion.Trigger>
-      <Accordion.Content>
-        <Text>An accordion with a border around the entire component.</Text>
-      </Accordion.Content>
-    </Accordion.Item>
-  </Accordion>
-  
   <Accordion variant="card" type="single" collapsible>
     <Accordion.Item value="card">
       <Accordion.Trigger>
         <Text>Card Variant</Text>
       </Accordion.Trigger>
       <Accordion.Content>
-        <Text>An accordion with a card-like appearance and background.</Text>
+        <Text>The standard accordion style using Card components with rounded borders and shadow.</Text>
+      </Accordion.Content>
+    </Accordion.Item>
+  </Accordion>
+  
+  <Accordion variant="outline" type="single" collapsible>
+    <Accordion.Item value="outline">
+      <Accordion.Trigger>
+        <Text>Outline Variant</Text>
+      </Accordion.Trigger>
+      <Accordion.Content>
+        <Text>An accordion with a simple border outline and rounded corners.</Text>
       </Accordion.Content>
     </Accordion.Item>
   </Accordion>
@@ -74,7 +63,7 @@ Apply different visual styles to match your design system.
         <Text>Underline Variant</Text>
       </Accordion.Trigger>
       <Accordion.Content>
-        <Text>An accordion with subtle underline styling on hover.</Text>
+        <Text>A minimal accordion with just an underline border for a clean appearance.</Text>
       </Accordion.Content>
     </Accordion.Item>
   </Accordion>
@@ -83,7 +72,7 @@ Apply different visual styles to match your design system.
 
 ### Colors
 
-Apply semantic color schemes for different contexts and states.
+Apply semantic color schemes for different contexts and states. Colors are now handled by the Card component's color system.
 
 ```tsx live
 <View className="space-y-4">
@@ -93,7 +82,7 @@ Apply semantic color schemes for different contexts and states.
         <Text>Neutral Color</Text>
       </Accordion.Trigger>
       <Accordion.Content>
-        <Text>Default neutral color scheme.</Text>
+        <Text>Default neutral color scheme using Card color prop.</Text>
       </Accordion.Content>
     </Accordion.Item>
   </Accordion>
@@ -104,7 +93,7 @@ Apply semantic color schemes for different contexts and states.
         <Text>Primary Color</Text>
       </Accordion.Trigger>
       <Accordion.Content>
-        <Text>Primary brand color scheme.</Text>
+        <Text>Primary brand color scheme using Card color prop.</Text>
       </Accordion.Content>
     </Accordion.Item>
   </Accordion>
@@ -115,7 +104,7 @@ Apply semantic color schemes for different contexts and states.
         <Text>Secondary Color</Text>
       </Accordion.Trigger>
       <Accordion.Content>
-        <Text>Secondary brand color scheme.</Text>
+        <Text>Secondary brand color scheme using Card color prop.</Text>
       </Accordion.Content>
     </Accordion.Item>
   </Accordion>
@@ -126,7 +115,29 @@ Apply semantic color schemes for different contexts and states.
         <Text>Error Color</Text>
       </Accordion.Trigger>
       <Accordion.Content>
-        <Text>Error state color scheme.</Text>
+        <Text>Error state color scheme using Card color prop.</Text>
+      </Accordion.Content>
+    </Accordion.Item>
+  </Accordion>
+
+  <Accordion color="warning" type="single" collapsible>
+    <Accordion.Item value="warning">
+      <Accordion.Trigger>
+        <Text>Warning Color</Text>
+      </Accordion.Trigger>
+      <Accordion.Content>
+        <Text>Warning state color scheme using Card color prop.</Text>
+      </Accordion.Content>
+    </Accordion.Item>
+  </Accordion>
+
+  <Accordion color="success" type="single" collapsible>
+    <Accordion.Item value="success">
+      <Accordion.Trigger>
+        <Text>Success Color</Text>
+      </Accordion.Trigger>
+      <Accordion.Content>
+        <Text>Warning state color scheme using Card color prop.</Text>
       </Accordion.Content>
     </Accordion.Item>
   </Accordion>
@@ -135,7 +146,7 @@ Apply semantic color schemes for different contexts and states.
 
 ### Sizes
 
-Scale accordions to fit different UI contexts and hierarchy levels.
+Scale accordions to fit different UI contexts and hierarchy levels. Size variants now control text sizing and padding since Card components don't have size variants.
 
 ```tsx live
 <View className="space-y-4">
@@ -145,7 +156,7 @@ Scale accordions to fit different UI contexts and hierarchy levels.
         <Text>Small Size</Text>
       </Accordion.Trigger>
       <Accordion.Content>
-        <Text>Compact size for tight spaces.</Text>
+        <Text>Compact size for tight spaces with smaller text and padding.</Text>
       </Accordion.Content>
     </Accordion.Item>
   </Accordion>
@@ -156,7 +167,7 @@ Scale accordions to fit different UI contexts and hierarchy levels.
         <Text>Medium Size</Text>
       </Accordion.Trigger>
       <Accordion.Content>
-        <Text>Default size for most use cases.</Text>
+        <Text>Default size for most use cases with standard text and padding.</Text>
       </Accordion.Content>
     </Accordion.Item>
   </Accordion>
@@ -167,7 +178,7 @@ Scale accordions to fit different UI contexts and hierarchy levels.
         <Text>Large Size</Text>
       </Accordion.Trigger>
       <Accordion.Content>
-        <Text>Larger size for emphasis and readability.</Text>
+        <Text>Larger size for emphasis and readability with larger text and padding.</Text>
       </Accordion.Content>
     </Accordion.Item>
   </Accordion>
@@ -283,7 +294,7 @@ const Component = () => {
 
 ### Customization
 
-Here's how to customize using all the parts together:
+Here's how to customize using all the parts together. The accordion now uses Card components and Icon components for consistent theming:
 
 ```tsx live expand
 <Accordion 
@@ -296,7 +307,7 @@ Here's how to customize using all the parts together:
   className="shadow-lg"
 >
   <Accordion.Item value="custom">
-    <Accordion.Trigger className="hover:bg-primary-a3">
+    <Accordion.Trigger className="hover:bg-primary-a4">
       <View className="flex flex-row items-center gap-2">
         <Icon icon={Figma} size="sm" />
         <Text className="font-semibold">Custom Styled Accordion</Text>
@@ -308,6 +319,7 @@ Here's how to customize using all the parts together:
         <Text className="text-sm text-neutral-a11">
           This accordion demonstrates custom styling with icons, enhanced typography, 
           and additional visual elements to create a rich user experience.
+          The accordion now uses Card components for consistent theming.
         </Text>
       </View>
     </Accordion.Content>
@@ -323,7 +335,7 @@ Complete reference of all available props and their configurations.
 
 The main Accordion component that provides the container and context.
 
-```tsx live
+```tsx
 <Accordion type="single" collapsible variant="default" color="neutral" size="md">
   {/* Accordion items go here */}
 </Accordion>
@@ -336,9 +348,9 @@ The main Accordion component that provides the container and context.
 | `defaultValue` | `string` \| `string[]` | - | The default expanded items |
 | `value` | `string` \| `string[]` | - | The controlled expanded items |
 | `onValueChange` | `(value: string \| string[]) => void` | - | Called when the expanded items change |
-| `variant` | `'default'` \| `'bordered'` \| `'card'` \| `'underline'` | `'default'` | The visual style variant |
-| `color` | `'neutral'` \| `'primary'` \| `'secondary'` \| `'error'` \| `'warning'` \| `'success'` | `'neutral'` | The color theme |
-| `size` | `'sm'` \| `'md'` \| `'lg'` | `'md'` | The size of the accordion |
+| `variant` | `'card'` \| `'underline'` \| `'outline'` | `'card'` | The visual style variant |
+| `color` | `'neutral'` \| `'primary'` \| `'secondary'` \| `'error'` \| `'warning'` \| `'success'` | `'neutral'` | The color theme (only applies to card variant) |
+| `size` | `'sm'` \| `'md'` \| `'lg'` | `'md'` | The size of the accordion (controls text sizing and padding) |
 | `className` | `string` | - | Additional class names |
 | `children` | `ReactNode` | - | Accordion items |
 
@@ -348,7 +360,7 @@ Inherits all [View](https://reactnative.dev/docs/view) props.
 
 Represents a single collapsible section within the accordion.
 
-```tsx live
+```tsx
 <Accordion>
   <Accordion.Item value="unique-id" disabled={false}>
     {/* Trigger and Content go here */}
@@ -368,11 +380,11 @@ Inherits all [AccordionPrimitive.Item](https://www.radix-ui.com/primitives/docs/
 
 The clickable element that controls the expansion state of an item.
 
-```tsx live
+```tsx
 <Accordion>
   <Accordion.Item value="unique-id" disabled={false}>
     <Accordion.Trigger className="custom-trigger">
-      <Text>Click to expand</Text>
+      {/* Text goes here */}
     </Accordion.Trigger>
   </Accordion.Item>
 </Accordion>
@@ -389,11 +401,11 @@ Inherits all [AccordionPrimitive.Trigger](https://www.radix-ui.com/primitives/do
 
 The collapsible content that appears when an item is expanded.
 
-```tsx live
+```tsx
 <Accordion>
   <Accordion.Item value="unique-id" disabled={false}>
     <Accordion.Content className="custom-content">
-      <Text>This content is shown when expanded</Text>
+       {/* Content goes here */}
     </Accordion.Content>
   </Accordion.Item>
 </Accordion>
@@ -407,8 +419,6 @@ The collapsible content that appears when an item is expanded.
 Inherits all [AccordionPrimitive.Content](https://www.radix-ui.com/primitives/docs/components/accordion#content) props.
 
 ## Accessibility
-
-Built-in accessibility support with automatic ARIA attributes and screen reader compatibility.
 
 The Accordion component automatically implements proper accessibility attributes:
 

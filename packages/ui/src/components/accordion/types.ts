@@ -1,13 +1,12 @@
 import * as React from 'react';
 import * as AccordionPrimitive from '@rn-primitives/accordion';
 import type { VariantProps } from 'class-variance-authority';
-import { accordionVariants } from './styles';
 
 // Shared accordion props
 export type SharedAccordionProps = {
-  variant?: VariantProps<typeof accordionVariants>['variant'];
-  color?: VariantProps<typeof accordionVariants>['color'];
-  size?: VariantProps<typeof accordionVariants>['size'];
+  variant?: 'card' | 'underline' | 'outline';
+  color?: 'neutral' | 'primary' | 'secondary' | 'error' | 'warning' | 'success';
+  size?: 'sm' | 'md' | 'lg';
   className?: string;
   children?: React.ReactNode;
 };
@@ -16,9 +15,9 @@ export type SharedAccordionProps = {
 export type AccordionRootProps = SharedAccordionProps & Omit<AccordionPrimitive.RootProps, keyof SharedAccordionProps>;
 
 export type AccordionContext = {
-  variant?: VariantProps<typeof accordionVariants>['variant'];
-  color?: VariantProps<typeof accordionVariants>['color'];
-  size?: VariantProps<typeof accordionVariants>['size'];
+  variant?: 'card' | 'underline' | 'outline';
+  color?: 'neutral' | 'primary' | 'secondary' | 'error' | 'warning' | 'success';
+  size?: 'sm' | 'md' | 'lg';
 };
 
 export type AccordionItemProps = AccordionPrimitive.ItemProps & {

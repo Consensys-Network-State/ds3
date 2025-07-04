@@ -5,10 +5,9 @@ export const accordionVariants = cva(
   {
     variants: {
       variant: {
-        default: '',
-        bordered: 'border border-solid border-neutral-a7 rounded-4',
-        card: 'bg-neutral-a2 border border-solid border-neutral-a7 rounded-4',
+        card: '',
         underline: '',
+        outline: 'border border-solid rounded-lg',
       },
       color: {
         neutral: '',
@@ -18,42 +17,30 @@ export const accordionVariants = cva(
         warning: '',
         success: '',
       },
-      size: {
-        sm: '',
-        md: '',
-        lg: '',
-      },
     },
     compoundVariants: [
-      { variant: 'bordered', color: 'primary', class: 'border-primary-a7' },
-      { variant: 'bordered', color: 'secondary', class: 'border-secondary-a7' },
-      { variant: 'bordered', color: 'error', class: 'border-error-a7' },
-      { variant: 'bordered', color: 'warning', class: 'border-warning-a7' },
-      { variant: 'bordered', color: 'success', class: 'border-success-a7' },
-      
-      { variant: 'card', color: 'primary', class: 'border-primary-a7' },
-      { variant: 'card', color: 'secondary', class: 'border-secondary-a7' },
-      { variant: 'card', color: 'error', class: 'border-error-a7' },
-      { variant: 'card', color: 'warning', class: 'border-warning-a7' },
-      { variant: 'card', color: 'success', class: 'border-success-a7' },
+      { variant: 'outline', color: 'neutral', class: 'border-neutral-6' },
+      { variant: 'outline', color: 'primary', class: 'border-primary-6' },
+      { variant: 'outline', color: 'secondary', class: 'border-secondary-6' },
+      { variant: 'outline', color: 'error', class: 'border-error-6' },
+      { variant: 'outline', color: 'warning', class: 'border-warning-6' },
+      { variant: 'outline', color: 'success', class: 'border-success-6' },
     ],
     defaultVariants: {
-      variant: 'bordered',
+      variant: 'card',
       color: 'neutral',
-      size: 'md',
     },
   }
 );
 
 export const accordionItemVariants = cva(
-  'overflow-hidden',
+  '',
   {
     variants: {
       variant: {
-        default: '',
-        bordered: '',
-        card: 'border-b border-solid border-neutral-a7 last:border-b-0',
-        underline: 'border-b border-solid border-neutral-a7',
+        card: '',
+        underline: 'border-b',
+        outline: '',
       },
       color: {
         neutral: '',
@@ -63,118 +50,102 @@ export const accordionItemVariants = cva(
         warning: '',
         success: '',
       },
-      size: {
-        sm: '',
-        md: '',
-        lg: '',
-      },
     },
     compoundVariants: [
-      { variant: 'default', color: 'primary', class: 'border-primary-a7' },
-      { variant: 'default', color: 'secondary', class: 'border-secondary-a7' },
-      { variant: 'default', color: 'error', class: 'border-error-a7' },
-      { variant: 'default', color: 'warning', class: 'border-warning-a7' },
-      { variant: 'default', color: 'success', class: 'border-success-a7' },
-      
-      { variant: 'card', color: 'primary', class: 'border-primary-a7' },
-      { variant: 'card', color: 'secondary', class: 'border-secondary-a7' },
-      { variant: 'card', color: 'error', class: 'border-error-a7' },
-      { variant: 'card', color: 'warning', class: 'border-warning-a7' },
-      { variant: 'card', color: 'success', class: 'border-success-a7' },
+      { variant: 'underline', color: 'neutral', class: 'border-neutral-6' },
+      { variant: 'underline', color: 'primary', class: 'border-primary-6' },
+      { variant: 'underline', color: 'secondary', class: 'border-secondary-6' },
+      { variant: 'underline', color: 'error', class: 'border-error-6' },
+      { variant: 'underline', color: 'warning', class: 'border-warning-6' },
+      { variant: 'underline', color: 'success', class: 'border-success-6' },
     ],
     defaultVariants: {
-      variant: 'bordered',
+      variant: 'card',
       color: 'neutral',
-      size: 'md',
     },
   }
 );
 
 export const accordionTriggerVariants = cva(
-  'flex flex-row items-center justify-between w-full transition-all group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-muted-foreground',
+  'flex flex-row items-center justify-between w-full overflow-hidden',
   {
     variants: {
       variant: {
-        default: 'py-4',
-        bordered: 'py-4 px-4',
-        card: 'py-4 px-4',
-        underline: 'py-3',
-      },
-      color: {
-        neutral: 'text-neutral-a11 hover:text-neutral-a12',
-        primary: 'text-primary-a11 hover:text-primary-a12',
-        secondary: 'text-secondary-a11 hover:text-secondary-a12',
-        error: 'text-error-a11 hover:text-error-a12',
-        warning: 'text-warning-a11 hover:text-warning-a12',
-        success: 'text-success-a11 hover:text-success-a12',
+        card: 'px-4',
+        underline: 'bg-neutral-1 px-0 py-2',
+        outline: 'px-4',
       },
       size: {
-        sm: 'text-sm',
-        md: 'text-base',
-        lg: 'text-lg',
+        sm: 'py-3 text-sm',
+        md: 'py-4 text-base',
+        lg: 'py-5 text-lg',
+      },
+      color: {
+        neutral: '',
+        primary: '',
+        secondary: '',
+        error: '',
+        warning: '',
+        success: '',
       },
     },
+    compoundVariants: [
+      { variant: 'underline', color: 'neutral', class: 'text-neutral-12' },
+      { variant: 'underline', color: 'primary', class: 'text-primary-12' },
+      { variant: 'underline', color: 'secondary', class: 'text-secondary-12' },
+      { variant: 'underline', color: 'error', class: 'text-error-12' },
+      { variant: 'underline', color: 'warning', class: 'text-warning-12' },
+      { variant: 'underline', color: 'success', class: 'text-success-12' },
+      { variant: 'outline', color: 'neutral', class: 'text-neutral-12' },
+      { variant: 'outline', color: 'primary', class: 'text-primary-12' },
+      { variant: 'outline', color: 'secondary', class: 'text-secondary-12' },
+      { variant: 'outline', color: 'error', class: 'text-error-12' },
+      { variant: 'outline', color: 'warning', class: 'text-warning-12' },
+      { variant: 'outline', color: 'success', class: 'text-success-12' },
+    ],
     defaultVariants: {
-      variant: 'bordered',
-      color: 'neutral',
+      variant: 'card',
       size: 'md',
+      color: 'neutral',
     },
   }
 );
 
 export const accordionContentVariants = cva(
-  'overflow-hidden transition-all',
+  'overflow-hidden',
   {
     variants: {
       variant: {
-        default: 'pb-4',
-        bordered: 'pb-4 px-4',
-        card: 'pb-4 px-4',
-        underline: 'pb-3',
+        card: 'p-4',
+        underline: 'px-0 pb-2',
+        outline: 'px-4 pb-4',
       },
       color: {
-        neutral: 'text-neutral-a11',
-        primary: 'text-primary-a11',
-        secondary: 'text-secondary-a11',
-        error: 'text-error-a11',
-        warning: 'text-warning-a11',
-        success: 'text-success-a11',
-      },
-      size: {
-        sm: 'text-sm',
-        md: 'text-base',
-        lg: 'text-lg',
+        neutral: '',
+        primary: '',
+        secondary: '',
+        error: '',
+        warning: '',
+        success: '',
       },
     },
+    compoundVariants: [
+      { variant: 'underline', color: 'neutral', class: 'text-neutral-11' },
+      { variant: 'underline', color: 'primary', class: 'text-primary-11' },
+      { variant: 'underline', color: 'secondary', class: 'text-secondary-11' },
+      { variant: 'underline', color: 'error', class: 'text-error-11' },
+      { variant: 'underline', color: 'warning', class: 'text-warning-11' },
+      { variant: 'underline', color: 'success', class: 'text-success-11' },
+      { variant: 'outline', color: 'neutral', class: 'text-neutral-11' },
+      { variant: 'outline', color: 'primary', class: 'text-primary-11' },
+      { variant: 'outline', color: 'secondary', class: 'text-secondary-11' },
+      { variant: 'outline', color: 'error', class: 'text-error-11' },
+      { variant: 'outline', color: 'warning', class: 'text-warning-11' },
+      { variant: 'outline', color: 'success', class: 'text-success-11' },
+    ],
     defaultVariants: {
-      variant: 'bordered',
+      variant: 'card',
       color: 'neutral',
-      size: 'md',
     },
   }
 );
-
-export const accordionChevronVariants = cva(
-  'shrink-0 transition-transform duration-200',
-  {
-    variants: {
-      size: {
-        sm: 'h-4 w-4',
-        md: 'h-5 w-5',
-        lg: 'h-6 w-6',
-      },
-      color: {
-        neutral: 'text-neutral-a11',
-        primary: 'text-primary-a11',
-        secondary: 'text-secondary-a11',
-        error: 'text-error-a11',
-        warning: 'text-warning-a11',
-        success: 'text-success-a11',
-      },
-    },
-    defaultVariants: {
-      size: 'md',
-      color: 'neutral',
-    },
-  }
-); 

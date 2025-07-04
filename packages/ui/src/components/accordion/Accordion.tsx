@@ -1,12 +1,10 @@
 import * as AccordionPrimitive from '@rn-primitives/accordion';
 import * as React from 'react';
-import { Platform } from 'react-native';
+import { Platform, View } from 'react-native';
 import Animated, {
   LayoutAnimationConfig,
   LinearTransition,
 } from 'react-native-reanimated';
-import { cn } from '../../utils';
-import { accordionVariants } from './styles';
 import { AccordionContextProvider } from './context';
 import { 
   AccordionItem,
@@ -14,17 +12,22 @@ import {
   AccordionContent
 } from './Accordion.shared';
 import type { AccordionRootProps } from './types';
+import { Card } from '../card';
+import { accordionVariants } from './styles';
+import { cn } from '../../utils';
 
 const AccordionRoot = React.forwardRef<AccordionPrimitive.RootRef, AccordionRootProps>(
-  ({ className, variant, color, size, children, ...props }, ref) => {
+  ({ className, variant = 'card', color, size, children, ...props }, ref) => {
     const contextValue = React.useMemo(() => ({ variant, color, size }), [variant, color, size]);
 
-    return (
+    // Map accordion color to card color
+    const cardColor = color || 'neutral';
+
+    const accordionContent = (
       <LayoutAnimationConfig skipEntering>
         <AccordionContextProvider.Provider value={contextValue}>
           <AccordionPrimitive.Root
             ref={ref}
-            className={cn(accordionVariants({ variant, color, size }), className)}
             {...(props as AccordionPrimitive.RootProps)}
             asChild={Platform.OS !== 'web'}
           >
@@ -32,6 +35,22 @@ const AccordionRoot = React.forwardRef<AccordionPrimitive.RootRef, AccordionRoot
           </AccordionPrimitive.Root>
         </AccordionContextProvider.Provider>
       </LayoutAnimationConfig>
+    );
+
+    // Use Card component for 'card' variant
+    if (variant === 'card') {
+      return (
+        <Card color={cardColor} border={true} className={className}>
+          {accordionContent}
+        </Card>
+      );
+    }
+
+    // Use CVA variants for 'underline' and 'outline'
+    return (
+      <View className={cn(accordionVariants({ variant, color }), className)}>
+        {accordionContent}
+      </View>
     );
   }
 );
