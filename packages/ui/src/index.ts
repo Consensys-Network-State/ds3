@@ -209,6 +209,21 @@ export type {
   CardColors
 } from './components/card';
 
+// accordion
+export {
+  Accordion,
+} from './components/accordion';
+
+export type {
+  AccordionRootProps,
+  AccordionItemProps,
+  AccordionTriggerProps,
+  AccordionContentProps,
+  AccordionVariants,
+  AccordionColors,
+  AccordionSizes,
+} from './components/accordion';
+
 // other components
 // TODO: move to components folder and refactor
 export * from './components/Select';
