@@ -150,6 +150,7 @@ export type {
 // text
 export {
   Text,
+  TextClassContext,
   useTextClass, // TODO: consistent naming
 } from './components/text';
 

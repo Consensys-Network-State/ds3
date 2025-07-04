@@ -10,6 +10,7 @@ const Text = React.forwardRef<TextRef, TextProps>(
   ({ className, size, weight, color, lineHeight, fontFamily, spectrum, hover, asChild = false, ...props }, ref) => {
     const textClass = React.useContext(TextClassContext);
     const Component = asChild ? Slot.Text : RNText;
+
     return (
       <Component
         ref={ref}
@@ -21,4 +22,4 @@ const Text = React.forwardRef<TextRef, TextProps>(
 );
 Text.displayName = 'Text';
 
-export { Text };
+export { Text }; 

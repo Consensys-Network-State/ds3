@@ -13,7 +13,7 @@ const CardRoot = React.forwardRef<React.ElementRef<typeof View>, CardRootProps>(
 
     return (
       <CardContextProvider.Provider value={contextValue}>
-        <TextClassContext.Provider value='text-card-foreground'>
+        <TextClassContext.Provider value=''>
           <View
             ref={ref}
             className={cn(cardVariants({ color, border }), className)}
