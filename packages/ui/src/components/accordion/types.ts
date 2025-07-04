@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as AccordionPrimitive from '@rn-primitives/accordion';
-import type { VariantProps } from 'class-variance-authority';
 
 // Shared accordion props
 export type SharedAccordionProps = {

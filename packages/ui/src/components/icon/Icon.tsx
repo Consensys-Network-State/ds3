@@ -10,6 +10,8 @@ const Icon = React.forwardRef<SVGSVGElement, IconProps>(({
   size,
   className,
   style,
+  hover,
+  spectrum,
   ...otherProps
 }, ref) => {
   const StyledIcon = cssInterop(icon, {
@@ -33,7 +35,7 @@ const Icon = React.forwardRef<SVGSVGElement, IconProps>(({
       role="img"
       accessibilityRole="image"
       ref={ref}
-      className={cn(iconVariants({ color, size: typeof size === 'string' ? size : undefined }), className)}
+      className={cn(iconVariants({ color, size: typeof size === 'string' ? size : undefined, hover, spectrum }), className)}
       style={iconStyle}
       {...otherProps}
     />
