@@ -14,7 +14,7 @@ export type SharedAccordionProps = {
 export type AccordionRootProps = SharedAccordionProps & Omit<AccordionPrimitive.RootProps, keyof SharedAccordionProps>;
 
 export type AccordionContext = {
-  variant?: 'card' | 'underline' | 'outline';
+  variant?: 'card' | 'underline' | 'outline' | 'unstyled';
   color?: 'neutral' | 'primary' | 'secondary' | 'error' | 'warning' | 'success';
   size?: 'sm' | 'md' | 'lg';
 };
