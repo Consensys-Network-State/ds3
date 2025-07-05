@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { View, Platform, Dimensions } from 'react-native';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Platform, Dimensions } from 'react-native';
 import { Drawer } from 'expo-router/drawer';
 import { useThemeColors } from '@consensys/ds3';
-import { ThemeControls } from './ThemeControls';
 
 interface LocalDrawerProps {
   children?: React.ReactNode;
@@ -24,28 +23,34 @@ export function LocalDrawer({ children }: LocalDrawerProps) {
     return () => subscription?.remove();
   }, []);
 
+  
+  const screenOptions = useMemo(() => ({
+    headerStyle: {
+      backgroundColor: colors.primary1,
+      borderBottomWidth: 0,
+      ...(Platform.OS === 'ios' && { height: 80 }),
+    },
+    headerTintColor: colors.neutral12,
+    headerTitleAlign: 'left' as const,
+    drawerStyle: {
+      backgroundColor: colors.primary1,
+      width: isDesktop ? 280 : 300, // Slightly wider on desktop
+    },
+    drawerActiveTintColor: colors.primary11,
+    drawerInactiveTintColor: colors.neutral11,
+    // Hide header on desktop, show on mobile
+    headerShown: !isDesktop,
+    // Open by default on desktop, closed on mobile
+    drawerType: (isDesktop ? 'permanent' : 'front') as 'permanent' | 'front',
+    swipeEnabled: !isDesktop,
+    // Add performance optimizations
+    animationEnabled: true,
+    gestureEnabled: !isDesktop,
+    detachInactiveScreens: true,
+  }), [colors, isDesktop]);
+
   return (
-    <Drawer
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: colors.primary1,
-          borderBottomWidth: 0,
-          ...(Platform.OS === 'ios' && { height: 80 }),
-        },
-        headerTintColor: colors.neutral12,
-        headerTitleAlign: 'left',
-        drawerStyle: {
-          backgroundColor: colors.primary1,
-          width: isDesktop ? 280 : 300, // Slightly wider on desktop
-        },
-        drawerActiveTintColor: colors.primary11,
-        drawerInactiveTintColor: colors.neutral11,
-        // Hide header on desktop, show on mobile
-        headerShown: !isDesktop,
-        // Open by default on desktop, closed on mobile
-        drawerType: isDesktop ? 'permanent' : 'front',
-        swipeEnabled: !isDesktop,
-      }}>
+    <Drawer screenOptions={screenOptions}>
       {children}
     </Drawer>
   );

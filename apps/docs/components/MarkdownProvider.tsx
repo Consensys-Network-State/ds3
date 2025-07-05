@@ -2,10 +2,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode, useRe
 import { loadMarkdown, startSSEConnection, stopSSEConnection } from '@/utils/markdownLoader';
 
 interface MarkdownContextType {
-  isLoading: boolean;
-  error: string | null;
   loadMarkdown: (path: string) => Promise<string>;
-  getCachedMarkdown: (path: string) => string | null;
   subscribeToFileChanges: (path: string, callback: () => void) => () => void;
 }
 
@@ -17,31 +14,19 @@ interface MarkdownProviderProps {
 }
 
 export function MarkdownProvider({ children, enableLiveReload = true }: MarkdownProviderProps) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const isInitialized = useRef(false);
   const fileChangeSubscribers = useRef<Map<string, Set<() => void>>>(new Map());
+  const cleanupRef = useRef<(() => void) | null>(null);
 
   const loadMarkdownContent = useCallback(async (path: string): Promise<string> => {
-    setIsLoading(true);
-    setError(null);
     try {
       const content = await loadMarkdown(path);
       return content;
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to load markdown';
-      setError(errorMessage);
-      console.error('Error loading markdown:', err);
+      console.error('Error loading markdown:', errorMessage);
       throw err;
-    } finally {
-      setIsLoading(false);
     }
-  }, []);
-
-  const getCachedMarkdown = useCallback((path: string): string | null => {
-    // For now, we'll always load fresh content
-    // In the future, we could implement a more sophisticated caching system
-    return null;
   }, []);
 
   const subscribeToFileChanges = useCallback((path: string, callback: () => void) => {
@@ -64,13 +49,18 @@ export function MarkdownProvider({ children, enableLiveReload = true }: Markdown
 
   // Handle file changes from SSE
   const handleFileChanged = useCallback(async (filePath: string) => {
-    console.log(`🔄 File changed: ${filePath}`);
-    
     // Notify all subscribers for this file
     const subscribers = fileChangeSubscribers.current.get(filePath);
     if (subscribers) {
-      console.log(`📢 Notifying ${subscribers.size} subscribers for ${filePath}`);
-      subscribers.forEach(callback => callback());
+      // Create a copy of the set to avoid modification during iteration
+      const subscribersCopy = new Set(subscribers);
+      subscribersCopy.forEach(callback => {
+        try {
+          callback();
+        } catch (error) {
+          console.error('Error in file change subscriber:', error);
+        }
+      });
     }
   }, []);
 
@@ -82,21 +72,25 @@ export function MarkdownProvider({ children, enableLiveReload = true }: Markdown
       // Start SSE connection for live reload
       if (enableLiveReload) {
         startSSEConnection(handleFileChanged);
+        cleanupRef.current = () => {
+          stopSSEConnection();
+        };
       }
     }
 
     return () => {
-      if (enableLiveReload) {
-        stopSSEConnection();
+      if (cleanupRef.current) {
+        cleanupRef.current();
+        cleanupRef.current = null;
       }
+      
+      // Clean up all subscribers
+      fileChangeSubscribers.current.clear();
     };
   }, [enableLiveReload, handleFileChanged]);
 
   const value: MarkdownContextType = {
-    isLoading,
-    error,
     loadMarkdown: loadMarkdownContent,
-    getCachedMarkdown,
     subscribeToFileChanges,
   };
 
@@ -114,42 +108,3 @@ export function useMarkdown() {
   }
   return context;
 }
-
-export function useMarkdownContent(path: string) {
-  const { loadMarkdown, isLoading, error, subscribeToFileChanges } = useMarkdown();
-  const [content, setContent] = useState<string>('');
-  const [localLoading, setLocalLoading] = useState(true);
-  const [reloadTrigger, setReloadTrigger] = useState(0);
-
-  // Subscribe to file changes
-  useEffect(() => {
-    const unsubscribe = subscribeToFileChanges(path, () => {
-      console.log(`🔄 Reloading content for: ${path}`);
-      setReloadTrigger(prev => prev + 1);
-    });
-
-    return unsubscribe;
-  }, [path, subscribeToFileChanges]);
-
-  useEffect(() => {
-    async function loadContent() {
-      setLocalLoading(true);
-      try {
-        const markdownContent = await loadMarkdown(path);
-        setContent(markdownContent);
-      } catch (err) {
-        setContent(`# Error\n\nFailed to load markdown from: ${path}`);
-      } finally {
-        setLocalLoading(false);
-      }
-    }
-
-    loadContent();
-  }, [path, loadMarkdown, reloadTrigger]);
-
-  return {
-    content,
-    isLoading: isLoading || localLoading,
-    error,
-  };
-} 

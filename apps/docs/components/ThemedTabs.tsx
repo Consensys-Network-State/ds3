@@ -1,34 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { Tabs } from 'expo-router';
-import { Platform, Dimensions, View, TouchableOpacity } from 'react-native';
-import { useThemeColors, Text, Icon, Button, ThemeIcon } from '@consensys/ds3';
+import { Platform, Dimensions, View } from 'react-native';
+import { useThemeColors, Button, ThemeIcon } from '@consensys/ds3';
 import { HapticTab } from '@/components/HapticTab';
 import { ThemeControls } from '@/components/ThemeControls';
 import { useRouter, usePathname } from 'expo-router';
-import { Home, Palette, Layers, Wallet } from 'lucide-react-native';
+import { Palette, Layers, Wallet } from 'lucide-react-native';
 
 interface ThemedTabsProps {
   children?: React.ReactNode;
 }
 
-// DS3 Logo component
 function DS3Logo() {
   const router = useRouter();
   
   return (
-    <TouchableOpacity
-      onPress={() => router.push('/')}
-      className="flex-row items-center gap-2 ml-4 cursor-pointer"
-    >
-      <Icon icon={ThemeIcon} className="w-8 h-8" />
-      <Text size="lg" weight="bold" color="neutral" className="text-neutral-12">
-        DS3
-      </Text>
-    </TouchableOpacity>
+    <View className="flex justify-center items-center ml-1">
+      <Button
+        variant="ghost"
+        color="neutral"
+        onPress={() => router.push('/')}
+      >
+        <Button.Icon icon={ThemeIcon} className="w-8 h-8" />
+        <Button.Text>
+          DS3
+        </Button.Text>
+      </Button>
+    </View>
   );
 }
 
-// Custom header title component
 function CustomHeaderTitle() {
   const router = useRouter();
   const pathname = usePathname();
@@ -46,7 +47,7 @@ function CustomHeaderTitle() {
     return () => subscription?.remove();
   }, []);
 
-  const navigationItems = [
+  const navigationItems = React.useMemo(() => [
     {
       name: 'Theme',
       path: '/theme',
@@ -65,7 +66,7 @@ function CustomHeaderTitle() {
       icon: Wallet,
       isActive: pathname.startsWith('/web3'),
     },
-  ];
+  ], [pathname]);
 
   // On desktop, show navigation buttons since tabs are hidden
   if (isDesktop) {
@@ -76,7 +77,6 @@ function CustomHeaderTitle() {
             <Button
               variant={item.isActive ? 'solid' : 'ghost'}
               color={item.isActive ? 'primary' : 'neutral'}
-              // size="sm"
               onPress={() => router.push(item.path as any)}
             >
               <Button.Icon icon={item.icon} />

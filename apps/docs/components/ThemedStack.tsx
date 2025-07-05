@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Stack } from 'expo-router';
 import { useThemeColors } from '@consensys/ds3';
 
@@ -14,22 +15,23 @@ export function ThemedStack({
 }: ThemedStackProps) {
   const colors = useThemeColors();
 
+  const screenOptions = React.useMemo(() => ({
+    headerStyle: {
+      backgroundColor: colors.neutral1,
+    },
+    headerTintColor: colors.neutral12,
+    headerTitleStyle: {
+      color: colors.neutral12,
+    },
+    headerTitleAlign,
+    headerShown,
+    contentStyle: {
+      backgroundColor: colors.neutral1,
+    },
+  }), [colors, headerTitleAlign, headerShown]);
+
   return (
-    <Stack
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: colors.neutral1,
-        },
-        headerTintColor: colors.neutral12,
-        headerTitleStyle: {
-          color: colors.neutral12,
-        },
-        headerTitleAlign,
-        headerShown,
-        contentStyle: {
-          backgroundColor: colors.neutral1,
-        },
-      }}>
+    <Stack screenOptions={screenOptions}>
       {children}
     </Stack>
   );

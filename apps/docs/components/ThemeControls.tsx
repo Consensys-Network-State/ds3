@@ -14,8 +14,9 @@ import { ThemeToggle, ThemeSwitcher } from '@consensys/ds3';
 
 export function ThemeControls() {
   const { width } = useWindowDimensions();
+  
   const isWeb = Platform.OS === 'web';
-  const isLargeScreen = width > 640;
+  const isLargeScreen = React.useMemo(() => width > 640, [width]);
   
   return (
     <View className="flex-row gap-4 mr-4 items-center px-3 py-2">
@@ -44,7 +45,10 @@ export function ThemeControls() {
               <Button.Icon icon={Settings} />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
+          <DropdownMenuContent
+            align="end"
+            className="w-56"
+          >
             <DropdownMenuLabel>Theme Settings</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
