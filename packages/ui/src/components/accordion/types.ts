@@ -3,7 +3,7 @@ import * as AccordionPrimitive from '@rn-primitives/accordion';
 
 // Shared accordion props
 export type SharedAccordionProps = {
-  variant?: 'card' | 'underline' | 'outline';
+  variant?: 'card' | 'underline' | 'outline' | 'unstyled';
   color?: 'neutral' | 'primary' | 'secondary' | 'error' | 'warning' | 'success';
   size?: 'sm' | 'md' | 'lg';
   className?: string;

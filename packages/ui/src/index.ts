@@ -225,6 +225,25 @@ export type {
   AccordionSizes,
 } from './components/accordion';
 
+// menu
+export {
+  Menu,
+} from './components/menu';
+
+export type {
+  MenuRootProps,
+  MenuItemProps,
+  MenuGroupProps,
+  MenuTriggerProps,
+  MenuItemVariants,
+  MenuTriggerVariants,
+  MenuData,
+  MenuGroupData,
+  MenuItemData,
+  MenuBaseItem,
+  MenuBadge,
+} from './components/menu';
+
 // other components
 // TODO: move to components folder and refactor
 export * from './components/Select';

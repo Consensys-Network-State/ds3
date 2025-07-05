@@ -12,6 +12,7 @@ export default function ComponentsLayout() {
       <LocalDrawer.Screen name="tag" options={{ title: 'Tag' }} />
       <LocalDrawer.Screen name="card" options={{ title: 'Card' }} />
       <LocalDrawer.Screen name="accordion" options={{ title: 'Accordion' }} />
+      <LocalDrawer.Screen name="menu" options={{ title: 'Menu' }} />
       <LocalDrawer.Screen name="table" options={{ title: 'Table' }} />
       <LocalDrawer.Screen name="inputs" options={{ title: 'Input' }} />
       <LocalDrawer.Screen name="checkbox" options={{ title: 'Checkbox' }} />

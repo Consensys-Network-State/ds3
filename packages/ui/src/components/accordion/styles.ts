@@ -8,6 +8,7 @@ export const accordionVariants = cva(
         card: '',
         underline: '',
         outline: 'border border-solid rounded-lg',
+        unstyled: '',
       },
       color: {
         neutral: '',
@@ -41,6 +42,7 @@ export const accordionItemVariants = cva(
         card: '',
         underline: 'border-b',
         outline: '',
+        unstyled: '',
       },
       color: {
         neutral: '',
@@ -74,6 +76,7 @@ export const accordionTriggerVariants = cva(
         card: 'px-4',
         underline: 'bg-neutral-1 px-0 py-2',
         outline: 'px-4',
+        unstyled: 'px-4',
       },
       size: {
         sm: 'py-3 text-sm',
@@ -119,6 +122,7 @@ export const accordionContentVariants = cva(
         card: 'p-4',
         underline: 'px-0 pb-2',
         outline: 'px-4 pb-4',
+        unstyled: 'p-4',
       },
       color: {
         neutral: '',
