@@ -26,6 +26,7 @@ export const HighlightInput: React.FC<HighlightInputProps> = ({
   const [cursorVisible, setCursorVisible] = useState(true);
   const inputRef = React.useRef<any>(null);
   const highlightScrollRef = useRef<ScrollView>(null);
+  const [scrollY, setScrollY] = useState(0);
 
   // Blinking cursor effect
   React.useEffect(() => {
@@ -114,7 +115,13 @@ export const HighlightInput: React.FC<HighlightInputProps> = ({
   const cursorPos = getCursorPosition();
 
   const handleInputScroll = (event: any) => {
-    const scrollY = event.nativeEvent.contentOffset.y;
+    let scrollY = 0;
+    if (Platform.OS === 'web') {
+      scrollY = event.target?.scrollTop ?? 0;
+    } else {
+      scrollY = event.nativeEvent.contentOffset.y;
+    }
+    setScrollY(scrollY);
     highlightScrollRef.current?.scrollTo({ y: scrollY, animated: false });
   };
 
@@ -147,7 +154,7 @@ export const HighlightInput: React.FC<HighlightInputProps> = ({
               width: 1,
               height: inputLineHeight * 0.75,
               left: cursorPos.x,
-              top: cursorPos.y + inputLineHeight * 0.125,
+              top: cursorPos.y + inputLineHeight * 0.125 - (Platform.OS === 'web' ? scrollY : 0),
               zIndex: 2,
             }}
           />
