@@ -55,7 +55,7 @@ export const HighlightInput: React.FC<HighlightInputProps> = ({
   // Calculate actual height based on content
   const lines = value.split('\n');
   const contentHeight = Math.max(
-    lines.length * inputLineHeight + (inputPadding * 2),
+    // lines.length * inputLineHeight + (inputPadding * 2),
     numberOfLines * inputLineHeight + (inputPadding * 2)
   );
 
@@ -135,13 +135,11 @@ export const HighlightInput: React.FC<HighlightInputProps> = ({
           style={{
             position: 'absolute',
             inset: 0,
-            height: contentHeight,
             width: '100%',
             zIndex: 0,
           }}
           contentContainerStyle={{
             padding: highlightPadding,
-            minHeight: contentHeight,
           }}
         >
           {highlightedCode}
@@ -182,7 +180,6 @@ export const HighlightInput: React.FC<HighlightInputProps> = ({
             right: 0,
             bottom: 0,
             zIndex: 1,
-            height: contentHeight,
           }}
           className="flex-1 text-transparent"
           onFocus={() => setFocused(true)}
