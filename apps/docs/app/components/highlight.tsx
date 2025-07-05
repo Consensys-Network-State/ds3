@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Icon, Input, Checkbox, Switch, Spinner, Card, Badge, Alert, View } from '@consensys/ds3';
 import { MarkdownPage } from '@/components/MarkdownPage';
 import { themes } from 'prism-react-renderer';
-import { Highlight } from '@consensys/ds3-playground';
+import { Highlight, HighlightInput } from '@consensys/ds3-playground';
 
 export default function HighlightPage() {
   const scope = {
@@ -18,6 +18,7 @@ export default function HighlightPage() {
     Alert,
     View,
     Highlight,
+    HighlightInput,
     themes,
   };
 

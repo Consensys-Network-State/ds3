@@ -20,29 +20,51 @@ export function Highlight({
         language={language}
         theme={theme || ds3Theme}
       >
-        {({ tokens, getTokenProps }) => (
-          <View className="bg-transparent">
-            {tokens.map((line, i) => (
-              <View key={i} className="flex-row flex-wrap">
-                {line.map((token, key) => {
-                  const tokenProps = getTokenProps({ token });
-                  
+        {({ tokens, getTokenProps }) => {
+          const isLineBlank = (line: any[]) =>
+            line.length === 0 || line.every((token: any) => !token.content.trim());
+          return (
+            <>
+              {tokens.map((line: any[], i: number) => {
+                const lineStyle: any[] = [style, { width: '100%', flexWrap: 'wrap' as const }];
+                if (isLineBlank(line)) {
                   return (
-                    <Text 
-                      key={key}
-                      style={[
-                        { color: tokenProps.style?.color || ds3Theme.plain.color },
-                        style,
-                      ]}
+                    <Text
+                      key={i}
+                      style={lineStyle}
+                      allowFontScaling={false}
                     >
-                      {token.content}
+                      {' '}
                     </Text>
                   );
-                })}
-              </View>
-            ))}
-          </View>
-        )}
+                }
+                return (
+                  <Text
+                    key={i}
+                    style={lineStyle}
+                    allowFontScaling={false}
+                  >
+                    {line.map((token: any, key: number) => {
+                      const tokenProps = getTokenProps({ token });
+                      return (
+                        <Text
+                          key={key}
+                          style={[
+                            { color: tokenProps.style?.color || ds3Theme.plain.color },
+                            style,
+                          ]}
+                          allowFontScaling={false}
+                        >
+                          {token.content}
+                        </Text>
+                      );
+                    })}
+                  </Text>
+                );
+              })}
+            </>
+          );
+        }}
       </PrismHighlight>
     </View>
   );
