@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, Text, useCopyToClipboard, Icon, Button, Card } from '@consensys/ds3';
-import { Check, Copy, Eye, EyeOff } from 'lucide-react-native';
+import { Check, Copy, Eye, EyeOff, Edit, Code } from 'lucide-react-native';
 import { LivePreview } from './LivePreview';
 import { Highlight } from '../highlight';
+import { HighlightInput } from '../highlight/HighlightInput';
 
 export interface CodeBlockProps {
   code: string;
@@ -10,9 +11,12 @@ export interface CodeBlockProps {
   className?: string;
   showCopyButton?: boolean;
   showLanguage?: boolean;
+  showEditButton?: boolean;
   preview?: boolean;
   expand?: boolean;
   scope?: Record<string, any>;
+  onChange?: (code: string) => void;
+  editable?: boolean;
 }
 
 // Memoized Highlight component to prevent unnecessary re-renders and state updates
@@ -53,24 +57,48 @@ export function CodeBlock({
   preview = false,
   expand = false,
   scope = {},
+  onChange,
+  editable = true,
 }: CodeBlockProps) {
   const { copied, copy } = useCopyToClipboard();
   const [showCode, setShowCode] = React.useState(preview ? expand : true);
+  const [isEditing, setIsEditing] = React.useState(false);
+  const [editableCode, setEditableCode] = React.useState(code);
+
+  // Update editable code when prop changes
+  React.useEffect(() => {
+    setEditableCode(code);
+  }, [code]);
 
   const handleCopy = React.useCallback(() => {
-    copy(code);
-  }, [copy, code]);
+    copy(isEditing ? editableCode : code);
+  }, [copy, code, editableCode, isEditing]);
 
   const toggleCodeVisibility = React.useCallback(() => {
     setShowCode(!showCode);
   }, [showCode]);
 
+  const toggleEditMode = React.useCallback(() => {
+    setIsEditing(!isEditing);
+  }, [isEditing]);
+
+  const handleCodeChange = React.useCallback((text: string) => {
+    setEditableCode(text);
+    if (onChange) {
+      onChange(text);
+    }
+  }, [onChange]);
+
   // Determine what to show based on preview state
   const shouldShowCode = showCode || !preview;
   const shouldShowPreview = preview;
   const shouldShowToggleButton = preview;
+  const shouldShowEditButton = preview && shouldShowCode && editable;
 
-  const showHeader = showLanguage || showCopyButton;
+  const showHeader = showLanguage || showCopyButton || shouldShowEditButton || shouldShowToggleButton;
+
+  // Calculate number of lines for HighlightInput
+  const numberOfLines = Math.max(6, editableCode.split('\n').length);
 
   return (
     <Card color="neutral" border className={className}>
@@ -78,12 +106,13 @@ export function CodeBlock({
       {shouldShowPreview && (
         <Card.Content className="bg-neutral-1">
           <LivePreview 
-            code={code}
+            code={isEditing ? editableCode : code}
             scope={scope}
           />
         </Card.Content>
       )}
 
+      {/* Code content - either highlighted or editable */}
       {shouldShowCode && (
         !preview && (
           <Card.Content className="bg-neutral-1">
@@ -92,7 +121,7 @@ export function CodeBlock({
         )
       )}
 
-      {/* Header with language label and copy button */}
+      {/* Header with language label and action buttons */}
       {showHeader && (
         <Card.Footer>
           <View className="flex-row justify-between items-center w-full">
@@ -128,6 +157,18 @@ export function CodeBlock({
                   <Icon icon={showCode ? EyeOff : Eye} size="sm" color="neutral" />
                 </Button>
               )}
+              {shouldShowEditButton && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onPress={toggleEditMode}
+                  accessibilityLabel={isEditing ? "View code" : "Edit code"}
+                  accessibilityHint={isEditing ? "Click to view the code without editing" : "Click to edit the code"}
+                  className="flex-row items-center gap-2"
+                >
+                  <Icon icon={isEditing ? Code : Edit} size="sm" color="neutral" />
+                </Button>
+              )}
             </View>
           </View>
         </Card.Footer>
@@ -137,7 +178,17 @@ export function CodeBlock({
       {shouldShowCode && (
         preview && (
           <Card.Content className="border-t border-neutral-a7 bg-neutral-1">
-            <MemoizedHighlight code={code} language={language} />
+            {isEditing ? (
+              <HighlightInput
+                value={editableCode}
+                onChangeText={handleCodeChange}
+                multiline={true}
+                numberOfLines={numberOfLines}
+                className="min-h-[120px]"
+              />
+            ) : (
+              <MemoizedHighlight code={code} language={language} />
+            )}
           </Card.Content>
         )
       )}
