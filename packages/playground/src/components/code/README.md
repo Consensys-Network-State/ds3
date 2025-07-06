@@ -1,13 +1,13 @@
-# Highlight Component
+# Code Component
 
-The `<Highlight />` component provides syntax highlighting for code blocks built with Prism.js that integrates with your DS3 theme while maintaining consistent styling across platforms.
+The `<Code />` component provides syntax highlighting for code blocks built with Prism.js that integrates with your DS3 theme while maintaining consistent styling across platforms.
 
 ## Installation
 
-Import the Highlight component from the DS3 package.
+Import the Code component from the DS3 package.
 
 ```tsx
-import { Highlight, HighlightInput } from '@consensys/ds3-playground';
+import { Code, CodeInput } from '@consensys/ds3-playground';
 ```
 
 ## Examples
@@ -17,7 +17,7 @@ import { Highlight, HighlightInput } from '@consensys/ds3-playground';
 Create a simple code block with syntax highlighting.
 
 ```tsx live
-<Highlight 
+<Code 
   code="const hello = 'world';" 
   language="javascript" 
 />
@@ -30,7 +30,7 @@ The component supports all languages supported by Prism.js. See the [full list o
 JavaScript: 
 
 ```tsx live
-<Highlight 
+<Code 
   code="function greet(name) { return `Hello, ${name}!`; }" 
   language="javascript" 
 />
@@ -39,7 +39,7 @@ JavaScript:
 TypeScript: 
 
 ```tsx live
-<Highlight 
+<Code 
   code="interface User {\n  name: string;\n  age: number;\n}" 
   language="typescript" 
 />
@@ -48,7 +48,7 @@ TypeScript:
 Python: 
 
 ```tsx live
-<Highlight 
+<Code 
   code="def greet(name):\n    return f'Hello, {name}!'" 
   language="python" 
 />
@@ -63,13 +63,13 @@ import { themes } from 'prism-react-renderer';
 
 return (
   <View className="space-y-4">
-    <Highlight 
+    <Code 
       code="const theme = 'vsDark';" 
       language="javascript"
       theme={themes.vsDark}
     />
     
-    <Highlight 
+    <Code 
       code="const theme = 'vsLight';" 
       language="javascript"
       theme={themes.vsLight}
@@ -80,12 +80,12 @@ return (
 
 ### Input
 
-The `<HighlightInput />` component provides a syntax-highlighted text input that's perfect for code editing. It's built on top of the DS3 Input component and features automatic scrolling for long content:
+The `<CodeInput />` component provides a syntax-highlighted text input that's perfect for code editing. It's built on top of the DS3 Input component and features automatic scrolling for long content:
 
 ```tsx live
 import { useState } from 'react';
 
-function HighlightInputExample() {
+function CodeInputExample() {
   const [code, setCode] = useState(`function greet(name) {
   return \`Hello, \${name}!\`;
 }
@@ -124,7 +124,7 @@ const result = processUserData(user);
 console.log("Final result:", result);`);
 
   return (
-    <HighlightInput
+    <CodeInput
       value={code}
       onChangeText={setCode}
       placeholder="Enter your code here..."
@@ -134,14 +134,14 @@ console.log("Final result:", result);`);
   );
 }
 
-return <HighlightInputExample />;
+return <CodeInputExample />;
 ```
 
 ## API Reference
 
 Complete reference of all available props and their configurations.
 
-### Highlight Props
+### Code Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -150,7 +150,9 @@ Complete reference of all available props and their configurations.
 | `theme` | `object` | DS3 theme | The Prism.js theme object to use |
 | `className` | `string` | - | Additional class names for styling |
 
-### HighlightInput Props
+### CodeInput Props
+
+The CodeInput component is built on top of the DS3 [Input](https://reactnative.dev/docs/textinput) component and provides syntax highlighting for code editing.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -160,3 +162,5 @@ Complete reference of all available props and their configurations.
 | `multiline` | `boolean` | `true` | Whether the input supports multiple lines |
 | `numberOfLines` | `number` | `6` | Minimum number of lines to display |
 | `className` | `string` | - | Additional class names for styling |
+
+Inherits all [Input](https://reactnative.dev/docs/textinput) props.

@@ -1,15 +1,15 @@
 import { View, Text, useThemeColors } from '@consensys/ds3';
 import { Highlight as PrismHighlight } from 'prism-react-renderer';
 import { createDs3Theme } from './theme';
-import type { HighlightProps } from './types';
+import type { CodeProps } from './types';
 
-export function Highlight({ 
+export function Code({ 
   code, 
   language = 'javascript', 
   className = '',
   style,
   theme,
-}: HighlightProps) {
+}: CodeProps) {
   const colors = useThemeColors();
   const ds3Theme = createDs3Theme(colors);
 

@@ -46,7 +46,7 @@ import {
 } from "lucide-react-native";
 import { useForm, Controller } from 'react-hook-form';
 import { LivePreview } from "./components/code-block";
-import { Highlight, HighlightInput } from "./components/highlight";
+import { Code, CodeInput } from "./components/code";
 import { ReactHookForm } from "./examples/ReactHookForm";
 import { codeExamples } from "./examples";
 
@@ -376,7 +376,7 @@ export const Playground = () => {
              <Text size="base" weight="semibold" className="mb-2">
               JSX Code
             </Text>
-            <HighlightInput 
+            <CodeInput 
               value={currentJSX}
               onChangeText={(text: string) => {
                 setCustomJSX(text);

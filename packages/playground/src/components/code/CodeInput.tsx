@@ -1,19 +1,10 @@
 import React, { useState, useRef } from "react";
 import { Platform, ScrollView } from "react-native";
-import { View, Input, Text, Button } from "@consensys/ds3";
-import type { InputRootProps } from "@consensys/ds3";
-import { Highlight } from "./Highlight";
+import { View, Input } from "@consensys/ds3";
+import { Code } from "./Code";
+import type { CodeInputProps } from './types';
 
-export interface HighlightInputProps extends InputRootProps {
-  value: string;
-  onChangeText: (text: string) => void;
-  placeholder?: string;
-  multiline?: boolean;
-  numberOfLines?: number;
-  className?: string;
-}
-
-export const HighlightInput: React.FC<HighlightInputProps> = ({
+export const CodeInput: React.FC<CodeInputProps> = ({
   value,
   onChangeText,
   placeholder,
@@ -67,7 +58,7 @@ export const HighlightInput: React.FC<HighlightInputProps> = ({
 
   // Memoize the Highlight component to prevent re-rendering
   const highlightedCode = React.useMemo(() => (
-    <Highlight 
+    <Code 
       code={highlightCode}
       language="tsx"
       style={{ fontFamily: highlightFontFamily, fontSize: highlightFontSize, lineHeight: highlightLineHeight }}

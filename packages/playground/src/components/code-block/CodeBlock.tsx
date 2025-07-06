@@ -1,9 +1,8 @@
 import React from 'react';
-import { View, Text, useCopyToClipboard, Icon, Button, Card } from '@consensys/ds3';
-import { Check, Copy, Eye, EyeOff, Edit, Code, X, Pencil } from 'lucide-react-native';
+import { View, Text, useCopyToClipboard, Button, Card } from '@consensys/ds3';
+import { Check, Copy, Code as CodeIcon, X, Pencil } from 'lucide-react-native';
 import { LivePreview } from './LivePreview';
-import { Highlight } from '../highlight';
-import { HighlightInput } from '../highlight/HighlightInput';
+import { Code, CodeInput } from '../code';
 
 export interface CodeBlockProps {
   code: string;
@@ -20,7 +19,7 @@ export interface CodeBlockProps {
 }
 
 // Memoized Highlight component to prevent unnecessary re-renders and state updates
-const MemoizedHighlight = React.memo(({ code, language }: { code: string; language: string }) => {
+const MemoizedCode = React.memo(({ code, language }: { code: string; language: string }) => {
   const [hasError, setHasError] = React.useState(false);
 
   React.useEffect(() => {
@@ -36,7 +35,7 @@ const MemoizedHighlight = React.memo(({ code, language }: { code: string; langua
   }
 
   try {
-    return <Highlight code={code} language={language} />;
+    return <Code code={code} language={language} />;
   } catch (error) {
     console.warn('Highlight component error:', error);
     setHasError(true);
@@ -118,7 +117,7 @@ export function CodeBlock({
       {shouldShowCode && (
         !preview && (
           <Card.Content className="bg-neutral-1">
-            <MemoizedHighlight code={code} language={language} />
+            <MemoizedCode code={code} language={language} />
           </Card.Content>
         )
       )}
@@ -156,7 +155,7 @@ export function CodeBlock({
                   accessibilityHint="Click to toggle code view"
                   className="flex-row items-center gap-2"
                 >
-                  <Button.Icon icon={viewMode === 'code' ? X : Code} />
+                  <Button.Icon icon={viewMode === 'code' ? X : CodeIcon} />
                 </Button>
               )}
               {shouldShowEditButton && (
@@ -180,7 +179,7 @@ export function CodeBlock({
       {preview && (shouldShowCode || shouldShowEdit) && (
         <Card.Content className="border-t border-neutral-a7 bg-neutral-1">
           {viewMode === 'edit' ? (
-            <HighlightInput
+            <CodeInput
               value={editableCode}
               onChangeText={handleCodeChange}
               multiline={true}
@@ -189,7 +188,7 @@ export function CodeBlock({
               autoFocus={viewMode === 'edit'}
             />
           ) : (
-            <MemoizedHighlight code={code} language={language} />
+            <MemoizedCode code={code} language={language} />
           )}
         </Card.Content>
       )}

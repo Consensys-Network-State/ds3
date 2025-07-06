@@ -19,7 +19,7 @@ export default function ComponentsLayout() {
       <LocalDrawer.Screen name="switch" options={{ title: 'Switch' }} />
       <LocalDrawer.Screen name="field" options={{ title: 'Field' }} />
       <LocalDrawer.Screen name="fields" options={{ title: 'Fields' }} />
-      <LocalDrawer.Screen name="highlight" options={{ title: 'Highlight' }} />
+      <LocalDrawer.Screen name="code" options={{ title: 'Code' }} />
       <LocalDrawer.Screen name="code-block" options={{ title: 'Code Block' }} />
       <LocalDrawer.Screen name="markdown" options={{ title: 'Markdown' }} />
     </LocalDrawer>
