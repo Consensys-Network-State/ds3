@@ -15,7 +15,7 @@ import { ChevronDown } from 'lucide-react-native';
 import { cn } from '../../utils';
 import { useAccordionContext } from './context';
 import type { AccordionItemProps, AccordionTriggerProps, AccordionContentProps } from './types';
-import { TextClassContext } from '../text';
+import { TextContextProvider } from '../text';
 import { Card } from '../card';
 import { Icon } from '../icon';
 import { accordionTriggerVariants, accordionContentVariants, accordionItemVariants } from './styles';
@@ -94,13 +94,13 @@ export const AccordionTrigger = React.forwardRef<AccordionPrimitive.TriggerRef, 
     );
 
     return (
-      <TextClassContext.Provider value='native:text-lg font-medium web:group-hover:underline'>
+      <TextContextProvider.Provider value={{ className: 'native:text-lg font-medium web:group-hover:underline' }}>
         {context.variant === 'card' ? (
           <Card.Header className="p-0 border-0">
             {triggerContent}
           </Card.Header>
         ) : triggerContent}
-      </TextClassContext.Provider>
+      </TextContextProvider.Provider>
     );
   }
 );
@@ -138,13 +138,13 @@ export const AccordionContent = React.forwardRef<AccordionPrimitive.ContentRef, 
     );
 
     return (
-      <TextClassContext.Provider value='native:text-lg'>
+      <TextContextProvider.Provider value={{ className: 'native:text-lg' }}>
         {context.variant === 'card' ? (
           <Card.Content className="p-0">
             {contentElement}
           </Card.Content>
         ) : contentElement}
-      </TextClassContext.Provider>
+      </TextContextProvider.Provider>
     );
   }
 );

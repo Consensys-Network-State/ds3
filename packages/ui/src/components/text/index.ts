@@ -2,7 +2,7 @@
 export { Text } from './Text';
 
 // context
-export { TextClassContext, useTextClass } from './context';
+export { TextContextProvider, useTextContent } from './context';
 
 // types
 export type { TextProps, TextRef } from './types';

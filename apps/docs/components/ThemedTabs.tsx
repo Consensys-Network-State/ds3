@@ -15,11 +15,12 @@ function DS3Logo() {
   const router = useRouter();
   
   return (
-    <View className="flex justify-center items-center ml-1">
+    <View className="flex justify-center items-center ml-2">
       <Button
         variant="ghost"
         color="neutral"
         onPress={() => router.push('/')}
+        className="pl-1 pr-1"
       >
         <Button.Icon icon={ThemeIcon} className="w-8 h-8" />
         <Button.Text>

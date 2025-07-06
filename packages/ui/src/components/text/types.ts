@@ -10,7 +10,6 @@ export type TextProps = Omit<SlottableTextProps, 'className'> & {
   lineHeight?: VariantProps<typeof textVariants>['lineHeight'];
   fontFamily?: VariantProps<typeof textVariants>['fontFamily'];
   spectrum?: VariantProps<typeof textVariants>['spectrum'];
-  hover?: VariantProps<typeof textVariants>['hover'];
   className?: string;
 };
 

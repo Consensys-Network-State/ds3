@@ -5,7 +5,7 @@ import { cardVariants } from './styles';
 import { CardContextProvider } from './context';
 import { CardHeader, CardTitle, CardDescription, CardContent, CardFooter, CardText } from './Card.shared';
 import type { CardRootProps } from './types';
-import { TextClassContext } from '../text';
+import { TextContextProvider } from '../text';
 
 const CardRoot = React.forwardRef<React.ElementRef<typeof View>, CardRootProps>(
   ({ className, color = 'neutral', border = false, children, ...props }, ref) => {
@@ -13,7 +13,7 @@ const CardRoot = React.forwardRef<React.ElementRef<typeof View>, CardRootProps>(
 
     return (
       <CardContextProvider.Provider value={contextValue}>
-        <TextClassContext.Provider value=''>
+        <TextContextProvider.Provider value={{ className: '' }}>
           <View
             ref={ref}
             className={cn(cardVariants({ color, border }), className)}
@@ -27,7 +27,7 @@ const CardRoot = React.forwardRef<React.ElementRef<typeof View>, CardRootProps>(
               children
             )}
           </View>
-        </TextClassContext.Provider>
+        </TextContextProvider.Provider>
       </CardContextProvider.Provider>
     );
   }

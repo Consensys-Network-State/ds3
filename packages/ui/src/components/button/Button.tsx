@@ -7,7 +7,7 @@ import { ButtonContextProvider } from './context';
 import { ButtonIcon, ButtonSpinner, ButtonText } from './Button.shared';
 import { getNativeButtonAccessibilityProps } from './utils';
 import type { ButtonRootProps } from './types';
-import { TextClassContext } from '../text';
+import { TextContextProvider } from '../text';
 
 const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRootProps>(
   ({
@@ -45,7 +45,7 @@ const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRo
 
     return (
       <ButtonContextProvider.Provider value={contextValue}>
-        <TextClassContext.Provider value={buttonTextVariants({ variant, color: effectiveColor, size })}>
+        <TextContextProvider.Provider value={{ className: buttonTextVariants({ variant, color: effectiveColor, size }) }}>
           <Component
             ref={ref}
             className={cn(
@@ -74,7 +74,7 @@ const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRo
           >
             {typeof children === 'string' ? <ButtonText>{children}</ButtonText> : children}
           </Component>
-        </TextClassContext.Provider>
+        </TextContextProvider.Provider>
       </ButtonContextProvider.Provider>
     );
   }

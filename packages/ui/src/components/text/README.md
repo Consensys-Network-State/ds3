@@ -151,20 +151,6 @@ Apply different font weights for emphasis and hierarchy.
 </View>
 ```
 
-### Hover Effects
-
-Enable hover effects that change the text color on hover (web only).
-
-```tsx live
-<View className="flex flex-col gap-2">
-  <Text color="primary" hover>Primary text with hover</Text>
-  <Text color="primary" spectrum="bg" hover>Background spectrum with hover</Text>
-  <Text color="primary" spectrum="border" hover>Border spectrum with hover</Text>
-  <Text color="primary" spectrum="solid" hover>Solid spectrum with hover</Text>
-  <Text color="primary" spectrum="contrast" hover>Contrast spectrum with hover</Text>
-</View>
-```
-
 ### Line Heights
 
 Control line spacing for better readability and visual hierarchy.
@@ -238,13 +224,13 @@ Combine multiple typography properties for rich text styling.
 The Text component can receive default styling from a parent context:
 
 ```tsx live
-<TextClassContext.Provider value="italic text-primary-9">
+<TextContextProvider.Provider value="italic text-primary-9">
   <View className="flex flex-col gap-2">
     <Text>This will inherit the context styles</Text>
     <Text className="underline">This will merge with context styles</Text>
     <Text size="lg" weight="bold">This will override context styles</Text>
   </View>
-</TextClassContext.Provider>
+</TextContextProvider.Provider>
 ```
 
 ### Composition with `asChild`
@@ -290,7 +276,6 @@ Complete reference of all available props and their configurations.
 | `lineHeight` | `'tight' \| 'normal' \| 'loose'` | `'normal'` | The line height of the text |
 | `fontFamily` | `'inter' \| 'roboto' \| 'robotoCondensed' \| 'robotoSlab' \| 'libreFranklin'` | - | The font family of the text |
 | `spectrum` | `'text' \| 'bg' \| 'border' \| 'solid' \| 'contrast'` | `'text'` | The color spectrum to use |
-| `hover` | `boolean` | `false` | Enable hover effects that change color on hover (web only) |
 | `className` | `string` | - | Additional class names for custom styling |
 | `asChild` | `boolean` | `false` | Whether to use Slot.Text for composition |
 

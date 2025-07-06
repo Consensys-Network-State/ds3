@@ -21,6 +21,17 @@ export type {
   ButtonVariant
 } from './components/button';
 
+// surface
+export {
+  Surface,
+} from './components/surface';
+
+export type {
+  SurfaceRootProps,
+  SurfaceColors,
+  SurfaceVariant
+} from './components/surface';
+
 // checkbox
 export {
   Checkbox,
@@ -150,8 +161,8 @@ export type {
 // text
 export {
   Text,
-  TextClassContext,
-  useTextClass, // TODO: consistent naming
+  TextContextProvider,
+  useTextContent,
 } from './components/text';
 
 export type {

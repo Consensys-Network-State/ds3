@@ -1,14 +1,14 @@
 import React from 'react';
-import { TouchableOpacity, Pressable } from 'react-native';
-import { Button, Icon, Input, Checkbox, Switch, Spinner, Card, Badge, Alert, View, Text, TextContextProvider } from '@consensys/ds3';
+import { TouchableOpacity } from 'react-native';
+import { Surface, Icon, Input, Checkbox, Switch, Spinner, Card, Badge, Alert, View, Text } from '@consensys/ds3';
 import { MarkdownPage } from '@/components/MarkdownPage';
 import { Figma, Loader } from 'lucide-react-native';
 import { Link } from 'expo-router';
 
-export default function TextPage() {
+export default function SurfacePage() {
   const scope = {
     React,
-    Button,
+    Surface,
     Icon,
     Input,
     Checkbox,
@@ -18,18 +18,16 @@ export default function TextPage() {
     Badge,
     Alert,
     View,
-    Text,
     Figma,
     Loader,
     TouchableOpacity,
     Link,
-    TextContextProvider,
-    Pressable
+    Text,
   };
 
   return (
     <MarkdownPage 
-      path="packages/ui/src/components/text/README.md"
+      path="packages/ui/src/components/surface/README.md"
       scope={scope}
     />
   );

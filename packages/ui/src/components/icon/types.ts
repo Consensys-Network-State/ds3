@@ -9,6 +9,5 @@ export interface IconProps extends Omit<React.SVGProps<SVGSVGElement>, 'color' |
   icon: React.ComponentType<any>;
   className?: string;
   size?: IconSizes | number;
-  hover?: boolean;
   spectrum?: IconSpectrum;
 } 
