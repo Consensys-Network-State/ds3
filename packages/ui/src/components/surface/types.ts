@@ -17,5 +17,5 @@ export type SharedSurfaceProps = {
 
 export type SurfaceRootProps = SharedSurfaceProps & ViewProps & Partial<PressableProps>;
 
-export type SurfaceColors = NonNullable<SurfaceRootProps['color']>;
+export type SurfaceColor = NonNullable<SurfaceRootProps['color']>;
 export type SurfaceVariant = NonNullable<SurfaceRootProps['variant']>; 

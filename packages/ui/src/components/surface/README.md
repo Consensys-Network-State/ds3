@@ -353,7 +353,7 @@ Create pressable surfaces that respond to press and hover events.
 </View>
 ```
 
-### To Color
+### Interaction Color
 
 ```tsx live
 <View className="flex flex-col gap-3">

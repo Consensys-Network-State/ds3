@@ -1,6 +1,5 @@
 import { cva } from 'class-variance-authority';
-import type { TextProps } from '../text/types';
-import type { IconProps } from '../icon/types';
+import type { SurfaceColor, SurfaceVariant } from './types';
 
 export const surfaceVariants = cva(
   'group flex',
@@ -92,54 +91,20 @@ export const surfaceVariants = cva(
   }
 );
 
-export const surfaceIconVariants = cva(
-  'h-4 w-4',
-  {
-    variants: {},
-    defaultVariants: {},
-  }
-);
-
-// Helper function to convert Surface props to Text props
-export const getSurfaceTextProps = (
-  variant?: 'elevated' | 'solid' | 'soft' | 'outline' | 'dashed' | 'ghost',
-  color?: 'neutral' | 'primary' | 'secondary' | 'error' | 'warning' | 'success'
-): Partial<TextProps> => {
-  const textProps: Partial<TextProps> = {
-    spectrum: 'solid',
-  };
-
-  // Map Surface color to Text color
-  if (color) {
-    textProps.color = color;
-  }
+// Helper function to convert Surface props to Text/Icon props
+export const getSurfaceColorProps = (
+  variant?: SurfaceVariant,
+  color?: SurfaceColor
+) => {
+  let spectrum: 'solid' | 'contrast' = 'solid';
 
   // For elevated and solid variants, use contrast spectrum
   if (variant === 'elevated' || variant === 'solid') {
-    textProps.spectrum = 'contrast';
+    spectrum = 'contrast';
   }
 
-  return textProps;
-};
-
-// Helper function to convert Surface props to Icon props
-export const getSurfaceIconProps = (
-  variant?: 'elevated' | 'solid' | 'soft' | 'outline' | 'dashed' | 'ghost',
-  color?: 'neutral' | 'primary' | 'secondary' | 'error' | 'warning' | 'success'
-): Partial<IconProps> => {
-  const iconProps: Partial<IconProps> = {
-    spectrum: 'solid',
+  return {
+    color,
+    spectrum,
   };
-
-  // Map Surface color to Icon color
-  if (color) {
-    iconProps.color = color;
-  }
-
-  // For elevated and solid variants, use contrast spectrum
-  if (variant === 'elevated' || variant === 'solid') {
-    iconProps.spectrum = 'contrast';
-  }
-
-  return iconProps;
 };

@@ -4,13 +4,18 @@ export { Surface } from './Surface';
 // types
 export type { 
   SurfaceRootProps,
-  SurfaceColors,
+  SurfaceColor,
   SurfaceVariant
 } from './types';
+
+// constants
+export { 
+  SURFACE_COLORS,
+  SURFACE_VARIANTS,
+} from './constants';
 
 // styles
 export { 
   surfaceVariants,
-  getSurfaceIconProps,
-  getSurfaceTextProps,
+  getSurfaceColorProps,
 } from './styles'; 

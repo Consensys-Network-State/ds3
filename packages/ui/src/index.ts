@@ -28,7 +28,7 @@ export {
 
 export type {
   SurfaceRootProps,
-  SurfaceColors,
+  SurfaceColor,
   SurfaceVariant
 } from './components/surface';
 

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Pressable, View } from 'react-native';
 import * as Slot from '@rn-primitives/slot';
 import { cn } from '../../utils';
-import { surfaceVariants, getSurfaceTextProps, getSurfaceIconProps } from './styles';
+import { surfaceVariants, getSurfaceColorProps } from './styles';
 import type { SurfaceRootProps } from './types';
 import { TextContextProvider } from '../text';
 import { IconContextProvider } from '../icon';
@@ -22,6 +22,7 @@ const SurfaceRoot = React.forwardRef<any, SurfaceRootProps>(
     const [isPressed, setIsPressed] = React.useState(false);
     const [isHovered, setIsHovered] = React.useState(false);
     const effectiveColor = (isPressed || isHovered) && toColor ? toColor : color;
+    const contextProps = getSurfaceColorProps(variant || undefined, effectiveColor || undefined);
 
     if (pressable) {
       const pressableProps = {
@@ -51,8 +52,8 @@ const SurfaceRoot = React.forwardRef<any, SurfaceRootProps>(
       const Component = asChild ? Slot.Pressable : Pressable;
 
       return (
-        <TextContextProvider.Provider value={getSurfaceTextProps(variant || undefined, effectiveColor || undefined)}>
-          <IconContextProvider.Provider value={getSurfaceIconProps(variant || undefined, effectiveColor || undefined)}>
+        <TextContextProvider.Provider value={contextProps}>
+          <IconContextProvider.Provider value={contextProps}>
             <Component
               ref={ref}
               className={cn(
@@ -72,8 +73,8 @@ const SurfaceRoot = React.forwardRef<any, SurfaceRootProps>(
     const Component = asChild ? Slot.View : View;
 
     return (
-      <TextContextProvider.Provider value={getSurfaceTextProps(variant || undefined, effectiveColor || undefined)}>
-        <IconContextProvider.Provider value={getSurfaceIconProps(variant || undefined, effectiveColor || undefined)}>
+      <TextContextProvider.Provider value={contextProps}>
+        <IconContextProvider.Provider value={contextProps}>
           <Component
             ref={ref}
             className={cn(
