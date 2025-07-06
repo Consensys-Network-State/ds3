@@ -1,9 +1,10 @@
 import React, { useState, useRef } from "react";
 import { Platform, ScrollView } from "react-native";
 import { View, Input, Text, Button } from "@consensys/ds3";
+import type { InputRootProps } from "@consensys/ds3";
 import { Highlight } from "./Highlight";
 
-export interface HighlightInputProps {
+export interface HighlightInputProps extends InputRootProps {
   value: string;
   onChangeText: (text: string) => void;
   placeholder?: string;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, useCopyToClipboard, Icon, Button, Card } from '@consensys/ds3';
-import { Check, Copy, Eye, EyeOff, Edit, Code } from 'lucide-react-native';
+import { Check, Copy, Eye, EyeOff, Edit, Code, X, Pencil } from 'lucide-react-native';
 import { LivePreview } from './LivePreview';
 import { Highlight } from '../highlight';
 import { HighlightInput } from '../highlight/HighlightInput';
@@ -61,8 +61,9 @@ export function CodeBlock({
   editable = true,
 }: CodeBlockProps) {
   const { copied, copy } = useCopyToClipboard();
-  const [showCode, setShowCode] = React.useState(preview ? expand : true);
-  const [isEditing, setIsEditing] = React.useState(false);
+  const [viewMode, setViewMode] = React.useState<'hidden' | 'code' | 'edit'>(
+    preview ? (expand ? 'code' : 'hidden') : 'code'
+  );
   const [editableCode, setEditableCode] = React.useState(code);
 
   // Update editable code when prop changes
@@ -71,16 +72,16 @@ export function CodeBlock({
   }, [code]);
 
   const handleCopy = React.useCallback(() => {
-    copy(isEditing ? editableCode : code);
-  }, [copy, code, editableCode, isEditing]);
+    copy(viewMode === 'edit' ? editableCode : code);
+  }, [copy, code, editableCode, viewMode]);
 
-  const toggleCodeVisibility = React.useCallback(() => {
-    setShowCode(!showCode);
-  }, [showCode]);
+  const toggleCode = React.useCallback(() => {
+    setViewMode(viewMode === 'code' ? 'hidden' : 'code');
+  }, [viewMode]);
 
-  const toggleEditMode = React.useCallback(() => {
-    setIsEditing(!isEditing);
-  }, [isEditing]);
+  const toggleEdit = React.useCallback(() => {
+    setViewMode(viewMode === 'edit' ? 'hidden' : 'edit');
+  }, [viewMode]);
 
   const handleCodeChange = React.useCallback((text: string) => {
     setEditableCode(text);
@@ -90,10 +91,11 @@ export function CodeBlock({
   }, [onChange]);
 
   // Determine what to show based on preview state
-  const shouldShowCode = showCode || !preview;
+  const shouldShowCode = viewMode === 'code' || !preview;
+  const shouldShowEdit = viewMode === 'edit';
   const shouldShowPreview = preview;
   const shouldShowToggleButton = preview;
-  const shouldShowEditButton = preview && shouldShowCode && editable;
+  const shouldShowEditButton = preview && editable;
 
   const showHeader = showLanguage || showCopyButton || shouldShowEditButton || shouldShowToggleButton;
 
@@ -106,7 +108,7 @@ export function CodeBlock({
       {shouldShowPreview && (
         <Card.Content className="bg-neutral-1">
           <LivePreview 
-            code={isEditing ? editableCode : code}
+            code={viewMode === 'edit' ? editableCode : code}
             scope={scope}
           />
         </Card.Content>
@@ -142,31 +144,31 @@ export function CodeBlock({
                   accessibilityHint="Click to copy code to clipboard"
                   className="flex-row items-center gap-2"
                 >
-                  <Icon icon={copied ? Check : Copy} size="sm" color="neutral" />
+                  <Button.Icon icon={copied ? Check : Copy} />
                 </Button>
               )}
               {shouldShowToggleButton && (
                 <Button
-                  variant="ghost"
+                  variant={viewMode === 'code' ? 'solid' : 'ghost'}
                   size="sm"
-                  onPress={toggleCodeVisibility}
-                  accessibilityLabel={showCode ? "Hide code" : "Show code"}
-                  accessibilityHint="Click to toggle code visibility"
+                  onPress={toggleCode}
+                  accessibilityLabel={viewMode === 'code' ? "Hide code" : "Show code"}
+                  accessibilityHint="Click to toggle code view"
                   className="flex-row items-center gap-2"
                 >
-                  <Icon icon={showCode ? EyeOff : Eye} size="sm" color="neutral" />
+                  <Button.Icon icon={viewMode === 'code' ? X : Code} />
                 </Button>
               )}
               {shouldShowEditButton && (
                 <Button
-                  variant="ghost"
+                  variant={viewMode === 'edit' ? 'solid' : 'ghost'}
                   size="sm"
-                  onPress={toggleEditMode}
-                  accessibilityLabel={isEditing ? "View code" : "Edit code"}
-                  accessibilityHint={isEditing ? "Click to view the code without editing" : "Click to edit the code"}
+                  onPress={toggleEdit}
+                  accessibilityLabel={viewMode === 'edit' ? "Hide edit" : "Show edit"}
+                  accessibilityHint="Click to toggle edit mode"
                   className="flex-row items-center gap-2"
                 >
-                  <Icon icon={isEditing ? Code : Edit} size="sm" color="neutral" />
+                  <Button.Icon icon={viewMode === 'edit' ? X : Pencil}/>
                 </Button>
               )}
             </View>
@@ -175,22 +177,21 @@ export function CodeBlock({
       )}
 
       {/* Code content - footer when there's a toggle, otherwise main content */}
-      {shouldShowCode && (
-        preview && (
-          <Card.Content className="border-t border-neutral-a7 bg-neutral-1">
-            {isEditing ? (
-              <HighlightInput
-                value={editableCode}
-                onChangeText={handleCodeChange}
-                multiline={true}
-                numberOfLines={numberOfLines}
-                className="min-h-[120px]"
-              />
-            ) : (
-              <MemoizedHighlight code={code} language={language} />
-            )}
-          </Card.Content>
-        )
+      {preview && (shouldShowCode || shouldShowEdit) && (
+        <Card.Content className="border-t border-neutral-a7 bg-neutral-1">
+          {viewMode === 'edit' ? (
+            <HighlightInput
+              value={editableCode}
+              onChangeText={handleCodeChange}
+              multiline={true}
+              numberOfLines={numberOfLines}
+              className="min-h-[120px]"
+              autoFocus={viewMode === 'edit'}
+            />
+          ) : (
+            <MemoizedHighlight code={code} language={language} />
+          )}
+        </Card.Content>
       )}
     </Card>
   );
