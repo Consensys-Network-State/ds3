@@ -1,18 +1,12 @@
-import type { VariantProps } from 'class-variance-authority';
-import { buttonVariants } from "@consensys/ds3/src/components/button/styles";
-
-// Extract actual types from the button component
-type ButtonVariant = NonNullable<VariantProps<typeof buttonVariants>['variant']>;
-type ButtonColor = NonNullable<VariantProps<typeof buttonVariants>['color']>;
-type ButtonSize = NonNullable<VariantProps<typeof buttonVariants>['size']>;
+import type { ButtonVariant, ButtonColors, ButtonSizes } from "@consensys/ds3";
 
 // Get the actual variant, color, and size values from the component
 const variants: ButtonVariant[] = ['elevated', 'solid', 'soft', 'outline', 'dashed', 'ghost'];
-const colors: ButtonColor[] = ['neutral', 'primary', 'secondary', 'error', 'warning', 'success'];
-const sizes: ButtonSize[] = ['sm', 'md', 'lg'];
+const colors: ButtonColors[] = ['neutral', 'primary', 'secondary', 'error', 'warning', 'success'];
+const sizes: ButtonSizes[] = ['sm', 'md', 'lg'];
 
 // Helper function to generate JSX for a single button
-const generateButtonJSX = (variant: ButtonVariant, color?: ButtonColor, size?: ButtonSize, text = 'Button') => {
+const generateButtonJSX = (variant: ButtonVariant, color?: ButtonColors, size?: ButtonSizes, text = 'Button') => {
   const colorProp = color && color !== 'neutral' ? ` color="${color}"` : '';
   const sizeProp = size && size !== 'md' ? ` size="${size}"` : '';
   
@@ -22,7 +16,7 @@ const generateButtonJSX = (variant: ButtonVariant, color?: ButtonColor, size?: B
 };
 
 // Helper function to generate JSX for button with icon
-const generateButtonWithIconJSX = (variant: ButtonVariant, iconPosition: 'start' | 'end' | 'both', color?: ButtonColor, size?: ButtonSize, text = 'Button') => {
+const generateButtonWithIconJSX = (variant: ButtonVariant, iconPosition: 'start' | 'end' | 'both', color?: ButtonColors, size?: ButtonSizes, text = 'Button') => {
   const colorProp = color && color !== 'neutral' ? ` color="${color}"` : '';
   const sizeProp = size && size !== 'md' ? ` size="${size}"` : '';
   
@@ -40,7 +34,7 @@ ${iconJSX}</Button>`;
 };
 
 // Helper function to generate JSX for icon button
-const generateIconButtonJSX = (variant: ButtonVariant, color?: ButtonColor, size?: ButtonSize) => {
+const generateIconButtonJSX = (variant: ButtonVariant, color?: ButtonColors, size?: ButtonSizes) => {
   const colorProp = color && color !== 'neutral' ? ` color="${color}"` : '';
   const sizeProp = size && size !== 'md' ? ` size="${size}"` : '';
   

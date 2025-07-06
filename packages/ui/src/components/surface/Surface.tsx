@@ -16,13 +16,18 @@ const SurfaceRoot = React.forwardRef<any, SurfaceRootProps>(
     disabled = false,
     asChild = false,
     pressable = false,
+    iconContext: providedIconContext,
+    textContext: providedTextContext,
     children,
     ...props
   }, ref) => {
     const [isPressed, setIsPressed] = React.useState(false);
     const [isHovered, setIsHovered] = React.useState(false);
     const effectiveColor = (isPressed || isHovered) && toColor ? toColor : color;
-    const contextProps = getSurfaceColorProps(variant || undefined, effectiveColor || undefined);
+    const colorContext = getSurfaceColorProps(variant || undefined, effectiveColor || undefined);
+
+    const iconContext = { ...colorContext, ...providedIconContext };
+    const textContext = { ...colorContext, ...providedTextContext };
 
     if (pressable) {
       const pressableProps = {
@@ -52,8 +57,8 @@ const SurfaceRoot = React.forwardRef<any, SurfaceRootProps>(
       const Component = asChild ? Slot.Pressable : Pressable;
 
       return (
-        <TextContextProvider.Provider value={contextProps}>
-          <IconContextProvider.Provider value={contextProps}>
+        <TextContextProvider.Provider value={textContext}>
+          <IconContextProvider.Provider value={iconContext}>
             <Component
               ref={ref}
               className={cn(
@@ -73,8 +78,8 @@ const SurfaceRoot = React.forwardRef<any, SurfaceRootProps>(
     const Component = asChild ? Slot.View : View;
 
     return (
-      <TextContextProvider.Provider value={contextProps}>
-        <IconContextProvider.Provider value={contextProps}>
+      <TextContextProvider.Provider value={textContext}>
+        <IconContextProvider.Provider value={iconContext}>
           <Component
             ref={ref}
             className={cn(

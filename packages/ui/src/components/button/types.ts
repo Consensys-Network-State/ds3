@@ -3,20 +3,14 @@ import { PressableProps } from 'react-native';
 import type { VariantProps } from 'class-variance-authority';
 import type { IconProps } from '../icon/types';
 import type { SpinnerProps } from '../spinner/types';
+import type { SurfaceRootProps } from '../surface/types';
 import { buttonVariants } from './styles';
 
-// Shared button props
-export type SharedButtonProps = {
-  variant?: VariantProps<typeof buttonVariants>['variant'];
-  color?: VariantProps<typeof buttonVariants>['color'];
-  toColor?: VariantProps<typeof buttonVariants>['color'];
+// Shared button props - extends Surface props
+export type SharedButtonProps = Omit<SurfaceRootProps, 'pressable'> & {
   size?: VariantProps<typeof buttonVariants>['size'];
-  disabled?: boolean;
   loading?: boolean;
   square?: boolean;
-  asChild?: boolean;
-  className?: string;
-  children?: React.ReactNode;
 };
 
 // Native button props
@@ -26,17 +20,12 @@ export type NativeButtonProps = SharedButtonProps & PressableProps;
 export type ButtonRootProps = NativeButtonProps;
 
 export type ButtonContext = {
-  variant?: VariantProps<typeof buttonVariants>['variant'];
-  color?: VariantProps<typeof buttonVariants>['color'];
+  variant?: SurfaceRootProps['variant'];
+  color?: SurfaceRootProps['color'];
   size?: VariantProps<typeof buttonVariants>['size'];
   disabled?: boolean;
   loading?: boolean;
   square?: boolean;
-  isPressed?: boolean;
-  isHovered?: boolean;
-  setPressed?: (pressed: boolean) => void;
-  setHovered?: (hovered: boolean) => void;
-  buttonRef?: React.RefObject<any>;
   buttonProps?: ButtonRootProps;
 };
 
@@ -54,6 +43,6 @@ export type ButtonTextProps = {
   children?: React.ReactNode;
 };
 
-export type ButtonColors = NonNullable<ButtonRootProps['color']>;
+export type ButtonColors = NonNullable<SurfaceRootProps['color']>;
 export type ButtonSizes = NonNullable<ButtonRootProps['size']>;
-export type ButtonVariant = NonNullable<ButtonRootProps['variant']>;
+export type ButtonVariant = NonNullable<SurfaceRootProps['variant']>;

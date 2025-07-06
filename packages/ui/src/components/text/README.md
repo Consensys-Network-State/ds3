@@ -224,7 +224,7 @@ Combine multiple typography properties for rich text styling.
 The Text component can receive default styling from a parent context:
 
 ```tsx live
-<TextContextProvider.Provider value="italic text-primary-9">
+<TextContextProvider.Provider value={{ className: 'italic text-primary-9' }}>
   <View className="flex flex-col gap-2">
     <Text>This will inherit the context styles</Text>
     <Text className="underline">This will merge with context styles</Text>

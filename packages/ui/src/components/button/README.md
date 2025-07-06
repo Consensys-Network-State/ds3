@@ -83,19 +83,19 @@ Add visual context with icons positioned before, after, or on both sides of text
 ```tsx live
 <View className="flex flex-row flex-wrap gap-3">
   <Button>
-    <Button.Icon icon={Figma} />
-    <Button.Text>Icon Left</Button.Text>
+    <Icon icon={Figma} />
+    <Text>Icon Left</Text>
   </Button>
 
   <Button>
-    <Button.Text>Icon Right</Button.Text>
-    <Button.Icon icon={Figma} />
+    <Text>Icon Right</Text>
+    <Icon icon={Figma} />
   </Button>
 
   <Button>
-    <Button.Icon icon={Figma} />
-    <Button.Text>Icon Both</Button.Text>
-    <Button.Icon icon={Figma} />
+    <Icon icon={Figma} />
+    <Text>Icon Both</Text>
+    <Icon icon={Figma} />
   </Button>
 </View>
 ```
@@ -109,15 +109,15 @@ Create icon-only buttons with equal padding for consistent visual balance.
 ```tsx live
 <View className="flex flex-row flex-wrap gap-3">
   <Button size="sm" square>
-    <Button.Icon icon={Figma} />
+    <Icon icon={Figma} />
   </Button>
 
   <Button square>
-    <Button.Icon icon={Figma} />
+    <Icon icon={Figma} />
   </Button>
   
   <Button size="lg" square>
-    <Button.Icon icon={Figma} />
+    <Icon icon={Figma} />
   </Button>
 </View>
 ```
@@ -132,11 +132,11 @@ Basic:
 <View className="flex flex-row flex-wrap gap-3">
   <Button loading>
     <Button.Spinner />
-    <Button.Text>Loading Left</Button.Text>
+    <Text>Loading Left</Text>
   </Button>
 
   <Button loading>
-    <Button.Text>Loading Right</Button.Text>
+    <Text>Loading Right</Text>
     <Button.Spinner />
   </Button>
 </View>
@@ -147,7 +147,7 @@ Loading Icon:
 ```tsx live
 <Button loading>
   <Button.Spinner loadingIcon={Loader} />
-  <Button.Text>Custom Icon</Button.Text>
+  <Text>Custom Icon</Text>
 </Button>
 ```
 
@@ -166,7 +166,7 @@ const Component = () => {
       loading={loading}
     >
       <Button.Spinner icon={Figma} />
-      <Button.Text>{loading ? 'Loading...' : 'Press to load'}</Button.Text>
+      <Text>{loading ? 'Loading...' : 'Press to load'}</Text>
     </Button>
   );
 }
@@ -182,7 +182,7 @@ Prevent user interaction and provide visual feedback for unavailable actions.
 
 ```tsx live
 <Button disabled>
-  <Button.Text>Disabled</Button.Text>
+  <Text>Disabled</Text>
 </Button>
 ```
 
@@ -200,7 +200,7 @@ const Component = () => {
   return (
     <Button asChild>
       <Link href="/">
-        <Button.Text>Navigate Home</Button.Text>
+        <Text>Navigate Home</Text>
       </Link>
     </Button>
   );

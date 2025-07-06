@@ -20,10 +20,6 @@ export const ButtonIcon = React.forwardRef<React.ElementRef<typeof Icon>, Button
         ref={ref}
         icon={icon}
         className={cn(
-          buttonTextVariants({
-            variant: context.variant,
-            color: context.color,
-          }),
           buttonIconVariants({ size: context.size }),
           className
         )}
@@ -51,10 +47,6 @@ export const ButtonSpinner = React.forwardRef<React.ElementRef<typeof Icon>, But
           ref={ref}
           icon={icon}
           className={cn(
-            buttonTextVariants({
-              variant: context.variant,
-              color: context.color,
-            }),
             buttonIconVariants({ size: context.size }),
             className
           )}
@@ -69,10 +61,6 @@ export const ButtonSpinner = React.forwardRef<React.ElementRef<typeof Icon>, But
           ref={ref}
           icon={loadingIcon}
           className={cn(
-            buttonTextVariants({
-              variant: context.variant,
-              color: context.color,
-            }),
             buttonIconVariants({ size: context.size }),
             className
           )}
@@ -95,8 +83,6 @@ export const ButtonText = React.forwardRef<React.ElementRef<typeof Text>, Button
         ref={ref}
         className={cn(
           buttonTextVariants({
-            variant: context.variant,
-            color: context.color,
             size: context.size,
           }),
           className

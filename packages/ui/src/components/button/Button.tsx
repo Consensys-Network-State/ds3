@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { Pressable } from 'react-native';
-import * as Slot from '@rn-primitives/slot';
 import { cn } from '../../utils';
-import { buttonVariants, buttonTextVariants } from './styles';
+import { buttonVariants, buttonIconVariants, buttonTextVariants } from './styles';
 import { ButtonContextProvider } from './context';
 import { ButtonIcon, ButtonSpinner, ButtonText } from './Button.shared';
 import { getNativeButtonAccessibilityProps } from './utils';
 import type { ButtonRootProps } from './types';
-import { TextContextProvider } from '../text';
+import { Surface } from '../surface';
+import { Text } from '../text';
 
 const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRootProps>(
   ({
@@ -23,58 +23,38 @@ const ButtonRoot = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonRo
     children,
     ...props
   }, ref) => {
-    const [isPressed, setIsPressed] = React.useState(false);
-    const [isHovered, setIsHovered] = React.useState(false);
-    const effectiveColor = (isPressed || isHovered) && toColor ? toColor : color;
-
     const accessibilityProps = getNativeButtonAccessibilityProps({ disabled, loading });
 
     const contextValue = React.useMemo(() => ({
       variant,
-      color: effectiveColor,
+      color,
       size,
       disabled: disabled || loading,
       loading,
       square,
-      isPressed,
-      setPressed: setIsPressed,
       buttonProps: props,
-    }), [variant, effectiveColor, size, disabled, loading, square, isPressed, props]);
-
-    const Component = asChild ? Slot.Pressable : Pressable;
+    }), [variant, color, size, disabled, loading, square, props]);
 
     return (
       <ButtonContextProvider.Provider value={contextValue}>
-        <TextContextProvider.Provider value={{ className: buttonTextVariants({ variant, color: effectiveColor, size }) }}>
-          <Component
-            ref={ref}
-            className={cn(
-              buttonVariants({ variant, color: effectiveColor, size, disabled: disabled || loading, square }),
-              className,
-            )}
-            disabled={disabled || loading}
-            onPressIn={(e) => {
-              setIsPressed(true);
-              props.onPressIn?.(e);
-            }}
-            onPressOut={(e) => {
-              setIsPressed(false);
-              props.onPressOut?.(e);
-            }}
-            onHoverIn={(e) => {
-              setIsHovered(true);
-              props.onHoverIn?.(e);
-            }}
-            onHoverOut={(e) => {
-              setIsHovered(false);
-              props.onHoverOut?.(e);
-            }}
-            {...accessibilityProps}
-            {...props}
-          >
-            {typeof children === 'string' ? <ButtonText>{children}</ButtonText> : children}
-          </Component>
-        </TextContextProvider.Provider>
+        <Surface
+          ref={ref}
+          pressable
+          variant={variant}
+          color={color}
+          toColor={toColor}
+          disabled={disabled || loading}
+          iconContext={{ className: buttonIconVariants({ size }) }}
+          textContext={{ className: buttonTextVariants({ size }) }}
+          className={cn(
+            buttonVariants({ size, square }),
+            className,
+          )}
+          {...accessibilityProps}
+          {...props}
+        >
+          {typeof children === 'string' ? <Text>{children}</Text> : children}
+        </Surface>
       </ButtonContextProvider.Provider>
     );
   }
