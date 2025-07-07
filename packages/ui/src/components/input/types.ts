@@ -48,6 +48,7 @@ export type InputIconProps = IconProps & {
 
 export type InputSpinnerProps = SpinnerRootProps & {
   className?: string;
+  icon?: React.ComponentType<any>;
   loadingIcon?: React.ComponentType<any>;
 };
 

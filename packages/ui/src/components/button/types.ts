@@ -35,6 +35,7 @@ export type ButtonIconProps = IconProps & {
 
 export type ButtonSpinnerProps = SpinnerRootProps & {
   className?: string;
+  icon?: React.ComponentType<any>;
   loadingIcon?: React.ComponentType<any>;
 };
 
