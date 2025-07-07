@@ -96,6 +96,11 @@ pnpm config:build
 
 The interactive documentation and component examples are available in the [docs](apps/docs) app.
 
+Start the markdown server (serves markdown files with live reload):
+```bash
+pnpm markdown-server
+```
+
 Start the documentation site:
 ```bash
 pnpm docs:start
