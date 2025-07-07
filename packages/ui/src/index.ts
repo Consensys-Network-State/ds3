@@ -5,17 +5,10 @@
 // button
 export {
   Button,
-  useButtonContext,
 } from './components/button';
 
 export type {
   ButtonRootProps,
-  ButtonContext,
-  ButtonIconProps,
-  ButtonSpinnerProps,
-  ButtonTextProps,
-  NativeButtonProps,
-  SharedButtonProps,
   ButtonColors,
   ButtonSizes,
   ButtonVariant

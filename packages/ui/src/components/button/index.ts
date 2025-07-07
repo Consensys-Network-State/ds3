@@ -4,7 +4,6 @@ export { Button } from './Button';
 // types
 export type { 
   ButtonRootProps,
-  SharedButtonProps,
   ButtonColors,
   ButtonSizes,
   ButtonVariant
@@ -13,4 +12,6 @@ export type {
 // styles
 export { 
   buttonVariants,
+  buttonTextVariants,
+  buttonIconVariants,
 } from './styles'; 
