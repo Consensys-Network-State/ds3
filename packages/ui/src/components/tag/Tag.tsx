@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { View } from 'react-native';
 import { cn } from '../../utils';
-import { tagVariants } from './styles';
-import { TagContextProvider } from './context';
-import { TagRoot, TagText } from './Tag.shared';
+import { tagVariants, tagTextVariants, tagIconVariants } from './styles';
 import type { TagProps, TagContext } from './types';
+import { Surface } from '../surface';
+import { Text } from '../text';
+import { TagContextProvider } from './context';
+import { TagDismiss } from './Tag.shared';
 
-const TagComponent = React.forwardRef<React.ElementRef<typeof View>, TagProps>(
+const Tag = React.forwardRef<React.ElementRef<typeof Surface>, TagProps>(
   (props, ref) => {
     const {
       children,
@@ -14,7 +15,9 @@ const TagComponent = React.forwardRef<React.ElementRef<typeof View>, TagProps>(
       style,
       color = 'neutral',
       size = 'md',
-      variant = 'default',
+      variant = 'soft',
+      onPress,
+      disabled = false,
       ...otherProps
     } = props;
 
@@ -24,39 +27,35 @@ const TagComponent = React.forwardRef<React.ElementRef<typeof View>, TagProps>(
       variant: variant!,
     }), [color, size, variant]);
 
-    // Wrap string children in TagText
-    const renderChildren = () => {
-      if (typeof children === 'string') {
-        return <TagText>{children}</TagText>;
-      }
-      return children;
-    };
-
     return (
       <TagContextProvider.Provider value={contextValue}>
-        <TagRoot
+        <Surface
           ref={ref}
+          color={color}
+          variant={variant}
+          pressable={!!onPress}
+          disabled={disabled}
+          onPress={onPress}
+          iconContext={{ className: tagIconVariants({ size }) }}
+          textContext={{ className: tagTextVariants({ size }) }}
           className={cn(
-            tagVariants({ color, size, variant }),
+            tagVariants({ size }),
             className
           )}
           style={style}
-          color={color}
-          size={size}
-          variant={variant}
           {...otherProps}
         >
-          {renderChildren()}
-        </TagRoot>
+          {typeof children === 'string' ? <Text>{children}</Text> : children}
+        </Surface>
       </TagContextProvider.Provider>
     );
   }
 );
 
-TagComponent.displayName = 'Tag';
+Tag.displayName = 'Tag';
 
-const Tag = Object.assign(TagComponent, {
-  Text: TagText,
+const TagWithDismiss = Object.assign(Tag, {
+  Dismiss: TagDismiss,
 });
 
-export { Tag }; 
+export { TagWithDismiss as Tag }; 

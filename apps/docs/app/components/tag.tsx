@@ -1,8 +1,8 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { Tag, Icon, View } from '@consensys/ds3';
+import { Tag, Icon, View, Text, Button } from '@consensys/ds3';
 import { MarkdownPage } from '@/components/MarkdownPage';
-import { X } from 'lucide-react-native';
+import { X, Figma } from 'lucide-react-native';
 
 export default function TagPage() {
   const scope = {
@@ -12,6 +12,9 @@ export default function TagPage() {
     View,
     X,
     TouchableOpacity,
+    Figma,
+    Text,
+    Button
   };
 
   return (

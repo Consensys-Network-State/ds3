@@ -1,70 +1,28 @@
 import * as React from 'react';
-import { Pressable, View } from 'react-native';
-import { Text } from '../text';
+import { Button } from '../button';
+import { Icon } from '../icon';
+import { X } from 'lucide-react-native';
 import { cn } from '../../utils';
-import { tagVariants, tagTextVariants } from './styles';
 import { useTagContext } from './context';
-import type { TagProps, TagTextProps } from './types';
 
-export const TagText = React.forwardRef<React.ElementRef<typeof Text>, TagTextProps>(
+export const TagDismiss = React.forwardRef<React.ElementRef<typeof Button>, React.ComponentProps<typeof Button>>(
   (props, ref) => {
-    const { children, className = '', style, color, size, ...otherProps } = props;
+    const { className = '', ...otherProps } = props;
     const context = useTagContext();
-
+    
     return (
-      <Text
+      <Button
         ref={ref}
-        className={cn(
-          tagTextVariants({
-            color: color || context.color,
-            size: size || context.size,
-          }),
-          className
-        )}
-        style={style}
+        variant="ghost"
+        size="sm"
+        square
+        className={cn("p-0.5 self-center", className)}
         {...otherProps}
       >
-        {children}
-      </Text>
+        <Icon icon={X} size="sm" color={context.color} />
+      </Button>
     );
   }
 );
 
-TagText.displayName = 'TagText';
-
-export const TagRoot = React.forwardRef<React.ElementRef<typeof Pressable>, TagProps>(
-  (props, ref) => {
-    const {
-      children,
-      className = '',
-      style,
-      color = 'neutral',
-      size = 'md',
-      variant = 'default',
-      onPress,
-      disabled = false,
-      ...otherProps
-    } = props;
-
-    const Component = onPress ? Pressable : View;
-
-    return (
-      <Component
-        ref={ref}
-        className={cn(
-          tagVariants({ color, size, variant }),
-          disabled && 'opacity-50 cursor-not-allowed',
-          className
-        )}
-        style={style}
-        onPress={onPress}
-        disabled={disabled}
-        {...otherProps}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
-
-TagRoot.displayName = 'Tag'; 
+TagDismiss.displayName = 'Tag.Dismiss'; 

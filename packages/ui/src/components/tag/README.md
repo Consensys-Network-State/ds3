@@ -1,25 +1,43 @@
 # Tag Component
 
-A flexible tag component for displaying labels, badges, and interactive elements.
+The `<Tag />` component provides a cross-platform tag control that adapts to both web and React Native environments while maintaining a consistent API and design.
 
-## Features
+## Installation
 
-- Multiple color variants (neutral, primary, secondary, success, warning, error)
-- Different sizes (sm, md, lg)
-- Multiple variants (default, outline, secondary)
-- Interactive with onPress support
-- Accessible and keyboard navigable
-- Consistent with DS3 design system
+Import the Tag component from the DS3 package.
 
-## Usage
+```tsx
+import { Tag } from '@consensys/ds3';
+```
 
-### Basic Tag
+## Examples
+
+### Basic
+
+Create a simple tag with default styling.
 
 ```tsx live
 <Tag>Default Tag</Tag>
 ```
 
+### Variants
+
+Choose from six different visual styles to match your design system.
+
+```tsx live
+<View className="flex flex-row gap-2">
+  <Tag variant="elevated">Elevated</Tag>
+  <Tag variant="solid">Solid</Tag>
+  <Tag variant="soft">Soft</Tag>
+  <Tag variant="outline">Outline</Tag>
+  <Tag variant="dashed">Dashed</Tag>
+  <Tag variant="ghost">Ghost</Tag>
+</View>
+```
+
 ### Colors
+
+Apply semantic color schemes for different contexts and states.
 
 ```tsx live
 <View className="flex flex-row flex-wrap gap-2">
@@ -32,17 +50,9 @@ A flexible tag component for displaying labels, badges, and interactive elements
 </View>
 ```
 
-### Tag Variants
+### Sizes
 
-```tsx live
-<View className="flex flex-row gap-2">
-  <Tag variant="default">Default</Tag>
-  <Tag variant="outline">Outline</Tag>
-  <Tag variant="secondary">Secondary</Tag>
-</View>
-```
-
-### Tag Sizes
+Scale tags to fit different UI contexts and hierarchy levels.
 
 ```tsx live
 <View className="flex flex-row gap-2">
@@ -52,7 +62,32 @@ A flexible tag component for displaying labels, badges, and interactive elements
 </View>
 ```
 
-### Interactive Tag
+### Icons
+
+Add visual context with icons that automatically scale with the tag size.
+
+```tsx live
+<View className="flex flex-row gap-2">
+  <Tag size="sm">
+    <Icon icon={Figma} />
+    <Text>Small</Text>
+  </Tag>
+  <Tag size="md">
+    <Icon icon={Figma} />
+    <Text>Medium</Text>
+  </Tag>
+  <Tag size="lg">
+    <Icon icon={Figma} />
+    <Text>Large</Text>
+  </Tag>
+</View>
+```
+
+### Pressable
+
+Create interactive tags that respond to press and hover events.
+
+Basic:
 
 ```tsx live
 <Tag onPress={() => console.log('Tag pressed!')}>
@@ -60,23 +95,64 @@ A flexible tag component for displaying labels, badges, and interactive elements
 </Tag>
 ```
 
-### Disabled Tag
+Interaction Color:
+
+```tsx live
+<Tag color="neutral" toColor="primary" onPress={() => console.log('Tag pressed!')}>
+  Neutral to Primary
+</Tag>
+```
+
+### Dismissible
+
+Create dismissible tags with two different approaches - using the entire tag or a dedicated dismiss button.
+
+```tsx live
+const Component = () => {
+  const [visible1, setVisible1] = React.useState(true);
+  const [visible2, setVisible2] = React.useState(true);
+
+  return (
+    <View className="flex flex-row gap-2">
+      {visible1 ? (
+        <Tag onPress={() => setVisible1(false)}>
+          <Text>Full Tag</Text>
+          <Icon icon={X} />
+        </Tag>
+      ) : null}
+      
+      {visible2 ? (
+        <Tag>
+          <Text>Dedicated Button</Text>
+          <Tag.Dismiss onPress={() => setVisible2(false)} />
+        </Tag>
+      ) : null}
+    </View>
+  );
+}
+
+export default Component;
+```
+
+### Disabled State
+
+Prevent user interaction and provide visual feedback for unavailable actions.
 
 ```tsx live
 <Tag disabled>Disabled Tag</Tag>
 ```
 
-### Custom Tag Text
+## API Reference
+
+Complete reference of all available props and their configurations.
+
+### Tag.Root
 
 ```tsx live
-<Tag color="primary">
-  <Tag.Text>Custom styled text</Tag.Text>
+<Tag variant="soft" color="primary">
+  { /* Tag content here */ }
 </Tag>
 ```
-
-## API
-
-### Tag Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
@@ -85,16 +161,28 @@ A flexible tag component for displaying labels, badges, and interactive elements
 | `style` | `ViewStyle` | - | Additional styles |
 | `color` | `'neutral'` \| `'primary'` \| `'secondary'` \| `'success'` \| `'warning'` \| `'error'` | `'neutral'` | Tag color variant |
 | `size` | `'sm'` \| `'md'` \| `'lg'` | `'md'` | Tag size |
-| `variant` | `'default'` \| `'outline'` \| `'secondary'` | `'default'` | Tag variant |
+| `variant` | `'elevated'` \| `'solid'` \| `'soft'` \| `'outline'` \| `'dashed'` \| `'ghost'` | `'soft'` | Tag variant |
 | `onPress` | `() => void` | - | Press handler |
 | `disabled` | `boolean` | `false` | Whether tag is disabled |
+| `toColor` | Same as `color` | - | Color to switch to on press/hover |
 
-### TagText Props
+**Note**: Tag inherits all props from [Surface](/packages/ui/src/components/surface/README.md), including color schemes, variants, and interaction states.
+
+### Tag.Dismiss
+
+A convenient subcomponent for creating dismissible tags with an X icon:
+
+```tsx live
+<Tag variant="soft" color="primary">
+  { /* Tag content here */ }
+  <Tag.Dismiss onPress={() => console.log('Dismissed!')} />
+</Tag>
+```
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `children` | `React.ReactNode` | - | Text content |
+| `onPress` | `() => void` | - | Press handler for dismissing the tag |
+| `disabled` | `boolean` | `false` | Whether the dismiss button is disabled |
 | `className` | `string` | `''` | Additional CSS classes |
-| `style` | `TextStyle` | - | Additional styles |
-| `color` | `'neutral'` \| `'primary'` \| `'secondary'` \| `'success'` \| `'warning'` \| `'error'` | Inherits from parent | Text color |
-| `size` | `'sm'` \| `'md'` \| `'lg'` | Inherits from parent | Text size |
+
+**Note**: Tag.Dismiss inherits all [Button props](/packages/ui/src/components/button/README.md) and automatically inherits the color from its parent Tag.

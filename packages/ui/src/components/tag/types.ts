@@ -1,8 +1,7 @@
 import * as React from 'react';
-import type { ViewProps } from 'react-native';
-import type { TextProps } from '../text';
 import type { VariantProps } from 'class-variance-authority';
-import type { tagVariants, tagTextVariants } from './styles';
+import type { SurfaceRootProps } from '../surface/types';
+import type { tagVariants } from './styles';
 
 export interface TagContext {
   color: NonNullable<TagProps['color']>;
@@ -10,12 +9,6 @@ export interface TagContext {
   variant: NonNullable<TagProps['variant']>;
 }
 
-export interface TagProps extends ViewProps, VariantProps<typeof tagVariants> {
-  children?: React.ReactNode;
-  onPress?: () => void;
-  disabled?: boolean;
-}
-
-export interface TagTextProps extends Omit<TextProps, 'color' | 'size'>, VariantProps<typeof tagTextVariants> {
+export interface TagProps extends SurfaceRootProps, Pick<VariantProps<typeof tagVariants>, 'size'> {
   children?: React.ReactNode;
 } 

@@ -6,7 +6,7 @@ export const TagContextProvider = React.createContext<TagContext | undefined>(un
 export const useTagContext = () => {
   const context = React.useContext(TagContextProvider);
   if (!context) {
-    throw new Error('Tag components must be used within a Tag');
+    throw new Error('Tag.Dismiss must be used within a Tag');
   }
   return context;
 }; 

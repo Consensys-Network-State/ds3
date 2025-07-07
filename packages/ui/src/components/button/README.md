@@ -178,7 +178,7 @@ Icon Fallback:
 
 ```tsx live
 <Button>
-  <Spinner fallback={Figma} />
+  <Spinner fallback={Figma} spin={false} />
   <Text>With Fallback</Text>
 </Button>
 ```
