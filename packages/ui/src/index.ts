@@ -44,7 +44,6 @@ export {
 
 export type {
   TagProps,
-  TagTextProps, 
   TagContext,
 } from './components/tag';
 
