@@ -7,7 +7,8 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
   DropdownMenuLabel,
-  Button
+  Button,
+  Icon
 } from '@consensys/ds3';
 import { Settings } from 'lucide-react-native';
 import { ThemeToggle, ThemeSwitcher } from '@consensys/ds3';
@@ -42,7 +43,7 @@ export function ThemeControls() {
               className="h-9 w-9"
               square
             >
-              <Button.Icon icon={Settings} />
+              <Icon icon={Settings} />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent

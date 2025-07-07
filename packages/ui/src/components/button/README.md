@@ -124,38 +124,29 @@ Create icon-only buttons with equal padding for consistent visual balance.
 
 ### Loading State
 
-Show loading indicators during async operations with customizable spinners.
+Show loading indicators during async operations by using the Spinner component outside of the Button.
 
 Basic:
 
 ```tsx live
 <View className="flex flex-row flex-wrap gap-3">
-  <Button loading>
-    <Button.Spinner />
+  <Button>
+    <Spinner />
     <Text>Loading Left</Text>
   </Button>
 
-  <Button loading>
+  <Button>
     <Text>Loading Right</Text>
-    <Button.Spinner />
+    <Spinner />
   </Button>
 </View>
 ```
 
-Loading Icon:
+Loading with State:
 
 ```tsx live
-<Button loading>
-  <Button.Spinner loadingIcon={Loader} />
-  <Text>Custom Icon</Text>
-</Button>
-```
-
-Icon Fallback:
-
-```tsx live
-import { Button } from '@consensys/ds3';
-import { Figma } from 'lucide-react';
+import { Button, Spinner } from '@consensys/ds3';
+import { useState } from 'react';
 
 const Component = () => {
   const [loading, setLoading] = useState(false);
@@ -163,15 +154,33 @@ const Component = () => {
   return (
     <Button
       onPress={() => setLoading(true)}
-      loading={loading}
+      disabled={loading}
     >
-      <Button.Spinner icon={Figma} />
+      <Spinner spin={loading} />
       <Text>{loading ? 'Loading...' : 'Press to load'}</Text>
     </Button>
   );
 }
 
 export default Component;
+```
+
+Custom Spinner Icon:
+
+```tsx live
+<Button>
+  <Spinner spinner={Loader} />
+  <Text>Custom Icon</Text>
+</Button>
+```
+
+Icon Fallback:
+
+```tsx live
+<Button>
+  <Spinner fallback={Figma} />
+  <Text>With Fallback</Text>
+</Button>
 ```
 
 For props and styling options, see the [Spinner Component API](/packages/ui/src/components/spinner).
@@ -220,7 +229,6 @@ Complete reference of all available props and their configurations.
 | `toColor` | Same as `color` | - | Color to switch to on press |
 | `size` | `sm` \| `md` \| `lg` | `md` | Size of the button |
 | `disabled` | `boolean` | `false` | Whether the button is disabled |
-| `loading` | `boolean` | `false` | Whether the button is in loading state |
 | `square` | `boolean` | `false` | Whether the button should have equal padding (for icon-only buttons) |
 | `asChild` | `boolean` | `false` | Whether to replace the button with a different component |
 | `className` | `string` | - | Additional class names |
@@ -240,7 +248,6 @@ The Button component automatically implements proper accessibility attributes:
 |----------|----------------|
 | Role | `accessibilityRole="button"` |
 | Disabled | `accessibilityState={{ disabled }}` |
-| Loading | `accessibilityState={{ busy: loading }}` |
 
 When using icon-only buttons with the `square` option, remember to provide descriptive labels:
 - Use `accessibilityLabel="Description"`

@@ -84,6 +84,8 @@ Choose from six different semantic colors to match your design system.
 
 Create pressable surfaces that respond to press and hover events.
 
+Basic:
+
 ```tsx live
 <View className="flex flex-row gap-3">
   <Surface pressable onPress={() => {}} color="neutral" variant="elevated" className="p-4 flex-1">
@@ -107,7 +109,7 @@ Create pressable surfaces that respond to press and hover events.
 </View>
 ```
 
-### Interaction Color
+Interaction Color:
 
 ```tsx live
 <View className="flex flex-row gap-3">

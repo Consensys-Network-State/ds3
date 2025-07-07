@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, useCopyToClipboard, Button, Card } from '@consensys/ds3';
+import { View, Text, useCopyToClipboard, Button, Card, Icon } from '@consensys/ds3';
 import { Check, Copy, Code as CodeIcon, X, Pencil } from 'lucide-react-native';
 import { LivePreview } from './LivePreview';
 import { Code, CodeInput } from '../code';
@@ -143,7 +143,7 @@ export function CodeBlock({
                   accessibilityHint="Click to copy code to clipboard"
                   className="flex-row items-center gap-2"
                 >
-                  <Button.Icon icon={copied ? Check : Copy} />
+                  <Icon icon={copied ? Check : Copy} />
                 </Button>
               )}
               {shouldShowToggleButton && (
@@ -155,7 +155,7 @@ export function CodeBlock({
                   accessibilityHint="Click to toggle code view"
                   className="flex-row items-center gap-2"
                 >
-                  <Button.Icon icon={viewMode === 'code' ? X : CodeIcon} />
+                  <Icon icon={viewMode === 'code' ? X : CodeIcon} />
                 </Button>
               )}
               {shouldShowEditButton && (
@@ -167,7 +167,7 @@ export function CodeBlock({
                   accessibilityHint="Click to toggle edit mode"
                   className="flex-row items-center gap-2"
                 >
-                  <Button.Icon icon={viewMode === 'edit' ? X : Pencil}/>
+                  <Icon icon={viewMode === 'edit' ? X : Pencil}/>
                 </Button>
               )}
             </View>

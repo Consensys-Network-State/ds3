@@ -4,6 +4,7 @@ import { COLOR_MODES } from "@consensys/ds3-theme";
 import { MoonStar, Sun, SunMoon } from "lucide-react-native";
 import { Button } from "../button";
 import { useTheme } from './useTheme';
+import { Icon } from '../icon';
 import type { ThemeToggleProps } from './types';
 
 export const ThemeToggle = React.forwardRef<View, ThemeToggleProps>(
@@ -42,7 +43,7 @@ export const ThemeToggle = React.forwardRef<View, ThemeToggleProps>(
         className={className}
         square
       >
-        <Button.Icon icon={getIcon()} />
+        <Icon icon={getIcon()} />
       </Button>
     );
   }

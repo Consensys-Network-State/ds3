@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Text, cn } from "@consensys/ds3";
+import { Button, Text, Spinner, cn } from "@consensys/ds3";
 import { useConnect, Connector } from "wagmi";
 import type { MetaMaskLoginProps } from './types';
 import { MetaMask } from '../../icons/MetaMask';
@@ -36,11 +36,10 @@ const MetaMaskLogin = React.forwardRef<any, MetaMaskLoginProps>(
          // @ts-ignore - TypeScript can't handle universal component props
         onPress={handleConnect}
         disabled={isConnecting}
-        loading={isConnecting}
         {...props}
       >
-        <Button.Spinner icon={MetaMask} />
-        <Button.Text>Login with MetaMask</Button.Text>
+        <Spinner fallback={MetaMask} spin={isConnecting} />
+        <Text>Login with MetaMask</Text>
       </Button>
     ) : (
       <Text>You need MetaMask to connect to this application</Text>

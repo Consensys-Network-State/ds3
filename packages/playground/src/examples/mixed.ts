@@ -9,10 +9,10 @@ export const mixedExamples = {
   <Input placeholder="your@email.com" label="Email" />
   <View className="flex flex-row gap-2">
     <Button variant="solid" color="primary">
-      <Button.Text>Submit</Button.Text>
+      <Text>Submit</Text>
     </Button>
     <Button variant="outline" color="neutral">
-      <Button.Text>Cancel</Button.Text>
+      <Text>Cancel</Text>
     </Button>
   </View>
 </View>`
@@ -29,10 +29,10 @@ export const mixedExamples = {
   </Text>
   <View className="flex flex-row gap-2">
     <Button variant="soft" color="primary" size="sm">
-      <Button.Text>Learn More</Button.Text>
+      <Text>Learn More</Text>
     </Button>
     <Button variant="ghost" color="neutral" size="sm">
-      <Button.Text>Dismiss</Button.Text>
+      <Text>Dismiss</Text>
     </Button>
   </View>
 </View>`

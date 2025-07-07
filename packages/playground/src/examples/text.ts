@@ -139,15 +139,15 @@ export const textExamples = {
     name: "Text in Buttons",
     jsx: `<View className="flex flex-col gap-3">
   <Button>
-    <Button.Text>Default Button Text</Button.Text>
+    <Text>Default Button Text</Text>
   </Button>
   
   <Button variant="solid" color="primary">
-    <Button.Text>Primary Button Text</Button.Text>
+    <Text>Primary Button Text</Text>
   </Button>
   
   <Button variant="outline" color="secondary">
-    <Button.Text>Secondary Button Text</Button.Text>
+    <Text>Secondary Button Text</Text>
   </Button>
 </View>`
   },
@@ -155,15 +155,15 @@ export const textExamples = {
     name: "Text with Hover in Buttons",
     jsx: `<View className="flex flex-col gap-3">
   <Button>
-    <Button.Text hover>Button Text with Hover</Button.Text>
+    <Text hover>Button Text with Hover</Text>
   </Button>
   
   <Button variant="solid" color="primary">
-    <Button.Text spectrum="contrast" hover>Primary Button Text</Button.Text>
+    <Text spectrum="contrast" hover>Primary Button Text</Text>
   </Button>
   
   <Button variant="outline" color="secondary">
-    <Button.Text spectrum="border" hover>Secondary Button Text</Button.Text>
+    <Text spectrum="border" hover>Secondary Button Text</Text>
   </Button>
 </View>`
   }

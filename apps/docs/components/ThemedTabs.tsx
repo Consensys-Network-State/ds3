@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Tabs } from 'expo-router';
 import { Platform, Dimensions, View } from 'react-native';
-import { useThemeColors, Button, ThemeIcon } from '@consensys/ds3';
+import { useThemeColors, Button, ThemeIcon, Icon, Text } from '@consensys/ds3';
 import { HapticTab } from '@/components/HapticTab';
 import { ThemeControls } from '@/components/ThemeControls';
 import { useRouter, usePathname } from 'expo-router';
@@ -22,10 +22,8 @@ function DS3Logo() {
         onPress={() => router.push('/')}
         className="pl-1 pr-1"
       >
-        <Button.Icon icon={ThemeIcon} className="w-8 h-8" />
-        <Button.Text>
-          DS3
-        </Button.Text>
+        <Icon icon={ThemeIcon} className="w-8 h-8" />
+        <Text>DS3</Text>
       </Button>
     </View>
   );
@@ -80,8 +78,8 @@ function CustomHeaderTitle() {
               color={item.isActive ? 'primary' : 'neutral'}
               onPress={() => router.push(item.path as any)}
             >
-              <Button.Icon icon={item.icon} />
-              <Button.Text>{item.name}</Button.Text>
+              <Icon icon={item.icon} />
+              <Text>{item.name}</Text>
             </Button>
             
             {/* Separator between buttons (except for last item) */}

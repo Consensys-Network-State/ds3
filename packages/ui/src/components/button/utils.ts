@@ -7,13 +7,11 @@ import type { AccessibilityRole } from 'react-native';
  * Web accessibility props
  * Maps:
  * - disabled → aria-disabled
- * - loading → aria-busy
  */
 export const getWebButtonAccessibilityProps = (props: Partial<SharedButtonProps>) => {
-  const { disabled, loading } = props;
+  const { disabled } = props;
   return {
     'aria-disabled': disabled,
-    'aria-busy': loading,
     role: 'button',
   };
 };
@@ -22,15 +20,13 @@ export const getWebButtonAccessibilityProps = (props: Partial<SharedButtonProps>
  * Native accessibility props
  * Maps:
  * - disabled → accessibilityState.disabled
- * - loading → accessibilityState.busy
  */
 export const getNativeButtonAccessibilityProps = (props: Partial<SharedButtonProps>) => {
-  const { disabled, loading } = props;
+  const { disabled } = props;
   return {
     accessibilityRole: 'button' as AccessibilityRole,
     accessibilityState: {
       disabled,
-      busy: loading,
     },
   };
 }; 

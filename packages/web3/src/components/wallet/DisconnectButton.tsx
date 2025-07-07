@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button } from "@consensys/ds3";
+import { Button, Text } from "@consensys/ds3";
 import { useDisconnect } from 'wagmi';
 import type { DisconnectButtonProps } from './types';
 
@@ -14,7 +14,7 @@ const DisconnectButton = React.forwardRef<any, DisconnectButtonProps>(
         onPress={() => disconnect()}
         {...props}
       >
-        {children || <Button.Text>Disconnect</Button.Text>}
+        {children || <Text>Disconnect</Text>}
       </Button>
     );
   }
