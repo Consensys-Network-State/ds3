@@ -2,7 +2,7 @@ import * as React from 'react';
 import { PressableProps } from 'react-native';
 import type { VariantProps } from 'class-variance-authority';
 import type { IconProps } from '../icon/types';
-import type { SpinnerProps } from '../spinner/types';
+import type { SpinnerRootProps } from '../spinner/types';
 import type { SurfaceRootProps } from '../surface/types';
 import { buttonVariants } from './styles';
 
@@ -33,7 +33,7 @@ export type ButtonIconProps = IconProps & {
   className?: string;
 };
 
-export type ButtonSpinnerProps = SpinnerProps & {
+export type ButtonSpinnerProps = SpinnerRootProps & {
   className?: string;
   loadingIcon?: React.ComponentType<any>;
 };
@@ -43,6 +43,6 @@ export type ButtonTextProps = {
   children?: React.ReactNode;
 };
 
-export type ButtonColors = NonNullable<SurfaceRootProps['color']>;
 export type ButtonSizes = NonNullable<ButtonRootProps['size']>;
+export type ButtonColors = NonNullable<SurfaceRootProps['color']>;
 export type ButtonVariant = NonNullable<SurfaceRootProps['variant']>;

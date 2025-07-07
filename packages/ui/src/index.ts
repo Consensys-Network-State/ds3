@@ -144,7 +144,11 @@ export {
 } from './components/spinner';
 
 export type {
-  SpinnerProps,
+  SpinnerRootProps,
+  SpinnerFallbackProps,
+  SpinnerContext,
+  SpinnerSizes,
+  SpinnerColors,
 } from './components/spinner';
 
 // switch

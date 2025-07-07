@@ -2,7 +2,7 @@ import * as React from 'react';
 import { TextInputProps } from 'react-native';
 import type { VariantProps } from 'class-variance-authority';
 import type { IconProps } from '../icon/types';
-import type { SpinnerProps } from '../spinner/types';
+import type { SpinnerRootProps } from '../spinner/types';
 import { inputRootVariants } from './styles';
 
 export type SharedInputProps = {
@@ -46,7 +46,7 @@ export type InputIconProps = IconProps & {
   className?: string;
 };
 
-export type InputSpinnerProps = SpinnerProps & {
+export type InputSpinnerProps = SpinnerRootProps & {
   className?: string;
   loadingIcon?: React.ComponentType<any>;
 };
