@@ -59,7 +59,7 @@ export const ButtonSpinner = React.forwardRef<React.ElementRef<typeof Icon>, But
       return (
         <Spinner
           ref={ref}
-          icon={loadingIcon}
+          spinner={loadingIcon}
           className={cn(
             buttonIconVariants({ size: context.size }),
             className

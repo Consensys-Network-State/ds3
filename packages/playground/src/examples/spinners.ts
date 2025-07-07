@@ -23,21 +23,21 @@ const spinnerIcons = [
 ] as const;
 
 // Helper function to generate JSX for a single spinner
-const generateSpinnerJSX = (color?: SpinnerColor, size?: SpinnerSize, speed?: SpinnerSpeed, direction?: SpinnerDirection, icon?: string) => {
+const generateSpinnerJSX = (color?: SpinnerColor, size?: SpinnerSize, speed?: SpinnerSpeed, direction?: SpinnerDirection, spinner?: string) => {
   const colorProp = color && color !== 'neutral' ? ` color="${color}"` : '';
   const sizeProp = size && size !== 'md' ? ` size="${size}"` : '';
   const speedProp = speed && speed !== 'normal' ? ` speed="${speed}"` : '';
   const directionProp = direction && direction !== 'clockwise' ? ` direction="${direction}"` : '';
-  const iconProp = icon ? ` icon={${icon}}` : '';
+  const spinnerProp = spinner ? ` spinner={${spinner}}` : '';
   
-  return `<Spinner${colorProp}${sizeProp}${speedProp}${directionProp}${iconProp} />`;
+  return `<Spinner${colorProp}${sizeProp}${speedProp}${directionProp}${spinnerProp} />`;
 };
 
 // Helper function to generate JSX for spinner with label
-const generateSpinnerWithLabelJSX = (label: string, color?: SpinnerColor, size?: SpinnerSize, speed?: SpinnerSpeed, direction?: SpinnerDirection, icon?: string) => {
+const generateSpinnerWithLabelJSX = (label: string, color?: SpinnerColor, size?: SpinnerSize, speed?: SpinnerSpeed, direction?: SpinnerDirection, spinner?: string) => {
   return `<View className="flex flex-row items-center gap-2">
   <Text>${label}</Text>
-  ${generateSpinnerJSX(color, size, speed, direction, icon)}
+  ${generateSpinnerJSX(color, size, speed, direction, spinner)}
 </View>`;
 };
 
