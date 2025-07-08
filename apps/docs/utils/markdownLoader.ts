@@ -1,41 +1,39 @@
-import { Asset } from 'expo-asset';
-import * as FileSystem from 'expo-file-system';
+import { Platform } from 'react-native';
 
 // Development mode detection
 const isDevelopment = (globalThis as any).__DEV__ || process.env.NODE_ENV === 'development';
+const DEBUG = __DEV__;
+
+// Platform detection using React Native Platform API
+const isWeb = Platform.OS === 'web';
+const isReactNative = Platform.OS === 'ios' || Platform.OS === 'android';
 
 // Development server configuration
 const DEV_SERVER_PORT = 3001;
-const DEV_SERVER_HOST = 'localhost'; // For web
-const DEV_SERVER_HOST_NATIVE = '10.0.2.2'; // For Android emulator
-const DEV_SERVER_HOST_IOS = 'localhost'; // For iOS simulator
+const DEV_SERVER_HOST = 'localhost';
 
 // GitHub repository base URL for production fallback
-const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/Consensys-Network-State/ds3/docs-cleanup';
+const GITHUB_BASE_URL = 'https://raw.githubusercontent.com/Consensys-Network-State/ds3/more-components';
 
 // Cache for downloaded content
 const markdownCache: Record<string, string> = {};
 
+// Loading queue to prevent simultaneous loads of the same file
+const loadingQueue: Set<string> = new Set();
+const loadingPromises: Map<string, Promise<string>> = new Map();
+
 // SSE connection for live reload
 let sseConnection: EventSource | null = null;
 let sseReconnectTimeout: NodeJS.Timeout | null = null;
+let sseReconnectAttempts = 0;
+const MAX_RECONNECT_ATTEMPTS = 3;
+const RECONNECT_DELAY = 5000;
 
 /**
  * Gets the development server URL for a markdown path
  */
 function getDevServerUrl(markdownPath: string): string {
-  // Detect platform for correct host
-  const isWeb = typeof window !== 'undefined';
-  const isAndroid = !isWeb && typeof navigator !== 'undefined' && navigator.product === 'ReactNative';
-  
-  let host = DEV_SERVER_HOST;
-  if (!isWeb && isAndroid) {
-    host = DEV_SERVER_HOST_NATIVE; // Android emulator
-  } else if (!isWeb) {
-    host = DEV_SERVER_HOST_IOS; // iOS simulator
-  }
-  
-  return `http://${host}:${DEV_SERVER_PORT}/markdown/${markdownPath}`;
+  return `http://${DEV_SERVER_HOST}:${DEV_SERVER_PORT}/markdown/${markdownPath}`;
 }
 
 /**
@@ -51,17 +49,7 @@ function getGitHubUrl(markdownPath: string): string {
  * Gets the SSE events URL
  */
 function getSSEUrl(): string {
-  const isWeb = typeof window !== 'undefined';
-  const isAndroid = !isWeb && typeof navigator !== 'undefined' && navigator.product === 'ReactNative';
-  
-  let host = DEV_SERVER_HOST;
-  if (!isWeb && isAndroid) {
-    host = DEV_SERVER_HOST_NATIVE;
-  } else if (!isWeb) {
-    host = DEV_SERVER_HOST_IOS;
-  }
-  
-  return `http://${host}:${DEV_SERVER_PORT}/events`;
+  return `http://${DEV_SERVER_HOST}:${DEV_SERVER_PORT}/events`;
 }
 
 /**
@@ -70,25 +58,16 @@ function getSSEUrl(): string {
 async function loadFromDevServer(markdownPath: string): Promise<string | null> {
   try {
     const url = getDevServerUrl(markdownPath);
-    console.log(`🔍 Attempting to load from dev server: ${url}`);
-    
-    // Detect platform for debugging
-    const isWeb = typeof window !== 'undefined';
-    const isAndroid = !isWeb && typeof navigator !== 'undefined' && navigator.product === 'ReactNative';
-    console.log(`🔍 Platform detection: isWeb=${isWeb}, isAndroid=${isAndroid}`);
+    if (DEBUG) console.log(`📥 Downloading markdown for ${markdownPath} from local server...`);
     
     const response = await fetch(url);
     if (!response.ok) {
-      console.warn(`Dev server returned ${response.status} for ${markdownPath}`);
       return null;
     }
     
     const content = await response.text();
-    console.log(`✅ Loaded from dev server: ${markdownPath}`);
     return content;
   } catch (error) {
-    console.warn(`Failed to load from dev server for ${markdownPath}:`, error);
-    console.warn(`Error details:`, error);
     return null;
   }
 }
@@ -103,11 +82,10 @@ async function downloadMarkdown(markdownPath: string): Promise<string> {
       return markdownCache[markdownPath];
     }
 
-    console.log(`📥 Downloading markdown for ${markdownPath} from GitHub...`);
+    if (DEBUG) console.log(`📥 Downloading markdown for ${markdownPath} from GitHub...`);
     
     // Download from GitHub
     const url = getGitHubUrl(markdownPath);
-    console.log(`🔗 GitHub URL: ${url}`);
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Failed to fetch ${url}: ${response.status}`);
@@ -118,7 +96,6 @@ async function downloadMarkdown(markdownPath: string): Promise<string> {
     // Cache the content
     markdownCache[markdownPath] = content;
     
-    console.log(`✅ Downloaded markdown for ${markdownPath}`);
     return content;
   } catch (error) {
     console.error(`Error downloading markdown for ${markdownPath}:`, error);
@@ -130,20 +107,46 @@ async function downloadMarkdown(markdownPath: string): Promise<string> {
  * Loads markdown content with fallback strategy
  */
 export async function loadMarkdown(markdownPath: string): Promise<string> {
-  console.log(`🚀 Loading markdown: ${markdownPath} (dev mode: ${isDevelopment})`);
-  
-  // Always try development server first
-  console.log(`🔍 Attempting to load local markdown for ${markdownPath}...`);
-  const devServerContent = await loadFromDevServer(markdownPath);
-  if (devServerContent) {
-    markdownCache[markdownPath] = devServerContent;
-    return devServerContent;
+  // Check if already loading this file
+  if (loadingQueue.has(markdownPath)) {
+    const existingPromise = loadingPromises.get(markdownPath);
+    if (existingPromise) {
+      return existingPromise;
+    }
   }
-  console.log(`⚠️ Local markdown not available for ${markdownPath}, falling back to GitHub...`);
+  
+  // Check cache first
+  if (markdownCache[markdownPath]) {
+    return markdownCache[markdownPath];
+  }
+  
+  // Add to loading queue
+  loadingQueue.add(markdownPath);
+  
+  // Create loading promise
+  const loadingPromise = (async () => {
+    try {
+      // Always try development server first
+      const devServerContent = await loadFromDevServer(markdownPath);
+      if (devServerContent) {
+        markdownCache[markdownPath] = devServerContent;
+        return devServerContent;
+      }
+      if (DEBUG) console.log(`⚠️ Local markdown not available for ${markdownPath}, falling back to GitHub...`);
 
-  // Fallback to GitHub URL
-  console.log(`📥 Falling back to GitHub for: ${markdownPath}`);
-  return downloadMarkdown(markdownPath);
+      // Fallback to GitHub URL
+      return await downloadMarkdown(markdownPath);
+    } finally {
+      // Remove from loading queue
+      loadingQueue.delete(markdownPath);
+      loadingPromises.delete(markdownPath);
+    }
+  })();
+  
+  // Store the promise
+  loadingPromises.set(markdownPath, loadingPromise);
+  
+  return loadingPromise;
 }
 
 /**
@@ -195,33 +198,43 @@ export function getDevServerUrlFor(markdownPath: string): string {
  * Starts SSE connection for live reloading
  */
 export function startSSEConnection(onFileChanged?: (path: string) => void): void {
-  if (!isDevelopment || sseConnection) {
+  if (!isDevelopment) {
+    if (DEBUG) console.log('🚫 SSE connection disabled in production');
+    return;
+  }
+  
+  if (sseConnection) {
+    if (DEBUG) console.log('🚫 SSE connection already exists');
     return;
   }
 
+  // Check if EventSource is available (web only)
+  if (typeof EventSource === 'undefined' || isReactNative) {
+    if (DEBUG) console.log('🚫 SSE connection disabled for React Native');
+    return;
+  }
+
+  // Reset reconnect attempts when starting fresh
+  sseReconnectAttempts = 0;
+
   try {
     const sseUrl = getSSEUrl();
-    console.log(`🔗 Connecting to SSE: ${sseUrl}`);
+    if (DEBUG) console.log(`🔗 Connecting to SSE: ${sseUrl}`);
     
     sseConnection = new EventSource(sseUrl);
-    
-    sseConnection.onopen = () => {
-      console.log('✅ SSE connection established');
-    };
     
     sseConnection.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
         
         if (data.type === 'connected') {
-          console.log('✅ SSE connected successfully');
+          if (DEBUG) console.log('✅ SSE connected established');
         } else if (data.type === 'file-changed') {
-          console.log(`📝 File changed: ${data.path}`);
+          if (DEBUG) console.log(`📝 File changed: ${data.path}`);
           
           // Clear cache for the changed file
           if (data.path && markdownCache[data.path]) {
             delete markdownCache[data.path];
-            console.log(`🗑️ Cleared cache for: ${data.path}`);
           }
           
           // Notify callback
@@ -230,26 +243,32 @@ export function startSSEConnection(onFileChanged?: (path: string) => void): void
           }
         }
       } catch (error) {
-        console.warn('Failed to parse SSE message:', error);
+        if (DEBUG) console.warn('Failed to parse SSE message:', error);
       }
     };
     
     sseConnection.onerror = (error) => {
-      console.warn('SSE connection error:', error);
-      
-      // Attempt to reconnect after 5 seconds
-      if (sseReconnectTimeout) {
-        clearTimeout(sseReconnectTimeout);
-      }
-      
-      sseReconnectTimeout = setTimeout(() => {
-        console.log('🔄 Attempting to reconnect SSE...');
+      if (sseReconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
+        if (DEBUG) console.warn(`SSE connection error (attempt ${sseReconnectAttempts + 1}/${MAX_RECONNECT_ATTEMPTS}):`, error);
+        
+        // Attempt to reconnect after delay
+        if (sseReconnectTimeout) {
+          clearTimeout(sseReconnectTimeout);
+        }
+        
+        sseReconnectAttempts++;
+        sseReconnectTimeout = setTimeout(() => {
+          if (DEBUG) console.log(`🔄 Attempting to reconnect SSE (attempt ${sseReconnectAttempts})...`);
+          stopSSEConnection();
+          startSSEConnection(onFileChanged);
+        }, RECONNECT_DELAY);
+      } else {
+        if (DEBUG) console.warn('SSE connection failed after maximum attempts. Live reload disabled.');
         stopSSEConnection();
-        startSSEConnection(onFileChanged);
-      }, 5000);
+      }
     };
   } catch (error) {
-    console.warn('Failed to start SSE connection:', error);
+    if (DEBUG) console.warn('Failed to start SSE connection:', error);
   }
 }
 
@@ -260,11 +279,14 @@ export function stopSSEConnection(): void {
   if (sseConnection) {
     sseConnection.close();
     sseConnection = null;
-    console.log('🔌 SSE connection closed');
+    if (DEBUG) console.log('🔌 SSE connection closed');
   }
   
   if (sseReconnectTimeout) {
     clearTimeout(sseReconnectTimeout);
     sseReconnectTimeout = null;
   }
+
+  // Reset reconnect attempts
+  sseReconnectAttempts = 0;
 }

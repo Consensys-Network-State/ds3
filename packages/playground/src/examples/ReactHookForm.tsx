@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import {
   Button,
   Text,
+  Spinner,
   InputField,
   RadioGroupField,
   SelectField,
@@ -462,16 +463,15 @@ export const ReactHookForm: React.FC = () => {
           onPress={() => reset()}
           disabled={!isDirty || isSubmitting}
         >
-          <Button.Text>Reset</Button.Text>
+          Reset
         </Button>
 
         <Button
           onPress={handleSubmit(onSubmit)}
           disabled={isSubmitting}
-          loading={isSubmitting}
         >
-          <Button.Spinner />
-          <Button.Text>{isSubmitting ? 'Submitting...' : 'Submit Application'}</Button.Text>
+          <Spinner spin={isSubmitting} />
+          <Text>{isSubmitting ? 'Submitting...' : 'Submit Application'}</Text>
         </Button>
       </View>
     </View>

@@ -12,7 +12,7 @@ import {
 import { Check, ChevronDown, ChevronRight, ChevronUp } from 'lucide-react-native';
 import { Icon } from './icon';
 import { cn } from '../utils';
-import { TextClassContext } from './text';
+import { TextContextProvider } from './text';
 
 const DropdownMenu = DropdownMenuPrimitive.Root;
 
@@ -35,11 +35,13 @@ const DropdownMenuSubTrigger = React.forwardRef<
   const { open } = DropdownMenuPrimitive.useSubContext();
   const iconName = Platform.OS === 'web' ? ChevronRight : open ? ChevronUp : ChevronDown;
   return (
-    <TextClassContext.Provider
-      value={cn(
-        'select-none text-sm native:text-lg text-primary',
-        open && 'native:text-accent-foreground'
-      )}
+    <TextContextProvider.Provider
+      value={{
+        className: cn(
+          'select-none text-sm native:text-lg text-primary',
+          open && 'native:text-accent-foreground'
+        )
+      }}
     >
       <DropdownMenuPrimitive.SubTrigger
         ref={ref}
@@ -54,7 +56,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
         {children as any}
         <Icon icon={iconName} className='ml-auto' />
       </DropdownMenuPrimitive.SubTrigger>
-    </TextClassContext.Provider>
+    </TextContextProvider.Provider>
   );
 });
 DropdownMenuSubTrigger.displayName = DropdownMenuPrimitive.SubTrigger.displayName;
@@ -127,7 +129,7 @@ const DropdownMenuItem = React.forwardRef<
   inset?: boolean;
 }
 >(({ className, inset, ...props }, ref) => (
-  <TextClassContext.Provider value='select-none text-sm native:text-lg text-popover-foreground web:group-focus:text-accent-foreground'>
+  <TextContextProvider.Provider value={{ className: 'select-none text-sm native:text-lg text-popover-foreground web:group-focus:text-accent-foreground' }}>
     <DropdownMenuPrimitive.Item
       ref={ref}
       className={cn(
@@ -138,7 +140,7 @@ const DropdownMenuItem = React.forwardRef<
       )}
       {...props}
     />
-  </TextClassContext.Provider>
+  </TextContextProvider.Provider>
 ));
 DropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName;
 

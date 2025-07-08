@@ -1,15 +1,8 @@
 import { Tag } from './Tag';
-import { TagText } from './Tag.shared';
 
-// Export individual components
-export { Tag, TagText };
+export { Tag };
 
-// Export compound component as default
-export default Tag;
+export type { TagProps, TagContext } from './types';
+export { TagContextProvider, useTagContext } from './context';
 
-// Export types
-export type { 
-  TagProps, 
-  TagTextProps, 
-  TagContext,
-} from './types'; 
+export { tagVariants, tagTextVariants, tagIconVariants } from './styles'; 

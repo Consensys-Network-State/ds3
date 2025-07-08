@@ -50,16 +50,16 @@ export default function HomeScreen() {
             {/* Platform Icons */}
             <View className="flex flex-row items-center justify-center gap-8 mb-8">
               <Button variant="ghost" color="neutral" size="lg" className="flex flex-col items-center gap-2">
-                <Button.Icon icon={ViteIcon} size={32} />
-                <Button.Text>Vite</Button.Text>
+                <Icon icon={ViteIcon} size={32} />
+                <Text>Vite</Text>
               </Button>
               <Button variant="ghost" color="neutral" size="lg" className="flex flex-col items-center gap-2">
-                <Button.Icon icon={NextJsIcon} size={32} className='text-neutral-12' />
-                <Button.Text>Next.js</Button.Text>
+                <Icon icon={NextJsIcon} size={32} className='text-neutral-12' />
+                <Text>Next.js</Text>
               </Button>
               <Button variant="ghost" color="neutral" size="lg" className="flex flex-col items-center gap-2">
-                <Button.Icon icon={ExpoIcon} size={32} />
-                <Button.Text>Expo</Button.Text>
+                <Icon icon={ExpoIcon} size={32} />
+                <Text>Expo</Text>
               </Button>
             </View>
 
@@ -71,8 +71,8 @@ export default function HomeScreen() {
               className="self-center"
               onPress={scrollToPlayground}
             >
-              <Button.Icon icon={ChevronDown} />
-              <Button.Text>Try the Playground</Button.Text>
+              <Icon icon={ChevronDown} />
+              <Text>Try the Playground</Text>
             </Button>
           </View>
         </View>
@@ -97,7 +97,7 @@ export default function HomeScreen() {
       <View className="native:pb-20 pb-4">
         <View className="max-w-4xl mx-auto flex justify-center">
           <Text size="sm" color="neutral" className="text-neutral-11 text-center">
-            Made with ❤️ by Consensys
+            Made with ❤️
           </Text>
         </View>
       </View>

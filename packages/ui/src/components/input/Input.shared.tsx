@@ -67,7 +67,7 @@ export const InputSpinner = React.forwardRef<React.ElementRef<typeof Icon>, Inpu
       return (
         <Spinner
           ref={ref}
-          icon={loadingIcon}
+          spinner={loadingIcon}
           className={cn(
             inputIconVariants({
               color: context.color,

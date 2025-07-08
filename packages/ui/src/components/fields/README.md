@@ -142,10 +142,10 @@ function ExampleForm() {
       />
       <View className="flex flex-row gap-2">
         <Button variant="solid" color="primary" onPress={handleSubmit(onSubmit)}>
-          <Button.Text>Submit Form</Button.Text>
+          <Text>Submit Form</Text>
         </Button>
         <Button variant="outline" color="neutral" onPress={() => reset()}>
-          <Button.Text>Clear Form</Button.Text>
+          <Text>Clear Form</Text>
         </Button>
       </View>
     </View>

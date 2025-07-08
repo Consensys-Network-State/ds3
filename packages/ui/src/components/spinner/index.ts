@@ -2,4 +2,10 @@
 export { Spinner } from './Spinner';
 
 // types
-export type { SpinnerProps } from './types';
+export type { 
+  SpinnerRootProps, 
+  SpinnerFallbackProps, 
+  SpinnerContext,
+  SpinnerSizes,
+  SpinnerColors 
+} from './types';

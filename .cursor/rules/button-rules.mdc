@@ -1,0 +1,41 @@
+---
+description: This rule gives you the documentation reference for a DS3 React Native Button
+globs: 
+alwaysApply: false
+---
+# DS3 Button Component
+
+## Reference Material (look up all this material)
+
+* Read - /packages/ui/src/components/button/README.md
+* Read - /packages/ui/src/components/icon/README.md
+* Read - /packages/ui/src/components/spinner/README.md
+
+## Basic button
+<Button>Press Me!</Button>
+```
+
+## What do you need help with?
+
+### 🎨 **Styling & Appearance**
+- **Variants**: Choose from 6 visual styles (elevated, solid, soft, outline, dashed, ghost)
+- **Colors**: Apply semantic colors (neutral, primary, secondary, error, warning, success)
+- **Sizes**: Scale buttons (sm, md, lg) to fit your UI hierarchy
+- **Icons**: Add icons before, after, or on both sides of text
+
+### 🔄 **Interactive States**
+- **Loading**: Show spinners during async operations
+- **Disabled**: Prevent interaction and provide visual feedback
+- **Color Transitions**: Change colors on press/hover for enhanced feedback
+
+### 🧩 **Advanced Features**
+- **Square Buttons**: Create icon-only buttons with equal padding
+- **Slot Pattern**: Transform buttons into other interactive elements
+- **Accessibility**: Built-in ARIA support and screen reader compatibility
+
+## Need a specific example?
+
+**Tell me what you're trying to build:**
+- "I need a primary action button" → See @/packages/ui/src/components/button/README.md on Button
+- "I want to add an icon to my button" → See @/package/ui/src/components/icon/README.md on ICON
+- "I want to add a spinner to my button" -> See @/packages/ui/src/components/spinner/README.md on Spinner

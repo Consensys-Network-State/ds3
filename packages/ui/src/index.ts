@@ -5,21 +5,25 @@
 // button
 export {
   Button,
-  useButtonContext,
 } from './components/button';
 
 export type {
   ButtonRootProps,
-  ButtonContext,
-  ButtonIconProps,
-  ButtonSpinnerProps,
-  ButtonTextProps,
-  NativeButtonProps,
-  SharedButtonProps,
   ButtonColors,
   ButtonSizes,
   ButtonVariant
 } from './components/button';
+
+// surface
+export {
+  Surface,
+} from './components/surface';
+
+export type {
+  SurfaceRootProps,
+  SurfaceColor,
+  SurfaceVariant
+} from './components/surface';
 
 // checkbox
 export {
@@ -40,7 +44,6 @@ export {
 
 export type {
   TagProps,
-  TagTextProps, 
   TagContext,
 } from './components/tag';
 
@@ -133,7 +136,11 @@ export {
 } from './components/spinner';
 
 export type {
-  SpinnerProps,
+  SpinnerRootProps,
+  SpinnerFallbackProps,
+  SpinnerContext,
+  SpinnerSizes,
+  SpinnerColors,
 } from './components/spinner';
 
 // switch
@@ -150,7 +157,8 @@ export type {
 // text
 export {
   Text,
-  useTextClass, // TODO: consistent naming
+  TextContextProvider,
+  useTextContent,
 } from './components/text';
 
 export type {
@@ -178,13 +186,77 @@ export type {
   ThemeToggleProps,
 } from './components/theme';
 
+// card
+export {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+  CardText,
+  useCardContext,
+} from './components/card';
+
+export type {
+  CardRootProps,
+  CardHeaderProps,
+  CardTitleProps,
+  CardDescriptionProps,
+  CardTextProps,
+  CardContentProps,
+  CardFooterProps,
+  CardContextValue,
+  CardRef,
+  CardHeaderRef,
+  CardTitleRef,
+  CardDescriptionRef,
+  CardTextRef,
+  CardContentRef,
+  CardFooterRef,
+  CardColors
+} from './components/card';
+
+// accordion
+export {
+  Accordion,
+} from './components/accordion';
+
+export type {
+  AccordionRootProps,
+  AccordionItemProps,
+  AccordionTriggerProps,
+  AccordionContentProps,
+  AccordionVariants,
+  AccordionColors,
+  AccordionSizes,
+} from './components/accordion';
+
+// menu
+export {
+  Menu,
+} from './components/menu';
+
+export type {
+  MenuRootProps,
+  MenuItemProps,
+  MenuGroupProps,
+  MenuTriggerProps,
+  MenuItemVariants,
+  MenuTriggerVariants,
+  MenuData,
+  MenuGroupData,
+  MenuItemData,
+  MenuBaseItem,
+  MenuBadge,
+} from './components/menu';
+
 // other components
 // TODO: move to components folder and refactor
 export * from './components/Select';
 export * from './components/SelectField';
-export * from './components/Avatar';
+export * from './components/avatar';
 export * from './components/DropdownMenu';
-export * from './components/Card';
 export * from './components/Alert';
 export * from './components/Badge';
 export * from './components/Dialog';

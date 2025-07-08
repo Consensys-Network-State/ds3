@@ -1,38 +1,32 @@
-import type { VariantProps } from 'class-variance-authority';
-import { buttonVariants } from "@consensys/ds3/src/components/button/styles";
-
-// Extract actual types from the button component
-type ButtonVariant = NonNullable<VariantProps<typeof buttonVariants>['variant']>;
-type ButtonColor = NonNullable<VariantProps<typeof buttonVariants>['color']>;
-type ButtonSize = NonNullable<VariantProps<typeof buttonVariants>['size']>;
+import type { ButtonVariant, ButtonColors, ButtonSizes } from "@consensys/ds3";
 
 // Get the actual variant, color, and size values from the component
 const variants: ButtonVariant[] = ['elevated', 'solid', 'soft', 'outline', 'dashed', 'ghost'];
-const colors: ButtonColor[] = ['neutral', 'primary', 'secondary', 'error', 'warning', 'success'];
-const sizes: ButtonSize[] = ['sm', 'md', 'lg'];
+const colors: ButtonColors[] = ['neutral', 'primary', 'secondary', 'error', 'warning', 'success'];
+const sizes: ButtonSizes[] = ['sm', 'md', 'lg'];
 
 // Helper function to generate JSX for a single button
-const generateButtonJSX = (variant: ButtonVariant, color?: ButtonColor, size?: ButtonSize, text = 'Button') => {
+const generateButtonJSX = (variant: ButtonVariant, color?: ButtonColors, size?: ButtonSizes, text = 'Button') => {
   const colorProp = color && color !== 'neutral' ? ` color="${color}"` : '';
   const sizeProp = size && size !== 'md' ? ` size="${size}"` : '';
   
   return `<Button variant="${variant}"${colorProp}${sizeProp}>
-  <Button.Text>${text}</Button.Text>
+  <Text>${text}</Text>
 </Button>`;
 };
 
 // Helper function to generate JSX for button with icon
-const generateButtonWithIconJSX = (variant: ButtonVariant, iconPosition: 'start' | 'end' | 'both', color?: ButtonColor, size?: ButtonSize, text = 'Button') => {
+const generateButtonWithIconJSX = (variant: ButtonVariant, iconPosition: 'start' | 'end' | 'both', color?: ButtonColors, size?: ButtonSizes, text = 'Button') => {
   const colorProp = color && color !== 'neutral' ? ` color="${color}"` : '';
   const sizeProp = size && size !== 'md' ? ` size="${size}"` : '';
   
   let iconJSX = '';
   if (iconPosition === 'start' || iconPosition === 'both') {
-    iconJSX += `  <Button.Icon icon={Figma} />\n`;
+    iconJSX += `  <Icon icon={Figma} />\n`;
   }
-  iconJSX += `  <Button.Text>${text}</Button.Text>\n`;
+  iconJSX += `  <Text>${text}</Text>\n`;
   if (iconPosition === 'end' || iconPosition === 'both') {
-    iconJSX += `  <Button.Icon icon={Figma} />\n`;
+    iconJSX += `  <Icon icon={Figma} />\n`;
   }
   
   return `<Button variant="${variant}"${colorProp}${sizeProp}>
@@ -40,11 +34,11 @@ ${iconJSX}</Button>`;
 };
 
 // Helper function to generate JSX for icon button
-const generateIconButtonJSX = (variant: ButtonVariant, color?: ButtonColor, size?: ButtonSize) => {
+const generateIconButtonJSX = (variant: ButtonVariant, color?: ButtonColors, size?: ButtonSizes) => {
   const colorProp = color && color !== 'neutral' ? ` color="${color}"` : '';
   const sizeProp = size && size !== 'md' ? ` size="${size}"` : '';
   
-  return `<Button variant="${variant}"${colorProp}${sizeProp} square><Button.Icon icon={Figma} /></Button>`;
+  return `<Button variant="${variant}"${colorProp}${sizeProp} square><Icon icon={Figma} /></Button>`;
 };
 
 export const buttonExamples = {
@@ -67,19 +61,19 @@ ${variants.map(variant => `    ${generateButtonJSX(variant, color, undefined, va
     name: "Accent Colors",
     jsx: `<View className="flex flex-row flex-wrap gap-4">
   <Button variant="soft" color="neutral" toColor="primary">
-    <Button.Text>Neutral to Primary</Button.Text>
+    <Text>Neutral to Primary</Text>
   </Button>
 
   <Button variant="outline" color="primary" toColor="secondary">
-    <Button.Text>Primary to Secondary</Button.Text>
+    <Text>Primary to Secondary</Text>
   </Button>
 
   <Button variant="ghost" color="secondary" toColor="success">
-    <Button.Text>Secondary to Success</Button.Text>
+    <Text>Secondary to Success</Text>
   </Button>
 
   <Button variant="dashed" color="success" toColor="error">
-    <Button.Text>Success to Error</Button.Text>
+    <Text>Success to Error</Text>
   </Button>
 </View>`
   },
@@ -122,28 +116,28 @@ ${variants.map((variant, index) => `    ${generateIconButtonJSX(variant, colors[
     name: "Loading",
     jsx: `<View className="flex flex-row flex-wrap gap-4">
   <Button variant="elevated" loading>
-    <Button.Spinner />
-    <Button.Text>Loading</Button.Text>
+    <Spinner />
+    <Text>Loading</Text>
   </Button>
   <Button variant="solid" color="primary" loading>
-    <Button.Text>Loading</Button.Text>
-    <Button.Spinner loadingIcon={Loader} />
+    <Text>Loading</Text>
+    <Spinner spinner={Loader} />
   </Button>
   <Button variant="soft" color="secondary" loading>
-    <Button.Spinner loadingIcon={LoaderPinwheel} />
-    <Button.Text>Loading</Button.Text>
+    <Spinner spinner={LoaderPinwheel} />
+    <Text>Loading</Text>
   </Button>
   <Button variant="outline" color="error" loading>
-    <Button.Text>Loading</Button.Text>
-    <Button.Spinner />
+    <Text>Loading</Text>
+    <Spinner />
   </Button>
   <Button variant="dashed" color="warning" loading>
-    <Button.Spinner loadingIcon={Loader} />
-    <Button.Text>Loading</Button.Text>
+    <Spinner spinner={Loader} />
+    <Text>Loading</Text>
   </Button>
   <Button variant="ghost" color="success" loading>
-    <Button.Text>Loading</Button.Text>
-    <Button.Spinner loadingIcon={LoaderPinwheel} />
+    <Text>Loading</Text>
+    <Spinner spinner={LoaderPinwheel} />
   </Button>
 </View>`
   },
@@ -153,12 +147,12 @@ ${variants.map((variant, index) => `    ${generateIconButtonJSX(variant, colors[
   <View className="flex flex-row flex-wrap gap-4">
     <Text className="flex items-center">Regular Buttons</Text>
 ${variants.map((variant, index) => `    <Button variant="${variant}" color="${colors[index]}" disabled>
-      <Button.Text>${variant.charAt(0).toUpperCase() + variant.slice(1)}</Button.Text>
+      <Text>${variant.charAt(0).toUpperCase() + variant.slice(1)}</Text>
     </Button>`).join('\n')}
   </View>
   <View className="flex flex-row flex-wrap gap-4">
     <Text className="flex items-center">Square</Text>
-${variants.map((variant, index) => `    <Button variant="${variant}" color="${colors[index]}" disabled square><Button.Icon icon={Figma} /></Button>`).join('\n')}
+${variants.map((variant, index) => `    <Button variant="${variant}" color="${colors[index]}" disabled square><Icon icon={Figma} /></Button>`).join('\n')}
   </View>
 </View>`
   }

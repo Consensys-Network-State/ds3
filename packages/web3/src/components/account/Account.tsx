@@ -32,7 +32,7 @@ const Account = React.forwardRef<any, AccountProps>(
           <Button ref={ref} className={cn(accountRootVariants(), className)} {...props}>
             <AddressAvatar address={address} className="mr-1 w-6 h-6" />
             <Address address={address} />
-            <Button.Icon icon={ChevronDown} />
+            <Icon icon={ChevronDown} />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>

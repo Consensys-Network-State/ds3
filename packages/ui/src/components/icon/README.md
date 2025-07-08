@@ -24,6 +24,8 @@ Create a simple icon with default styling.
 
 Apply semantic color schemes for different contexts and states.
 
+Text (default):
+
 ```tsx live
 <View className="flex flex-row flex-wrap gap-3">
   <Icon icon={Figma} color="neutral" />
@@ -32,6 +34,58 @@ Apply semantic color schemes for different contexts and states.
   <Icon icon={Figma} color="error" />
   <Icon icon={Figma} color="warning" />
   <Icon icon={Figma} color="success" />
+</View>
+```
+
+Background:
+
+```tsx live
+<View className="flex flex-row flex-wrap gap-3">
+  <Icon icon={Figma} color="neutral" spectrum="bg" />
+  <Icon icon={Figma} color="primary" spectrum="bg" />
+  <Icon icon={Figma} color="secondary" spectrum="bg" />
+  <Icon icon={Figma} color="error" spectrum="bg" />
+  <Icon icon={Figma} color="warning" spectrum="bg" />
+  <Icon icon={Figma} color="success" spectrum="bg" />
+</View>
+```
+
+Border: 
+
+```tsx live
+<View className="flex flex-row flex-wrap gap-3">
+  <Icon icon={Figma} color="neutral" spectrum="border" />
+  <Icon icon={Figma} color="primary"spectrum="border" />
+  <Icon icon={Figma} color="secondary" spectrum="border" />
+  <Icon icon={Figma} color="error" spectrum="border" />
+  <Icon icon={Figma} color="warning" spectrum="border" />
+  <Icon icon={Figma} color="success" spectrum="border" />
+</View>
+```
+
+Solid:
+
+```tsx live
+<View className="flex flex-row flex-wrap gap-3">
+  <Icon icon={Figma} color="neutral" spectrum="solid" />
+  <Icon icon={Figma} color="primary"  spectrum="solid" />
+  <Icon icon={Figma} color="secondary"  spectrum="solid" />
+  <Icon icon={Figma} color="error"  spectrum="solid" />
+  <Icon icon={Figma} color="warning"  spectrum="solid" />
+  <Icon icon={Figma} color="success"  spectrum="solid" />
+</View>
+```
+
+Contrast:
+
+```tsx live
+<View className="flex flex-row flex-wrap gap-3">
+  <Icon icon={Figma} color="neutral" spectrum="contrast" />
+  <Icon icon={Figma} color="primary"  spectrum="contrast" />
+  <Icon icon={Figma} color="secondary"  spectrum="contrast" />
+  <Icon icon={Figma} color="error"  spectrum="contrast" />
+  <Icon icon={Figma} color="warning"  spectrum="contrast" />
+  <Icon icon={Figma} color="success"  spectrum="contrast" />
 </View>
 ```
 
@@ -96,6 +150,7 @@ Complete reference of all available props and their configurations.
 | `icon` | `React.ComponentType<any>` | **Required** | The SVG icon component to render |
 | `color` | `neutral` \| `primary` \| `secondary` \| `error` \| `warning` \| `success` | `neutral` | The color of the icon |
 | `size` | `sm` \| `md` \| `lg` \| `number` | `md` | Size of the icon (string for predefined sizes, number for custom pixel values) |
+| `spectrum` | `text` \| `bg` \| `border` \| `solid` \| `contrast` | `text` | The color spectrum to use (affects which color scale is applied) |
 | `className` | `string` | - | Additional class names |
 | `style` | `StyleProp<ViewStyle>` | - | Additional inline styles |
 

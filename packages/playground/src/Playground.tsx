@@ -46,7 +46,7 @@ import {
 } from "lucide-react-native";
 import { useForm, Controller } from 'react-hook-form';
 import { LivePreview } from "./components/code-block";
-import { Highlight, HighlightInput } from "./components/highlight";
+import { Code, CodeInput } from "./components/code";
 import { ReactHookForm } from "./examples/ReactHookForm";
 import { codeExamples } from "./examples";
 
@@ -161,7 +161,7 @@ export const Playground = () => {
 
   // Scope for the LivePreview
   const scope = {
-    Button, Text, Icon, View, React, Input, Checkbox, Switch, Spinner, Field, InputField, CheckboxField, SwitchField, Alert, AlertDescription, Highlight, ScrollView,
+    Button, Text, Icon, View, React, Input, Checkbox, Switch, Spinner, Field, InputField, CheckboxField, SwitchField, Alert, AlertDescription, Code, ScrollView,
     BookOpen, Heart, Star, Zap, Settings, RotateCcw, Edit3, Figma, LoaderPinwheel, Loader, Search, Eye, Mail, Lock,
     Minus, Check, X, LoaderCircle, RefreshCw, AlertCircle, CheckCircle, AlertTriangle, User, ChevronRight, Shield,
     // React Hook Form
@@ -236,8 +236,8 @@ export const Playground = () => {
                   size="sm"
                   onPress={resetCode}
                 >
-                  <Button.Icon icon={RotateCcw} />
-                  <Button.Text>Reset</Button.Text>
+                  <Icon icon={RotateCcw} />
+                  <Text>Reset</Text>
                 </Button>
 
                 <Button
@@ -246,8 +246,8 @@ export const Playground = () => {
                   size="sm"
                   onPress={() => setShowCodeEditor(!showCodeEditor)}
                 >
-                  <Button.Icon icon={showCodeEditor ? X : SearchCode} />
-                  <Button.Text>{showCodeEditor ? "Hide Code" : "Inspect Code"}</Button.Text>
+                  <Icon icon={showCodeEditor ? X : SearchCode} />
+                  <Text>{showCodeEditor ? "Hide Code" : "Inspect Code"}</Text>
                 </Button>
               </View>
             </View>
@@ -279,7 +279,7 @@ export const Playground = () => {
                         setIsDirectEditing(false);
                       }}
                     >
-                      <Button.Text>{key.charAt(0).toUpperCase() + key.slice(1)}</Button.Text>
+                      <Text>{key.charAt(0).toUpperCase() + key.slice(1)}</Text>
                     </Button>
                   ))}
                 </View>
@@ -310,7 +310,7 @@ export const Playground = () => {
                           setIsDirectEditing(false);
                         }}
                       >
-                        <Button.Text>{name}</Button.Text>
+                        <Text>{name}</Text>
                       </Button>
                     ))}
                   </View>
@@ -343,7 +343,7 @@ export const Playground = () => {
                         setIsDirectEditing(false);
                       }}
                     >
-                      <Button.Text>{name}</Button.Text>
+                      <Text>{name}</Text>
                     </Button>
                   ))}
                 </View>
@@ -376,7 +376,7 @@ export const Playground = () => {
              <Text size="base" weight="semibold" className="mb-2">
               JSX Code
             </Text>
-            <HighlightInput 
+            <CodeInput 
               value={currentJSX}
               onChangeText={(text: string) => {
                 setCustomJSX(text);

@@ -83,19 +83,19 @@ Add visual context with icons positioned before, after, or on both sides of text
 ```tsx live
 <View className="flex flex-row flex-wrap gap-3">
   <Button>
-    <Button.Icon icon={Figma} />
-    <Button.Text>Icon Left</Button.Text>
+    <Icon icon={Figma} />
+    <Text>Icon Left</Text>
   </Button>
 
   <Button>
-    <Button.Text>Icon Right</Button.Text>
-    <Button.Icon icon={Figma} />
+    <Text>Icon Right</Text>
+    <Icon icon={Figma} />
   </Button>
 
   <Button>
-    <Button.Icon icon={Figma} />
-    <Button.Text>Icon Both</Button.Text>
-    <Button.Icon icon={Figma} />
+    <Icon icon={Figma} />
+    <Text>Icon Both</Text>
+    <Icon icon={Figma} />
   </Button>
 </View>
 ```
@@ -109,53 +109,44 @@ Create icon-only buttons with equal padding for consistent visual balance.
 ```tsx live
 <View className="flex flex-row flex-wrap gap-3">
   <Button size="sm" square>
-    <Button.Icon icon={Figma} />
+    <Icon icon={Figma} />
   </Button>
 
   <Button square>
-    <Button.Icon icon={Figma} />
+    <Icon icon={Figma} />
   </Button>
   
   <Button size="lg" square>
-    <Button.Icon icon={Figma} />
+    <Icon icon={Figma} />
   </Button>
 </View>
 ```
 
 ### Loading State
 
-Show loading indicators during async operations with customizable spinners.
+Show loading indicators during async operations by using the Spinner component outside of the Button.
 
 Basic:
 
 ```tsx live
 <View className="flex flex-row flex-wrap gap-3">
-  <Button loading>
-    <Button.Spinner />
-    <Button.Text>Loading Left</Button.Text>
+  <Button>
+    <Spinner />
+    <Text>Loading Left</Text>
   </Button>
 
-  <Button loading>
-    <Button.Text>Loading Right</Button.Text>
-    <Button.Spinner />
+  <Button>
+    <Text>Loading Right</Text>
+    <Spinner />
   </Button>
 </View>
 ```
 
-Loading Icon:
+Loading with State:
 
 ```tsx live
-<Button loading>
-  <Button.Spinner loadingIcon={Loader} />
-  <Button.Text>Custom Icon</Button.Text>
-</Button>
-```
-
-Icon Fallback:
-
-```tsx live
-import { Button } from '@consensys/ds3';
-import { Figma } from 'lucide-react';
+import { Button, Spinner } from '@consensys/ds3';
+import { useState } from 'react';
 
 const Component = () => {
   const [loading, setLoading] = useState(false);
@@ -163,15 +154,33 @@ const Component = () => {
   return (
     <Button
       onPress={() => setLoading(true)}
-      loading={loading}
+      disabled={loading}
     >
-      <Button.Spinner icon={Figma} />
-      <Button.Text>{loading ? 'Loading...' : 'Press to load'}</Button.Text>
+      <Spinner spin={loading} />
+      <Text>{loading ? 'Loading...' : 'Press to load'}</Text>
     </Button>
   );
 }
 
 export default Component;
+```
+
+Custom Spinner Icon:
+
+```tsx live
+<Button>
+  <Spinner spinner={Loader} />
+  <Text>Custom Icon</Text>
+</Button>
+```
+
+Icon Fallback:
+
+```tsx live
+<Button>
+  <Spinner fallback={Figma} spin={false} />
+  <Text>With Fallback</Text>
+</Button>
 ```
 
 For props and styling options, see the [Spinner Component API](/packages/ui/src/components/spinner).
@@ -182,7 +191,7 @@ Prevent user interaction and provide visual feedback for unavailable actions.
 
 ```tsx live
 <Button disabled>
-  <Button.Text>Disabled</Button.Text>
+  <Text>Disabled</Text>
 </Button>
 ```
 
@@ -200,7 +209,7 @@ const Component = () => {
   return (
     <Button asChild>
       <Link href="/">
-        <Button.Text>Navigate Home</Button.Text>
+        <Text>Navigate Home</Text>
       </Link>
     </Button>
   );
@@ -220,7 +229,6 @@ Complete reference of all available props and their configurations.
 | `toColor` | Same as `color` | - | Color to switch to on press |
 | `size` | `sm` \| `md` \| `lg` | `md` | Size of the button |
 | `disabled` | `boolean` | `false` | Whether the button is disabled |
-| `loading` | `boolean` | `false` | Whether the button is in loading state |
 | `square` | `boolean` | `false` | Whether the button should have equal padding (for icon-only buttons) |
 | `asChild` | `boolean` | `false` | Whether to replace the button with a different component |
 | `className` | `string` | - | Additional class names |
@@ -240,7 +248,6 @@ The Button component automatically implements proper accessibility attributes:
 |----------|----------------|
 | Role | `accessibilityRole="button"` |
 | Disabled | `accessibilityState={{ disabled }}` |
-| Loading | `accessibilityState={{ busy: loading }}` |
 
 When using icon-only buttons with the `square` option, remember to provide descriptive labels:
 - Use `accessibilityLabel="Description"`

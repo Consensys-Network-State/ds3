@@ -64,7 +64,7 @@ export function Markdown({
       codespan(text: string, styles?: TextStyle) {
         return (
           <Tag key={this.getKey()} size="sm">
-            <Tag.Text>{text}</Tag.Text>
+            {text}
           </Tag>
         );
       }

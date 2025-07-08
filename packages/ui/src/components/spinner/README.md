@@ -1,6 +1,6 @@
 # Spinner Component
 
-The `<Spinner />` component provides a cross-platform loading animation that adapts to both web and React Native environments while maintaining consistent styling across platforms.
+The `<Spinner />` component provides a cross-platform loading animation that adapts to both web and React Native environments while maintaining consistent styling across platforms. The Spinner can animate any element and defaults to a loading icon.
 
 ## Installation
 
@@ -17,9 +17,8 @@ import { Spinner } from '@consensys/ds3';
 Create a simple spinner with default styling.
 
 ```tsx live
-<View className="flex flex-row">
-  <Spinner />
-</View>
+<Spinner />
+<Spinner spin={false} />
 ```
 
 ### Colors
@@ -61,27 +60,6 @@ Control the animation speed for different loading contexts.
 </View>
 ```
 
-### Custom Icons
-
-The Spinner component works seamlessly with any SVG icon library that exports React components. Here are examples from popular libraries:
-
-#### Lucide React Native
-
-```tsx live
-import { LoaderCircle, Loader, LoaderPinwheel, RefreshCw } from 'lucide-react-native';
-
-return (
-  <View className="flex flex-row flex-wrap gap-3">
-    <Spinner icon={LoaderCircle} color="primary" />
-    <Spinner icon={Loader} color="secondary" />
-    <Spinner icon={LoaderPinwheel} color="error" />
-    <Spinner icon={RefreshCw} color="warning" />
-  </View>
-)
-```
-
-Simply import your preferred icon library and pass the icon components to the `icon` prop.
-
 ### Animation Direction
 
 Control the rotation direction of the spinner animation.
@@ -93,21 +71,101 @@ Control the rotation direction of the spinner animation.
 </View>
 ```
 
+### Custom Spinning Icons
+
+Use the `spinner` prop to display custom icons that will spin.
+
+```tsx live
+import { LoaderCircle, Loader, LoaderPinwheel, RefreshCw } from 'lucide-react-native';
+
+return (
+  <View className="flex flex-row flex-wrap gap-3">
+    <Spinner spinner={LoaderCircle} color="primary" />
+    <Spinner spinner={Loader} color="secondary" />
+    <Spinner spinner={LoaderPinwheel} color="error" />
+    <Spinner spinner={RefreshCw} color="warning" />
+  </View>
+)
+```
+
+### Fallback Behavior
+
+The fallback only renders when `spin` is `false` and a `fallback` is provided.
+
+```tsx live
+<View className="flex flex-row gap-3">
+  <Spinner spin={false} fallback={Figma} />
+
+  <Spinner spin={false}>
+    <Spinner.Fallback>
+      <Text>Custom Fallback</Text>
+    </Spinner.Fallback>
+  </Spinner>
+</View>
+```
+
+### Custom Elements
+
+The Spinner can animate any element, not just icons. Pass children to spin custom content.
+
+```tsx live
+<View className="flex flex-row gap-3">
+  <Spinner>⏳</Spinner>
+
+  <Spinner color="primary">
+    <Text className="text-lg">Spin!</Text>
+  </Spinner>
+
+  <Spinner>
+    <View className="w-6 h-6 rounded-full border border-dashed" />
+  </Spinner>
+</View>
+```
+
 ## API Reference
 
 Complete reference of all available props and their configurations.
 
+### Spinner Root
+
+The main Spinner component that provides the container and context.
+
+```tsx live expand
+<Spinner speed="normal" direction="clockwise" spin={true}>
+  {/* Spinner content goes here */}
+</Spinner>
+```
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `icon` | `React.ComponentType<any>` | `LoaderCircle` | The SVG icon component to animate |
-| `color` | `neutral` \| `primary` \| `secondary` \| `error` \| `warning` \| `success` | `neutral` | The color of the spinner |
-| `size` | `sm` \| `md` \| `lg` | `md` | Size of the spinner |
 | `speed` | `slow` \| `normal` \| `fast` \| `number` | `normal` | Animation speed (ms for number) |
 | `direction` | `clockwise` \| `counterclockwise` | `clockwise` | Direction of rotation |
+| `spin` | `boolean` | `true` | Whether the spinner is actively spinning |
+| `spinner` | `ComponentType<any>` | `LoaderCircle` | Icon component to display when spinning |
+| `fallback` | `ComponentType<any>` | - | Icon component to display when spin is false |
 | `className` | `string` | - | Additional class names |
-| `style` | `StyleProp<ViewStyle>` | - | Additional inline styles |
+| `children` | `ReactNode` | - | Custom content to animate (overrides spinner) |
 
-Plus additional SVG props that are passed to the underlying Icon component.
+Inherits all [Icon](https://reactnative.dev/docs/image) props when no children are provided.
+
+### Spinner Fallback
+
+Displays the fallback content when `spin` is `false`. Can show custom content or the fallback icon.
+
+```tsx live expand
+<Spinner>
+  <Spinner.Fallback className="text-primary">
+    <Text>Custom Fallback</Text>
+  </Spinner.Fallback>
+</Spinner>
+```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `className` | `string` | - | Additional class names |
+| `children` | `ReactNode` | - | Custom fallback content |
+
+Inherits all [Icon](https://reactnative.dev/docs/image) props when no children are provided.
 
 ## Accessibility
 

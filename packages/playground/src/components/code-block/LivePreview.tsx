@@ -148,12 +148,9 @@ const extractAndExecuteComponent = (code: string, scope: Record<string, any>): R
       transformedCode = 'const { useState } = React;\n' + transformedCode;
     }
     
-    console.log('Transformed code:', transformedCode);
-    console.log('Scope keys:', Object.keys(scope));
-    
     // Use react-live's approach: dynamic scope keys
     const scopeKeys = Object.keys(scope);
-    const scopeValues = scopeKeys.map((key) => scope[key]);
+    const scopeValues = scopeKeys.map(key => scope[key]);
     
     // Add return statement to get the component
     const finalCode = `

@@ -141,9 +141,9 @@ Simple by default, infinitely customizable when needed:
 
 // Advanced usage - full control over structure and styling
 <Button variant="outline" color="primary" className="px-8 rounded-full">
-  <Button.Icon icon={Mail} className="mr-2" />
-  <Button.Text className="font-bold tracking-wide">Contact Us</Button.Text>
-  <Button.Spinner loadingIcon={RefreshCw} className="ml-3 animate-spin" />
+  <Icon icon={Mail} className="mr-2" />
+  <Text className="font-bold tracking-wide">Contact Us</Text>
+  <Spinner spinner={RefreshCw} className="ml-3 animate-spin" />
 </Button>
 ```
 
@@ -209,7 +209,7 @@ The library automatically maps accessibility props between platforms. Here are a
   }}
   accessibilityRole="button"
 >
-  <Button.Text>Submit</Button.Text>
+  <Text>Submit</Text>
 </Button>
 ```
 
@@ -262,21 +262,21 @@ While Platform Adaptation handles the underlying implementation differences, Dua
      onClick={() => {}} // Will be ignored on native!
      onPress={handlePress}
    >
-     <Button.Text>Mixed Props Button</Button.Text>
+     <Text>Mixed Props Button</Text>
    </Button>
 
    // ✅ CORRECT: 🌐 Web-only code can use web props
    <Button 
      onClick={handleClick} // Perfectly fine in web-only code!
    >
-     <Button.Text>Web Button</Button.Text>
+     <Text>Web Button</Text>
    </Button>
 
    // ✅ CORRECT: 📱🌐  Native/hybrid code must use native props
    <Button 
      onPress={handlePress}
    >
-     <Button.Text>Native Button</Button.Text>
+     <Text>Native Button</Text>
    </Button>
    ```
 
@@ -308,7 +308,7 @@ import type { WebClickEvent, NativePressEvent } from '@consensys/ds3';
 
 // 📱 Native events
 <Button onPress={(e: NativePressEvent) => console.log(e.nativeEvent)}>
-  <Button.Text>Press Me</Button.Text>
+  <Text>Press Me</Text>
 </Button>
 ```
 

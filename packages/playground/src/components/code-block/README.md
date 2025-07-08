@@ -103,9 +103,12 @@ Complete reference of all available props and their configurations.
 |------|------|---------|-------------|
 | `code` | `string` | - | The code to display and optionally execute |
 | `language` | `string` | `'javascript'` | The programming language for syntax highlighting |
-| `className` | `string` | - | Additional class names for the code block container |
+| `className` | `string` | `''` | Additional class names for the code block container |
 | `showCopyButton` | `boolean` | `true` | Whether to show the copy to clipboard button |
 | `showLanguage` | `boolean` | `true` | Whether to show the language label in the header |
+| `showEditButton` | `boolean` | - | Whether to show the edit button (only visible when preview is enabled) |
 | `preview` | `boolean` | `false` | Whether to show a live preview of the code execution |
 | `expand` | `boolean` | `false` | Whether the code is visible by default when preview is enabled |
 | `scope` | `Record<string, any>` | `{}` | Object containing components and dependencies for live preview |
+| `onChange` | `(code: string) => void` | - | Callback fired when the code is edited in edit mode |
+| `editable` | `boolean` | `true` | Whether the code can be edited when preview is enabled |

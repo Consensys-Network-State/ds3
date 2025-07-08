@@ -2,16 +2,16 @@ export { Playground } from "./Playground";
 
 export { codeExamples } from "./examples";
 
-// highlight
+// code
 export {
-  Highlight,
-  HighlightInput,
-} from './components/highlight';
+  Code,
+  CodeInput,
+} from './components/code';
 
 export type {
-  HighlightProps,
-  HighlightInputProps,
-} from './components/highlight';
+  CodeProps,
+  CodeInputProps,
+} from './components/code';
 
 // code-block
 export {

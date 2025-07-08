@@ -48,6 +48,7 @@
     "@rn-primitives/slot": "^1.1.0",
     "@rn-primitives/switch": "^1.1.0",
     "@rn-primitives/types": "^1.1.0",
+    "@rn-primitives/accordion": "^1.1.0",
     "autoprefixer": "^10.4.20",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

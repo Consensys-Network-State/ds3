@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, useCopyToClipboard, Icon, Button } from '@consensys/ds3';
-import { Check, Copy, Eye, EyeOff } from 'lucide-react-native';
+import { View, Text, useCopyToClipboard, Button, Card, Icon } from '@consensys/ds3';
+import { Check, Copy, Code as CodeIcon, X, Pencil } from 'lucide-react-native';
 import { LivePreview } from './LivePreview';
-import { Highlight } from '../highlight';
+import { Code, CodeInput } from '../code';
 
 export interface CodeBlockProps {
   code: string;
@@ -10,13 +10,16 @@ export interface CodeBlockProps {
   className?: string;
   showCopyButton?: boolean;
   showLanguage?: boolean;
+  showEditButton?: boolean;
   preview?: boolean;
   expand?: boolean;
   scope?: Record<string, any>;
+  onChange?: (code: string) => void;
+  editable?: boolean;
 }
 
 // Memoized Highlight component to prevent unnecessary re-renders and state updates
-const MemoizedHighlight = React.memo(({ code, language }: { code: string; language: string }) => {
+const MemoizedCode = React.memo(({ code, language }: { code: string; language: string }) => {
   const [hasError, setHasError] = React.useState(false);
 
   React.useEffect(() => {
@@ -32,7 +35,7 @@ const MemoizedHighlight = React.memo(({ code, language }: { code: string; langua
   }
 
   try {
-    return <Highlight code={code} language={language} />;
+    return <Code code={code} language={language} />;
   } catch (error) {
     console.warn('Highlight component error:', error);
     setHasError(true);
@@ -53,83 +56,142 @@ export function CodeBlock({
   preview = false,
   expand = false,
   scope = {},
+  onChange,
+  editable = true,
 }: CodeBlockProps) {
   const { copied, copy } = useCopyToClipboard();
-  const [showCode, setShowCode] = React.useState(preview ? expand : true);
+  const [viewMode, setViewMode] = React.useState<'hidden' | 'code' | 'edit'>(
+    preview ? (expand ? 'code' : 'hidden') : 'code'
+  );
+  const [editableCode, setEditableCode] = React.useState(code);
+
+  // Update editable code when prop changes
+  React.useEffect(() => {
+    setEditableCode(code);
+  }, [code]);
 
   const handleCopy = React.useCallback(() => {
-    copy(code);
-  }, [copy, code]);
+    copy(viewMode === 'edit' ? editableCode : code);
+  }, [copy, code, editableCode, viewMode]);
 
-  const toggleCodeVisibility = React.useCallback(() => {
-    setShowCode(!showCode);
-  }, [showCode]);
+  const toggleCode = React.useCallback(() => {
+    setViewMode(viewMode === 'code' ? 'hidden' : 'code');
+  }, [viewMode]);
+
+  const toggleEdit = React.useCallback(() => {
+    setViewMode(viewMode === 'edit' ? 'hidden' : 'edit');
+  }, [viewMode]);
+
+  const handleCodeChange = React.useCallback((text: string) => {
+    setEditableCode(text);
+    if (onChange) {
+      onChange(text);
+    }
+  }, [onChange]);
 
   // Determine what to show based on preview state
-  const shouldShowCode = showCode || !preview;
+  const shouldShowCode = viewMode === 'code' || !preview;
+  const shouldShowEdit = viewMode === 'edit';
   const shouldShowPreview = preview;
   const shouldShowToggleButton = preview;
-  const shouldShowLanguage = showLanguage && shouldShowCode;
+  const shouldShowEditButton = preview && editable;
 
-  const showHeader = showLanguage || showCopyButton;
+  const showHeader = showLanguage || showCopyButton || shouldShowEditButton || shouldShowToggleButton;
+
+  // Calculate number of lines for HighlightInput
+  const numberOfLines = Math.max(6, editableCode.split('\n').length);
 
   return (
-    <View className={`bg-neutral-2 rounded-lg overflow-hidden border border-neutral-5 ${className}`}>
-      {/* Live Preview - only show when preview is true */}
+    <Card color="neutral" border className={className}>
+      {/* Live Preview - main content when preview is true */}
       {shouldShowPreview && (
-        <View className="border-b border-neutral-5">
+        <Card.Content className="bg-neutral-1">
           <LivePreview 
-            code={code}
+            code={viewMode === 'edit' ? editableCode : code}
             scope={scope}
           />
-        </View>
+        </Card.Content>
       )}
 
-      {/* Header with language label and copy button */}
-      {showHeader && (
-        <View className="flex-row justify-between items-center px-4 py-2 bg-neutral-3">
-          {shouldShowLanguage ? (
-            <Text size="sm" color="neutral" className="text-neutral-11 font-mono uppercase">
-              {language}
-            </Text>
-          ) : (
-            <View /> // Empty view to keep justify-between working
-          )}
-          <View className="flex-row items-center gap-2">
-            {showCopyButton && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onPress={handleCopy}
-                accessibilityLabel={copied ? "Copied" : "Copy to clipboard"}
-                accessibilityHint="Click to copy code to clipboard"
-                className="flex-row items-center gap-2"
-              >
-                <Icon icon={copied ? Check : Copy} size="sm" color="neutral" />
-              </Button>
-            )}
-            {shouldShowToggleButton && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onPress={toggleCodeVisibility}
-                accessibilityLabel={showCode ? "Hide code" : "Show code"}
-                accessibilityHint="Click to toggle code visibility"
-                className="flex-row items-center gap-2"
-              >
-                <Icon icon={showCode ? EyeOff : Eye} size="sm" color="neutral" />
-              </Button>
-            )}
-          </View>
-        </View>
-      )}
-
-      {/* Code content */}
+      {/* Code content - either highlighted or editable */}
       {shouldShowCode && (
-        <View className="p-4">
-          <MemoizedHighlight code={code} language={language} />
-        </View>
+        !preview && (
+          <Card.Content className="bg-neutral-1">
+            <MemoizedCode code={code} language={language} />
+          </Card.Content>
+        )
       )}
-    </View>
+
+      {/* Header with language label and action buttons */}
+      {showHeader && (
+        <Card.Footer>
+          <View className="flex-row justify-between items-center w-full">
+            {showLanguage ? (
+              <Card.Text className="text-neutral-11 font-mono uppercase">
+                {language}
+              </Card.Text>
+            ) : (
+              <View /> // Empty view to keep justify-between working
+            )}
+            <View className="flex-row items-center gap-2">
+              {showCopyButton && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onPress={handleCopy}
+                  accessibilityLabel={copied ? "Copied" : "Copy to clipboard"}
+                  accessibilityHint="Click to copy code to clipboard"
+                  className="flex-row items-center gap-2"
+                >
+                  <Icon icon={copied ? Check : Copy} />
+                </Button>
+              )}
+              {shouldShowToggleButton && (
+                <Button
+                  variant={viewMode === 'code' ? 'solid' : 'ghost'}
+                  size="sm"
+                  onPress={toggleCode}
+                  accessibilityLabel={viewMode === 'code' ? "Hide code" : "Show code"}
+                  accessibilityHint="Click to toggle code view"
+                  className="flex-row items-center gap-2"
+                >
+                  <Icon icon={viewMode === 'code' ? X : CodeIcon} />
+                </Button>
+              )}
+              {shouldShowEditButton && (
+                <Button
+                  variant={viewMode === 'edit' ? 'solid' : 'ghost'}
+                  size="sm"
+                  onPress={toggleEdit}
+                  accessibilityLabel={viewMode === 'edit' ? "Hide edit" : "Show edit"}
+                  accessibilityHint="Click to toggle edit mode"
+                  className="flex-row items-center gap-2"
+                >
+                  <Icon icon={viewMode === 'edit' ? X : Pencil}/>
+                </Button>
+              )}
+            </View>
+          </View>
+        </Card.Footer>
+      )}
+
+      {/* Code content - footer when there's a toggle, otherwise main content */}
+      {preview && (shouldShowCode || shouldShowEdit) && (
+        <Card.Content className="border-t border-neutral-a7 bg-neutral-1">
+          {viewMode === 'edit' ? (
+            <CodeInput
+              value={editableCode}
+              onChangeText={handleCodeChange}
+              multiline={true}
+              numberOfLines={numberOfLines}
+              className="min-h-[120px]"
+              autoFocus={viewMode === 'edit'}
+            />
+          ) : (
+            <MemoizedCode code={code} language={language} />
+          )}
+        </Card.Content>
+      )}
+    </Card>
   );
 } 
