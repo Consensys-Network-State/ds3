@@ -1,6 +1,6 @@
-# Menu Navigation Component
+# Menu Component
 
-The `<Menu />` component provides a flexible, accessible navigation menu that uses accordions for nested navigation. It's perfect for drawer layouts, left panels, and any sidebar navigation needs.
+The `<Menu />` component provides a cross-platform menu control that adapts to both web and React Native environments while maintaining a consistent API and design. Menus are used to display lists of interactive items, commonly found in side navigation or dropdown menus.
 
 ## Installation
 
@@ -12,324 +12,293 @@ import { Menu } from '@consensys/ds3';
 
 ## Examples
 
-### Basic Navigation
+### Basic
 
-Create a simple side menu with navigation items.
+Create a simple menu with default styling.
 
 ```tsx live
-const Component = () => {
-  const menuItems = [
-    {
-      id: 'home',
-      label: 'Home',
-      icon: Home,
-      isActive: true,
-    },
-    {
-      id: 'profile',
-      label: 'Profile',
-      icon: User,
-    },
-    {
-      id: 'documents',
-      label: 'Documents',
-      icon: FileText,
-    },
-    {
-      id: 'settings',
-      label: 'Settings',
-      icon: Settings,
-    },
-  ];
-
-  return (
-    <View className="w-80 bg-neutral-1 p-4 rounded-lg">
-      <Menu>
-        {menuItems.map((item) => (
-          <Menu.Item
-            key={item.id}
-            item={item}
-            isActive={item.isActive}
-            onPress={(item) => console.log('Pressed:', item.label)}
-          />
-        ))}
-      </Menu>
-    </View>
-  );
-}
+<Menu>
+  <Menu.Item onPress={() => {}}>
+    <Text>Menu Item</Text>
+  </Menu.Item>
+</Menu>
 ```
 
-### Nested Navigation with Groups
+### With Icons
 
-Create hierarchical navigation using accordion groups.
+Add visual context with icons positioned before text.
 
 ```tsx live
-const Component = () => {
-  const nestedMenuItems = [
-    {
-      id: 'home',
-      label: 'Home',
-      icon: Home,
-      isActive: true,
-    },
-    {
-      id: 'user',
-      type: 'group',
-      label: 'User Management',
-      icon: User,
-      items: [
-        {
-          id: 'profile',
-          label: 'Profile',
-          description: 'Manage your profile settings',
-        },
-        {
-          id: 'preferences',
-          label: 'Preferences',
-          description: 'Customize your experience',
-        },
-        {
-          id: 'security',
-          type: 'group',
-          label: 'Security',
-          icon: Shield,
-          description: 'Security and privacy settings',
-          items: [
-            {
-              id: 'password',
-              label: 'Password',
-              description: 'Change your password',
-            },
-            {
-              id: 'two-factor',
-              label: 'Two-Factor Auth',
-              description: 'Enable 2FA protection',
-              badge: { text: 'New', color: 'secondary' },
-            },
-            {
-              id: 'sessions',
-              label: 'Active Sessions',
-              description: 'Manage login sessions',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'content',
-      type: 'group',
-      label: 'Content',
-      icon: FileText,
-      items: [
-        {
-          id: 'documents',
-          type: 'group',
-          label: 'Documents',
-          description: 'Manage your documents',
-          items: [
-            {
-              id: 'recent',
-              label: 'Recent Files',
-              description: 'Recently accessed documents',
-            },
-            {
-              id: 'shared',
-              label: 'Shared Documents',
-              description: 'Documents shared with you',
-              badge: { text: '5', color: 'default' },
-            },
-            {
-              id: 'templates',
-              label: 'Templates',
-              description: 'Document templates',
-            },
-          ],
-        },
-        {
-          id: 'media',
-          type: 'group',
-          label: 'Media Library',
-          description: 'Photos, videos, and files',
-          items: [
-            {
-              id: 'photos',
-              label: 'Photos',
-              description: 'Image files',
-            },
-            {
-              id: 'videos',
-              label: 'Videos',
-              description: 'Video files',
-            },
-            {
-              id: 'audio',
-              label: 'Audio',
-              description: 'Audio files',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'system',
-      type: 'group',
-      label: 'System',
-      icon: Settings,
-      items: [
-        {
-          id: 'database',
-          type: 'group',
-          label: 'Database',
-          icon: Database,
-          description: 'Database management',
-          items: [
-            {
-              id: 'backups',
-              label: 'Backups',
-              description: 'Database backups',
-            },
-            {
-              id: 'migrations',
-              label: 'Migrations',
-              description: 'Database migrations',
-            },
-            {
-              id: 'logs',
-              label: 'Logs',
-              description: 'Database logs',
-            },
-          ],
-        },
-        {
-          id: 'notifications',
-          label: 'Notifications',
-          icon: Bell,
-          description: 'Notification settings',
-          badge: { text: '3', color: 'destructive' },
-        },
-      ],
-    },
-  ];
-
-  return (
-    <View className="w-80 bg-neutral-1 p-4 rounded-lg">
-      <Menu>
-        {nestedMenuItems.map((item) => {
-          if (item.type === 'group') {
-            return (
-              <Menu.Group
-                key={item.id}
-                group={item}
-                isActive={item.isActive}
-                onItemPress={(item) => console.log('Pressed:', item.label)}
-              />
-            );
-          }
-          return (
-            <Menu.Item
-              key={item.id}
-              item={item}
-              isActive={item.isActive}
-              onPress={(item) => console.log('Pressed:', item.label)}
-            />
-          );
-        })}
-      </Menu>
-    </View>
-  );
-}
+<Menu>
+  <Menu.Item onPress={() => {}}>
+    <Icon icon={Figma} />
+    <Text>Menu Item</Text>
+  </Menu.Item>
+  <Menu.Item onPress={() => {}}>
+    <Icon icon={Settings} />
+    <Text>Settings</Text>
+  </Menu.Item>
+  <Menu.Item onPress={() => {}}>
+    <Icon icon={User} />
+    <Text>Profile</Text>
+  </Menu.Item>
+</Menu>
 ```
 
-### Controlled State
+### With Avatars
 
-Manage the active state programmatically.
+Display user avatars alongside menu items.
 
 ```tsx live
-const Component = () => {
-  const [activeItem, setActiveItem] = React.useState('home');
-  
-  const items = [
-    { id: 'home', label: 'Home', icon: Home, isActive: activeItem === 'home' },
-    { id: 'profile', label: 'Profile', icon: User, isActive: activeItem === 'profile' },
-    { id: 'settings', label: 'Settings', icon: Settings, isActive: activeItem === 'settings' },
-  ];
-  
-  const handleItemPress = (item) => {
-    setActiveItem(item.id);
-    console.log('Active item:', item.label);
-  };
-  
-  return (
-    <View className="space-y-4">
-      <View className="flex flex-row gap-2">
-        <Button 
-          size="sm" 
-          onPress={() => setActiveItem('home')}
-          variant={activeItem === 'home' ? 'solid' : 'outline'}
-        >
-          Home
-        </Button>
-        <Button 
-          size="sm" 
-          onPress={() => setActiveItem('profile')}
-          variant={activeItem === 'profile' ? 'solid' : 'outline'}
-        >
-          Profile
-        </Button>
-        <Button 
-          size="sm" 
-          onPress={() => setActiveItem('settings')}
-          variant={activeItem === 'settings' ? 'solid' : 'outline'}
-        >
-          Settings
-        </Button>
-      </View>
-      
-      <Menu className="w-64">
-        {items.map((item) => (
-          <Menu.Item
-            key={item.id}
-            item={item}
-            isActive={item.isActive}
-            onPress={handleItemPress}
-          />
-        ))}
-      </Menu>
-    </View>
-  );
-}
+<Menu>
+  <Menu.Item onPress={() => {}}>
+    <Avatar source={{ uri: 'https://github.com/shadcn.png' }}>JD</Avatar>
+    <Text>John Doe</Text>
+  </Menu.Item>
+  <Menu.Item onPress={() => {}}>
+    <Avatar color="primary">AB</Avatar>
+    <Text>Alice Brown</Text>
+  </Menu.Item>
+  <Menu.Item onPress={() => {}}>
+    <Avatar icon={User} color="secondary">CD</Avatar>
+    <Text>Charlie Davis</Text>
+  </Menu.Item>
+</Menu>
 ```
 
-### Disabled Items
+### Mixed Content
 
-Disable specific navigation items.
+Combine icons, avatars, and text in various combinations.
 
 ```tsx live
-const Component = () => {
-  const itemsWithDisabled = [
-    { id: 'home', label: 'Home', icon: Home, isActive: true },
-    { id: 'profile', label: 'Profile', icon: User },
-    { id: 'settings', label: 'Settings', icon: Settings, disabled: true },
-    { id: 'admin', label: 'Admin Panel', icon: Shield, disabled: true },
-  ];
+<Menu>
+  <Menu.Item onPress={() => {}}>
+    <Icon icon={Home} />
+    <Text>Home</Text>
+  </Menu.Item>
+  <Menu.Item onPress={() => {}}>
+    <Avatar source={{ uri: 'https://github.com/shadcn.png' }}>JD</Avatar>
+    <Text>Profile</Text>
+  </Menu.Item>
+  <Menu.Item onPress={() => {}}>
+    <Icon icon={Settings} />
+    <Text>Settings</Text>
+  </Menu.Item>
+  <Menu.Item onPress={() => {}}>
+    <Avatar color="error">AB</Avatar>
+    <Text>Account</Text>
+  </Menu.Item>
+</Menu>
+```
 
-  return (
-    <Menu className="w-64">
-      {itemsWithDisabled.map((item) => (
-        <Menu.Item
-          key={item.id}
-          item={item}
-          isActive={item.isActive}
-          onPress={(item) => {
-            if (!item.disabled) {
-              console.log('Pressed:', item.label);
-            }
-          }}
-        />
-      ))}
-    </Menu>
-  );
-}
+### Sizes
+
+Scale menus to fit different UI contexts and hierarchy levels. Avatar components automatically adapt to the menu size.
+
+```tsx live
+<View className="flex flex-col gap-6">
+  <Menu size="sm">
+    <Menu.Item onPress={() => {}}>
+      <Icon icon={Figma} />
+      <Text>Small</Text>
+    </Menu.Item>
+    <Menu.Item onPress={() => {}}>
+      <Avatar source={{ uri: 'https://github.com/shadcn.png' }}>JD</Avatar>
+      <Text>Profile</Text>
+    </Menu.Item>
+  </Menu>
+
+  <Menu size="md">
+    <Menu.Item onPress={() => {}}>
+      <Icon icon={Figma} />
+      <Text>Medium</Text>
+    </Menu.Item>
+    <Menu.Item onPress={() => {}}>
+      <Avatar source={{ uri: 'https://github.com/shadcn.png' }}>JD</Avatar>
+      <Text>Profile</Text>
+    </Menu.Item>
+  </Menu>
+
+  <Menu size="lg">
+    <Menu.Item onPress={() => {}}>
+      <Icon icon={Figma} />
+      <Text>Large</Text>
+    </Menu.Item>
+    <Menu.Item onPress={() => {}}>
+      <Avatar source={{ uri: 'https://github.com/shadcn.png' }}>JD</Avatar>
+      <Text>Profile</Text>
+    </Menu.Item>
+  </Menu>
+</View>
+```
+
+**Avatar Size Mapping:**
+- `sm` menu → `sm` avatar (24x24px)
+- `md` menu → `md` avatar (32x32px) 
+- `lg` menu → `md` avatar (32x32px)
+
+### Disabled State
+
+Prevent user interaction and provide visual feedback for unavailable actions.
+
+```tsx live
+<Menu>
+  <Menu.Item onPress={() => {}}>
+    <Icon icon={Figma} />
+    <Text>Active Item</Text>
+  </Menu.Item>
+  <Menu.Item disabled>
+    <Icon icon={Settings} />
+    <Text>Disabled Item</Text>
+  </Menu.Item>
+  <Menu.Item onPress={() => {}}>
+    <Icon icon={User} />
+    <Text>Another Active Item</Text>
+  </Menu.Item>
+</Menu>
+```
+
+### Variants
+
+Choose from six different visual styles to match your design system.
+
+```tsx live
+<Menu>
+  <Menu.Item onPress={() => {}} variant="elevated">
+    <Icon icon={Figma} />
+    <Text>Elevated</Text>
+  </Menu.Item>
+  <Menu.Item onPress={() => {}} variant="solid">
+    <Icon icon={Settings} />
+    <Text>Solid</Text>
+  </Menu.Item>
+  <Menu.Item onPress={() => {}} variant="soft">
+    <Icon icon={User} />
+    <Text>Soft</Text>
+  </Menu.Item>
+  <Menu.Item onPress={() => {}} variant="outline">
+    <Icon icon={HelpCircle} />
+    <Text>Outline</Text>
+  </Menu.Item>
+  <Menu.Item onPress={() => {}} variant="dashed">
+    <Icon icon={Bell} />
+    <Text>Dashed</Text>
+  </Menu.Item>
+  <Menu.Item onPress={() => {}} variant="ghost">
+    <Icon icon={Mail} />
+    <Text>Ghost</Text>
+  </Menu.Item>
+</Menu>
+```
+
+### Colors
+
+Apply semantic color schemes for different contexts and states.
+
+```tsx live
+<Menu>
+  <Menu.Item onPress={() => {}} color="neutral">
+    <Icon icon={Figma} />
+    <Text>Neutral</Text>
+  </Menu.Item>
+  <Menu.Item onPress={() => {}} color="primary">
+    <Icon icon={Settings} />
+    <Text>Primary</Text>
+  </Menu.Item>
+  <Menu.Item onPress={() => {}} color="secondary">
+    <Icon icon={User} />
+    <Text>Secondary</Text>
+  </Menu.Item>
+  <Menu.Item onPress={() => {}} color="error">
+    <Icon icon={AlertCircle} />
+    <Text>Error</Text>
+  </Menu.Item>
+  <Menu.Item onPress={() => {}} color="warning">
+    <Icon icon={AlertTriangle} />
+    <Text>Warning</Text>
+  </Menu.Item>
+  <Menu.Item onPress={() => {}} color="success">
+    <Icon icon={CheckCircle} />
+    <Text>Success</Text>
+  </Menu.Item>
+</Menu>
+```
+
+### Interaction Colors
+
+Dynamically change colors on press or hover for enhanced user feedback.
+
+```tsx live
+<Menu>
+  <Menu.Item onPress={() => {}} color="neutral" toColor="primary">
+    <Icon icon={Figma} />
+    <Text>Neutral to Primary</Text>
+  </Menu.Item>
+  <Menu.Item onPress={() => {}} color="primary" toColor="secondary">
+    <Icon icon={Settings} />
+    <Text>Primary to Secondary</Text>
+  </Menu.Item>
+  <Menu.Item onPress={() => {}} color="secondary" toColor="error">
+    <Icon icon={User} />
+    <Text>Secondary to Error</Text>
+  </Menu.Item>
+</Menu>
+```
+
+### Custom Styling
+
+Apply custom styles to individual menu items.
+
+```tsx live
+<Menu>
+  <Menu.Item onPress={() => {}} className="bg-primary-a3">
+    <Icon icon={Figma} />
+    <Text>Custom Background</Text>
+  </Menu.Item>
+  <Menu.Item onPress={() => {}} className="border border-primary">
+    <Icon icon={Settings} />
+    <Text>Custom Border</Text>
+  </Menu.Item>
+  <Menu.Item onPress={() => {}} className="rounded-lg">
+    <Icon icon={User} />
+    <Text>Custom Border Radius</Text>
+  </Menu.Item>
+</Menu>
+```
+
+### Side Navigation Example
+
+A complete side navigation menu example.
+
+```tsx live expand
+<View className="w-64 bg-neutral-1 border-r border-neutral-a6 p-4">
+  <Menu>
+    <Menu.Item onPress={() => {}}>
+      <Icon icon={Home} />
+      <Text>Dashboard</Text>
+    </Menu.Item>
+    
+    <Menu.Item onPress={() => {}}>
+      <Icon icon={Users} />
+      <Text>Users</Text>
+    </Menu.Item>
+    
+    <Menu.Item onPress={() => {}}>
+      <Icon icon={Settings} />
+      <Text>Settings</Text>
+    </Menu.Item>
+    
+    <Menu.Item onPress={() => {}}>
+      <Icon icon={HelpCircle} />
+      <Text>Help</Text>
+    </Menu.Item>
+    
+    <Menu.Item onPress={() => {}}>
+      <Avatar source={{ uri: 'https://github.com/shadcn.png' }}>JD</Avatar>
+      <Text>Profile</Text>
+    </Menu.Item>
+  </Menu>
+</View>
 ```
 
 ## API Reference
@@ -338,168 +307,59 @@ Complete reference of all available props and their configurations.
 
 ### Menu Root
 
-The main Menu component that provides the container and navigation structure.
+The main Menu component that provides the container and context.
 
-```tsx
-<Menu className="w-80">
-  <Menu.Item item={item} />
-  <Menu.Group group={group} />
+```tsx live
+<Menu size="md" className="w-64">
+  {/* Menu items go here */}
 </Menu>
 ```
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| `size` | `sm` \| `md` \| `lg` | `md` | The size of the menu and its items |
 | `className` | `string` | - | Additional class names |
+| `children` | `ReactNode` | - | Menu items (Menu.Item components) |
 
 Inherits all [View](https://reactnative.dev/docs/view) props.
 
-### MenuData
+### Menu Item
 
-Represents a single navigation item or group.
+Individual menu items that can be pressed and contain various content types.
 
-```tsx
-// Simple item
-{
-  id: 'home',
-  label: 'Home',
-  icon: Home,
-  isActive: true,
-  onPress: (item) => console.log(item.label),
-}
-
-// Group with nested items
-{
-  id: 'settings',
-  type: 'group',
-  label: 'Settings',
-  icon: Settings,
-  items: [
-    { id: 'profile', label: 'Profile' },
-    { id: 'security', label: 'Security' },
-  ],
-}
+```tsx live
+<Menu.Item onPress={() => {}} disabled={false}>
+  <Icon icon={Figma} />
+  <Text>Menu Item</Text>
+</Menu.Item>
 ```
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `id` | `string` | Unique identifier for the item |
-| `label` | `string` | Display text for the item |
-| `description` | `string` | Optional description text |
-| `icon` | `React.ComponentType` | Icon component to display |
-| `disabled` | `boolean` | Whether the item is disabled |
-| `isActive` | `boolean` | Whether the item is currently active |
-| `onPress` | `(item: MenuData) => void` | Item-specific press handler |
-| `badge` | `MenuBadge` | Badge configuration |
-| `type` | `'item'` \| `'group'` | Item type (defaults to 'item') |
-| `items` | `MenuData[]` | Nested items (for groups only) |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `size` | `sm` \| `md` \| `lg` | Inherits from Menu | The size of the menu item |
+| `variant` | `elevated` \| `solid` \| `soft` \| `outline` \| `dashed` \| `ghost` | `elevated` | The visual style variant |
+| `color` | `neutral` \| `primary` \| `secondary` \| `error` \| `warning` \| `success` | `neutral` | The color scheme |
+| `toColor` | `neutral` \| `primary` \| `secondary` \| `error` \| `warning` \| `success` | - | Color to transition to on interaction |
+| `disabled` | `boolean` | `false` | Whether the item is disabled |
+| `onPress` | `() => void` | - | Function called when the item is pressed |
+| `className` | `string` | - | Additional class names |
+| `children` | `ReactNode` | - | Item content (Icon, Text, Avatar) |
 
-### MenuBadge
+Inherits all [View](https://reactnative.dev/docs/view) props.
 
-Configuration for badges displayed on navigation items.
+## Design Principles
 
-```tsx
-{
-  text: '3',
-  color: 'destructive',
-}
-```
+The Menu component follows these design principles:
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `text` | `string` \| `number` | Badge text content |
-| `color` | `'default'` \| `'secondary'` \| `'destructive'` \| `'outline'` | Badge color variant |
+- **Consistent Sizing**: All items within a menu share the same size context
+- **Flexible Content**: Supports Icon, Text, and Avatar components in any combination
+- **Surface Integration**: Uses Surface component for consistent styling and interactions
+- **Accessibility**: Proper accessibility roles and states for interactive elements
+- **Cross-Platform**: Works consistently across web and React Native platforms
 
-### Menu.Item
+## Related Components
 
-Individual navigation item component.
-
-```tsx
-<Menu.Item
-  item={menuData}
-  isActive={true}
-  isNested={false}
-  onPress={handlePress}
-/>
-```
-
-| Prop | Type | Description |
-|------|------|-------------|
-| `item` | `MenuData` | Menu item configuration |
-| `isActive` | `boolean` | Whether the item is active |
-| `isNested` | `boolean` | Whether the item is nested in a group |
-| `onPress` | `(item: MenuData) => void` | Press handler |
-| `className` | `string` | Additional class names |
-| `activeClassName` | `string` | Additional class names for active state |
-
-### Menu.Group
-
-Navigation group component with accordion functionality.
-
-```tsx
-<Menu.Group
-  group={menuGroupData}
-  isActive={false}
-  onItemPress={handleItemPress}
-/>
-```
-
-| Prop | Type | Description |
-|------|------|-------------|
-| `group` | `MenuGroupData` | Menu group configuration |
-| `isActive` | `boolean` | Whether the group is active |
-| `onItemPress` | `(item: MenuData) => void` | Item press handler |
-| `className` | `string` | Additional class names |
-| `activeClassName` | `string` | Additional class names for active state |
-
-## Accessibility
-
-The Menu component automatically implements proper accessibility attributes:
-
-### Accessibility Features
-
-- **WAI-ARIA Compliance**: Follows navigation menu patterns
-- **Keyboard Navigation**: Full keyboard support with arrow keys, Enter, and Space
-- **Screen Reader Support**: Proper ARIA attributes for navigation structure
-- **Focus Management**: Automatic focus handling for menu items
-- **Semantic Structure**: Uses proper semantic elements
-
-### Best Practices
-
-```tsx
-<Menu>
-  {navigationItems.map((item) => (
-    <Menu.Item
-      key={item.id}
-      item={item}
-      isActive={item.isActive}
-      onPress={(item) => {
-        // Handle navigation
-        router.push(item.id);
-      }}
-    />
-  ))}
-</Menu>
-```
-
-### Menu Data Types
-
-- `MenuData`: Union of `MenuItemData` and `MenuGroupData`.
-- `MenuItemData`: Represents a single menu item.
-- `MenuGroupData`: Represents a group of menu items (with nested items).
-- `MenuBadge`: Badge configuration for menu items.
-- `isMenuGroup`: Type guard to check if a menu item is a group.
-
-### Example
-
-```tsx
-const items: MenuData[] = [
-  { id: 'home', label: 'Home', icon: Home },
-  { id: 'settings', type: 'group', label: 'Settings', items: [
-    { id: 'profile', label: 'Profile' },
-  ]},
-];
-
-if (isMenuGroup(items[1])) {
-  // items[1] is a MenuGroupData
-}
-```
+- [Surface](/packages/ui/src/components/surface) - The styling foundation used by Menu.Item
+- [Icon](/packages/ui/src/components/icon) - For adding visual context to menu items
+- [Text](/packages/ui/src/components/text) - For displaying text content
+- [Avatar](/packages/ui/src/components/avatar) - For displaying user avatars 

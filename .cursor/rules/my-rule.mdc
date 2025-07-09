@@ -1,0 +1,6 @@
+---
+description: If I talk about Jerry, do the following
+globs: 
+alwaysApply: false
+---
+Say: "Hello Jerry", "how can I help you today"

@@ -83,6 +83,46 @@ Add visual context with icons that automatically scale with the tag size.
 </View>
 ```
 
+### Spinner
+
+Add loading states with spinners that automatically scale with the tag size.
+
+```tsx live
+<View className="flex flex-row gap-2">
+  <Tag size="sm">
+    <Spinner />
+    <Text>Loading...</Text>
+  </Tag>
+  <Tag size="md">
+    <Spinner />
+    <Text>Loading...</Text>
+  </Tag>
+  <Tag size="lg">
+    <Spinner />
+    <Text>Loading...</Text>
+  </Tag>
+</View>
+```
+
+Custom Spinner Icons:
+
+```tsx live
+<View className="flex flex-row gap-2">
+  <Tag color="primary">
+    <Spinner spinner={Loader} />
+    <Text>Processing</Text>
+  </Tag>
+  <Tag color="secondary">
+    <Spinner spinner={RefreshCw} />
+    <Text>Refreshing</Text>
+  </Tag>
+  <Tag color="error">
+    <Spinner spinner={LoaderPinwheel} />
+    <Text>Error</Text>
+  </Tag>
+</View>
+```
+
 ### Pressable
 
 Create interactive tags that respond to press and hover events.

@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Avatar, Icon, Input, Checkbox, Switch, Spinner, Card, Badge, Alert, View, Text } from '@consensys/ds3';
 import { MarkdownPage } from '@/components/MarkdownPage';
-import { Figma, Loader, User, Settings, Bell, HelpCircle } from 'lucide-react-native';
+import { Figma, Loader, User, Settings, Bell, HelpCircle, RefreshCw, LoaderPinwheel } from 'lucide-react-native';
 import { Link } from 'expo-router';
 
 export default function AvatarPage() {
@@ -27,6 +27,8 @@ export default function AvatarPage() {
     TouchableOpacity,
     Link,
     Text,
+    RefreshCw,
+    LoaderPinwheel
   };
 
   return (

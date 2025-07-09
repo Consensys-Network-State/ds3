@@ -1,14 +1,2 @@
 export { Menu } from './Menu';
-export type {
-  MenuRootProps,
-  MenuItemProps,
-  MenuGroupProps,
-  MenuTriggerProps,
-  MenuItemVariants,
-  MenuTriggerVariants,
-  MenuData,
-  MenuGroupData,
-  MenuItemData,
-  MenuBaseItem,
-  MenuBadge,
-} from './types'; 
+export type { MenuRootProps, MenuItemProps, MenuSize } from './types'; 

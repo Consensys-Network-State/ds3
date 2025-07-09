@@ -240,15 +240,7 @@ export {
 export type {
   MenuRootProps,
   MenuItemProps,
-  MenuGroupProps,
-  MenuTriggerProps,
-  MenuItemVariants,
-  MenuTriggerVariants,
-  MenuData,
-  MenuGroupData,
-  MenuItemData,
-  MenuBaseItem,
-  MenuBadge,
+  MenuSize,
 } from './components/menu';
 
 // other components
