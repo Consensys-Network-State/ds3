@@ -190,20 +190,18 @@ Create simple indented groups for visual hierarchy.
 
 ### Accordion
 
-Create collapsible sections with automatic trigger generation.
+Create collapsible sections with the new simplified API.
 
 Basic:
 
 ```tsx live
-<Menu>
+<Menu accordion defaultValue="users" type="single" collapsible>
   <Menu.Item icon={Home} label="Dashboard" />
   
-  <Menu.Accordion defaultValue="users" type="single" collapsible>
-    <Menu.Accordion.Item value="users" icon={Users} label="User Management">
-      <Menu.Item icon={UserCheck} label="Active Users" />
-      <Menu.Item icon={UserX} label="Inactive Users" />
-      <Menu.Item icon={UserPlus} label="Add New User" />
-    </Menu.Accordion.Item>
+  <Menu.Accordion value="users" icon={Users} label="User Management">
+    <Menu.Item icon={UserCheck} label="Active Users" />
+    <Menu.Item icon={UserX} label="Inactive Users" />
+    <Menu.Item icon={UserPlus} label="Add New User" />
   </Menu.Accordion>
 </Menu>
 ```
@@ -211,20 +209,18 @@ Basic:
 Single (only one item open):
 
 ```tsx live
-<Menu>
+<Menu accordion defaultValue="settings" type="single" collapsible>
   <Menu.Item icon={Home} label="Dashboard" />
   
-  <Menu.Accordion defaultValue="settings" type="single" collapsible>
-    <Menu.Accordion.Item value="users" icon={Users} label="User Management">
-      <Menu.Item icon={UserCheck} label="Active Users" />
-      <Menu.Item icon={UserX} label="Inactive Users" />
-      <Menu.Item icon={UserPlus} label="Add New User" />
-    </Menu.Accordion.Item>
-    <Menu.Accordion.Item value="settings" icon={Settings} label="Settings">
-      <Menu.Item icon={Shield} label="Security" />
-      <Menu.Item icon={Bell} label="Notifications" />
-      <Menu.Item icon={Palette} label="Appearance" />
-    </Menu.Accordion.Item>
+  <Menu.Accordion value="users" icon={Users} label="User Management">
+    <Menu.Item icon={UserCheck} label="Active Users" />
+    <Menu.Item icon={UserX} label="Inactive Users" />
+    <Menu.Item icon={UserPlus} label="Add New User" />
+  </Menu.Accordion>
+  <Menu.Accordion value="settings" icon={Settings} label="Settings">
+    <Menu.Item icon={Shield} label="Security" />
+    <Menu.Item icon={Bell} label="Notifications" />
+    <Menu.Item icon={Palette} label="Appearance" />
   </Menu.Accordion>
 </Menu>
 ```
@@ -232,45 +228,41 @@ Single (only one item open):
 Multiple (many items open):
 
 ```tsx live
-<Menu>
+<Menu accordion defaultValue={["users", "settings"]} type="multiple">
   <Menu.Item icon={Home} label="Dashboard" />
   
-  <Menu.Accordion defaultValue={["users", "settings"]} type="multiple">
-    <Menu.Accordion.Item value="users" icon={Users} label="User Management">
-      <Menu.Item icon={UserCheck} label="Active Users" />
-      <Menu.Item icon={UserX} label="Inactive Users" />
-      <Menu.Item icon={UserPlus} label="Add New User" />
-    </Menu.Accordion.Item>
-    <Menu.Accordion.Item value="settings" icon={Settings} label="Settings">
-      <Menu.Item icon={Shield} label="Security" />
-      <Menu.Item icon={Bell} label="Notifications" />
-      <Menu.Item icon={Palette} label="Appearance" />
-    </Menu.Accordion.Item>
+  <Menu.Accordion value="users" icon={Users} label="User Management">
+    <Menu.Item icon={UserCheck} label="Active Users" />
+    <Menu.Item icon={UserX} label="Inactive Users" />
+    <Menu.Item icon={UserPlus} label="Add New User" />
+  </Menu.Accordion>
+  <Menu.Accordion value="settings" icon={Settings} label="Settings">
+    <Menu.Item icon={Shield} label="Security" />
+    <Menu.Item icon={Bell} label="Notifications" />
+    <Menu.Item icon={Palette} label="Appearance" />
   </Menu.Accordion>
 </Menu>
 ```
 
 #### Custom Triggers and Content
 
-For complex cases, use `trigger={false}` on `Menu.Accordion.Item` for full control.
+For complex cases, use custom trigger and content components for full control.
 
 ```tsx live
-<Menu>
+<Menu accordion defaultValue="users" type="single" collapsible>
   <Menu.Item icon={Home} label="Dashboard" />
   
-  <Menu.Accordion defaultValue="users" type="single" collapsible>
-    <Menu.Accordion.Item value="users" trigger={false}>
-      <Menu.Accordion.Trigger>
-        <Icon icon={Users} />
-        <Text className="mr-auto">User Management</Text>
-        <Menu.Accordion.Chevron />
-      </Menu.Accordion.Trigger>
-      <Menu.Accordion.Content>
-        <Menu.Item icon={UserCheck} label="Active Users" />
-        <Menu.Item icon={UserX} label="Inactive Users" />
-        <Menu.Item icon={UserPlus} label="Add New User" />
-      </Menu.Accordion.Content>
-    </Menu.Accordion.Item>
+  <Menu.Accordion value="users">
+    <Menu.Accordion.Trigger>
+      <Icon icon={Users} />
+      <Text className="mr-auto">User Management</Text>
+      <Menu.Accordion.Chevron />
+    </Menu.Accordion.Trigger>
+    <Menu.Accordion.Content>
+      <Menu.Item icon={UserCheck} label="Active Users" />
+      <Menu.Item icon={UserX} label="Inactive Users" />
+      <Menu.Item icon={UserPlus} label="Add New User" />
+    </Menu.Accordion.Content>
   </Menu.Accordion>
 </Menu>
 ```
@@ -280,30 +272,100 @@ For complex cases, use `trigger={false}` on `Menu.Accordion.Item` for full contr
 Create hierarchical navigation with nested accordion sections.
 
 ```tsx live
-<Menu>
+<Menu accordion defaultValue={["content", "media"]} type="multiple" collapsible>
   <Menu.Item icon={Home} label="Dashboard" />
   
-  <Menu.Accordion defaultValue={["content", "media"]} type="multiple" collapsible>
-    <Menu.Accordion.Item value="content" icon={FileText} label="Content Management">
-      <Menu.Item icon={FileText} label="Articles" />
-      <Menu.Item icon={FileText} label="Pages" />
-      
-      <Menu.Accordion.Item value="media" icon={FileText} label="Media Library">
-        <Menu.Item icon={FileText} label="Images" />
-        <Menu.Item icon={FileText} label="Videos" />
-        <Menu.Item icon={FileText} label="Documents" />
-      </Menu.Accordion.Item>
-    </Menu.Accordion.Item>
+  <Menu.Accordion value="content" icon={FileText} label="Content Management">
+    <Menu.Item icon={FileText} label="Articles" />
+    <Menu.Item icon={FileText} label="Pages" />
+    
+    <Menu.Accordion value="media" icon={FileText} label="Media Library">
+      <Menu.Item icon={FileText} label="Images" />
+      <Menu.Item icon={FileText} label="Videos" />
+      <Menu.Item icon={FileText} label="Documents" />
+    </Menu.Accordion>
   </Menu.Accordion>
   
-  <Menu.Accordion defaultValue="settings" type="single" collapsible>
-    <Menu.Accordion.Item value="settings" icon={Settings} label="Settings">
-      <Menu.Item icon={Shield} label="Security" />
-      <Menu.Item icon={Bell} label="Notifications" />
-      <Menu.Item icon={Palette} label="Appearance" />
-    </Menu.Accordion.Item>
+  <Menu.Accordion value="settings" icon={Settings} label="Settings">
+    <Menu.Item icon={Shield} label="Security" />
+    <Menu.Item icon={Bell} label="Notifications" />
+    <Menu.Item icon={Palette} label="Appearance" />
   </Menu.Accordion>
 </Menu>
+```
+
+### Data-Driven Rendering
+
+Use the `items` prop to render menus from data structures.
+
+#### Normal Menus and Groups
+
+```tsx live
+const Component = () => {
+  const menuItems = [
+    {
+      type: 'item',
+      label: 'Dashboard',
+      icon: Home,
+      onPress: () => console.log('Dashboard clicked')
+    },
+    {
+      type: 'group',
+      children: [
+        {
+          type: 'item',
+          label: 'All Users',
+          icon: Users
+        },
+        {
+          type: 'item',
+          label: 'Active Users',
+          icon: UserCheck
+        }
+      ]
+    }
+  ];
+
+  return (
+    <Menu items={menuItems} />
+  )
+}
+```
+
+#### Accordion Menus
+
+```tsx live
+const Component = () => {
+  const accordionItems = [
+    {
+      type: 'item',
+      label: 'Dashboard',
+      icon: Home
+    },
+    {
+      type: 'accordion',
+      value: 'users',
+      label: 'User Management',
+      icon: Users,
+      children: [
+        {
+          type: 'item',
+          label: 'Active Users',
+          icon: UserCheck
+        },
+        {
+          type: 'item',
+          label: 'Inactive Users',
+          icon: UserX
+        }
+      ]
+    }
+  ];
+
+  return (
+    <Menu accordion defaultValue="users" type="single" collapsible items={accordionItems} />
+  );
+}
 ```
 
 ## API Reference
@@ -312,7 +374,7 @@ Complete reference of all available props and their configurations.
 
 ### Menu Root
 
-The main Menu component that provides the container and context.
+The main Menu component that provides the container and context. When `accordion` is true, it wraps an Accordion component.
 
 ```tsx live
 <Menu size="md" className="w-64">
@@ -325,6 +387,12 @@ The main Menu component that provides the container and context.
 | `size` | `sm` \| `md` \| `lg` | `md` | The size of the menu and its items |
 | `className` | `string` | - | Additional class names |
 | `children` | `ReactNode` | - | Menu items (Menu.Item components) |
+| `items` | `MenuItemData[]` | - | Data-driven menu items |
+| `accordion` | `boolean` | `false` | Whether to wrap the menu in an Accordion |
+| `value` | `string` \| `string[]` | - | Controlled value for accordion (when accordion is true) |
+| `defaultValue` | `string` \| `string[]` | - | Default value for accordion (when accordion is true) |
+| `type` | `single` \| `multiple` | `single` | Accordion type (when accordion is true) |
+| `collapsible` | `boolean` | `true` | Whether accordion can be collapsed (when accordion is true) |
 
 Inherits all [View](https://reactnative.dev/docs/view) props.
 
@@ -372,33 +440,12 @@ Creates a simple indented group for visual hierarchy.
 
 ### Menu Accordion
 
-Creates an accordion-style collapsible group of menu items.
-
-```tsx
-<Menu.Accordion value="users" type="single" collapsible>
-  <Menu.Item icon={Users} label="All Users" />
-</Menu.Accordion>
-```
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `value` | `string` | **Required** | Unique identifier for the accordion |
-| `type` | `single` \| `multiple` | `single` | Whether multiple items can be expanded |
-| `collapsible` | `boolean` | `true` | Whether the accordion can be collapsed |
-| `icon` | `ComponentType<any>` | - | Icon for auto-generated trigger |
-| `label` | `string` | - | Label for auto-generated trigger |
-| `avatar` | `object` | - | Avatar for auto-generated trigger |
-| `className` | `string` | - | Additional class names |
-| `children` | `ReactNode` | - | Menu items or Menu.Accordion.Item |
-
-### Menu Accordion Item
-
 Individual accordion item with optional auto-generated trigger.
 
 ```tsx
-<Menu.Accordion.Item icon={Users} label="All Users">
-  <Menu.Item icon={Users} label="Active Users" />
-</Menu.Accordion.Item>
+<Menu.Accordion value="users" icon={Users} label="User Management">
+  <Menu.Item icon={UserCheck} label="Active Users" />
+</Menu.Accordion>
 ```
 
 | Prop | Type | Default | Description |
@@ -407,7 +454,6 @@ Individual accordion item with optional auto-generated trigger.
 | `icon` | `ComponentType<any>` | - | Icon for auto-generated trigger |
 | `label` | `string` | - | Label for auto-generated trigger |
 | `avatar` | `object` | - | Avatar for auto-generated trigger |
-| `trigger` | `boolean` | `true` | Whether to auto-generate trigger |
 | `className` | `string` | - | Additional class names |
 | `children` | `ReactNode` | - | Menu items or custom trigger/content |
 
@@ -455,32 +501,32 @@ Animated chevron icon for accordion triggers.
 |------|------|---------|-------------|
 | Inherits all chevron props from Accordion.Chevron | - | - | - |
 
-### Menu Items
-
-Data-driven component for rendering menu items from an array.
-
-```tsx
-<Menu.Items items={menuItems} />
-```
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `items` | `MenuItemData[]` | **Required** | Array of menu item data |
-
 ### MenuItemData Type
 
 ```tsx
 type MenuItemData = {
-  label: string;
+  // Common props
+  label?: string;
   icon?: ComponentType<any>;
   avatar?: {
     source?: ImageSourcePropType;
     icon?: ComponentType<any>;
     children?: ReactNode;
   };
-  onPress?: () => void;
   disabled?: boolean;
+  className?: string;
+  
+  // For regular items
+  onPress?: () => void;
+  
+  // For groups and accordions
   children?: MenuItemData[];
+  
+  // Type discriminator
+  type?: 'item' | 'group' | 'accordion';
+  
+  // Accordion-specific props
+  value?: string; // Required for accordions
 };
 ```
 
@@ -496,6 +542,8 @@ The Menu component follows these design principles:
 - **Dual API**: Supports both declarative composition and data-driven approaches
 - **Hierarchical Navigation**: Supports both simple indentation and collapsible accordions
 - **Flexible Triggers**: Auto-generated or custom triggers for accordion sections
+- **Simplified Accordion API**: Streamlined accordion integration with Menu root
+- **Data-Driven Rendering**: Render complex menu structures from data arrays
 
 ## Related Components
 
@@ -503,4 +551,4 @@ The Menu component follows these design principles:
 - [Icon](/packages/ui/src/components/icon) - For adding visual context to menu items
 - [Text](/packages/ui/src/components/text) - For displaying text content
 - [Avatar](/packages/ui/src/components/avatar) - For displaying user avatars
-- [Accordion](/packages/ui/src/components/accordion) - The underlying component for Menu.Accordion 
+- [Accordion](/packages/ui/src/components/accordion) - The underlying component for Menu accordion functionality 

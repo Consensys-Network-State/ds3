@@ -9,7 +9,6 @@ import type {
   MenuItemData,
   MenuGroupProps,
   MenuAccordionProps,
-  MenuAccordionItemProps,
   MenuAccordionTriggerProps,
   MenuAccordionContentProps
 } from './types';
@@ -27,29 +26,112 @@ import {
 } from './styles';
 import { AvatarContextProvider } from '../avatar/context';
 
+const renderMenuItems = (items: MenuItemData[]): React.ReactNode => {
+  return items.map((item, index) => {
+    const key = item.value || `menu-item-${index}`;
+    const itemType = item.type || 'item';
+
+    switch (itemType) {
+      case 'group':
+        return (
+          <MenuGroup key={key} className={item.className}>
+            {item.children && renderMenuItems(item.children)}
+          </MenuGroup>
+        );
+
+      case 'accordion':
+        if (!item.value) {
+          console.warn('Menu.Accordion requires a value prop');
+          return null;
+        }
+        return (
+          <MenuAccordion 
+            key={key} 
+            value={item.value}
+            icon={item.icon}
+            label={item.label}
+            avatar={item.avatar}
+            className={item.className}
+          >
+            {item.children && renderMenuItems(item.children)}
+          </MenuAccordion>
+        );
+
+      case 'item':
+      default:
+        return (
+          <Menu.Item
+            key={key}
+            icon={item.icon}
+            label={item.label}
+            avatar={item.avatar}
+            onPress={item.onPress}
+            disabled={item.disabled}
+            className={item.className}
+          />
+        );
+    }
+  });
+};
+
 const MenuRoot = React.forwardRef<React.ElementRef<typeof Surface>, MenuRootProps>(
-  ({ className, size = 'md', variant = 'ghost', color, toColor, children, disabled, ...props }, ref) => {
+  ({ 
+    className, 
+    size = 'md', 
+    variant = 'ghost', 
+    color, 
+    toColor, 
+    children, 
+    items,
+    disabled,
+    accordion = false,
+    value,
+    defaultValue,
+    type = 'single',
+    collapsible = true,
+    ...props 
+  }, ref) => {
     const contextValue = React.useMemo(() => ({ 
       size: size as MenuSize, 
       variant, 
       color, 
       toColor,
       disabled
-    }), [size, variant, color, toColor]);
+    }), [size, variant, color, toColor, disabled]);
 
     const avatarContextValue = React.useMemo(() => ({ 
       className: menuItemAvatarVariants({ size })
     }), [size]);
 
-    return (
+    // Use items prop if provided, otherwise use children
+    const menuContent = items ? renderMenuItems(items) : children;
+
+    const menuWrapper = (
       <MenuContext.Provider value={contextValue}>
         <AvatarContextProvider.Provider value={avatarContextValue}>
-          <View ref={ref} className={cn(menuVariants({ size }), className)} {...props}>
-            {children}
-          </View>
+          {accordion ? (
+            <Accordion
+              ref={ref}
+              variant="unstyled"
+              value={value}
+              defaultValue={defaultValue}
+              type={type}
+              collapsible={collapsible}
+              className={cn(menuVariants({ size }), className)}
+              {...props}
+            >
+              {menuContent}
+            </Accordion>
+          ) : (
+            <View ref={ref} className={cn(menuVariants({ size }), className)} {...props}>
+              {menuContent}
+            </View>
+          )}
         </AvatarContextProvider.Provider>
       </MenuContext.Provider>
     );
+
+    return menuWrapper;
   }
 );
 
@@ -150,58 +232,7 @@ const MenuGroup = React.forwardRef<View, MenuGroupProps>(
 
 MenuGroup.displayName = 'Menu.Group';
 
-const MenuAccordion = React.forwardRef<React.ElementRef<typeof Accordion>, MenuAccordionProps>(
-  ({ 
-    children, 
-    className, 
-    icon,
-    label,
-    avatar,
-    value,
-    type = 'single',
-    collapsible = true,
-    ...props 
-  }, ref) => {
-    const [hasAccordionItem, setHasAccordionItem] = React.useState(false);
-
-    React.useEffect(() => {
-      const accordionItem = React.Children.toArray(children).find(
-        child => React.isValidElement(child) && child.type === MenuAccordionItem
-      );
-      setHasAccordionItem(!!accordionItem);
-    }, [children]);
-
-    const accordionValue = typeof value === 'string' ? value : 'accordion-item';
-
-    return (
-      <Accordion
-        ref={ref}
-        variant="unstyled"
-        type={type}
-        collapsible={collapsible}
-        className={className}
-        {...props}
-      >
-        {hasAccordionItem ? (
-          children
-        ) : (
-          <MenuAccordionItem 
-            value={accordionValue}
-            icon={icon}
-            label={label}
-            avatar={avatar}
-          >
-            {children}
-          </MenuAccordionItem>
-        )}
-      </Accordion>
-    );
-  }
-);
-
-MenuAccordion.displayName = 'Menu.Accordion';
-
-const MenuAccordionItem = React.forwardRef<React.ElementRef<typeof Accordion.Item>, MenuAccordionItemProps>(
+const MenuAccordion = React.forwardRef<React.ElementRef<typeof Accordion.Item>, MenuAccordionProps>(
   ({ 
     children, 
     className, 
@@ -225,7 +256,7 @@ const MenuAccordionItem = React.forwardRef<React.ElementRef<typeof Accordion.Ite
       <Accordion.Item ref={ref} value={itemValue} className={className} {...props}>
         {hasTrigger ? (
           children 
-        ) :
+        ) : (
           <>
             <MenuAccordionTrigger>
               <View className="flex flex-row items-center gap-3">
@@ -247,13 +278,13 @@ const MenuAccordionItem = React.forwardRef<React.ElementRef<typeof Accordion.Ite
               {children}
             </MenuAccordionContent>
           </>
-        }
+        )}
       </Accordion.Item>
     );
   }
 );
 
-MenuAccordionItem.displayName = 'Menu.Accordion.Item';
+MenuAccordion.displayName = 'Menu.Accordion';
 
 const MenuAccordionTrigger = React.forwardRef<React.ElementRef<typeof Accordion.Trigger>, MenuAccordionTriggerProps>(
   ({ children, className, ...props }, ref) => {
@@ -289,56 +320,11 @@ const MenuAccordionChevron = React.forwardRef<React.ElementRef<typeof Accordion.
 
 MenuAccordionChevron.displayName = 'Menu.Accordion.Chevron';
 
-// Data-driven menu renderer
-const renderMenuItems = (items: MenuItemData[]): React.ReactNode => {
-  return items.map((item, index) => {
-    if (item.children && item.children.length > 0) {
-      return (
-        <MenuAccordion key={index} value={`group-${index}`} type="single" collapsible>
-          <MenuAccordionItem 
-            value={`group-${index}`}
-            icon={item.icon}
-            label={item.label}
-            avatar={item.avatar}
-          >
-            {renderMenuItems(item.children)}
-          </MenuAccordionItem>
-        </MenuAccordion>
-      );
-    }
-
-    return (
-      <Menu.Item
-        key={index}
-        icon={item.icon}
-        label={item.label}
-        avatar={item.avatar}
-        onPress={item.onPress}
-        disabled={item.disabled}
-      />
-    );
-  });
-};
-
-const MenuItems = React.forwardRef<View, { items: MenuItemData[] }>(
-  ({ items }, ref) => {
-    return (
-      <View ref={ref}>
-        {renderMenuItems(items)}
-      </View>
-    );
-  }
-);
-
-MenuItems.displayName = 'Menu.Items';
-
 // Assign all components to Menu
 const Menu = Object.assign(MenuRoot, {
   Item: MenuItem,
   Group: MenuGroup,
-  Items: MenuItems,
   Accordion: Object.assign(MenuAccordion, {
-    Item: MenuAccordionItem,
     Trigger: MenuAccordionTrigger,
     Content: MenuAccordionContent,
     Chevron: MenuAccordionChevron,

@@ -6,7 +6,6 @@ export type {
   MenuItemData,
   MenuGroupProps,
   MenuAccordionProps,
-  MenuAccordionItemProps,
   MenuAccordionTriggerProps,
   MenuAccordionContentProps
 } from './types'; 
