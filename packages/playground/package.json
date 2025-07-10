@@ -1,6 +1,6 @@
 {
   "name": "@consensys/ds3-playground",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "DS3 Playground for interactive component examples",
   "repository": {
     "type": "git",
