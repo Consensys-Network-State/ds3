@@ -1,6 +1,6 @@
-# Menu Navigation Component
+# Menu Component
 
-The `<Menu />` component provides a flexible, accessible navigation menu that uses accordions for nested navigation. It's perfect for drawer layouts, left panels, and any sidebar navigation needs.
+The `<Menu />` component provides a cross-platform menu control that adapts to both web and React Native environments while maintaining a consistent API and design. Menus are used to display lists of interactive items, commonly found in side navigation or dropdown menus.
 
 ## Installation
 
@@ -12,322 +12,358 @@ import { Menu } from '@consensys/ds3';
 
 ## Examples
 
-### Basic Navigation
+### Basic
 
-Create a simple side menu with navigation items.
+Create a simple menu with default styling.
+
+```tsx live
+<Menu>
+  <Menu.Item label="Menu Item" />
+</Menu>
+```
+
+### Variants
+
+Choose from six different visual styles to match your design system.
+
+```tsx live
+<Menu>
+  <Menu.Item label="Elevated" variant="elevated" />
+  <Menu.Item label="Solid" variant="solid" />
+  <Menu.Item label="Soft" variant="soft" />
+  <Menu.Item label="Outline" variant="outline" />
+  <Menu.Item label="Dashed" variant="dashed" />
+  <Menu.Item label="Ghost" variant="ghost"  />
+</Menu>
+```
+
+Menu level:
+
+```tsx live
+<Menu variant="outline">
+  <Menu.Item label="Outline" />
+</Menu>
+```
+
+### Colors
+
+Apply semantic color schemes for different contexts and states.
+
+```tsx live
+<Menu>
+  <Menu.Item label="Neutral" color="neutral"  />
+  <Menu.Item label="Primary" color="primary" />
+  <Menu.Item label="Secondary" color="secondary" />
+  <Menu.Item label="Error" color="error" />
+  <Menu.Item label="Warning" color="warning" />
+  <Menu.Item label="Success" color="success" />
+</Menu>
+```
+
+Menu level:
+
+```tsx live
+<Menu color="primary">
+  <Menu.Item label="Primary" />
+</Menu>
+```
+
+### Interaction Colors
+
+Dynamically change colors on press or hover for enhanced user feedback.
+
+```tsx live
+<Menu>
+  <Menu.Item label="Neutral to Primary" color="neutral" toColor="primary" />
+  <Menu.Item label="Primary to Secondary" color="primary" toColor="secondary" />
+  <Menu.Item label="Secondary to Error" color="secondary" toColor="error" />
+</Menu>
+```
+
+Menu level:
+
+```tsx live
+<Menu color="neutral" toColor="primary">
+  <Menu.Item label="Neutral to Primary" />
+</Menu>
+```
+
+### Icons
+
+Add visual context with icons positioned before text.
+
+```tsx live
+<Menu>
+  <Menu.Item icon={Figma} label="Menu Item" />
+  <Menu.Item icon={Settings} label="Settings" />
+  <Menu.Item icon={User} label="Profile" />
+</Menu>
+```
+
+### Avatars
+
+Display user avatars alongside menu items.
+
+```tsx live
+<Menu>
+  <Menu.Item avatar={{ source: { uri: 'https://github.com/shadcn.png' }, children: 'JD' }} label="John Doe" />
+  <Menu.Item avatar={{ color: 'primary', children: 'AB' }} label="Alice Brown" />
+  <Menu.Item avatar={{ icon: User, color: 'secondary', children: 'CD' }} label="Charlie Davis" />
+</Menu>
+```
+
+### Sizes
+
+Scale menus to fit different UI contexts and hierarchy levels. Avatar components automatically adapt to the menu size.
+
+```tsx live
+<View className="flex flex-col gap-6">
+  <Menu size="sm">
+    <Menu.Item icon={Figma} label="Small" />
+    <Menu.Item avatar={{ source: { uri: 'https://github.com/shadcn.png' }, children: 'JD' }} label="Profile" />
+  </Menu>
+
+  <Menu size="md">
+    <Menu.Item icon={Figma} label="Medium" />
+    <Menu.Item avatar={{ source: { uri: 'https://github.com/shadcn.png' }, children: 'JD' }} label="Profile" />
+  </Menu>
+
+  <Menu size="lg">
+    <Menu.Item icon={Figma} label="Large" />
+    <Menu.Item avatar={{ source: { uri: 'https://github.com/shadcn.png' }, children: 'JD' }} label="Profile" />
+  </Menu>
+</View>
+```
+
+### Disabled State
+
+Prevent user interaction and provide visual feedback for unavailable actions.
+
+```tsx live
+<Menu>
+  <Menu.Item icon={Figma} label="Active Item" />
+  <Menu.Item icon={Settings} label="Disabled Item" disabled />
+  <Menu.Item icon={User} label="Another Active Item" />
+</Menu>
+```
+
+Menu level:
+
+```tsx live
+<Menu disabled>
+  <Menu.Item icon={Figma} label="Disabled Item" />
+</Menu>
+```
+
+### Custom Styling
+
+Apply custom styles to individual menu items and their sub-components.
+
+```tsx live
+<Menu>
+  <Menu.Item className="bg-primary-a3">
+    <Icon icon={Figma} />
+    <Text className="font-bold">Custom Background</Text>
+  </Menu.Item>
+  <Menu.Item color="primary">
+    <Icon icon={Settings} color="neutral" />
+    <Text color="neutral">Custom Border</Text>
+  </Menu.Item>
+</Menu>
+```
+
+### Group
+
+Create simple indented groups for visual hierarchy.
+
+```tsx live
+<Menu>
+  <Menu.Item icon={Home} label="Dashboard" />
+  
+  <Menu.Group>
+    <Menu.Item icon={Users} label="All Users" />
+    <Menu.Item icon={Users} label="Active Users" />
+    <Menu.Item icon={Users} label="Inactive Users" />
+  </Menu.Group>
+</Menu>
+```
+
+### Accordion
+
+Create collapsible sections with the new simplified API.
+
+Basic:
+
+```tsx live
+<Menu accordion defaultValue="users" type="single" collapsible>
+  <Menu.Item icon={Home} label="Dashboard" />
+  
+  <Menu.Accordion value="users" icon={Users} label="User Management">
+    <Menu.Item icon={UserCheck} label="Active Users" />
+    <Menu.Item icon={UserX} label="Inactive Users" />
+    <Menu.Item icon={UserPlus} label="Add New User" />
+  </Menu.Accordion>
+</Menu>
+```
+
+Single (only one item open):
+
+```tsx live
+<Menu accordion defaultValue="settings" type="single" collapsible>
+  <Menu.Item icon={Home} label="Dashboard" />
+  
+  <Menu.Accordion value="users" icon={Users} label="User Management">
+    <Menu.Item icon={UserCheck} label="Active Users" />
+    <Menu.Item icon={UserX} label="Inactive Users" />
+    <Menu.Item icon={UserPlus} label="Add New User" />
+  </Menu.Accordion>
+  <Menu.Accordion value="settings" icon={Settings} label="Settings">
+    <Menu.Item icon={Shield} label="Security" />
+    <Menu.Item icon={Bell} label="Notifications" />
+    <Menu.Item icon={Palette} label="Appearance" />
+  </Menu.Accordion>
+</Menu>
+```
+
+Multiple (many items open):
+
+```tsx live
+<Menu accordion defaultValue={["users", "settings"]} type="multiple">
+  <Menu.Item icon={Home} label="Dashboard" />
+  
+  <Menu.Accordion value="users" icon={Users} label="User Management">
+    <Menu.Item icon={UserCheck} label="Active Users" />
+    <Menu.Item icon={UserX} label="Inactive Users" />
+    <Menu.Item icon={UserPlus} label="Add New User" />
+  </Menu.Accordion>
+  <Menu.Accordion value="settings" icon={Settings} label="Settings">
+    <Menu.Item icon={Shield} label="Security" />
+    <Menu.Item icon={Bell} label="Notifications" />
+    <Menu.Item icon={Palette} label="Appearance" />
+  </Menu.Accordion>
+</Menu>
+```
+
+#### Custom Triggers and Content
+
+For complex cases, use custom trigger and content components for full control.
+
+```tsx live
+<Menu accordion defaultValue="users" type="single" collapsible>
+  <Menu.Item icon={Home} label="Dashboard" />
+  
+  <Menu.Accordion value="users">
+    <Menu.Accordion.Trigger>
+      <Icon icon={Users} />
+      <Text className="mr-auto">User Management</Text>
+      <Menu.Accordion.Chevron />
+    </Menu.Accordion.Trigger>
+    <Menu.Accordion.Content>
+      <Menu.Item icon={UserCheck} label="Active Users" />
+      <Menu.Item icon={UserX} label="Inactive Users" />
+      <Menu.Item icon={UserPlus} label="Add New User" />
+    </Menu.Accordion.Content>
+  </Menu.Accordion>
+</Menu>
+```
+
+#### Nested Accordions
+
+Create hierarchical navigation with nested accordion sections.
+
+```tsx live
+<Menu accordion defaultValue={["content", "media"]} type="multiple" collapsible>
+  <Menu.Item icon={Home} label="Dashboard" />
+  
+  <Menu.Accordion value="content" icon={FileText} label="Content Management">
+    <Menu.Item icon={FileText} label="Articles" />
+    <Menu.Item icon={FileText} label="Pages" />
+    
+    <Menu.Accordion value="media" icon={FileText} label="Media Library">
+      <Menu.Item icon={FileText} label="Images" />
+      <Menu.Item icon={FileText} label="Videos" />
+      <Menu.Item icon={FileText} label="Documents" />
+    </Menu.Accordion>
+  </Menu.Accordion>
+  
+  <Menu.Accordion value="settings" icon={Settings} label="Settings">
+    <Menu.Item icon={Shield} label="Security" />
+    <Menu.Item icon={Bell} label="Notifications" />
+    <Menu.Item icon={Palette} label="Appearance" />
+  </Menu.Accordion>
+</Menu>
+```
+
+### Data-Driven Rendering
+
+Use the `items` prop to render menus from data structures.
+
+#### Normal Menus and Groups
 
 ```tsx live
 const Component = () => {
   const menuItems = [
     {
-      id: 'home',
-      label: 'Home',
+      type: 'item',
+      label: 'Dashboard',
       icon: Home,
-      isActive: true,
+      onPress: () => console.log('Dashboard clicked')
     },
     {
-      id: 'profile',
-      label: 'Profile',
-      icon: User,
-    },
-    {
-      id: 'documents',
-      label: 'Documents',
-      icon: FileText,
-    },
-    {
-      id: 'settings',
-      label: 'Settings',
-      icon: Settings,
-    },
+      type: 'group',
+      children: [
+        {
+          type: 'item',
+          label: 'All Users',
+          icon: Users
+        },
+        {
+          type: 'item',
+          label: 'Active Users',
+          icon: UserCheck
+        }
+      ]
+    }
   ];
 
   return (
-    <View className="w-80 bg-neutral-1 p-4 rounded-lg">
-      <Menu>
-        {menuItems.map((item) => (
-          <Menu.Item
-            key={item.id}
-            item={item}
-            isActive={item.isActive}
-            onPress={(item) => console.log('Pressed:', item.label)}
-          />
-        ))}
-      </Menu>
-    </View>
-  );
+    <Menu items={menuItems} />
+  )
 }
 ```
 
-### Nested Navigation with Groups
-
-Create hierarchical navigation using accordion groups.
+#### Accordion Menus
 
 ```tsx live
 const Component = () => {
-  const nestedMenuItems = [
+  const accordionItems = [
     {
-      id: 'home',
-      label: 'Home',
-      icon: Home,
-      isActive: true,
+      type: 'item',
+      label: 'Dashboard',
+      icon: Home
     },
     {
-      id: 'user',
-      type: 'group',
+      type: 'accordion',
+      value: 'users',
       label: 'User Management',
-      icon: User,
-      items: [
+      icon: Users,
+      children: [
         {
-          id: 'profile',
-          label: 'Profile',
-          description: 'Manage your profile settings',
+          type: 'item',
+          label: 'Active Users',
+          icon: UserCheck
         },
         {
-          id: 'preferences',
-          label: 'Preferences',
-          description: 'Customize your experience',
-        },
-        {
-          id: 'security',
-          type: 'group',
-          label: 'Security',
-          icon: Shield,
-          description: 'Security and privacy settings',
-          items: [
-            {
-              id: 'password',
-              label: 'Password',
-              description: 'Change your password',
-            },
-            {
-              id: 'two-factor',
-              label: 'Two-Factor Auth',
-              description: 'Enable 2FA protection',
-              badge: { text: 'New', color: 'secondary' },
-            },
-            {
-              id: 'sessions',
-              label: 'Active Sessions',
-              description: 'Manage login sessions',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'content',
-      type: 'group',
-      label: 'Content',
-      icon: FileText,
-      items: [
-        {
-          id: 'documents',
-          type: 'group',
-          label: 'Documents',
-          description: 'Manage your documents',
-          items: [
-            {
-              id: 'recent',
-              label: 'Recent Files',
-              description: 'Recently accessed documents',
-            },
-            {
-              id: 'shared',
-              label: 'Shared Documents',
-              description: 'Documents shared with you',
-              badge: { text: '5', color: 'default' },
-            },
-            {
-              id: 'templates',
-              label: 'Templates',
-              description: 'Document templates',
-            },
-          ],
-        },
-        {
-          id: 'media',
-          type: 'group',
-          label: 'Media Library',
-          description: 'Photos, videos, and files',
-          items: [
-            {
-              id: 'photos',
-              label: 'Photos',
-              description: 'Image files',
-            },
-            {
-              id: 'videos',
-              label: 'Videos',
-              description: 'Video files',
-            },
-            {
-              id: 'audio',
-              label: 'Audio',
-              description: 'Audio files',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'system',
-      type: 'group',
-      label: 'System',
-      icon: Settings,
-      items: [
-        {
-          id: 'database',
-          type: 'group',
-          label: 'Database',
-          icon: Database,
-          description: 'Database management',
-          items: [
-            {
-              id: 'backups',
-              label: 'Backups',
-              description: 'Database backups',
-            },
-            {
-              id: 'migrations',
-              label: 'Migrations',
-              description: 'Database migrations',
-            },
-            {
-              id: 'logs',
-              label: 'Logs',
-              description: 'Database logs',
-            },
-          ],
-        },
-        {
-          id: 'notifications',
-          label: 'Notifications',
-          icon: Bell,
-          description: 'Notification settings',
-          badge: { text: '3', color: 'destructive' },
-        },
-      ],
-    },
+          type: 'item',
+          label: 'Inactive Users',
+          icon: UserX
+        }
+      ]
+    }
   ];
 
   return (
-    <View className="w-80 bg-neutral-1 p-4 rounded-lg">
-      <Menu>
-        {nestedMenuItems.map((item) => {
-          if (item.type === 'group') {
-            return (
-              <Menu.Group
-                key={item.id}
-                group={item}
-                isActive={item.isActive}
-                onItemPress={(item) => console.log('Pressed:', item.label)}
-              />
-            );
-          }
-          return (
-            <Menu.Item
-              key={item.id}
-              item={item}
-              isActive={item.isActive}
-              onPress={(item) => console.log('Pressed:', item.label)}
-            />
-          );
-        })}
-      </Menu>
-    </View>
-  );
-}
-```
-
-### Controlled State
-
-Manage the active state programmatically.
-
-```tsx live
-const Component = () => {
-  const [activeItem, setActiveItem] = React.useState('home');
-  
-  const items = [
-    { id: 'home', label: 'Home', icon: Home, isActive: activeItem === 'home' },
-    { id: 'profile', label: 'Profile', icon: User, isActive: activeItem === 'profile' },
-    { id: 'settings', label: 'Settings', icon: Settings, isActive: activeItem === 'settings' },
-  ];
-  
-  const handleItemPress = (item) => {
-    setActiveItem(item.id);
-    console.log('Active item:', item.label);
-  };
-  
-  return (
-    <View className="space-y-4">
-      <View className="flex flex-row gap-2">
-        <Button 
-          size="sm" 
-          onPress={() => setActiveItem('home')}
-          variant={activeItem === 'home' ? 'solid' : 'outline'}
-        >
-          Home
-        </Button>
-        <Button 
-          size="sm" 
-          onPress={() => setActiveItem('profile')}
-          variant={activeItem === 'profile' ? 'solid' : 'outline'}
-        >
-          Profile
-        </Button>
-        <Button 
-          size="sm" 
-          onPress={() => setActiveItem('settings')}
-          variant={activeItem === 'settings' ? 'solid' : 'outline'}
-        >
-          Settings
-        </Button>
-      </View>
-      
-      <Menu className="w-64">
-        {items.map((item) => (
-          <Menu.Item
-            key={item.id}
-            item={item}
-            isActive={item.isActive}
-            onPress={handleItemPress}
-          />
-        ))}
-      </Menu>
-    </View>
-  );
-}
-```
-
-### Disabled Items
-
-Disable specific navigation items.
-
-```tsx live
-const Component = () => {
-  const itemsWithDisabled = [
-    { id: 'home', label: 'Home', icon: Home, isActive: true },
-    { id: 'profile', label: 'Profile', icon: User },
-    { id: 'settings', label: 'Settings', icon: Settings, disabled: true },
-    { id: 'admin', label: 'Admin Panel', icon: Shield, disabled: true },
-  ];
-
-  return (
-    <Menu className="w-64">
-      {itemsWithDisabled.map((item) => (
-        <Menu.Item
-          key={item.id}
-          item={item}
-          isActive={item.isActive}
-          onPress={(item) => {
-            if (!item.disabled) {
-              console.log('Pressed:', item.label);
-            }
-          }}
-        />
-      ))}
-    </Menu>
+    <Menu accordion defaultValue="users" type="single" collapsible items={accordionItems} />
   );
 }
 ```
@@ -338,168 +374,181 @@ Complete reference of all available props and their configurations.
 
 ### Menu Root
 
-The main Menu component that provides the container and navigation structure.
+The main Menu component that provides the container and context. When `accordion` is true, it wraps an Accordion component.
 
 ```tsx
-<Menu className="w-80">
-  <Menu.Item item={item} />
-  <Menu.Group group={group} />
+<Menu size="md" className="w-64">
+  {/* Menu items go here */}
 </Menu>
 ```
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| `size` | `sm` \| `md` \| `lg` | `md` | The size of the menu and its items |
 | `className` | `string` | - | Additional class names |
+| `children` | `ReactNode` | - | Menu items (Menu.Item components) |
+| `items` | `MenuItemData[]` | - | Data-driven menu items |
+| `accordion` | `boolean` | `false` | Whether to wrap the menu in an Accordion |
+| `value` | `string` \| `string[]` | - | Controlled value for accordion (when accordion is true) |
+| `defaultValue` | `string` \| `string[]` | - | Default value for accordion (when accordion is true) |
+| `type` | `single` \| `multiple` | `single` | Accordion type (when accordion is true) |
+| `collapsible` | `boolean` | `true` | Whether accordion can be collapsed (when accordion is true) |
 
 Inherits all [View](https://reactnative.dev/docs/view) props.
 
-### MenuData
+### Menu Item
 
-Represents a single navigation item or group.
+Individual menu items that can be pressed and contain various content types.
 
-```tsx
-// Simple item
-{
-  id: 'home',
-  label: 'Home',
-  icon: Home,
-  isActive: true,
-  onPress: (item) => console.log(item.label),
-}
-
-// Group with nested items
-{
-  id: 'settings',
-  type: 'group',
-  label: 'Settings',
-  icon: Settings,
-  items: [
-    { id: 'profile', label: 'Profile' },
-    { id: 'security', label: 'Security' },
-  ],
-}
+```tsx live
+<Menu.Item disabled={false}>
+  <Icon icon={Figma} />
+  <Text>Menu Item</Text>
+</Menu.Item>
 ```
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `id` | `string` | Unique identifier for the item |
-| `label` | `string` | Display text for the item |
-| `description` | `string` | Optional description text |
-| `icon` | `React.ComponentType` | Icon component to display |
-| `disabled` | `boolean` | Whether the item is disabled |
-| `isActive` | `boolean` | Whether the item is currently active |
-| `onPress` | `(item: MenuData) => void` | Item-specific press handler |
-| `badge` | `MenuBadge` | Badge configuration |
-| `type` | `'item'` \| `'group'` | Item type (defaults to 'item') |
-| `items` | `MenuData[]` | Nested items (for groups only) |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `size` | `sm` \| `md` \| `lg` | Inherits from Menu | The size of the menu item |
+| `variant` | `elevated` \| `solid` \| `soft` \| `outline` \| `dashed` \| `ghost` | `elevated` | The visual style variant |
+| `color` | `neutral` \| `primary` \| `secondary` \| `error` \| `warning` \| `success` | `neutral` | The color scheme |
+| `toColor` | `neutral` \| `primary` \| `secondary` \| `error` \| `warning` \| `success` | - | Color to transition to on interaction |
+| `disabled` | `boolean` | `false` | Whether the item is disabled |
+| `onPress` | `() => void` | - | Function called when the item is pressed |
+| `className` | `string` | - | Additional class names |
+| `children` | `ReactNode` | - | Item content (Icon, Text, Avatar) |
+| `label` | `string` | - | Text label for the menu item |
+| `icon` | `ComponentType<any>` | - | Icon component to display |
+| `avatar` | `object` | - | Avatar configuration (source, icon, children) |
 
-### MenuBadge
+Inherits all [View](https://reactnative.dev/docs/view) props.
 
-Configuration for badges displayed on navigation items.
+### Menu Group
 
-```tsx
-{
-  text: '3',
-  color: 'destructive',
-}
-```
-
-| Prop | Type | Description |
-|------|------|-------------|
-| `text` | `string` \| `number` | Badge text content |
-| `color` | `'default'` \| `'secondary'` \| `'destructive'` \| `'outline'` | Badge color variant |
-
-### Menu.Item
-
-Individual navigation item component.
+Creates a simple indented group for visual hierarchy.
 
 ```tsx
-<Menu.Item
-  item={menuData}
-  isActive={true}
-  isNested={false}
-  onPress={handlePress}
-/>
+<Menu.Group>
+  <Menu.Item icon={Users} label="All Users" />
+</Menu.Group>
 ```
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `item` | `MenuData` | Menu item configuration |
-| `isActive` | `boolean` | Whether the item is active |
-| `isNested` | `boolean` | Whether the item is nested in a group |
-| `onPress` | `(item: MenuData) => void` | Press handler |
-| `className` | `string` | Additional class names |
-| `activeClassName` | `string` | Additional class names for active state |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `className` | `string` | - | Additional class names |
+| `children` | `ReactNode` | - | Menu items within the group |
 
-### Menu.Group
+### Menu Accordion
 
-Navigation group component with accordion functionality.
+Individual accordion item with optional auto-generated trigger.
 
 ```tsx
-<Menu.Group
-  group={menuGroupData}
-  isActive={false}
-  onItemPress={handleItemPress}
-/>
+<Menu.Accordion value="users" icon={Users} label="User Management">
+  <Menu.Item icon={UserCheck} label="Active Users" />
+</Menu.Accordion>
 ```
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `group` | `MenuGroupData` | Menu group configuration |
-| `isActive` | `boolean` | Whether the group is active |
-| `onItemPress` | `(item: MenuData) => void` | Item press handler |
-| `className` | `string` | Additional class names |
-| `activeClassName` | `string` | Additional class names for active state |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `string` | **Required** | Unique identifier for the accordion item |
+| `icon` | `ComponentType<any>` | - | Icon for auto-generated trigger |
+| `label` | `string` | - | Label for auto-generated trigger |
+| `avatar` | `object` | - | Avatar for auto-generated trigger |
+| `className` | `string` | - | Additional class names |
+| `children` | `ReactNode` | - | Menu items or custom trigger/content |
 
-## Accessibility
+### Menu Accordion Trigger
 
-The Menu component automatically implements proper accessibility attributes:
-
-### Accessibility Features
-
-- **WAI-ARIA Compliance**: Follows navigation menu patterns
-- **Keyboard Navigation**: Full keyboard support with arrow keys, Enter, and Space
-- **Screen Reader Support**: Proper ARIA attributes for navigation structure
-- **Focus Management**: Automatic focus handling for menu items
-- **Semantic Structure**: Uses proper semantic elements
-
-### Best Practices
+Custom trigger for accordion groups with full control over content.
 
 ```tsx
-<Menu>
-  {navigationItems.map((item) => (
-    <Menu.Item
-      key={item.id}
-      item={item}
-      isActive={item.isActive}
-      onPress={(item) => {
-        // Handle navigation
-        router.push(item.id);
-      }}
-    />
-  ))}
-</Menu>
+<Menu.Accordion.Trigger>
+  <Icon icon={Users} />
+  <Text>Users</Text>
+  <Menu.Accordion.Chevron />
+</Menu.Accordion.Trigger>
 ```
 
-### Menu Data Types
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `className` | `string` | - | Additional class names |
+| `children` | `ReactNode` | - | Custom trigger content |
 
-- `MenuData`: Union of `MenuItemData` and `MenuGroupData`.
-- `MenuItemData`: Represents a single menu item.
-- `MenuGroupData`: Represents a group of menu items (with nested items).
-- `MenuBadge`: Badge configuration for menu items.
-- `isMenuGroup`: Type guard to check if a menu item is a group.
+### Menu Accordion Content
 
-### Example
+Container for accordion content with proper padding and styling.
 
 ```tsx
-const items: MenuData[] = [
-  { id: 'home', label: 'Home', icon: Home },
-  { id: 'settings', type: 'group', label: 'Settings', items: [
-    { id: 'profile', label: 'Profile' },
-  ]},
-];
-
-if (isMenuGroup(items[1])) {
-  // items[1] is a MenuGroupData
-}
+<Menu.Accordion.Content>
+  <Menu.Item icon={Users} label="All Users" />
+</Menu.Accordion.Content>
 ```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `className` | `string` | - | Additional class names |
+| `children` | `ReactNode` | - | Menu items within the content |
+
+### Menu Accordion Chevron
+
+Animated chevron icon for accordion triggers.
+
+```tsx
+<Menu.Accordion.Chevron />
+```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| Inherits all chevron props from Accordion.Chevron | - | - | - |
+
+### MenuItemData Type
+
+```tsx
+type MenuItemData = {
+  // Common props
+  label?: string;
+  icon?: ComponentType<any>;
+  avatar?: {
+    source?: ImageSourcePropType;
+    icon?: ComponentType<any>;
+    children?: ReactNode;
+  };
+  disabled?: boolean;
+  className?: string;
+  
+  // For regular items
+  onPress?: () => void;
+  
+  // For groups and accordions
+  children?: MenuItemData[];
+  
+  // Type discriminator
+  type?: 'item' | 'group' | 'accordion';
+  
+  // Accordion-specific props
+  value?: string; // Required for accordions
+};
+```
+
+## Design Principles
+
+The Menu component follows these design principles:
+
+- **Consistent Sizing**: All items within a menu share the same size context
+- **Flexible Content**: Supports Icon, Text, and Avatar components in any combination
+- **Surface Integration**: Uses Surface component for consistent styling and interactions
+- **Accessibility**: Proper accessibility roles and states for interactive elements
+- **Cross-Platform**: Works consistently across web and React Native platforms
+- **Dual API**: Supports both declarative composition and data-driven approaches
+- **Hierarchical Navigation**: Supports both simple indentation and collapsible accordions
+- **Flexible Triggers**: Auto-generated or custom triggers for accordion sections
+- **Simplified Accordion API**: Streamlined accordion integration with Menu root
+- **Data-Driven Rendering**: Render complex menu structures from data arrays
+
+## Related Components
+
+- [Surface](/packages/ui/src/components/surface) - The styling foundation used by Menu.Item
+- [Icon](/packages/ui/src/components/icon) - For adding visual context to menu items
+- [Text](/packages/ui/src/components/text) - For displaying text content
+- [Avatar](/packages/ui/src/components/avatar) - For displaying user avatars
+- [Accordion](/packages/ui/src/components/accordion) - The underlying component for Menu accordion functionality 

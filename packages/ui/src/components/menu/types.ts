@@ -1,76 +1,92 @@
 import * as React from 'react';
-import type { ViewProps } from 'react-native';
 import type { VariantProps } from 'class-variance-authority';
+import { menuVariants, menuItemVariants } from './styles';
+import type { SurfaceRootProps } from '../surface/types';
+import type { AvatarRootProps } from '../avatar/types';
+import type { AccordionRootProps, AccordionTriggerProps, AccordionContentProps, AccordionItemProps } from '../accordion/types';
 
-// Base menu item interface
-export interface MenuBaseItem {
-  id?: string;
-  label: string;
-  description?: string;
+export type MenuItemData = {
+  // Common props
+  label?: string;
   icon?: React.ComponentType<any>;
+  avatar?: {
+    source?: AvatarRootProps['source'];
+    icon?: AvatarRootProps['icon'];
+    children?: React.ReactNode;
+  };
   disabled?: boolean;
-  isActive?: boolean;
-  onPress?: (item: MenuData) => void;
-}
-
-// Badge interface
-export interface MenuBadge {
-  text: string | number;
-  color?: 'default' | 'secondary' | 'destructive' | 'outline';
-}
-
-// Simple menu item
-export interface MenuItemData extends MenuBaseItem {
-  type?: 'item';
-  badge?: MenuBadge;
-}
-
-// Menu group with nested items
-export interface MenuGroupData extends MenuBaseItem {
-  type: 'group';
-  badge?: MenuBadge;
-  items: MenuData[];
-}
-
-// Union type for all menu items
-type MenuData = MenuItemData | MenuGroupData;
-export type { MenuData };
-
-// Type guard to check if item is a group
-export const isMenuGroup = (item: MenuData): item is MenuGroupData => {
-  return item.type === 'group' || 'items' in item;
+  className?: string;
+  
+  // For regular items
+  onPress?: () => void;
+  
+  // For groups and accordions
+  children?: MenuItemData[];
+  
+  // Type discriminator
+  type?: 'item' | 'group' | 'accordion';
+  
+  // Accordion-specific props
+  value?: string; // Required for accordions
 };
 
-// Props for the main Menu component
-export interface MenuRootProps extends ViewProps {
+export type MenuRootProps = SurfaceRootProps & {
+  size?: VariantProps<typeof menuVariants>['size'];
   className?: string;
-}
+  children?: React.ReactNode;
+  // Data-driven rendering
+  items?: MenuItemData[];
+  // Accordion props when accordion is true
+  accordion?: boolean;
+  value?: AccordionRootProps['value'];
+  defaultValue?: AccordionRootProps['defaultValue'];
+  type?: AccordionRootProps['type'];
+  collapsible?: AccordionRootProps['collapsible'];
+};
 
-// Props for individual menu items
-export interface MenuItemProps extends ViewProps {
-  item: MenuData;
-  isActive?: boolean;
-  isNested?: boolean;
-  onPress?: (item: MenuData) => void;
+export type MenuItemProps = SurfaceRootProps & {
+  size?: VariantProps<typeof menuItemVariants>['size'];
+  disabled?: boolean;
+  onPress?: () => void;
   className?: string;
-  activeClassName?: string;
-}
+  children?: React.ReactNode;
+  // New declarative props
+  label?: string;
+  icon?: React.ComponentType<any>;
+  avatar?: {
+    source?: AvatarRootProps['source'];
+    icon?: AvatarRootProps['icon'];
+    children?: React.ReactNode;
+  };
+};
 
-// Props for menu groups
-export interface MenuGroupProps extends ViewProps {
-  group: MenuGroupData;
-  isActive?: boolean;
-  onItemPress?: (item: MenuData) => void;
+export type MenuSize = NonNullable<MenuRootProps['size']>; 
+
+export type MenuGroupProps = {
+  children?: React.ReactNode;
   className?: string;
-  activeClassName?: string;
-}
+};
 
-// Props for menu triggers (used internally)
-export interface MenuTriggerProps extends ViewProps {
-  isActive?: boolean;
+// Renamed from MenuAccordionItemProps
+export type MenuAccordionProps = Omit<AccordionItemProps, 'children'> & {
+  children?: React.ReactNode;
   className?: string;
-}
+  // Item props for trigger generation
+  icon?: React.ComponentType<any>;
+  label?: string;
+  avatar?: {
+    source?: AvatarRootProps['source'];
+    icon?: AvatarRootProps['icon'];
+    children?: React.ReactNode;
+  };
+};
 
-// Variant types for styling
-export type MenuItemVariants = VariantProps<typeof import('./styles').menuItemVariants>;
-export type MenuTriggerVariants = VariantProps<typeof import('./styles').menuTriggerVariants>; 
+export type MenuAccordionTriggerProps = AccordionTriggerProps & {
+  children?: React.ReactNode;
+  className?: string;
+};
+
+export type MenuAccordionContentProps = AccordionContentProps & {
+  children?: React.ReactNode;
+  className?: string;
+}; 

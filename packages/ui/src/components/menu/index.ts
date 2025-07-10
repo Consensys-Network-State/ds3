@@ -2,13 +2,10 @@ export { Menu } from './Menu';
 export type {
   MenuRootProps,
   MenuItemProps,
-  MenuGroupProps,
-  MenuTriggerProps,
-  MenuItemVariants,
-  MenuTriggerVariants,
-  MenuData,
-  MenuGroupData,
+  MenuSize,
   MenuItemData,
-  MenuBaseItem,
-  MenuBadge,
+  MenuGroupProps,
+  MenuAccordionProps,
+  MenuAccordionTriggerProps,
+  MenuAccordionContentProps
 } from './types'; 

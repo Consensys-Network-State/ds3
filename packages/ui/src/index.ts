@@ -240,15 +240,11 @@ export {
 export type {
   MenuRootProps,
   MenuItemProps,
+  MenuSize,
   MenuGroupProps,
-  MenuTriggerProps,
-  MenuItemVariants,
-  MenuTriggerVariants,
-  MenuData,
-  MenuGroupData,
-  MenuItemData,
-  MenuBaseItem,
-  MenuBadge,
+  MenuAccordionProps,
+  MenuAccordionTriggerProps,
+  MenuAccordionContentProps
 } from './components/menu';
 
 // other components

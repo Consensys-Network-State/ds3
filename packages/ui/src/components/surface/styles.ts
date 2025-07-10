@@ -20,6 +20,7 @@ export const surfaceVariants = cva(
         outline: 'border',
         dashed: 'border border-dashed',
         ghost: '',
+        unstyled: '',
       },
       disabled: {
         false: null,

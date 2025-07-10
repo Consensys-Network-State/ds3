@@ -1,47 +1,33 @@
 import * as React from 'react';
-import * as AvatarPrimitive from '@rn-primitives/avatar';
+import { ImageProps } from 'react-native';
 import type { VariantProps } from 'class-variance-authority';
 import { avatarVariants } from './styles';
+import type { SurfaceRootProps } from '../surface/types';
+import { surfaceVariants } from '../surface';
 
 // Shared avatar props
 export type SharedAvatarProps = {
   size?: VariantProps<typeof avatarVariants>['size'];
-  color?: VariantProps<typeof avatarVariants>['color'];
+  color?: VariantProps<typeof surfaceVariants>['color'];
   border?: boolean;
   className?: string;
   children?: React.ReactNode;
-  source?: AvatarPrimitive.ImageProps['source'];
+  source?: ImageProps['source'];
   icon?: React.ComponentType<any>;
+  alt?: string;
 };
 
-// Avatar root props extending from primitives
-export type AvatarRootProps = SharedAvatarProps & Omit<AvatarPrimitive.RootProps, keyof SharedAvatarProps>;
+// Avatar root props extending from Surface
+export type AvatarRootProps = SharedAvatarProps & Omit<SurfaceRootProps, keyof SharedAvatarProps>;
 
-export type AvatarContext = {
+export type AvatarImageProps = ImageProps & {
+  className?: string;
   size?: VariantProps<typeof avatarVariants>['size'];
-  color?: VariantProps<typeof avatarVariants>['color'];
-  border?: boolean;
-  source?: AvatarPrimitive.ImageProps['source'];
-  icon?: React.ComponentType<any>;
 };
 
-export type AvatarImageProps = AvatarPrimitive.ImageProps & {
-  className?: string;
-};
-
-export type AvatarFallbackProps = AvatarPrimitive.FallbackProps & {
+export type AvatarFallbackProps = {
   className?: string;
   children?: React.ReactNode;
-};
-
-export type AvatarTextProps = {
-  className?: string;
-  children?: React.ReactNode;
-};
-
-export type AvatarIconProps = {
-  className?: string;
-  icon?: React.ComponentType<any>;
 };
 
 export type AvatarSizes = NonNullable<AvatarRootProps['size']>;

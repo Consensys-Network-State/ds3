@@ -1,7 +1,13 @@
 import * as React from 'react';
-import type { AvatarContext as AvatarContextType } from './types';
+import type { AvatarSizes, AvatarColors } from './types';
 
-export const AvatarContextProvider = React.createContext<AvatarContextType | undefined>(undefined);
+export type AvatarContextValue = {
+  size?: AvatarSizes;
+  color?: AvatarColors;
+  className?: string;
+};
+
+export const AvatarContextProvider = React.createContext<AvatarContextValue | undefined>(undefined);
 
 export const useAvatarContext = () => {
   const context = React.useContext(AvatarContextProvider);
