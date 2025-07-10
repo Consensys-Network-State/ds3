@@ -7,7 +7,9 @@ export type { AddressProps, AddressAvatarProps, AddressCardProps } from './compo
 export { ChainAvatar } from './components/chain';
 export type { ChainAvatarProps } from './components/chain';
 
-export { DisconnectButton, MetaMaskLogin } from './components/wallet';
-export type { DisconnectButtonProps, MetaMaskLoginProps } from './components/wallet'; 
+export { DisconnectButton, Web3LoginButton } from './components/wallet';
+export type { DisconnectButtonProps, Web3LoginProps } from './components/wallet'; 
+
+export { MetaMask } from './icons/MetaMask';
 
 export { truncateEthAddress } from './utils';

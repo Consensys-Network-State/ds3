@@ -38,6 +38,9 @@ importers:
       '@consensys/ds3-theme':
         specifier: workspace:*
         version: link:../../packages/theme
+      '@consensys/ds3-web3':
+        specifier: workspace:*
+        version: link:../../packages/web3
       '@expo/vector-icons':
         specifier: ^14.0.2
         version: 14.1.0(expo-font@13.0.4(expo@52.0.46(@babel/core@7.27.1)(@babel/preset-env@7.27.2(@babel/core@7.27.1))(@expo/metro-runtime@4.0.1(react-native@0.76.1(@babel/core@7.27.1)(@babel/preset-env@7.27.2(@babel/core@7.27.1))(@types/react@18.3.22)(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10)))(bufferutil@4.0.9)(react-native-webview@13.12.5(react-native@0.76.1(@babel/core@7.27.1)(@babel/preset-env@7.27.2(@babel/core@7.27.1))(@types/react@18.3.22)(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1))(react-native@0.76.1(@babel/core@7.27.1)(@babel/preset-env@7.27.2(@babel/core@7.27.1))(@types/react@18.3.22)(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1))(react-native@0.76.1(@babel/core@7.27.1)(@babel/preset-env@7.27.2(@babel/core@7.27.1))(@types/react@18.3.22)(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1)
@@ -137,10 +140,10 @@ importers:
         version: 18.3.1
       jest:
         specifier: ^29.2.1
-        version: 29.7.0(@types/node@22.15.21)
+        version: 29.7.0(@types/node@20.19.0)
       jest-expo:
         specifier: ~52.0.2
-        version: 52.0.6(dixny6r4a7srkycxooyaxgmya4)
+        version: 52.0.6(ysl5lc2qgb36igvfeuhlbc273m)
       react-test-renderer:
         specifier: 18.3.1
         version: 18.3.1(react@18.3.1)
@@ -246,10 +249,10 @@ importers:
         version: 18.3.1
       jest:
         specifier: ^29.2.1
-        version: 29.7.0(@types/node@20.19.0)
+        version: 29.7.0(@types/node@22.15.21)
       jest-expo:
         specifier: ~52.0.2
-        version: 52.0.6(ysl5lc2qgb36igvfeuhlbc273m)
+        version: 52.0.6(dixny6r4a7srkycxooyaxgmya4)
       react-test-renderer:
         specifier: 18.3.1
         version: 18.3.1(react@18.3.1)
