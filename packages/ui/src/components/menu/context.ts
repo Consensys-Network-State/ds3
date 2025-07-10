@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { MenuSize } from './types';
+import type { MenuSize, MenuRootProps } from './types';
 import type { SurfaceRootProps } from '../surface/types';
 
 export type MenuContextValue = {
@@ -7,6 +7,7 @@ export type MenuContextValue = {
   variant?: SurfaceRootProps['variant'];
   color?: SurfaceRootProps['color'];
   toColor?: SurfaceRootProps['toColor'];
+  disabled?: MenuRootProps['disabled'];
 };
 
 export const MenuContext = React.createContext<MenuContextValue | undefined>(undefined);

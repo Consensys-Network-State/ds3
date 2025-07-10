@@ -9,6 +9,7 @@ import { fieldsExamples } from './fields';
 import { designExamples } from './design';
 import { colorsExamples } from './colors';
 import { highlightExamples } from './highlight';
+import { menuExamples } from './menu';
 
 
 export { ReactHookForm } from './ReactHookForm';
@@ -24,7 +25,8 @@ export const codeExamples = {
   switches: switchExamples,
   spinners: spinnerExamples,
   fields: fieldsExamples,
-  highlight: highlightExamples
+  highlight: highlightExamples,
+  menu: menuExamples
 };
 
-export { buttonExamples, inputExamples, textExamples, iconExamples, checkboxExamples, switchExamples, spinnerExamples, fieldsExamples, designExamples, colorsExamples, highlightExamples }; 
+export { buttonExamples, inputExamples, textExamples, iconExamples, checkboxExamples, switchExamples, spinnerExamples, fieldsExamples, designExamples, colorsExamples, highlightExamples, menuExamples }; 

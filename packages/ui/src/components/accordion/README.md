@@ -235,6 +235,116 @@ Allow multiple items to be expanded simultaneously.
 </Accordion>
 ```
 
+### Nested Items
+
+```tsx live
+<Accordion type="multiple" collapsible defaultValue={['item-1', 'nested-1']}>
+  <Accordion.Item value="item-1">
+    <Accordion.Trigger>
+      <Text>Item 1</Text>
+    </Accordion.Trigger>
+    <Accordion.Content>
+      <View className="space-y-2">
+        <Text>This is the content of Item 1.</Text>
+        
+        <Accordion.Item value="nested-1">
+            <Accordion.Trigger>
+              <Text>Nested Item 1</Text>
+            </Accordion.Trigger>
+            <Accordion.Content>
+              <View className="space-y-1">
+                <Text>Nested Item 1 Content</Text>
+                <Text>More nested content</Text>
+              </View>
+            </Accordion.Content>
+          </Accordion.Item>
+          
+          <Accordion.Item value="nested-2">
+            <Accordion.Trigger>
+              <Text>Nested Item 2</Text>
+            </Accordion.Trigger>
+            <Accordion.Content>
+              <View className="space-y-1">
+                <Text>Nested Item 2 Content</Text>
+                <Text>More nested content</Text>
+              </View>
+            </Accordion.Content>
+          </Accordion.Item>
+      </View>
+    </Accordion.Content>
+  </Accordion.Item>
+  
+  <Accordion.Item value="item-2">
+    <Accordion.Trigger>
+      <Text>Item 2</Text>
+    </Accordion.Trigger>
+    <Accordion.Content>
+      <View className="space-y-1">
+        <Text>Item 2 Content</Text>
+        <Text>More content</Text>
+      </View>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion>
+```
+
+### Nested Accordions
+
+Create hierarchical content with accordion items nested within other accordion content.
+
+```tsx live
+<Accordion type="multiple" collapsible defaultValue={['item-1']}>
+  <Accordion.Item value="item-1">
+    <Accordion.Trigger>
+      <Text>Item 1</Text>
+    </Accordion.Trigger>
+    <Accordion.Content>
+      <View className="space-y-2">
+        <Text>This is the content of Item 1.</Text>
+        
+        <Accordion type="single" collapsible defaultValue={['nested-1']} size="sm">
+          <Accordion.Item value="nested-1">
+            <Accordion.Trigger>
+              <Text>Nested Item 1</Text>
+            </Accordion.Trigger>
+            <Accordion.Content>
+              <View className="space-y-1">
+                <Text>Nested Item 1 Content</Text>
+                <Text>More nested content</Text>
+              </View>
+            </Accordion.Content>
+          </Accordion.Item>
+          
+          <Accordion.Item value="nested-2">
+            <Accordion.Trigger>
+              <Text>Nested Item 2</Text>
+            </Accordion.Trigger>
+            <Accordion.Content>
+              <View className="space-y-1">
+                <Text>Nested Item 2 Content</Text>
+                <Text>More nested content</Text>
+              </View>
+            </Accordion.Content>
+          </Accordion.Item>
+        </Accordion>
+      </View>
+    </Accordion.Content>
+  </Accordion.Item>
+  
+  <Accordion.Item value="item-2">
+    <Accordion.Trigger>
+      <Text>Item 2</Text>
+    </Accordion.Trigger>
+    <Accordion.Content>
+      <View className="space-y-1">
+        <Text>Item 2 Content</Text>
+        <Text>More content</Text>
+      </View>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion>
+```
+
 ### Controlled State
 
 Manage the accordion state programmatically.

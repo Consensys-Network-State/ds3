@@ -241,6 +241,12 @@ export type {
   MenuRootProps,
   MenuItemProps,
   MenuSize,
+  MenuItemData,
+  MenuGroupProps,
+  MenuAccordionProps,
+  MenuAccordionItemProps,
+  MenuAccordionTriggerProps,
+  MenuAccordionContentProps
 } from './components/menu';
 
 // other components

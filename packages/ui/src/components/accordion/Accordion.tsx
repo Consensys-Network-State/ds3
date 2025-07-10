@@ -9,7 +9,8 @@ import { AccordionContextProvider } from './context';
 import { 
   AccordionItem,
   AccordionTrigger, 
-  AccordionContent
+  AccordionContent,
+  AccordionChevron
 } from './Accordion.shared';
 import type { AccordionRootProps } from './types';
 import { Card } from '../card';
@@ -61,6 +62,7 @@ const Accordion = Object.assign(AccordionRoot, {
   Item: AccordionItem,
   Trigger: AccordionTrigger,
   Content: AccordionContent,
+  Chevron: AccordionChevron,
 });
 
 export { Accordion }; 

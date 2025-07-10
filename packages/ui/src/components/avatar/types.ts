@@ -3,11 +3,12 @@ import { ImageProps } from 'react-native';
 import type { VariantProps } from 'class-variance-authority';
 import { avatarVariants } from './styles';
 import type { SurfaceRootProps } from '../surface/types';
+import { surfaceVariants } from '../surface';
 
 // Shared avatar props
 export type SharedAvatarProps = {
   size?: VariantProps<typeof avatarVariants>['size'];
-  color?: VariantProps<typeof avatarVariants>['color'];
+  color?: VariantProps<typeof surfaceVariants>['color'];
   border?: boolean;
   className?: string;
   children?: React.ReactNode;

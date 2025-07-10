@@ -48,9 +48,8 @@ AccordionItem.displayName = 'AccordionItem';
 
 const Trigger = Platform.OS === 'web' ? View : Pressable;
 
-export const AccordionTrigger = React.forwardRef<AccordionPrimitive.TriggerRef, AccordionTriggerProps>(
-  ({ className, children, ...props }, ref) => {
-    const context = useAccordionContext();
+const AccordionChevron = React.forwardRef<View, { size?: 'sm' | 'md' | 'lg'; color?: 'neutral' | 'primary' | 'secondary' | 'error' | 'warning' | 'success'; className?: string }>(
+  ({ size = 'md', color = 'neutral', className }, ref) => {
     const { isExpanded } = AccordionPrimitive.useItemContext();
 
     const progress = useDerivedValue(() =>
@@ -62,33 +61,48 @@ export const AccordionTrigger = React.forwardRef<AccordionPrimitive.TriggerRef, 
       opacity: interpolate(progress.value, [0, 1], [1, 0.8], Extrapolation.CLAMP),
     }));
 
-    // Map accordion color to card color
-    const cardColor = context.color || 'neutral';
+    return (
+      <Animated.View ref={ref} style={chevronStyle}>
+        <Icon 
+          icon={ChevronDown}
+          size={size === 'sm' ? 16 : size === 'lg' ? 20 : 18}
+          color={color}
+          className={cn("shrink-0", className)}
+        />
+      </Animated.View>
+    );
+  }
+);
+
+AccordionChevron.displayName = 'AccordionChevron';
+
+export { AccordionChevron };
+
+export const AccordionTrigger = React.forwardRef<AccordionPrimitive.TriggerRef, AccordionTriggerProps>(
+  ({ className, children, asChild, ...props }, ref) => {
+    const context = useAccordionContext();
 
     const triggerContent = (
       <AccordionPrimitive.Header className='flex'>
         <AccordionPrimitive.Trigger {...props} asChild>
-          <Trigger
-            ref={ref}
-            className={cn(
-              accordionTriggerVariants({ 
-                variant: context.variant, 
-                size: context.size,
-                color: context.color
-              }),
-              className
-            )}
-          >
-            {children}
-            <Animated.View style={chevronStyle}>
-              <Icon 
-                icon={ChevronDown}
-                size={context.size === 'sm' ? 16 : context.size === 'lg' ? 20 : 18}
-                color={cardColor}
-                className="shrink-0"
-              />
-            </Animated.View>
-          </Trigger>
+          {asChild ? (
+            children
+          ) : (
+            <Trigger
+              ref={ref}
+              className={cn(
+                accordionTriggerVariants({ 
+                  variant: context.variant, 
+                  size: context.size,
+                  color: context.color
+                }),
+                className
+              )}
+            >
+              {children}
+              <AccordionChevron size={context.size} color={context.color} />
+            </Trigger>
+          )}
         </AccordionPrimitive.Trigger>
       </AccordionPrimitive.Header>
     );
