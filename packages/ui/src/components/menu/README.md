@@ -376,7 +376,7 @@ Complete reference of all available props and their configurations.
 
 The main Menu component that provides the container and context. When `accordion` is true, it wraps an Accordion component.
 
-```tsx live
+```tsx
 <Menu size="md" className="w-64">
   {/* Menu items go here */}
 </Menu>
