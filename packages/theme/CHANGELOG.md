@@ -1,5 +1,11 @@
 # @consensys/ds3-theme
 
+## 0.0.5
+
+### Patch Changes
+
+- Adding additional components
+
 ## 0.0.4
 
 ### Patch Changes
