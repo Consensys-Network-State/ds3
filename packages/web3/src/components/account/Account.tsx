@@ -14,7 +14,6 @@ import {
   openLink,
   copyToClipboard
 } from "@consensys/ds3";
-import { useAccount, useDisconnect } from "wagmi";
 import { ChevronDown, Copy, ExternalLink, LogOut } from 'lucide-react-native';
 import { accountRootVariants } from './styles';
 import type { AccountProps } from './types';
@@ -22,16 +21,14 @@ import { Address } from '../address';
 import { AddressAvatar } from '../address';
 
 const Account = React.forwardRef<any, AccountProps>(
-  ({ className, ...props }, ref) => {
-    const { address } = useAccount();
-    const { disconnect } = useDisconnect();
+  ({ className, address, disconnect, avatarResolver, ensResolver, ...props }, ref) => {
 
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button ref={ref} className={cn(accountRootVariants(), className)} {...props}>
-            <AddressAvatar address={address} className="mr-1 w-6 h-6" />
-            <Address address={address} />
+            <AddressAvatar address={address} className="mr-1 w-6 h-6" avatarResolver={avatarResolver} />
+            <Address address={address} ensResolver={ensResolver} />
             <Icon icon={ChevronDown} />
           </Button>
         </DropdownMenuTrigger>
