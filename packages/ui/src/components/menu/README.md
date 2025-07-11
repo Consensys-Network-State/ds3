@@ -254,9 +254,11 @@ For complex cases, use custom trigger and content components for full control.
   
   <Menu.Accordion value="users">
     <Menu.Accordion.Trigger>
-      <Icon icon={Users} />
-      <Text className="mr-auto">User Management</Text>
-      <Menu.Accordion.Chevron />
+      <Menu.Item>
+        <Icon icon={Users} />
+        <Text className="mr-auto">User Management</Text>
+        <Menu.Accordion.Chevron />
+      </Menu.Item>
     </Menu.Accordion.Trigger>
     <Menu.Accordion.Content>
       <Menu.Item icon={UserCheck} label="Active Users" />

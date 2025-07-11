@@ -28,7 +28,7 @@ const AvatarRoot = React.forwardRef<React.ElementRef<typeof Surface>, AvatarRoot
     const avatarContext = React.useContext(AvatarContextProvider);
     
     // Use context values if available, otherwise use props
-    const effectiveSize = avatarContext?.size || size;
+    const effectiveSize = size || avatarContext?.size;
     const effectiveClassName = avatarContext?.className ? cn(avatarContext.className, className) : className;
     
     // Determine variant based on border prop

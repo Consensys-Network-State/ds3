@@ -14,7 +14,7 @@ import Animated, {
 import { ChevronDown } from 'lucide-react-native';
 import { cn } from '../../utils';
 import { useAccordionContext } from './context';
-import type { AccordionItemProps, AccordionTriggerProps, AccordionContentProps } from './types';
+import type { AccordionItemProps, AccordionTriggerProps, AccordionContentProps, AccordionChevronProps } from './types';
 import { TextContextProvider } from '../text';
 import { Card } from '../card';
 import { Icon } from '../icon';
@@ -48,27 +48,30 @@ AccordionItem.displayName = 'AccordionItem';
 
 const Trigger = Platform.OS === 'web' ? View : Pressable;
 
-const AccordionChevron = React.forwardRef<View, { size?: 'sm' | 'md' | 'lg'; color?: 'neutral' | 'primary' | 'secondary' | 'error' | 'warning' | 'success'; className?: string }>(
-  ({ size = 'md', color = 'neutral', className }, ref) => {
+const AccordionChevron = React.forwardRef<View, AccordionChevronProps>(
+  ({ size = 'md', color = 'neutral', children, className }, ref) => {
     const { isExpanded } = AccordionPrimitive.useItemContext();
 
     const progress = useDerivedValue(() =>
-      isExpanded ? withTiming(1, { duration: 250 }) : withTiming(0, { duration: 200 })
+      isExpanded ? withTiming(1, { duration: 250 }) : withTiming(0, { duration: 200 }),
+      [isExpanded]
     );
-    
+
     const chevronStyle = useAnimatedStyle(() => ({
       transform: [{ rotate: `${progress.value * 180}deg` }],
       opacity: interpolate(progress.value, [0, 1], [1, 0.8], Extrapolation.CLAMP),
-    }));
+    }), [progress]);
 
     return (
-      <Animated.View ref={ref} style={chevronStyle}>
-        <Icon 
-          icon={ChevronDown}
-          size={size === 'sm' ? 16 : size === 'lg' ? 20 : 18}
-          color={color}
-          className={cn("shrink-0", className)}
-        />
+      <Animated.View ref={ref} style={chevronStyle} className={cn("ml-auto", className)}>
+        {children || (
+          <Icon 
+            icon={ChevronDown}
+            size={size === 'sm' ? 16 : size === 'lg' ? 20 : 18}
+            color={color}
+            className="shrink-0"
+          />
+        )}
       </Animated.View>
     );
   }
@@ -100,7 +103,7 @@ export const AccordionTrigger = React.forwardRef<AccordionPrimitive.TriggerRef, 
               )}
             >
               {children}
-              <AccordionChevron size={context.size} color={context.color} />
+              <AccordionChevron size={context.size ?? undefined} color={context.color} />
             </Trigger>
           )}
         </AccordionPrimitive.Trigger>

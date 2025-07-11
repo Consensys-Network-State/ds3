@@ -23,3 +23,11 @@ Improvements:
 1. Implement info color
 2. Dropdown styles
 
+
+  "@types/lodash": "^4.17.20",
+
+  lodash is used in ui but not included in deps along with their types
+  
+https://docs.swmansion.com/react-native-reanimated/docs/guides/web-support/#web-without-the-babel-plugin
+
+avatar size menu override
