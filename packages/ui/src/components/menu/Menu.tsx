@@ -242,11 +242,16 @@ const MenuAccordion = React.forwardRef<React.ElementRef<typeof Accordion.Item>, 
     ...props 
   }, ref) => {
     const itemValue = typeof value === 'string' ? value : 'accordion-item';
-    const hasTrigger = React.Children.toArray(children).some(
-      child => React.isValidElement(child) && child.type === MenuAccordionTrigger
-    );
+    const [hasTrigger, setHasTrigger] = React.useState<boolean | null>(null);
 
-    return (
+    React.useEffect(() => {
+      const trigger = React.Children.toArray(children).find(
+        child => React.isValidElement(child) && child.type === MenuAccordionTrigger
+      );
+      setHasTrigger(!!trigger);
+    }, [children]);
+
+    return (hasTrigger === null ? null :
       <Accordion.Item ref={ref} value={itemValue} className={cn("gap-1", className)} {...props}>
         {hasTrigger ? (
           children 
