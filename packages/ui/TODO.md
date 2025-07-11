@@ -31,3 +31,6 @@ Improvements:
 https://docs.swmansion.com/react-native-reanimated/docs/guides/web-support/#web-without-the-babel-plugin
 
 avatar size menu override
+
+playground compoennts when used bring in all the example code. Might want to make either another lib or move those components to ui
+Then restore     "build": "tsc -b && vite build", in launchpad
