@@ -1,22 +1,24 @@
 import * as React from 'react';
 import * as AccordionPrimitive from '@rn-primitives/accordion';
+import type { VariantProps } from 'class-variance-authority';
+import type { IconSizes, IconColors } from '../icon/types';
+import type { SurfaceColor } from '../surface/types';
+import { accordionVariants, accordionTriggerVariants } from './styles';
 
-// Shared accordion props
 export type SharedAccordionProps = {
-  variant?: 'card' | 'underline' | 'outline' | 'unstyled';
-  color?: 'neutral' | 'primary' | 'secondary' | 'error' | 'warning' | 'success';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: VariantProps<typeof accordionVariants>['variant'];
+  color?: SurfaceColor;
+  size?: VariantProps<typeof accordionTriggerVariants>['size'];
   className?: string;
   children?: React.ReactNode;
 };
 
-// Accordion root props extending from primitives
 export type AccordionRootProps = SharedAccordionProps & Omit<AccordionPrimitive.RootProps, keyof SharedAccordionProps>;
 
 export type AccordionContext = {
-  variant?: 'card' | 'underline' | 'outline' | 'unstyled';
-  color?: 'neutral' | 'primary' | 'secondary' | 'error' | 'warning' | 'success';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: VariantProps<typeof accordionVariants>['variant'];
+  color?: SurfaceColor;
+  size?: VariantProps<typeof accordionTriggerVariants>['size'];
 };
 
 export type AccordionItemProps = AccordionPrimitive.ItemProps & {
@@ -31,6 +33,13 @@ export type AccordionTriggerProps = AccordionPrimitive.TriggerProps & {
 export type AccordionContentProps = AccordionPrimitive.ContentProps & {
   className?: string;
   children?: React.ReactNode;
+};
+
+export type AccordionChevronProps = {
+  size?: IconSizes | number;
+  color?: IconColors;
+  children?: React.ReactNode;
+  className?: string;
 };
 
 export type AccordionVariants = NonNullable<AccordionRootProps['variant']>;

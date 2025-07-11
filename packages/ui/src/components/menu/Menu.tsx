@@ -17,6 +17,7 @@ import { Icon } from '../icon';
 import { Avatar } from '../avatar';
 import { Text } from '../text';
 import { Accordion } from '../accordion';
+import type { AccordionChevronProps } from '../accordion/types';
 import {
   menuVariants,
   menuItemAvatarVariants,
@@ -103,7 +104,6 @@ const MenuRoot = React.forwardRef<React.ElementRef<typeof Surface>, MenuRootProp
       className: menuItemAvatarVariants({ size })
     }), [size]);
 
-    // Use items prop if provided, otherwise use children
     const menuContent = items ? renderMenuItems(items) : children;
 
     const menuWrapper = (
@@ -159,7 +159,6 @@ const MenuItem = React.forwardRef<React.ElementRef<typeof Surface>, MenuItemProp
     const effectiveToColor = toColor || menuContext?.toColor;
     const effectiveDisabled = disabled || menuContext?.disabled;
 
-    // Render content based on props or children
     const renderContent = () => {
       if (children) {
         return children;
@@ -243,7 +242,7 @@ const MenuAccordion = React.forwardRef<React.ElementRef<typeof Accordion.Item>, 
     ...props 
   }, ref) => {
     const itemValue = typeof value === 'string' ? value : 'accordion-item';
-    const [hasTrigger, setHasTrigger] = React.useState(false);
+    const [hasTrigger, setHasTrigger] = React.useState<boolean | null>(null);
 
     React.useEffect(() => {
       const trigger = React.Children.toArray(children).find(
@@ -252,14 +251,14 @@ const MenuAccordion = React.forwardRef<React.ElementRef<typeof Accordion.Item>, 
       setHasTrigger(!!trigger);
     }, [children]);
 
-    return (
-      <Accordion.Item ref={ref} value={itemValue} className={className} {...props}>
+    return (hasTrigger === null ? null :
+      <Accordion.Item ref={ref} value={itemValue} className={cn("gap-1", className)} {...props}>
         {hasTrigger ? (
           children 
         ) : (
           <>
             <MenuAccordionTrigger>
-              <View className="flex flex-row items-center gap-3">
+              <Menu.Item>
                 {avatar && (
                   <Avatar 
                     source={avatar.source}
@@ -271,8 +270,8 @@ const MenuAccordion = React.forwardRef<React.ElementRef<typeof Accordion.Item>, 
                 )}
                 {icon && !avatar && <Icon icon={icon} />}
                 {label && <Text>{label}</Text>}
-              </View>
-              <MenuAccordionChevron />
+                <MenuAccordionChevron />
+              </Menu.Item>
             </MenuAccordionTrigger>
             <MenuAccordionContent>
               {children}
@@ -290,9 +289,7 @@ const MenuAccordionTrigger = React.forwardRef<React.ElementRef<typeof Accordion.
   ({ children, className, ...props }, ref) => {
     return (
       <Accordion.Trigger ref={ref} asChild className={className} {...props}>
-        <Menu.Item className="justify-between">
-          {children}
-        </Menu.Item>
+        {children}
       </Accordion.Trigger>
     );
   }
@@ -303,7 +300,7 @@ MenuAccordionTrigger.displayName = 'Menu.Accordion.Trigger';
 const MenuAccordionContent = React.forwardRef<React.ElementRef<typeof Accordion.Content>, MenuAccordionContentProps>(
   ({ children, className, ...props }, ref) => {
     return (
-      <Accordion.Content ref={ref} className={cn("p-0 pl-8", className)} {...props}>
+      <Accordion.Content ref={ref} className={cn("p-0 pl-8 gap-1", className)} {...props}>
         {children}
       </Accordion.Content>
     );
@@ -312,7 +309,7 @@ const MenuAccordionContent = React.forwardRef<React.ElementRef<typeof Accordion.
 
 MenuAccordionContent.displayName = 'Menu.Accordion.Content';
 
-const MenuAccordionChevron = React.forwardRef<React.ElementRef<typeof Accordion.Chevron>, {}>(
+const MenuAccordionChevron = React.forwardRef<React.ElementRef<typeof Accordion.Chevron>, AccordionChevronProps>(
   (props, ref) => {
     return <Accordion.Chevron ref={ref} {...props} />;
   }
@@ -320,7 +317,6 @@ const MenuAccordionChevron = React.forwardRef<React.ElementRef<typeof Accordion.
 
 MenuAccordionChevron.displayName = 'Menu.Accordion.Chevron';
 
-// Assign all components to Menu
 const Menu = Object.assign(MenuRoot, {
   Item: MenuItem,
   Group: MenuGroup,

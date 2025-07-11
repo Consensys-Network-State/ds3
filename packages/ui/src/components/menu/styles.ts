@@ -64,6 +64,7 @@ export const menuItemTextVariants = cva(
   }
 );
 
+// TODO: there is an issue where when i go to add a size prop on avatar, it doesn't do anything as these classes override it.
 export const menuItemAvatarVariants = cva(
   '',
   {

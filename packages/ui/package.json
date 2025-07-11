@@ -32,7 +32,8 @@
   "devDependencies": {
     "@tsconfig/react-native": "^3.0.5",
     "@tsconfig/recommended": "^1.0.8",
-    "@types/react": "^18.3.11"
+    "@types/react": "^18.3.11",
+    "@types/lodash": "^4.17.13"
   },
   "dependencies": {
     "@consensys/ds3-theme": "workspace:*",

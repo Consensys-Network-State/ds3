@@ -23,3 +23,14 @@ Improvements:
 1. Implement info color
 2. Dropdown styles
 
+
+  "@types/lodash": "^4.17.20",
+
+  lodash is used in ui but not included in deps along with their types
+  
+https://docs.swmansion.com/react-native-reanimated/docs/guides/web-support/#web-without-the-babel-plugin
+
+avatar size menu override
+
+playground compoennts when used bring in all the example code. Might want to make either another lib or move those components to ui
+Then restore     "build": "tsc -b && vite build", in launchpad
