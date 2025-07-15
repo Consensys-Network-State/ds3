@@ -31,6 +31,112 @@ This is a **bold** paragraph with *italic* text and \`inline code\`.
 />
 ```
 
+### Custom Renderer
+
+Override specific markdown renderer methods to customize how elements are rendered while maintaining default behavior for others.
+
+```tsx live
+// Custom renderer that overrides specific methods
+<Markdown 
+  content={`# Custom Styled Heading
+
+This heading uses a custom card-based renderer.
+
+\`\`\`warning
+This is a warning code block with custom styling
+\`\`\`
+
+Inline \`code\` uses custom badge styling.
+
+[Custom Link](https://example.com) with enhanced styling.
+
+## Variable Substitution
+
+Hello,
+
+\$\{name\}!
+
+This text contains a variable that gets replaced with an input field.
+
+## Regular Heading
+
+This heading uses the default renderer.`}
+  customRenderer={{
+  // Custom heading with special styling for H1
+  heading: (text, styles, depth) => {
+    if (depth === 1) {
+      return (
+        <Card key="custom-h1" className="mb-6 p-4 bg-gradient-to-r from-primary-3 to-primary-4">
+          <Text size="4xl" weight="bold" className="text-primary-12">
+            {text}
+          </Text>
+        </Card>
+      );
+    }
+    // For other headings, use the default renderer
+    return null; // This will fall back to default behavior
+  },
+
+  // Custom code blocks with enhanced styling
+  code: (code, lang, containerStyle, textStyle) => {
+    if (lang === 'warning') {
+      return (
+        <Alert key="warning-code" variant="warning" className="mb-4">
+          <Text weight="semibold">Warning Code:</Text>
+          <Text className="mt-2 font-mono text-sm">{code}</Text>
+        </Alert>
+      );
+    }
+    // For other code blocks, use the default renderer
+    return null;
+  },
+
+  // Custom inline code with badge styling
+  codespan: (text, styles) => {
+    return (
+      <Badge key="custom-code" variant="outline" size="sm" className="mx-1">
+        {text}
+      </Badge>
+    );
+  },
+
+  // Custom links with enhanced styling
+  link: (children, href, styles) => {
+    return (
+      <Text 
+        key="custom-link"
+        className="text-primary-9 underline decoration-primary-6 hover:decoration-primary-8"
+        onPress={() => {
+          // Handle link press
+          console.log('Link pressed:', href);
+        }}
+      >
+        {children} 🔗
+      </Text>
+    );
+  },
+
+  // Variable substitution for ${name} patterns
+  text: (text, styles) => {
+    
+    if (typeof text === 'string' && text.includes('${name}')) {
+      return (
+        <Input 
+          key="name-input"
+          defaultValue="Alice"
+          size="sm"
+          className="inline-block w-24 mx-1"
+        />
+      );
+    }
+    
+    return <Text style={styles}>{text}</Text>;
+  }
+}}
+  scope={{ React, Card, Badge, Alert, Text, Input }}
+/>
+```
+
 ### Elements
 
 The Markdown component supports all standard markdown elements with custom DS3 styling:
@@ -196,3 +302,89 @@ Complete reference of all available props and their configurations.
 | `content` | `string` | - | The markdown content to render |
 | `className` | `string` | - | Additional class names for the container |
 | `scope` | `Record<string, any>` | `{}` | Object containing components and dependencies for live code execution |
+| `customRenderer` | `Partial<RendererInterface>` | `{}` | Custom renderer methods to override default markdown rendering |
+
+### Custom Renderer Methods
+
+The `customRenderer` prop accepts a partial implementation of the `RendererInterface` from `react-native-marked`. You can override any of these methods:
+
+| Method | Parameters | Description |
+|--------|------------|-------------|
+| `heading` | `(text, styles, depth)` | Custom heading rendering |
+| `code` | `(code, lang, containerStyle, textStyle)` | Custom code block rendering |
+| `codespan` | `(text, styles)` | Custom inline code rendering |
+| `table` | `(header, rows, tableStyle, rowStyle, cellStyle)` | Custom table rendering |
+| `paragraph` | `(text, styles)` | Custom paragraph rendering |
+| `link` | `(children, href, styles)` | Custom link rendering |
+| `list` | `(ordered, li, listStyle, textStyle, startIndex)` | Custom list rendering |
+| `listItem` | `(children, styles)` | Custom list item rendering |
+| `blockquote` | `(children, styles)` | Custom blockquote rendering |
+| `strong` | `(children, styles)` | Custom bold text rendering |
+| `em` | `(children, styles)` | Custom italic text rendering |
+| `hr` | `(styles)` | Custom horizontal rule rendering |
+| `image` | `(uri, alt, styles)` | Custom image rendering |
+| `escape` | `(text, styles)` | Custom escaped text rendering |
+| `br` | `()` | Custom line break rendering |
+| `del` | `(children, styles)` | Custom strikethrough text rendering |
+| `text` | `(text, styles)` | Custom text rendering |
+| `html` | `(text, styles)` | Custom HTML rendering |
+
+### Renderer Interface
+
+The custom renderer uses the official `RendererInterface` from `react-native-marked`:
+
+```tsx
+import type { RendererInterface } from 'react-native-marked';
+
+const customRenderer: Partial<RendererInterface> = {
+  // Override only the methods you need
+  heading: (text, styles, depth) => {
+    // Your custom heading logic
+    return <CustomHeading depth={depth}>{text}</CustomHeading>;
+  }
+};
+```
+
+## Best Practices
+
+### Selective Overrides
+Only override the renderer methods you need. The component will use default behavior for unoverridden methods.
+
+```tsx
+// Good: Only override what you need
+const customRenderer = {
+  heading: (text, styles, depth) => <CustomHeading>{text}</CustomHeading>
+};
+
+// Avoid: Overriding everything unnecessarily
+const customRenderer = {
+  heading: (text, styles, depth) => <CustomHeading>{text}</CustomHeading>,
+  paragraph: (text, styles) => <CustomParagraph>{text}</CustomParagraph>,
+  // ... many more overrides
+};
+```
+
+### Fallback to Default
+When you need to conditionally use custom rendering, return `null` to fall back to default behavior:
+
+```tsx
+const customRenderer = {
+  heading: (text, styles, depth) => {
+    if (depth === 1) {
+      return <SpecialH1>{text}</SpecialH1>;
+    }
+    return null; // Falls back to default heading renderer
+  }
+};
+```
+
+### Type Safety
+Use the official `RendererInterface` type for full type safety and compatibility:
+
+```tsx
+import type { RendererInterface } from 'react-native-marked';
+
+const customRenderer: Partial<RendererInterface> = {
+  // TypeScript will provide full intellisense and type checking
+};
+```
